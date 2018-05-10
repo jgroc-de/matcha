@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8/">
+        <title>Matcha</title>
+        <link rel="stylesheet" href="css/main.css" type="text/css"/>
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            <h1>Match a Rick&Morty</h1>
+            <em>even if it's such a pain in the ass</em>
+            {% block title %}{% endblock %}
+        </header>
+        <div>
+            <h2>{{ title }}</h2>
+            {% block content %}{% endblock %}
+        </div>
+        <footer>
+            <hr>
+            <em>© jgroc-de 2018</em>
+        </footer>
+
+    </body>
+</html>

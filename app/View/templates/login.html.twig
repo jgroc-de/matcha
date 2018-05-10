@@ -1,0 +1,29 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <form action='{{ path_for('login') }}' method="post">
+        <a href='{{ path_for('signup') }}'>signup?</a>
+            <div>
+                <label>pseudo</label>
+                <p></p>
+                <input type="text"
+                       maxlength="50"
+                       name="pseudo"
+                       id="pseudo"
+                       required>
+            </div>
+            <div>
+                <label>password</label>
+                <p></p>
+                <input type="password"
+                       name="password"
+                       id="password"
+                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                       required>
+            </div>
+            <input type='submit' name='submmit'>
+    </form>
+{% endblock %}

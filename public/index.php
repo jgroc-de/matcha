@@ -1,21 +1,18 @@
 <?php
-
-require __DIR__ . '/../vendor/autoload.php';
-
 session_start();
 
-// Instantiate the app
-$settings = require __DIR__ . '/../src/settings.php';
-$app = new \Slim\App($settings);
+require '../vendor/autoload.php';
+require '../config/config.php';
+use \App\Controllers\PagesController;
 
-// Set up dependencies
-require __DIR__ . '/../src/dependencies.php';
+$app = new \Slim\App(['settings' => $config]);
 
-// Register middleware
-require __DIR__ . '/../src/middleware.php';
+require '../app/container.php';
 
-// Register routes
-require __DIR__ . '/../src/routes.php';
+$app->get('/', PagesController::class . ':home');
+$app->get('/login', PagesController::class . ':home')->setName('login');
+$app->post('/login', PagesController::class . ':login');
+$app->get('/signup', PagesController::class . ':signup')->setName('signup');
+$app->post('/signup', PagesController::class . ':signup');
 
-// Run app
 $app->run();
