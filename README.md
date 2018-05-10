@@ -14,7 +14,9 @@ Introduction à un outil plus évolué pour réaliser vos applications web : le 
 
 | Back-end | Front-end | bdd |
 |---|---|---|
-| PHP/Slim | HTML5, CSS3, JS, JQuery, Bootstrap | MySQL |
+| PHP/Slim3: | HTML5, CSS3, JS, JQuery, Bootstrap | MySQL |
+|-twig|||
+|-monolog|||
 
 # Contraintes Techniques, composants interdits:
 
