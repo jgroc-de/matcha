@@ -1,4 +1,5 @@
 {% extends "layout.html.twig" %}
+{% import 'form.html.twig' as forms %}
 
 {% block title %}
 {% endblock %}
@@ -7,36 +8,17 @@
 <form action="" method="post">
     <a href='{{ path_for('login') }}'>login In?</a>
     <div>
-        <label>pseudo</label>
-        <p></p>
-        <input type="text"
-               maxlength="50"
-               name="pseudo"
-               id="pseudo"
-               required>
+        {{ forms.input() }}
     </div>
     <div>
-        <label>password</label>
-        <p></p>
-        <input type="password"
-               name="password"
-               id="password"
-               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
-               required> 
+        {{ forms.password() }}
     </div>
     <div>
-        <label>email</label>
-        <p></p>
-        <input type="email"
-               name="email"
-               id="email"
-               required
-               >
+        {{ forms.email() }}
     </div>
-        <select name="gender">
-            <option value="rick">Rick</option>
-            <option value="morty">Morty</option>
-        </select>
+    <div>
+        {{ forms.select('gender', characters) }}
+    </div>
     <div>
         <input type="submit" value="submit">
         <input type="reset" value="reset">
