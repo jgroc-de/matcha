@@ -11,9 +11,18 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-$container['db'] = function ($c) {
-    $pdo = new PDO('mysql:dbname=test;host=localhost', 'root', 'root00');
+$container['db'] = function ($container) {
+    $db = $container['settings']['db'];
+    $pdo = new PDO('mysql:dbname=' . $db['dbname'] . ';host=' . $db['host'], $db['user'], $db['pass']);
     $pdo->setAttribute(PdO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PdO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
+};
+
+$container['user'] = function ($container) { 
+    return new \App\Model\UserModel($container);
+};
+
+$container['form'] = function ($container) { 
+    return new \App\Controllers\FormController($container);
 };

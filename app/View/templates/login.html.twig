@@ -1,5 +1,5 @@
 {% extends "layout.html.twig" %}
-{% import 'form.html.twig' as forms %}
+{% import 'macro/form.html.twig' as forms %}
 
 {% block title %}
 {% endblock %}
@@ -13,6 +13,6 @@
             <div>
                 {{ forms.password() }}
             </div>
-            <input type='submit' name='submmit'>
+            <input type='submit' name='submit'>
     </form>
 {% endblock %}

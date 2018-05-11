@@ -6,23 +6,10 @@ namespace App\Controllers;
  * class PagesController
  * this class is called by each routes
  */
-class PagesController
+class RoutesController extends ContainerClass
 {
     /**
-     * @var array : for $container
-     */
-    private $container;
-
-    /**
-     * @param $container array
-     */
-    public function __construct($container)
-    {
-        $this->container = $container;
-    }
-
-    /**
-     * @param $request requestInterface : route for home
+     * @param $request requestInterface
      * @param $response responseInterface
      * @return twig view
      */
@@ -35,37 +22,47 @@ class PagesController
     }
     
     /**
-     * @param $request requestInterface : route for signup
+     * @param $request requestInterface
      * @param $response responseInterface
      * @return twig view
      */
     public function signup ($request, $response)
     {
+        //a récup depuis la db
         $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
         return $this->container->view->render($response, 'templates/sign.html.twig', ['characters' => $characters]);
     }
 
     /**
-     * @param $request requestInterface : route for login
+     * @param $request requestInterface
      * @param $response responseInterface
      * @return twig view
      */
     public function login ($request, $response)
     {
-        $params = $request->getParams();
-        $req = $this->container->db->prepare('SELECT * FROM lol WHERE name = ?');
-        $req->execute(array($params['pseudo']));
-        $name = $req->fetchAll();
-        print_r($name);
+        $this->form->checkLogin($request, $response);
+        if (isset($_SESSION['id']))
+            return $this->view->render($response, 'templates/home.html.twig');
+        return $this->view->render($response, 'templates/login.html.twig');
+    }
+
+    public function logout ($request, $response)
+    {
+        session_destroy();
         return $this->view->render($response, $dir = 'templates/login.html.twig');
     }
 
     /**
-     * @param $name string : shortcut to access dependencies in $container
-     * @return $container['$name'] : matching class from container if any
+     * create database and tables
+     *
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return twig view on login
      */
-    public function __get($name)
+    public function setup ($request, $response)
     {
-        return $this->container->get($name);
+        $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
+        $req = $this->db->exec($file);
+        return $this->view->render($response, $dir = 'templates/login.html.twig');
     }
 }

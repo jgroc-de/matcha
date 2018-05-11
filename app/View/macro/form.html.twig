@@ -32,7 +32,7 @@
 <input type="{{ type|default(def) }}"
        name="{{ name|default(def) }}"
        id="{{ id|default(def) }}"
-       pattern="{{ pattern|default('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}') }}"
+       pattern="{{ pattern|default('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}') }}"
        required>
 {% endmacro password %}
 
