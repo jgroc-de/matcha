@@ -17,7 +17,7 @@ $app->post('/login', RoutesController::class . ':login');
 $app->get('/logout', RoutesController::class . ':logout');
 
 $app->get('/signup', RoutesController::class . ':signup')->setName('signup');
-$app->post('/signup', RoutesController::class . ':signup');
+$app->post('/signup', RoutesController::class . ':signup')->setName('signup');
 
 
 $app->run();

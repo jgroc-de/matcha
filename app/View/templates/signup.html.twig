@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="" method="post">
+<form action="{{ path_for('signup') }}" method="post">
     <a href='{{ path_for('login') }}'>login In?</a>
     <div>
         {{ forms.input() }}

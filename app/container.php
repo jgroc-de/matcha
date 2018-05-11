@@ -1,6 +1,9 @@
 <?php
 $container = $app->getContainer();
 
+/**
+ * twig container
+ */
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig('../app/View', [
         'cache' => false //'../tmp/cache'
@@ -25,4 +28,12 @@ $container['user'] = function ($container) {
 
 $container['form'] = function ($container) { 
     return new \App\Controllers\FormController($container);
+};
+
+$container['validator'] = function ($container) {
+    return new \App\Lib\Validator();
+};
+
+$container['debug'] = function ($container) {
+    return new \App\Lib\Debug();
 };

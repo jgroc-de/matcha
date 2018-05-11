@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-require_once(__DIR__.'/../lib/ft_isset.php');
-
 /**
  * class FormController
  * manage forms data
@@ -18,7 +16,7 @@ class FormController extends ContainerClass
     public function checkLogin ($request, $response)
     {
         $post = $request->getParams();
-        if ($this->validate($post, 'pseudo', 'password'))
+        if ($this->validator->validate($post, 'pseudo', 'password'))
         {
             if (!empty($account = $this->checkPseudo($post['pseudo'])))
             {
@@ -39,22 +37,28 @@ class FormController extends ContainerClass
             return "burp!";
     }
 
+    /**
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return string error if any
+     */
     public function checkSignup ($request, $response)
     {
         $post = $request->getParams();
-        if ($this->validate($post, 'pseudo', 'password', 'email', 'gender'))
+        if ($this->validator->validate($post, 'pseudo', 'password', 'email', 'gender'))
         {
             if (empty($this->checkPseudo($post['pseudo'])))
             {
-                $this->setUser($post);
-                $account = $this->getUser($post['pseudo']);
-                $this->sendMail($account);
+                $this->user->setUser($post);
+                var_dump('done');
+                //$account = $this->getUser($post['pseudo']);
+                //$this->sendMail($account);
             }
             else
-                return "pseudo deja pris";
+                var_dump("pseudo deja pris");
         }
         else
-            return "burp";
+            var_dump("burp");
     }
 
     /**
@@ -73,6 +77,6 @@ class FormController extends ContainerClass
      */
     public function checkPassword ($real, $test)
     {
-        return ($real === $test) ? true : false;
+        return ($real === $test);
     }
 }

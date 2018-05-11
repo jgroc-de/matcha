@@ -28,9 +28,17 @@ class RoutesController extends ContainerClass
      */
     public function signup ($request, $response)
     {
-        //a récup depuis la db
-        $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
-        return $this->container->view->render($response, 'templates/sign.html.twig', ['characters' => $characters]);
+        //$this->debug->ft_print($_SERVER);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $this->form->checkSignup($request, $response);
+        }
+        else
+        {
+            //a récup depuis la db
+            $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
+            return $this->view->render($response, 'templates/signup.html.twig', ['characters' => $characters]);
+        }
     }
 
     /**

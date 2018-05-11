@@ -26,7 +26,8 @@ class UserModel extends ContainerClass
         $req->execute(array(
                 $post['pseudo'],
                 $post['password'],
-                $post['email'],$post['gender']));
+                $post['email'],
+                $post['gender']));
     }
 
     /**
