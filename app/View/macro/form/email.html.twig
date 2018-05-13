@@ -1,0 +1,9 @@
+{% macro email(name, id) %}
+{% set def = 'email' %}
+{% from 'macro/form/label.html.twig' import label %}
+{{ label(name|default(def)) }}
+<input type="{{ type|default(def) }}"
+       name="{{ name|default(def) }}"
+       id="{{ id|default(def) }}"
+       required/>
+{% endmacro email %}

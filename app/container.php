@@ -14,6 +14,9 @@ $container['view'] = function ($container) {
     return $view;
 };
 
+/**
+ * database container
+ */
 $container['db'] = function ($container) {
     $db = $container['settings']['db'];
     $pdo = new PDO('mysql:dbname=' . $db['dbname'] . ';host=' . $db['host'], $db['user'], $db['pass']);

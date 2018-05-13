@@ -9,6 +9,16 @@ namespace App\Controllers;
 class RoutesController extends ContainerClass
 {
     /**
+     * @var array
+     */
+    protected $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
+
+    /**
+     * @var array
+     */
+    protected $sexualPattern = ['bi', 'homo', 'hetero'];
+
+    /**
      * @param $request requestInterface
      * @param $response responseInterface
      * @return twig view
@@ -18,7 +28,7 @@ class RoutesController extends ContainerClass
         if (isset($_SESSION['id']))
             return $this->view->render($response, 'templates/home.html.twig');
         else
-            return $this->view->render($response, $dir = 'templates/login.html.twig');
+            return $this->view->render($response, 'templates/login.html.twig');
     }
     
     /**
@@ -32,12 +42,18 @@ class RoutesController extends ContainerClass
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $this->form->checkSignup($request, $response);
+            return $this->view->render(
+                $response,
+                'templates/login.html.twig'
+            );
         }
         else
         {
-            //a récup depuis la db
-            $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
-            return $this->view->render($response, 'templates/signup.html.twig', ['characters' => $characters]);
+            return $this->view->render(
+                $response,
+                'templates/signup.html.twig',
+                ['characters' => $this->characters]
+            );
         }
     }
 
@@ -53,11 +69,31 @@ class RoutesController extends ContainerClass
             return $this->view->render($response, 'templates/home.html.twig');
         return $this->view->render($response, 'templates/login.html.twig');
     }
-
+    
+    /**
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return twig view
+     */
     public function logout ($request, $response)
     {
         session_destroy();
-        return $this->view->render($response, $dir = 'templates/login.html.twig');
+        return $this->view->render(
+            $response,
+            'templates/login.html.twig'
+        );
+    }
+
+    public function profil ($request, $response)
+    {
+        return $this->view->render(
+            $response,
+            'templates/profil.html.twig',
+            [
+                'characters' => $this->characters,
+                'sexualPattern' => $this->sexualPattern
+            ]
+        );
     }
 
     /**
@@ -71,6 +107,6 @@ class RoutesController extends ContainerClass
     {
         $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
         $req = $this->db->exec($file);
-        return $this->view->render($response, $dir = 'templates/login.html.twig');
+        return $this->view->render($response, 'templates/login.html.twig');
     }
 }

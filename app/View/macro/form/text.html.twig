@@ -1,0 +1,11 @@
+{% macro text(name, id, value, type, size) %}
+{% set def = 'pseudo' %}
+{% from 'macro/form/label.html.twig' import label %}
+{{ label(name|default(def)) }}
+<input type="{{ type|default('text') }}"
+       name="{{ name|default(def) }}"
+       value="{{ value }}"
+       id="{{ id|default(def) }}"
+       maxlength="{{ size|default(40) }}"
+       required>
+{% endmacro text %}

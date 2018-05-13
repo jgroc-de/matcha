@@ -1,0 +1,45 @@
+{% extends "layout.html.twig" %}
+{% from 'macro/form/text.html.twig' import text %}
+{% from 'macro/form/textarea.html.twig' import textarea %}
+{% from 'macro/form/password.html.twig' import password %}
+{% from 'macro/form/email.html.twig' import email %}
+{% from 'macro/form/select.html.twig' import select %}
+{% from 'macro/form/number.html.twig' import number %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <form action='{{ path_for('profil') }}' method="post">
+        <a href='{{ path_for('home') }}'>home?</a>
+            <div>
+                {{ text() }}
+            </div>
+            <div>
+                {{ password() }}
+            </div>
+            <div>
+                {{ email() }}
+            </div>
+            <div>
+                {{ text('name') }}
+            </div>
+            <div>
+                {{ text('forname') }}
+            </div>
+            <div>
+                {{ number('age', 'age', 1, 140) }}
+            </div>
+            <div>
+                {{ select('gender', characters) }}
+            </div>
+            <div>
+                {{ select('sexual orientation', sexualPattern) }}
+            </div>
+            <div>
+                {{ textarea('Biography') }}
+            </div>
+            <input type='submit' name='submit'>
+    </form>
+{% endblock %}
+

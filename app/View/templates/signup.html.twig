@@ -1,5 +1,8 @@
 {% extends "layout.html.twig" %}
-{% import 'macro/form.html.twig' as forms %}
+{% from 'macro/form/text.html.twig' import text %}
+{% from 'macro/form/password.html.twig' import password %}
+{% from 'macro/form/email.html.twig' import email %}
+{% from 'macro/form/select.html.twig' import select %}
 
 {% block title %}
 {% endblock %}
@@ -8,16 +11,16 @@
 <form action="{{ path_for('signup') }}" method="post">
     <a href='{{ path_for('login') }}'>login In?</a>
     <div>
-        {{ forms.input() }}
+        {{ text() }}
     </div>
     <div>
-        {{ forms.password() }}
+        {{ password() }}
     </div>
     <div>
-        {{ forms.email() }}
+        {{ email() }}
     </div>
     <div>
-        {{ forms.select('gender', characters) }}
+        {{ select('gender', characters) }}
     </div>
     <div>
         <input type="submit" value="submit">
