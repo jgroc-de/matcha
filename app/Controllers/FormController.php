@@ -10,10 +10,9 @@ class FormController extends ContainerClass
 {
     /**
      * @param $request requestInterface
-     * @param $response responseInterface
      * @return string error if any
      */
-    public function checkLogin ($request, $response)
+    public function checkLogin ($request)
     {
         $post = $request->getParams();
         if ($this->validator->validate($post, 'pseudo', 'password'))
@@ -39,10 +38,9 @@ class FormController extends ContainerClass
 
     /**
      * @param $request requestInterface
-     * @param $response responseInterface
      * @return string error if any
      */
-    public function checkSignup ($request, $response)
+    public function checkSignup ($request)
     {
         $post = $request->getParams();
         if ($this->validator->validate($post, 'pseudo', 'password', 'email', 'gender'))
@@ -59,6 +57,15 @@ class FormController extends ContainerClass
         }
         else
             var_dump("burp");
+    }
+
+    /**
+     * @param $request requestInterface
+     * @return string error if any
+     */
+    public function checkProfil ($request)
+    {
+        return true;
     }
 
     /**

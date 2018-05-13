@@ -1,11 +1,13 @@
-{% macro select(name, array, id) %}
+{# hash keys are: label, name, array, select #}
+{% macro select(hash) %}
 {% set def = 'select' %}
 {% from 'macro/form/label.html.twig' import label %}
-{{ label(name|default(def)) }}
-<select name="{{ name|default(def) }}"
-       id="{{ id|default(def) }}">
-    {% for value in array %}
-    <option value='{{ value }}'>{{ value }}</option>
+{{ label(hash.label|default(def)) }}
+<select name="{{ hash.name|default(hash.label|default(def)) }}">
+    {% for value in hash.array %}
+    <option value='{{ value }}' {% if value == hash.select %}selected{% endif %}>
+        {{ value }}
+    </option>
     {% endfor %}
 </select>
 {% endmacro select %}

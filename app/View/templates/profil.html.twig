@@ -13,31 +13,46 @@
     <form action='{{ path_for('profil') }}' method="post">
         <a href='{{ path_for('home') }}'>home?</a>
             <div>
-                {{ text() }}
+                {{ text({'label': 'pseudo', 'value': profil.pseudo}) }}
             </div>
             <div>
-                {{ password() }}
+                {{ email({'value': profil.email}) }}
             </div>
             <div>
-                {{ email() }}
+                {{ text({'label': 'forname', 'value': profil.forname}) }}
             </div>
             <div>
-                {{ text('name') }}
+                {{ text({'label': 'name', 'value': profil.name}) }}
             </div>
             <div>
-                {{ text('forname') }}
+                {{ number({
+                    'label': 'birthdate',
+                    'min': 1850,
+                    'max': 2020,
+                    'name': 'birthdate',
+                    'value': profil.birthdate
+                    })
+                }}
             </div>
             <div>
-                {{ number('age', 'age', 1, 140) }}
+                {{ select({
+                    'label': 'gender',
+                    'array': characters,
+                    'select': profil.gender,
+                    })
+                }}
             </div>
             <div>
-                {{ select('gender', characters) }}
+                {{ select({
+                    'label': 'sexual orientation',
+                    'array': sexualPattern,
+                    'select': profil.sexuality,
+                    'name': sexuality
+                    }) 
+                }}
             </div>
             <div>
-                {{ select('sexual orientation', sexualPattern) }}
-            </div>
-            <div>
-                {{ textarea('Biography') }}
+                {{ textarea({'label': 'Biography', 'value': profil.biography}) }}
             </div>
             <input type='submit' name='submit'>
     </form>

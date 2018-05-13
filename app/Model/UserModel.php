@@ -18,6 +18,9 @@ class UserModel extends ContainerClass
         return $req->fetch();
     }
 
+    /**
+     * @param $post array
+     */
     public function setUser(array $post)
     {
         $req = $this->db->prepare('
@@ -39,5 +42,23 @@ class UserModel extends ContainerClass
         $req = $this->db->prepare('select * from user where id = ?');
         $req->execute(array($id));
         return $req->fetch();
+    }
+    
+    /**
+     * @param $post array
+     */
+    public function updateUser()
+    {
+        $post = array();
+        foreach ($_POST as $value)
+            $post[] = $value;
+        array_pop($post);
+        $post[] = $_SESSION['id'];
+        $this->debug->ft_print($post);
+        $req = $this->db->prepare('
+            UPDATE user
+            SET pseudo = ?, email = ?, forname = ?, name = ?, birthdate = ?, gender = ?, sexuality = ?, biography = ?
+            where id = ?');
+        $req->execute($post);
     }
 }

@@ -84,16 +84,34 @@ class RoutesController extends ContainerClass
         );
     }
 
+    /**
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return twig view
+     */
     public function profil ($request, $response)
     {
-        return $this->view->render(
-            $response,
-            'templates/profil.html.twig',
-            [
-                'characters' => $this->characters,
-                'sexualPattern' => $this->sexualPattern
-            ]
-        );
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $profil = $request->getParams();
+            if ($this->form->checkProfil($profil))
+            {
+                $this->user->updateUser($_POST);
+            }
+        }
+        else
+        {
+            $this->debug->ft_print($this->user->getUser($_SESSION['pseudo']));
+            return $this->view->render(
+                $response,
+                'templates/profil.html.twig',
+                [
+                    'profil' => $this->user->getUser($_SESSION['pseudo']),
+                    'characters' => $this->characters,
+                    'sexualPattern' => $this->sexualPattern,
+                ]
+            );
+        }
     }
 
     /**

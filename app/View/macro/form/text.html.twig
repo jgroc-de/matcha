@@ -1,11 +1,11 @@
-{% macro text(name, id, value, type, size) %}
-{% set def = 'pseudo' %}
+{# hash keys are: label, name, value, size #}
+{% macro text(hash) %}
+{% set def = 'text' %}
 {% from 'macro/form/label.html.twig' import label %}
-{{ label(name|default(def)) }}
-<input type="{{ type|default('text') }}"
-       name="{{ name|default(def) }}"
-       value="{{ value }}"
-       id="{{ id|default(def) }}"
-       maxlength="{{ size|default(40) }}"
+{{ label(hash.label|default(def)) }}
+<input tuype="text"
+       name="{{ hash.name|default(hash.label|default(def)) }}"
+       value="{{ hash.value }}"
+       maxlength="{{ hash.size|default(40) }}"
        required>
 {% endmacro text %}
