@@ -11,7 +11,7 @@
 <form action="{{ path_for('signup') }}" method="post">
     <a href='{{ path_for('login') }}'>login In?</a>
     <div>
-        {{ text() }}
+        {{ text({'label': 'pseudo'}) }}
     </div>
     <div>
         {{ password() }}
@@ -20,7 +20,7 @@
         {{ email() }}
     </div>
     <div>
-        {{ select('gender', characters) }}
+        {{ select({'name': 'gender', 'array': characters}) }}
     </div>
     <div>
         <input type="submit" value="submit">

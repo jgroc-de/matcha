@@ -9,7 +9,7 @@
     <form action='{{ path_for('login') }}' method="post">
         <a href='{{ path_for('signup') }}'>signup?</a>
             <div>
-                {{ text() }}
+                {{ text({'label': 'pseudo'}) }}
             </div>
             <div>
                 {{ password() }}
