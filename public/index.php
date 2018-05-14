@@ -6,9 +6,10 @@ require '../config/config.php';
 use \App\Controllers\RoutesController;
 
 $app = new \Slim\App(['settings' => $config]);
-$faker = Faker\Factory::create();
+$faker = Faker\Factory::create('fr_FR');
 require '../app/container.php';
-$app->get('/setup', RoutesController::class . ':setup');
+$app->get('/setup', RoutesController::class . ':setup')->setName('setup');
+$app->get('/seed', RoutesController::class . ':seed')->setName('seed');
 
 $app->get('/', RoutesController::class . ':home')->setName('home');
 $app->any('/login', RoutesController::class . ':login')->setName('login');

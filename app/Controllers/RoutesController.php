@@ -16,7 +16,13 @@ class RoutesController extends ContainerClass
     public function home ($request, $response)
     {
         if (isset($_SESSION['id']))
-            return $this->view->render($response, 'templates/home.html.twig');
+        {
+            return $this->view->render(
+                $response,
+                'templates/home.html.twig',
+                ['name' => $_SESSION['pseudo']]
+            );
+        }
         else
             return $this->view->render($response, 'templates/login.html.twig');
     }
@@ -28,7 +34,6 @@ class RoutesController extends ContainerClass
      */
     public function signup ($request, $response)
     {
-        //$this->debug->ft_print($_SERVER);
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $this->form->checkSignup($request, $response);
@@ -84,9 +89,7 @@ class RoutesController extends ContainerClass
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             if ($this->form->checkProfil($request))
-            {
                 $this->user->updateUser();
-            }
         }
         else
         {
@@ -114,14 +117,10 @@ class RoutesController extends ContainerClass
         {
             $this->debug->ft_print($_POST);
             if ($_POST['password'] === $_POST['password1'] && $this->form->check($request))
-            {
                 $this->user->updatePassUser();
-            }
         }
         else
-        {
             return $this->view->render($response, 'templates/password.html.twig');
-        }
     }
 
     /**
@@ -133,13 +132,14 @@ class RoutesController extends ContainerClass
      */
     public function setup ($request, $response)
     {
-        $this->dbCreate;
-        $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
-        $req = $this->db->exec($file);
-        $this->faker->fakeFactory(25);
-        $array = $this->user->getUsers();
+        $this->container->setup->init();
+    }
+
+    public function seed ($request, $response)
+    {
+        $this->container->setup->fakeFactory(400);
+        $array = $this->container->user->getUsers();
         foreach ($array as $value)
-            $this->debug->ft_print($value);
-        return $this->view->render($response, 'templates/login.html.twig');
+            $this->container->debug->ft_print($value);
     }
 }

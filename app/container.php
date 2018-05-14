@@ -9,9 +9,13 @@ $container['view'] = function ($container) {
         'cache' => false, //'../tmp/cache',
         'debug' => true
     ]);
-    $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
+    $basePath = rtrim(str_ireplace(
+        'index.php',
+        '',
+        $container['request']->getUri()->getBasePath()),
+        '/'
+    );
     $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
-
     return $view;
 };
 
@@ -20,19 +24,18 @@ $container['view'] = function ($container) {
  */
 $container['db'] = function ($container) {
     $db = $container['settings']['db'];
-    $pdo = new PDO('mysql:dbname=' . $db['dbname'] . ';host=' . $db['host'], $db['user'], $db['pass']);
-    $pdo->setAttribute(PdO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(PdO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $pdo = new PDO('mysql:host=' . $db['host'] . ';dbname=' . $db['dbname'], $db['user'], $db['pass']);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
 };
 
 $container['dbCreate'] = function ($container) {
     $db = $container['settings']['db'];
     $pdo = new PDO('mysql:host=' . $db['host'], $db['user'], $db['pass']);
-    $pdo->setAttribute(PdO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(PdO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    $pdo->exec('DROP DATABASE IF EXISTS ' . $db['dbname'] . '');
-    $pdo->exec('CREATE DATABASE ' . $db['dbname']);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    return $pdo;
 };
 
 $container['user'] = function ($container) { 
@@ -58,4 +61,8 @@ $container['faker'] = function ($container) {
 $container['fake'] = function () {
     $faker = Faker\Factory::create();
     return $faker;
+};
+
+$container['setup'] = function ($container) {
+    return new \App\Model\SetupModel($container);
 };

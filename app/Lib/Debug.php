@@ -16,5 +16,6 @@ class Debug
         {
             echo $key . ' => ' . $value . '<br>';
         }
+        echo ' ------------------------- <br>';
     }
 }
