@@ -12,6 +12,7 @@
 {% block content %}
     <form action='{{ path_for('profil') }}' method="post">
         <a href='{{ path_for('home') }}'>home?</a>
+        <a href='{{ path_for('password') }}'>modifier votre mot de passe</a>
             <div>
                 {{ text({'label': 'pseudo', 'value': profil.pseudo}) }}
             </div>

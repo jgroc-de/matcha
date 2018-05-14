@@ -1476,6 +1476,7 @@ cases	/home/gg/www/matcha/vendor/nikic/fast-route/test/Dispatcher/DispatcherTest
 cases	/home/gg/www/matcha/vendor/nikic/fast-route/test/Dispatcher/DispatcherTest.php	/^        $cases = [];$/;"	v	line:500	method:FastRoute\Dispatcher\DispatcherTest::provideMethodNotAllowedDispatchCases
 changeIgnoreStrictCheck	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Node/Expression/Test/Defined.php	/^    private function changeIgnoreStrictCheck(Twig_Node_Expression_GetAttr $node)$/;"	m	line:46	class:Twig_Node_Expression_Test_Defined	access:private
 characterMask	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Extension/Core.php	/^        $characterMask = " \t\n\r\0\x0B";$/;"	v	line:865	function:twig_trim_filter
+characters	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    protected $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];$/;"	p	line:14	class:App\Controllers\RoutesController	access:protected
 charset	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Environment.php	/^            $charset = 'UTF-8';$/;"	v	line:598	method:Twig_Environment::setCharset
 charset	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Environment.php	/^        $this->charset = $charset;$/;"	v	line:601	method:Twig_Environment::setCharset
 charset	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Environment.php	/^    private $charset;$/;"	p	line:26	class:Twig_Environment	access:private
@@ -1486,23 +1487,24 @@ charset	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Markup.php	/^        $this
 charset	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Markup.php	/^    private $charset;$/;"	p	line:20	class:Twig_Markup	access:private
 checkConstantExpression	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/ExpressionParser.php	/^    private function checkConstantExpression(Twig_Node $node)$/;"	m	line:701	class:Twig_ExpressionParser	access:private
 checkForConfiguration	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/NodeVisitor/OptimizerTest.php	/^    public function checkForConfiguration(Twig_Node $node, $target, $withLoop)$/;"	m	line:90	class:Twig_Tests_NodeVisitor_OptimizerTest	access:public
-checkLogin	/home/gg/www/matcha/app/Controllers/FormController.php	/^    public function checkLogin ($request, $response)$/;"	m	line:16	class:App\Controllers\FormController	access:public
+checkLogin	/home/gg/www/matcha/app/Controllers/FormController.php	/^    public function checkLogin ($request)$/;"	m	line:15	class:App\Controllers\FormController	access:public
 checkLoopUsageBody	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/TokenParser/For.php	/^    private function checkLoopUsageBody(Twig_TokenStream $stream, Twig_Node $node)$/;"	m	line:96	class:Twig_TokenParser_For	access:private
 checkLoopUsageCondition	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/TokenParser/For.php	/^    private function checkLoopUsageCondition(Twig_TokenStream $stream, Twig_Node $node)$/;"	m	line:79	class:Twig_TokenParser_For	access:private
 checkMethodAllowed	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Extension/Sandbox.php	/^    public function checkMethodAllowed($obj, $method)$/;"	m	line:71	class:Twig_Extension_Sandbox	access:public
 checkMethodAllowed	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Sandbox/SecurityPolicy.php	/^    public function checkMethodAllowed($obj, $method)$/;"	m	line:83	class:Twig_Sandbox_SecurityPolicy	access:public
 checkMethodAllowed	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Sandbox/SecurityPolicyInterface.php	/^    public function checkMethodAllowed($obj, $method);$/;"	m	line:21	interface:Twig_Sandbox_SecurityPolicyInterface	access:public
-checkPassword	/home/gg/www/matcha/app/Controllers/FormController.php	/^    public function checkPassword ($real, $test)$/;"	m	line:78	class:App\Controllers\FormController	access:public
+checkPassword	/home/gg/www/matcha/app/Controllers/FormController.php	/^    public function checkPassword ($real, $test)$/;"	m	line:85	class:App\Controllers\FormController	access:public
 checkPath	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Loader/Filesystem.php	/^        $checkPath = $this->isAbsolutePath($path) ? $path : $this->rootPath.$path;$/;"	v	line:120	method:Twig_Loader_Filesystem::prependPath
 checkPath	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Loader/Filesystem.php	/^        $checkPath = $this->isAbsolutePath($path) ? $path : $this->rootPath.$path;$/;"	v	line:99	method:Twig_Loader_Filesystem::addPath
+checkProfil	/home/gg/www/matcha/app/Controllers/FormController.php	/^    public function checkProfil ($request)$/;"	m	line:66	class:App\Controllers\FormController	access:public
 checkPropertyAllowed	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Extension/Sandbox.php	/^    public function checkPropertyAllowed($obj, $method)$/;"	m	line:78	class:Twig_Extension_Sandbox	access:public
 checkPropertyAllowed	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Sandbox/SecurityPolicy.php	/^    public function checkPropertyAllowed($obj, $property)$/;"	m	line:105	class:Twig_Sandbox_SecurityPolicy	access:public
 checkPropertyAllowed	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Sandbox/SecurityPolicyInterface.php	/^    public function checkPropertyAllowed($obj, $method);$/;"	m	line:23	interface:Twig_Sandbox_SecurityPolicyInterface	access:public
-checkPseudo	/home/gg/www/matcha/app/Controllers/FormController.php	/^    public function checkPseudo ($pseudo)$/;"	m	line:68	class:App\Controllers\FormController	access:public
+checkPseudo	/home/gg/www/matcha/app/Controllers/FormController.php	/^    public function checkPseudo ($pseudo)$/;"	m	line:75	class:App\Controllers\FormController	access:public
 checkSecurity	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Extension/Sandbox.php	/^    public function checkSecurity($tags, $filters, $functions)$/;"	m	line:64	class:Twig_Extension_Sandbox	access:public
 checkSecurity	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Sandbox/SecurityPolicy.php	/^    public function checkSecurity($tags, $filters, $functions)$/;"	m	line:62	class:Twig_Sandbox_SecurityPolicy	access:public
 checkSecurity	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Sandbox/SecurityPolicyInterface.php	/^    public function checkSecurity($tags, $filters, $functions);$/;"	m	line:19	interface:Twig_Sandbox_SecurityPolicyInterface	access:public
-checkSignup	/home/gg/www/matcha/app/Controllers/FormController.php	/^    public function checkSignup ($request, $response)$/;"	m	line:45	class:App\Controllers\FormController	access:public
+checkSignup	/home/gg/www/matcha/app/Controllers/FormController.php	/^    public function checkSignup ($request)$/;"	m	line:43	class:App\Controllers\FormController	access:public
 chunkSize	/home/gg/www/matcha/vendor/slim/slim/Slim/App.php	/^            $chunkSize      = $settings['responseChunkSize'];$/;"	v	line:451	method:Slim\App::respond
 class	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/ExpressionParser.php	/^            $class = $operator['class'];$/;"	v	line:81	method:Twig_ExpressionParser::getPrimary
 class	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/ExpressionParser.php	/^        $class = $this->getTestNodeClass($test);$/;"	v	line:592	method:Twig_ExpressionParser::parseTestExpression
@@ -2109,7 +2111,7 @@ false	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Node/Expression/Filter/Defau
 fetch	/home/gg/www/matcha/vendor/slim/twig-view/src/Twig.php	/^    public function fetch($template, $data = [])$/;"	m	line:84	class:Slim\Views\Twig	access:public
 fetchBlock	/home/gg/www/matcha/vendor/slim/twig-view/src/Twig.php	/^    public function fetchBlock($template, $block, $data = [])$/;"	m	line:100	class:Slim\Views\Twig	access:public
 fetchFromString	/home/gg/www/matcha/vendor/slim/twig-view/src/Twig.php	/^    public function fetchFromString($string ="", $data = [])$/;"	m	line:115	class:Slim\Views\Twig	access:public
-file	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^        $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');$/;"	v	line:72	method:App\Controllers\RoutesController::setup
+file	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^        $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');$/;"	v	line:126	method:App\Controllers\RoutesController::setup
 file	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^            $file = $this->findFileWithExtension($class, '.hh');$/;"	v	line:355	method:Composer\Autoload\ClassLoader::findFile
 file	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^            $file = apcu_fetch($this->apcuPrefix.$class, $hit);$/;"	v	line:345	method:Composer\Autoload\ClassLoader::findFile
 file	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^        $file = $this->findFileWithExtension($class, '.php');$/;"	v	line:351	method:Composer\Autoload\ClassLoader::findFile
@@ -2701,7 +2703,7 @@ getUri	/home/gg/www/matcha/vendor/psr/http-message/src/RequestInterface.php	/^  
 getUri	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^    public function getUri()$/;"	m	line:553	class:Slim\Http\Request	access:public
 getUseIncludePath	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^    public function getUseIncludePath()$/;"	m	line:249	class:Composer\Autoload\ClassLoader	access:public
 getUser	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function getUser($pseudo)$/;"	m	line:14	class:App\Model\UserModel	access:public
-getUserById	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function getUserById($id)$/;"	m	line:37	class:App\Model\UserModel	access:public
+getUserById	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function getUserById($id)$/;"	m	line:40	class:App\Model\UserModel	access:public
 getUserInfo	/home/gg/www/matcha/vendor/psr/http-message/src/UriInterface.php	/^    public function getUserInfo();$/;"	m	line:77	interface:UriInterface	access:public
 getUserInfo	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^    public function getUserInfo()$/;"	m	line:359	class:Slim\Http\Uri	access:public
 getValue	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Token.php	/^    public function getValue()$/;"	m	line:101	class:Twig_Token	access:public
@@ -2799,7 +2801,7 @@ headers	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^        $th
 headers	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^        $this->headers = clone $this->headers;$/;"	v	line:259	method:Slim\Http\Request::__clone
 headers	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Response.php	/^        $this->headers = $headers ? $headers : new Headers();$/;"	v	line:137	method:Slim\Http\Response::__construct
 headers	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Response.php	/^        $this->headers = clone $this->headers;$/;"	v	line:149	method:Slim\Http\Response::__clone
-home	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function home ($request, $response)$/;"	m	line:16	class:App\Controllers\RoutesController	access:public
+home	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function home ($request, $response)$/;"	m	line:26	class:App\Controllers\RoutesController	access:public
 homeUrl	/home/gg/www/matcha/vendor/slim/slim/Slim/Handlers/NotFound.php	/^        $homeUrl = (string)($request->getUri()->withPath('')->withQuery('')->withFragment(''));$/;"	v	line:106	method:Slim\Handlers\NotFound::renderHtmlNotFoundOutput
 host	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^            $host = $env->get('HTTP_HOST');$/;"	v	line:178	method:Slim\Http\Uri::createFromEnvironment
 host	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^            $host = $matches[1];$/;"	v	line:186	method:Slim\Http\Uri::createFromEnvironment
@@ -3172,8 +3174,8 @@ locator	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Tests/Psr11/ServiceL
 logError	/home/gg/www/matcha/vendor/slim/slim/Slim/Handlers/AbstractError.php	/^    protected function logError($message)$/;"	m	line:95	class:Slim\Handlers\AbstractError	access:protected
 logicalPathPsr0	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^            $logicalPathPsr0 = substr($logicalPathPsr4, 0, $pos + 1)$/;"	v	line:402	method:Composer\Autoload\ClassLoader::findFileWithExtension
 logicalPathPsr4	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^        $logicalPathPsr4 = strtr($class, '\\', DIRECTORY_SEPARATOR) . $ext;$/;"	v	line:373	method:Composer\Autoload\ClassLoader::findFileWithExtension
-login	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function login ($request, $response)$/;"	m	line:49	class:App\Controllers\RoutesController	access:public
-logout	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function logout ($request, $response)$/;"	m	line:57	class:App\Controllers\RoutesController	access:public
+login	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function login ($request, $response)$/;"	m	line:65	class:App\Controllers\RoutesController	access:public
+logout	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function logout ($request, $response)$/;"	m	line:78	class:App\Controllers\RoutesController	access:public
 look	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/TokenStream.php	/^    public function look($number = 1)$/;"	m	line:100	class:Twig_TokenStream	access:public
 lookupRoute	/home/gg/www/matcha/vendor/slim/slim/Slim/Interfaces/RouterInterface.php	/^    public function lookupRoute($identifier);$/;"	m	line:82	interface:RouterInterface	access:public
 lookupRoute	/home/gg/www/matcha/vendor/slim/slim/Slim/Router.php	/^    public function lookupRoute($identifier)$/;"	m	line:341	class:Slim\Router	access:public
@@ -4001,8 +4003,9 @@ position	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/IntegrationTest.ph
 position	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/IntegrationTest.php	/^    public $position = 0;$/;"	p	line:48	class:TwigTestFoo	access:public
 positions	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Lexer.php	/^        $this->positions = $matches;$/;"	v	line:90	method:Twig_Lexer::tokenize
 positions	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Lexer.php	/^    private $positions;$/;"	p	line:33	class:Twig_Lexer	access:private
-post	/home/gg/www/matcha/app/Controllers/FormController.php	/^        $post = $request->getParams();$/;"	v	line:18	method:App\Controllers\FormController::checkLogin
-post	/home/gg/www/matcha/app/Controllers/FormController.php	/^        $post = $request->getParams();$/;"	v	line:47	method:App\Controllers\FormController::checkSignup
+post	/home/gg/www/matcha/app/Controllers/FormController.php	/^        $post = $request->getParams();$/;"	v	line:17	method:App\Controllers\FormController::checkLogin
+post	/home/gg/www/matcha/app/Controllers/FormController.php	/^        $post = $request->getParams();$/;"	v	line:45	method:App\Controllers\FormController::checkSignup
+post	/home/gg/www/matcha/app/Model/UserModel.php	/^        $post = array();$/;"	v	line:52	method:App\Model\UserModel::updateUser
 post	/home/gg/www/matcha/vendor/nikic/fast-route/src/RouteCollector.php	/^    public function post($route, $handler)$/;"	m	line:86	class:FastRoute\RouteCollector	access:public
 post	/home/gg/www/matcha/vendor/slim/slim/Slim/App.php	/^    public function post($pattern, $callable)$/;"	m	line:154	class:Slim\App	access:public
 postParams	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^        $postParams = $this->getParsedBody();$/;"	v	line:1143	method:Slim\Http\Request::getParam
@@ -4028,6 +4031,8 @@ processChunk	/home/gg/www/matcha/vendor/nikic/fast-route/src/DataGenerator/MarkB
 processChunk	/home/gg/www/matcha/vendor/nikic/fast-route/src/DataGenerator/RegexBasedAbstract.php	/^    abstract protected function processChunk($regexToRoutesMap);$/;"	m	line:25	class:FastRoute\DataGenerator\RegexBasedAbstract	access:protected
 processGroups	/home/gg/www/matcha/vendor/slim/slim/Slim/Router.php	/^    protected function processGroups()$/;"	m	line:302	class:Slim\Router	access:protected
 processInvalidMethod	/home/gg/www/matcha/vendor/slim/slim/Slim/App.php	/^    protected function processInvalidMethod(ServerRequestInterface $request, ResponseInterface $response)$/;"	m	line:355	class:Slim\App	access:protected
+profil	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^            $profil = $request->getParams();$/;"	v	line:96	method:App\Controllers\RoutesController::profil
+profil	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function profil ($request, $response)$/;"	m	line:92	class:App\Controllers\RoutesController	access:public
 profile	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Profiler/Dumper/AbstractTest.php	/^        $profile = $this->getMockBuilder('Twig_Profiler_Profile')->disableOriginalConstructor()->getMock();$/;"	v	line:16	method:Twig_Tests_Profiler_Dumper_AbstractTest::getProfile
 profile	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Profiler/Dumper/AbstractTest.php	/^        $profile = $this->getMockBuilder('Twig_Profiler_Profile')->disableOriginalConstructor()->getMock();$/;"	v	line:86	method:Twig_Tests_Profiler_Dumper_AbstractTest::generateProfile
 profile	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Profiler/ProfileTest.php	/^        $profile = new Twig_Profiler_Profile('template', 'type', 'name');$/;"	v	line:16	method:Twig_Tests_Profiler_ProfileTest::testConstructor
@@ -4193,9 +4198,10 @@ replace	/home/gg/www/matcha/vendor/slim/slim/Slim/Interfaces/CollectionInterface
 repr	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Compiler.php	/^    public function repr($value)$/;"	m	line:138	class:Twig_Compiler	access:public
 repr	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Node.php	/^        $repr = array(get_class($this).'('.implode(', ', $attributes));$/;"	v	line:58	method:Twig_Node::__toString
 repr	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/TokenStreamTest.php	/^        $repr = array();$/;"	v	line:33	method:Twig_Tests_TokenStreamTest::testNext
-req	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^        $req = $this->db->exec($file);$/;"	v	line:73	method:App\Controllers\RoutesController::setup
-req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('$/;"	v	line:23	method:App\Model\UserModel::setUser
-req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('select * from user where id = ?');$/;"	v	line:39	method:App\Model\UserModel::getUserById
+req	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^        $req = $this->db->exec($file);$/;"	v	line:127	method:App\Controllers\RoutesController::setup
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('$/;"	v	line:26	method:App\Model\UserModel::setUser
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('$/;"	v	line:58	method:App\Model\UserModel::updateUser
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('select * from user where id = ?');$/;"	v	line:42	method:App\Model\UserModel::getUserById
 req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('select * from user where pseudo = ?');$/;"	v	line:16	method:App\Model\UserModel::getUser
 request	/home/gg/www/matcha/vendor/slim/slim/Slim/App.php	/^            $request = $request->withAttribute('route', $route);$/;"	v	line:595	method:Slim\App::dispatchRouterAndPrepareRoute
 request	/home/gg/www/matcha/vendor/slim/slim/Slim/App.php	/^            $request = $this->dispatchRouterAndPrepareRoute($request, $router);$/;"	v	line:401	method:Slim\App::process
@@ -4512,13 +4518,14 @@ setUp	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Extension/SandboxTest
 setUp	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/TokenStreamTest.php	/^    protected function setUp()$/;"	m	line:16	class:Twig_Tests_TokenStreamTest	access:protected
 setUp	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/escapingTest.php	/^    protected function setUp()$/;"	m	line:147	class:Twig_Test_EscapingTest	access:protected
 setUseIncludePath	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^    public function setUseIncludePath($useIncludePath)$/;"	m	line:238	class:Composer\Autoload\ClassLoader	access:public
-setUser	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function setUser(array $post)$/;"	m	line:21	class:App\Model\UserModel	access:public
+setUser	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function setUser(array $post)$/;"	m	line:24	class:App\Model\UserModel	access:public
 settingAnInvokableObjectShouldTreatItAsFactory	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Tests/PimpleTest.php	/^    public function settingAnInvokableObjectShouldTreatItAsFactory()$/;"	m	line:306	class:Pimple\Tests\PimpleTest	access:public
 settingNonInvokableObjectShouldTreatItAsParameter	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Tests/PimpleTest.php	/^    public function settingNonInvokableObjectShouldTreatItAsParameter()$/;"	m	line:315	class:Pimple\Tests\PimpleTest	access:public
 settings	/home/gg/www/matcha/vendor/slim/slim/Slim/App.php	/^            $settings       = $this->container->get('settings');$/;"	v	line:450	method:Slim\App::respond
-setup	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function setup ($request, $response)$/;"	m	line:70	class:App\Controllers\RoutesController	access:public
+setup	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function setup ($request, $response)$/;"	m	line:124	class:App\Controllers\RoutesController	access:public
+sexualPattern	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    protected $sexualPattern = ['bi', 'homo', 'hetero'];$/;"	p	line:19	class:App\Controllers\RoutesController	access:protected
 shortname	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Loader/Filesystem.php	/^            $shortname = substr($name, $pos + 1);$/;"	v	line:242	method:Twig_Loader_Filesystem::parseName
-signup	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function signup ($request, $response)$/;"	m	line:29	class:App\Controllers\RoutesController	access:public
+signup	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function signup ($request, $response)$/;"	m	line:39	class:App\Controllers\RoutesController	access:public
 simpleDispatcher	/home/gg/www/matcha/vendor/nikic/fast-route/src/functions.php	/^    function simpleDispatcher(callable $routeDefinitionCallback, array $options = [])$/;"	f	line:12	namespace:FastRoute
 size	/home/gg/www/matcha/vendor/slim/slim/Slim/App.php	/^            $size = $response->getBody()->getSize();$/;"	v	line:625	method:Slim\App::finalize
 size	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Stream.php	/^            $this->size = isset($stats['size']) && !$this->isPipe() ? $stats['size'] : null;$/;"	v	line:233	method:Slim\Http\Stream::getSize
@@ -5315,6 +5322,7 @@ unregister	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^    public func
 unserialize	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Profiler/Profile.php	/^    public function unserialize($data)$/;"	m	line:168	class:Twig_Profiler_Profile	access:public
 updateOptionsHash	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Environment.php	/^    private function updateOptionsHash()$/;"	m	line:956	class:Twig_Environment	access:private
 updateRepr	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Error.php	/^    private function updateRepr()$/;"	m	line:156	class:Twig_Error	access:private
+updateUser	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function updateUser()$/;"	m	line:50	class:App\Model\UserModel	access:public
 uploadedFiles	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^        $clone->uploadedFiles = $uploadedFiles;$/;"	v	line:854	method:Slim\Http\Request::withUploadedFiles
 uploadedFiles	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^        $this->uploadedFiles = $uploadedFiles;$/;"	v	line:194	method:Slim\Http\Request::__construct
 uploadedFiles	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^        $uploadedFiles = UploadedFile::createFromEnvironment($environment);$/;"	v	line:146	method:Slim\Http\Request::createFromEnvironment

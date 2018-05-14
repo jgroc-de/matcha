@@ -12,12 +12,24 @@ class FormController extends ContainerClass
      * @param $request requestInterface
      * @return string error if any
      */
-    public function checkLogin ($request)
+    public function check ($request)
     {
         $post = $request->getParams();
-        if ($this->validator->validate($post, 'pseudo', 'password'))
+        if ($this->validator->validate($post, array_keys($post)))
+            return $post;
+        var_dump('burp!');
+        return null;
+    }
+
+    /**
+     * @param $request requestInterface
+     * @return string error if any
+     */
+    public function checkLogin ($request)
+    {
+        if (($post = $this->check($request)))
         {
-            if (!empty($account = $this->checkPseudo($post['pseudo'])))
+            if (!empty($account = $this->user->getUser($post['pseudo'])))
             {
                 if ($account['activ'] == false)
                     return "coumpte inactif";
@@ -32,8 +44,6 @@ class FormController extends ContainerClass
             else
                 return "mauvais login";
         }
-        else
-            return "burp!";
     }
 
     /**
@@ -42,21 +52,19 @@ class FormController extends ContainerClass
      */
     public function checkSignup ($request)
     {
-        $post = $request->getParams();
-        if ($this->validator->validate($post, 'pseudo', 'password', 'email', 'gender'))
+        if (($post = $this->check($request)))
         {
-            if (empty($this->checkPseudo($post['pseudo'])))
+            if (empty($this->user->getuser($post['pseudo'])))
             {
                 $this->user->setUser($post);
                 var_dump('done');
                 //$account = $this->getUser($post['pseudo']);
                 //$this->sendMail($account);
+                var_dump('mail sent');
             }
             else
                 var_dump("pseudo deja pris");
         }
-        else
-            var_dump("burp");
     }
 
     /**
@@ -65,16 +73,18 @@ class FormController extends ContainerClass
      */
     public function checkProfil ($request)
     {
-        return true;
-    }
-
-    /**
-     * @param $pseudo string;
-     * @return array
-     */
-    public function checkPseudo ($pseudo)
-    {
-        return $this->user->getUser($pseudo);
+        if (($post = $this->check($request)))
+        {
+            if (empty($this->user->getUser($post['pseudo'])) || $post['pseudo'] === $_SESSION['pseudo'])
+            {
+                $this->user->updateUser($post);
+                $_SESSION['pseudo'] = $post['pseudo']; 
+                var_dump('done');
+                return $post;
+            }
+            else
+                var_dump("pseudo deja pris");
+        }
     }
 
     /**

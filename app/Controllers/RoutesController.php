@@ -9,16 +9,6 @@ namespace App\Controllers;
 class RoutesController extends ContainerClass
 {
     /**
-     * @var array
-     */
-    protected $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
-
-    /**
-     * @var array
-     */
-    protected $sexualPattern = ['bi', 'homo', 'hetero'];
-
-    /**
      * @param $request requestInterface
      * @param $response responseInterface
      * @return twig view
@@ -93,10 +83,9 @@ class RoutesController extends ContainerClass
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-            $profil = $request->getParams();
-            if ($this->form->checkProfil($profil))
+            if ($this->form->checkProfil($request))
             {
-                $this->user->updateUser($_POST);
+                $this->user->updateUser();
             }
         }
         else
@@ -115,6 +104,27 @@ class RoutesController extends ContainerClass
     }
 
     /**
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return twig view
+     */
+    public function password ($request, $response)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $this->debug->ft_print($_POST);
+            if ($_POST['password'] === $_POST['password1'] && $this->form->check($request))
+            {
+                $this->user->updatePassUser();
+            }
+        }
+        else
+        {
+            return $this->view->render($response, 'templates/password.html.twig');
+        }
+    }
+
+    /**
      * create database and tables
      *
      * @param $request requestInterface
@@ -123,8 +133,13 @@ class RoutesController extends ContainerClass
      */
     public function setup ($request, $response)
     {
+        $this->dbCreate;
         $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
         $req = $this->db->exec($file);
+        $this->faker->fakeFactory(25);
+        $array = $this->user->getUsers();
+        foreach ($array as $value)
+            $this->debug->ft_print($value);
         return $this->view->render($response, 'templates/login.html.twig');
     }
 }
