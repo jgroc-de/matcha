@@ -8,6 +8,7 @@
 {% block content %}
     <form action='{{ path_for('login') }}' method="post">
         <a href='{{ path_for('signup') }}'>signup?</a>
+        <a href='{{ path_for('reinitpassword') }}'>réinitialiser votre mot de passe</a>
             <div>
                 {{ text({'label': 'pseudo'}) }}
             </div>

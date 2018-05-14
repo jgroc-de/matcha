@@ -31,8 +31,8 @@ class FormController extends ContainerClass
         {
             if (!empty($account = $this->user->getUser($post['pseudo'])))
             {
-                if ($account['activ'] == false)
-                    return "coumpte inactif";
+                if ($account['activ'] === false)
+                    return "compte inactif";
                 elseif ($this->checkpassword($account['password'], $post['password']))
                 {
                     $_SESSION['pseudo'] = $account['pseudo'];
@@ -54,12 +54,14 @@ class FormController extends ContainerClass
     {
         if (($post = $this->check($request)))
         {
+            $post['activ'] = 0;
+            $post['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
+            print_r($post);
             if (empty($this->user->getuser($post['pseudo'])))
             {
                 $this->user->setUser($post);
-                var_dump('done');
-                //$account = $this->getUser($post['pseudo']);
-                //$this->sendMail($account);
+                $account = $this->user->getUser($post['pseudo']);
+                $this->mail->sendValidationMail($account['pseudo'], $account['email'], $account['token']);
                 var_dump('mail sent');
             }
             else

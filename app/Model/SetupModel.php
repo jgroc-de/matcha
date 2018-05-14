@@ -29,6 +29,8 @@ class SetupModel extends ContainerClass
             $profil['email'] = $this->fake->email();
             $profil['gender'] = $this->characters[$index];
             $profil['pseudo'] = $profil['gender'] . $this->fake->firstName;
+            $profil['activ'] = 1;
+            $profil['token'] = 'a';
             $this->user->setUser($profil);
         }
     }

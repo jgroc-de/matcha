@@ -34,13 +34,16 @@ class UserModel extends ContainerClass
     public function setUser(array $post)
     {
         $req = $this->db->prepare('
-                INSERT INTO user (pseudo, password, email, gender)
-                VALUES (?, ?, ?, ?)');
+                INSERT INTO user (pseudo, password, email, gender, activ, token)
+                VALUES (?, ?, ?, ?, ?, ?)');
         $req->execute(array(
                 $post['pseudo'],
                 $post['password'],
                 $post['email'],
-                $post['gender']));
+                $post['gender'],
+                $post['activ'],
+                $post['token']
+            ));
     }
 
     /**
@@ -78,5 +81,12 @@ class UserModel extends ContainerClass
             SET password = ?
             where id = ?');
         $req->execute($post);
+    }
+
+    public function activate()
+    {
+        $_SESSION['id'];
+        $req = $this->db->prepare('UPDATE user SET activ = 1 WHERE id = ?');
+        $req->execute(array($_SESSION['id']));
     }
 }

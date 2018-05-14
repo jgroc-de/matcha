@@ -20,11 +20,13 @@ class RoutesController extends ContainerClass
             return $this->view->render(
                 $response,
                 'templates/home.html.twig',
-                ['name' => $_SESSION['pseudo']]
+                [
+                    'name' => $_SESSION['pseudo']
+                ]
             );
         }
         else
-            return $this->view->render($response, 'templates/login.html.twig');
+            return $response->withRedirect('/login');
     }
     
     /**
@@ -37,19 +39,31 @@ class RoutesController extends ContainerClass
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $this->form->checkSignup($request, $response);
-            return $this->view->render(
-                $response,
-                'templates/login.html.twig'
-            );
+            return $response->withRedirect('/login');
         }
         else
         {
             return $this->view->render(
                 $response,
                 'templates/signup.html.twig',
-                ['characters' => $this->characters]
+                [
+                    'characters' => $this->characters
+                ]
             );
         }
+    }
+
+    public function validation ($request, $response)
+    {
+        $get = $request->getParams();
+        $account = $this->user->getUser($get['login']);
+        if (!empty($account) && $get['token'] = $account['token'])
+        {
+            $_SESSION['pseudo'] = $account['pseudo'];
+            $_SESSION['id'] = $account['id'];
+            $this->user->activate();
+        }
+        return $response->withRedirect('/');
     }
 
     /**
@@ -61,7 +75,7 @@ class RoutesController extends ContainerClass
     {
         $this->form->checkLogin($request, $response);
         if (isset($_SESSION['id']))
-            return $this->view->render($response, 'templates/home.html.twig');
+            return $response->withRedirect('/');
         return $this->view->render($response, 'templates/login.html.twig');
     }
     
@@ -73,10 +87,7 @@ class RoutesController extends ContainerClass
     public function logout ($request, $response)
     {
         session_destroy();
-        return $this->view->render(
-            $response,
-            'templates/login.html.twig'
-        );
+        return $response->withRedirect('/login');
     }
 
     /**
@@ -93,7 +104,6 @@ class RoutesController extends ContainerClass
         }
         else
         {
-            $this->debug->ft_print($this->user->getUser($_SESSION['pseudo']));
             return $this->view->render(
                 $response,
                 'templates/profil.html.twig',
@@ -115,7 +125,6 @@ class RoutesController extends ContainerClass
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-            $this->debug->ft_print($_POST);
             if ($_POST['password'] === $_POST['password1'] && $this->form->check($request))
                 $this->user->updatePassUser();
         }

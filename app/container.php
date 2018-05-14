@@ -66,3 +66,7 @@ $container['fake'] = function () {
 $container['setup'] = function ($container) {
     return new \App\Model\SetupModel($container);
 };
+
+$container['mail'] = function () {
+    return new \App\Controllers\MailController();
+};
