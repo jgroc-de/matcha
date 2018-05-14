@@ -57,6 +57,17 @@ class UserModel extends ContainerClass
         return $req->fetch();
     }
     
+    /**
+     * @param $email string email
+     * @return array
+     */
+    public function getUserByEmail($email)
+    {
+        $req = $this->db->prepare('select * from user where email = ?');
+        $req->execute(array($email));
+        return $req->fetch();
+    }
+    
     public function updateUser()
     {
         $post = array();
@@ -85,8 +96,13 @@ class UserModel extends ContainerClass
 
     public function activate()
     {
-        $_SESSION['id'];
         $req = $this->db->prepare('UPDATE user SET activ = 1 WHERE id = ?');
         $req->execute(array($_SESSION['id']));
+    }
+
+    public function updateToken($pseudo, $token)
+    {
+        $req = $this->db->prepare('UPDATE user SET token = ? WHERE pseudo = ?');
+        $req->execute(array($token, $pseudo));
     }
 }

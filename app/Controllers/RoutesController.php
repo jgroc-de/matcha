@@ -53,6 +53,13 @@ class RoutesController extends ContainerClass
         }
     }
 
+    /**
+     * validation of an ccount
+     *
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return redirection to home
+     */
     public function validation ($request, $response)
     {
         $get = $request->getParams();
@@ -61,9 +68,35 @@ class RoutesController extends ContainerClass
         {
             $_SESSION['pseudo'] = $account['pseudo'];
             $_SESSION['id'] = $account['id'];
+            if ($get['action'] === 'reinit')
+                return $response->withRedirect('/password');
             $this->user->activate();
         }
         return $response->withRedirect('/');
+    }
+
+    /**
+     * reinit password
+     *
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return redirection to home
+     */
+    public function reInitPassword ($request, $response)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']))
+        {
+            if (!empty(($account = $this->user->getUserByEmail($_POST['email']))))
+            {
+                $account['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
+                $this->user->updateToken($account['pseudo'], $account['token']);
+                $this->mail->sendReInitMail($account['pseudo'], $account['email'], $account['token']);
+                return $response->withRedirect('/');
+            }
+            var_dump('unknown mail');
+        }
+        else
+            return $this->view->render($response, 'templates/reInitPassword.html.twig');
     }
 
     /**
@@ -144,6 +177,12 @@ class RoutesController extends ContainerClass
         $this->container->setup->init();
     }
 
+    /**
+     * create 400 fake user in the database
+     *
+     * @param $request requestInterface
+     * @param $response responseInterface
+     */
     public function seed ($request, $response)
     {
         $this->container->setup->fakeFactory(400);

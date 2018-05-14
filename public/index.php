@@ -16,7 +16,7 @@ $app->any('/login', RoutesController::class . ':login')->setName('login');
 $app->get('/logout', RoutesController::class . ':logout')->setName('logout');
 $app->any('/signup', RoutesController::class . ':signup')->setName('signup');
 $app->get('/validation', RoutesController::class . ':validation')->setName('validation');
-$app->get('/reinitpassword', RoutesController::class . ':reinitpassword')->setName('reinitpassword');
+$app->any('/reInitPassword', RoutesController::class . ':reInitPassword')->setName('reInitPassword');
 
 $app->get('/', RoutesController::class . ':home')->setName('home');
 $app->any('/profil', RoutesController::class . ':profil')->setName('profil');

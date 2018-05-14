@@ -56,7 +56,6 @@ class FormController extends ContainerClass
         {
             $post['activ'] = 0;
             $post['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
-            print_r($post);
             if (empty($this->user->getuser($post['pseudo'])))
             {
                 $this->user->setUser($post);
