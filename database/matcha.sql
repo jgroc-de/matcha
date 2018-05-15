@@ -16,7 +16,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
-    `id` int(11) AUTO_INCREMENT,
+    `id` INT(11) AUTO_INCREMENT,
     `pseudo` VARCHAR(40),
     `password` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL DEFAULT 'jgroc2s@free.fr',
@@ -26,11 +26,52 @@ CREATE TABLE `user` (
     `name` VARCHAR(255) NOT NULL DEFAULT 'Doe',
     `biography` TEXT,
     `birthdate` YEAR NOT NULL DEFAULT '00',
-    `geolocalisation` tinyint NOT NULL DEFAULT 1,
+    `lattitude` FLOAT NOT NULL DEFAULT 48.853,
+    `longitude` FLOAT NOT NULL DEFAULT 2.349,
     `gender` ENUM('Rick','Morty','Summer','Beth','Jerry') NOT NULL DEFAULT 'Rick',
     `sexuality` ENUM('bi','hetero','homo') NOT NULL DEFAULT 'bi',
     `popularity` TINYINT NOT NULL DEFAULT 50,
     CONSTRAINT PK_user PRIMARY KEY (`id`, `pseudo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `like`
+--
+
+CREATE TABLE `like` (
+    `id_user1` INT(11) NOT NULL,
+    `id_user2` INT(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `message`
+--
+
+CREATE TABLE `message` (
+    `id_user1` INT(11) NOT NULL,
+    `id_user2` INT(11) NOT NULL,
+    `owner` TINYINT NOT NULL,
+    `message` TEXT NOT NULL,
+    `date` DATETIME NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `hashtags`
+--
+
+CREATE TABLE `hashtags` (
+    `id` INT(11) PRiMARY KEY AUTO_INCREMENT,
+    `tag` VARCHAR(255) NOT NULL UNIQUE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `usertags`
+--
+
+CREATE TABLE `usertags` (
+    `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
+    `idtag` INT(11) NOT NULL,
+    `iduser` INT(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 COMMIT;

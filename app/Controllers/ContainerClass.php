@@ -5,6 +5,16 @@ namespace App\Controllers;
 class ContainerClass
 {
     /**
+     * @var array
+     */
+    protected $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
+
+    /**
+     * @var array
+     */
+    protected $sexualPattern = ['bi', 'homo', 'hetero'];
+
+    /**
      * @var array : for $container
      */
     protected $container;

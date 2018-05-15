@@ -1,0 +1,12 @@
+{# hash keys are: label, name, min, max #}
+{% macro number(hash) %}
+{% set def = 'number' %}
+{% from 'macro/form/label.html.twig' import label %}
+{{ label(hash.label|default(def)) }}
+<input name="{{ hash.name|default(def) }}"
+       type="number"
+       value="{{ hash.value }}"
+       min="{{ hash.min }}"
+       max="{{ hash.max }}">
+</textarea>
+{% endmacro number %}

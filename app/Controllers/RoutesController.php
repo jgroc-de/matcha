@@ -16,9 +16,17 @@ class RoutesController extends ContainerClass
     public function home ($request, $response)
     {
         if (isset($_SESSION['id']))
-            return $this->view->render($response, 'templates/home.html.twig');
+        {
+            return $this->view->render(
+                $response,
+                'templates/home.html.twig',
+                [
+                    'name' => $_SESSION['pseudo']
+                ]
+            );
+        }
         else
-            return $this->view->render($response, $dir = 'templates/login.html.twig');
+            return $response->withRedirect('/login');
     }
     
     /**
@@ -28,17 +36,67 @@ class RoutesController extends ContainerClass
      */
     public function signup ($request, $response)
     {
-        //$this->debug->ft_print($_SERVER);
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $this->form->checkSignup($request, $response);
+            return $response->withRedirect('/login');
         }
         else
         {
-            //a récup depuis la db
-            $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
-            return $this->view->render($response, 'templates/signup.html.twig', ['characters' => $characters]);
+            return $this->view->render(
+                $response,
+                'templates/signup.html.twig',
+                [
+                    'characters' => $this->characters
+                ]
+            );
         }
+    }
+
+    /**
+     * validation of an ccount
+     *
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return redirection to home
+     */
+    public function validation ($request, $response)
+    {
+        $get = $request->getParams();
+        $account = $this->user->getUser($get['login']);
+        if (!empty($account) && $get['token'] = $account['token'])
+        {
+            $_SESSION['pseudo'] = $account['pseudo'];
+            $_SESSION['id'] = $account['id'];
+            if ($get['action'] === 'reinit')
+                return $response->withRedirect('/password');
+            $this->user->activate();
+        }
+        return $response->withRedirect('/');
+    }
+
+    /**
+     * reinit password
+     *
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return redirection to home
+     */
+    public function reInitPassword ($request, $response)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']))
+        {
+            if (!empty(($account = $this->user->getUserByEmail($_POST['email']))))
+            {
+                $account['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
+                $this->user->updateToken($account['pseudo'], $account['token']);
+                $this->mail->sendReInitMail($account['pseudo'], $account['email'], $account['token']);
+                return $response->withRedirect('/');
+            }
+            var_dump('unknown mail');
+        }
+        else
+            return $this->view->render($response, 'templates/reInitPassword.html.twig');
     }
 
     /**
@@ -50,14 +108,61 @@ class RoutesController extends ContainerClass
     {
         $this->form->checkLogin($request, $response);
         if (isset($_SESSION['id']))
-            return $this->view->render($response, 'templates/home.html.twig');
+            return $response->withRedirect('/');
         return $this->view->render($response, 'templates/login.html.twig');
     }
-
+    
+    /**
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return twig view
+     */
     public function logout ($request, $response)
     {
         session_destroy();
-        return $this->view->render($response, $dir = 'templates/login.html.twig');
+        return $response->withRedirect('/login');
+    }
+
+    /**
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return twig view
+     */
+    public function profil ($request, $response)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            if ($this->form->checkProfil($request))
+                $this->user->updateUser();
+        }
+        else
+        {
+            return $this->view->render(
+                $response,
+                'templates/profil.html.twig',
+                [
+                    'profil' => $this->user->getUser($_SESSION['pseudo']),
+                    'characters' => $this->characters,
+                    'sexualPattern' => $this->sexualPattern,
+                ]
+            );
+        }
+    }
+
+    /**
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return twig view
+     */
+    public function password ($request, $response)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            if ($_POST['password'] === $_POST['password1'] && $this->form->check($request))
+                $this->user->updatePassUser();
+        }
+        else
+            return $this->view->render($response, 'templates/password.html.twig');
     }
 
     /**
@@ -69,8 +174,20 @@ class RoutesController extends ContainerClass
      */
     public function setup ($request, $response)
     {
-        $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
-        $req = $this->db->exec($file);
-        return $this->view->render($response, $dir = 'templates/login.html.twig');
+        $this->container->setup->init();
+    }
+
+    /**
+     * create 400 fake user in the database
+     *
+     * @param $request requestInterface
+     * @param $response responseInterface
+     */
+    public function seed ($request, $response)
+    {
+        $this->container->setup->fakeFactory(400);
+        $array = $this->container->user->getUsers();
+        foreach ($array as $value)
+            $this->container->debug->ft_print($value);
     }
 }

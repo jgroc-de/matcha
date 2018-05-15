@@ -1,0 +1,10 @@
+{# hash keys are: label, name, value #}
+{% macro email(hash) %}
+{% set def = 'email' %}
+{% from 'macro/form/label.html.twig' import label %}
+{{ label(hash.label|default(def)) }}
+<input type='email'
+       name='{{ hash.name|default(def) }}'
+       value='{{ hash.value }}'
+       required/>
+{% endmacro email %}

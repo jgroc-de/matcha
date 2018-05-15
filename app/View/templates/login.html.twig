@@ -1,5 +1,6 @@
-{% extends "layout.html.twig" %}
-{% import 'macro/form.html.twig' as forms %}
+{% extends 'layout.html.twig' %}
+{% from 'macro/form/text.html.twig' import text %}
+{% from 'macro/form/password.html.twig' import password %}
 
 {% block title %}
 {% endblock %}
@@ -7,11 +8,12 @@
 {% block content %}
     <form action='{{ path_for('login') }}' method="post">
         <a href='{{ path_for('signup') }}'>signup?</a>
+        <a href='{{ path_for('reInitPassword') }}'>réinitialiser votre mot de passe</a>
             <div>
-                {{ forms.input() }}
+                {{ text({'label': 'pseudo'}) }}
             </div>
             <div>
-                {{ forms.password() }}
+                {{ password() }}
             </div>
             <input type='submit' name='submit'>
     </form>

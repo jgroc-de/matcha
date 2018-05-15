@@ -1,0 +1,10 @@
+{# hash keys are: label, name, value, placeholder #}
+{% macro textarea(hash) %}
+{% set def = 'textarea' %}
+{% from 'macro/form/label.html.twig' import label %}
+{{ label(hash.label|default(def)) }}
+<textarea
+    name="{{ hash.name|default(hash.label|default(def)) }}"
+    placeholder="{{ hash.placeholder|default('raconte ta life') }}">{{ hash.value }}
+</textarea>
+{% endmacro textarea %}
