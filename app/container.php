@@ -30,6 +30,9 @@ $container['db'] = function ($container) {
     return $pdo;
 };
 
+/**
+ * database controller called only to create th database
+ */
 $container['dbCreate'] = function ($container) {
     $db = $container['settings']['db'];
     $pdo = new PDO('mysql:host=' . $db['host'], $db['user'], $db['pass']);
@@ -38,10 +41,16 @@ $container['dbCreate'] = function ($container) {
     return $pdo;
 };
 
+/**
+ * @class UserModel
+ */
 $container['user'] = function ($container) { 
     return new \App\Model\UserModel($container);
 };
 
+/**
+ * etc…
+ */
 $container['form'] = function ($container) { 
     return new \App\Controllers\FormController($container);
 };
@@ -58,6 +67,9 @@ $container['faker'] = function ($container) {
     return new \App\Model\FakerModel($container);
 };
 
+/**
+ * faker app
+ */
 $container['fake'] = function () {
     $faker = Faker\Factory::create();
     return $faker;
