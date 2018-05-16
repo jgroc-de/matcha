@@ -15,7 +15,7 @@ class SetupModel extends ContainerClass
         $this->dbCreate->exec('CREATE DATABASE ' . $db['dbname']);
         $this->dbCreate->exec('USE ' . $db['dbname']);
         $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
-        $this->dbCreate->exec($file);
+        $this->db->exec($file);
         $this->setup->fakeFactory();
     } 
 

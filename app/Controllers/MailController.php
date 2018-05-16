@@ -5,10 +5,24 @@ namespace App\Controllers;
 class MailController
 {
     /**
+     * @param $dest string mail
+     * @param $subject string mail
+     * @param $message string mail
+     * @param $header string mail
+     * @return string for success or failure
+     */
+    public function sendMail($dest, $subject, $message, $header)
+    {
+        if (mail($dest, $subject, $message, $header))
+            return 'Registration Success! A validation mail has been sent';
+        else
+            return 'Registration Success! but mail not sent…';
+    }
+
+    /**
      * @param $login string
      * @param $dest string mail
      * @param $token string hash key
-     * @return string for success or failure
      */
     public function sendValidationMail($login, $dest, $token)
     {
@@ -24,12 +38,14 @@ class MailController
 
             ---------------
             Ceci est un mail automatique, Merci de ne pas y répondre.';
-        if (mail($dest, $subject, $message, $header))
-            return 'Registration Success! A validation mail has been sent';
-        else
-            return 'Registration Success! but mail not sent…';
+        sendMail($dest, $subject, $message, $header);
     }
 
+    /**
+     * @param $login string
+     * @param $dest string mail
+     * @param $token string hash key
+     */
     public function sendReInitMail($login, $dest, $token)
     {
         $subject = 'Matcha Reinitialisation link';
@@ -44,9 +60,6 @@ class MailController
 
             ---------------
             Ceci est un mail automatique, Merci de ne pas y répondre.';
-        if (mail($dest, $subject, $message, $header))
-            return 'Success! A validation mail has been sent!';
-        else
-            return 'Failure… Mail not sent…';
+        sendMail($dest, $subject, $message, $header);
     }
 }
