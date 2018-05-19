@@ -3,7 +3,6 @@
 {% from 'macro/form/password.html.twig' import password %}
 {% from 'macro/form/email.html.twig' import email %}
 {% from 'macro/form/select.html.twig' import select %}
-{% from 'macro/form/class.html.twig' import classCard, classh2, classForm %}
 
 {% block h2 %}Sign up{% endblock %}
 
@@ -23,7 +22,7 @@
         {{ email() }}
     </div>
     <div>
-        {{ select({'name': 'you are a:', 'array': characters}) }}
+        {{ select({'label': 'you are a', 'name': 'gender', 'array': characters}) }}
     </div>
     <div>
         <input type="submit" value="submit">
