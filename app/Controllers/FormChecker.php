@@ -6,7 +6,7 @@ namespace App\Controllers;
  * class FormController
  * manage forms data
  */
-class FormController extends ContainerClass
+class FormChecker extends \App\Constructor
 {
     /**
      * @param $request requestInterface

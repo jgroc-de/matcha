@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-echo __DIR__;
-require __DIR__ . '/../vendor/autoload.php';
+require '../vendor/autoload.php';
 require '../config/config.php';
 use \App\Controllers\RoutesController;
 

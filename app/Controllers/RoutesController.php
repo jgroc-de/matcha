@@ -6,7 +6,7 @@ namespace App\Controllers;
  * class PagesController
  * this class is called by each routes
  */
-class RoutesController extends ContainerClass
+class RoutesController extends \App\Constructor
 {
     /**
      * @param $request requestInterface

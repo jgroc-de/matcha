@@ -1,13 +1,18 @@
 <?php
 
-namespace App\Model;
+namespace App;
 
-class ContainerClass
+class Constructor
 {
     /**
      * @var array
      */
     protected $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
+
+    /**
+     * @var array
+     */
+    protected $sexualPattern = ['bi', 'homo', 'hetero'];
 
     /**
      * @var array : for $container
@@ -28,7 +33,7 @@ class ContainerClass
      */
     public function __get($name)
     {
-//        if (isset($container[$name]))
+        //if (isset($container[$name]))
             return $this->container->get($name);
     }
 }

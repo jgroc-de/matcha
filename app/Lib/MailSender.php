@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Lib;
 
-class MailController
+class MailSender
 {
     /**
      * @param $dest string mail
@@ -38,7 +38,7 @@ class MailController
 
             ---------------
             Ceci est un mail automatique, Merci de ne pas y répondre.';
-        sendMail($dest, $subject, $message, $header);
+        $this->sendMail($dest, $subject, $message, $header);
     }
 
     /**
@@ -60,6 +60,6 @@ class MailController
 
             ---------------
             Ceci est un mail automatique, Merci de ne pas y répondre.';
-        sendMail($dest, $subject, $message, $header);
+        $this->sendMail($dest, $subject, $message, $header);
     }
 }

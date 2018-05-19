@@ -5,7 +5,7 @@ namespace App\Model;
  * class SetupModel
  * generate fake profil
  */
-class SetupModel extends ContainerClass
+class SetupModel extends \App\Constructor
 {
     public function init ()
     {

@@ -5,7 +5,7 @@ namespace App\Model;
  * class UserModel
  * request to database about user
  */
-class UserModel extends ContainerClass
+class UserModel extends \App\Constructor
 {
     /**
      * @param $pseudo string

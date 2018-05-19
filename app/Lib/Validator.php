@@ -40,8 +40,6 @@ class Validator
      */
     public function ft_isset(array $array, array $keys)
     {
-        print_r($array);
-        print_r($keys);
         foreach ($keys as $key)
         {
             if (!isset($array[$key]))
@@ -96,7 +94,7 @@ class Validator
         return !is_null($test);
     }
     
-    public function Biography($test)
+    public function biography($test)
     {
         return true;
     }

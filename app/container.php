@@ -52,7 +52,7 @@ $container['user'] = function ($container) {
  * etc…
  */
 $container['form'] = function ($container) { 
-    return new \App\Controllers\FormController($container);
+    return new \App\Controllers\FormChecker($container);
 };
 
 $container['validator'] = function ($container) {
@@ -61,10 +61,6 @@ $container['validator'] = function ($container) {
 
 $container['debug'] = function ($container) {
     return new \App\Lib\Debug();
-};
-
-$container['faker'] = function ($container) {
-    return new \App\Model\FakerModel($container);
 };
 
 /**
@@ -80,5 +76,5 @@ $container['setup'] = function ($container) {
 };
 
 $container['mail'] = function () {
-    return new \App\Controllers\MailController();
+    return new \App\Lib\MailSender();
 };
