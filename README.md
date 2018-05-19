@@ -14,8 +14,8 @@ Introduction à un outil plus évolué pour réaliser vos applications web : le 
 
 |-| Back-end | Front-end | bdd |
 |---|---|---|---|
-| langage | PHP7 | HTML5, CSS3, JS | MySQL |
-| framework | slim3 | twig, w3.css, Jquery |-|
+| langage | PHP | HTML, CSS, JS | MySQL |
+| framework | Slim | twig, w3.css, Jquery |-|
 
 # Contraintes Techniques, composants interdits:
 
