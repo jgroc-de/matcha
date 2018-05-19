@@ -45,7 +45,7 @@ class RoutesController extends \App\Constructor
         {
             return $this->view->render(
                 $response,
-                'templates/signup.html.twig',
+                'templates/logForm/signup.html.twig',
                 [
                     'characters' => $this->characters
                 ]
@@ -96,7 +96,7 @@ class RoutesController extends \App\Constructor
             var_dump('unknown mail');
         }
         else
-            return $this->view->render($response, 'templates/reInitPassword.html.twig');
+            return $this->view->render($response, 'templates/logForm/reInitPassword.html.twig');
     }
 
     /**
@@ -109,7 +109,7 @@ class RoutesController extends \App\Constructor
         $this->form->checkLogin($request, $response);
         if (isset($_SESSION['id']))
             return $response->withRedirect('/');
-        return $this->view->render($response, 'templates/login.html.twig');
+        return $this->view->render($response, 'templates/logForm/login.html.twig');
     }
     
     /**
@@ -163,31 +163,5 @@ class RoutesController extends \App\Constructor
         }
         else
             return $this->view->render($response, 'templates/password.html.twig');
-    }
-
-    /**
-     * create database and tables
-     *
-     * @param $request requestInterface
-     * @param $response responseInterface
-     * @return twig view on login
-     */
-    public function setup ($request, $response)
-    {
-        $this->container->setup->init();
-    }
-
-    /**
-     * create 400 fake user in the database
-     *
-     * @param $request requestInterface
-     * @param $response responseInterface
-     */
-    public function seed ($request, $response)
-    {
-        $this->container->setup->fakeFactory(400);
-        $array = $this->container->user->getUsers();
-        foreach ($array as $value)
-            $this->container->debug->ft_print($value);
     }
 }

@@ -4,13 +4,13 @@ session_start();
 require '../vendor/autoload.php';
 require '../config/config.php';
 use \App\Controllers\RoutesController;
+use \App\Setup;
 
 $app = new \Slim\App(['settings' => $config]);
-$faker = Faker\Factory::create('fr_FR');
 require '../app/container.php';
 
-$app->get('/setup', RoutesController::class . ':setup')->setName('setup');
-$app->get('/seed', RoutesController::class . ':seed')->setName('seed');
+$app->get('/setup', Setup::class . ':init')->setName('setup');
+$app->get('/seed', Setup::class . ':fakeFactory')->setName('seed');
 
 $app->any('/login', RoutesController::class . ':login')->setName('login');
 $app->get('/logout', RoutesController::class . ':logout')->setName('logout');

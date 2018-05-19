@@ -11,6 +11,7 @@ class FormChecker extends \App\Constructor
     /**
      * @param $request requestInterface
      * @return string error if any
+     * à transformer en middleware
      */
     public function check ($request)
     {
@@ -33,7 +34,7 @@ class FormChecker extends \App\Constructor
             {
                 if ($account['activ'] === false)
                     return "compte inactif";
-                elseif ($this->checkpassword($account['password'], $post['password']))
+                elseif ($this->checkPassword($account['password'], $post['password']))
                 {
                     $_SESSION['pseudo'] = $account['pseudo'];
                     $_SESSION['id'] = $account['id'];

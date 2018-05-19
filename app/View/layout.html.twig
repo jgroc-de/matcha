@@ -4,18 +4,20 @@
     <head>
         <meta charset="utf-8/">
         <title>Matcha</title>
-        <!--<link rel="stylesheet" href="css/main.css" type="text/css"/>-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
+         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="css/main.css" type="text/css"/>
+        <link rel="stylesheet" href="css/theme.css" type="text/css"/>
         {% block head %}
         {% endblock %}
     </head>
     <body>
         <header>    
             <a href='{{ path_for('home') }}'><h1>Match a Rick&Morty</h1></a>
-            <em>even if it's such a pain in the ass</em>
+            <h3>even if it's such a pain in the ass</h3>
             {% block title %}{% endblock %}
         </header>
-        <div>
-            <h2>{{ title }}</h2>
+        <div class="main w3-display-container">
             {% block content %}{% endblock %}
         </div>
         <footer>

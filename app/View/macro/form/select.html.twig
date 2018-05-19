@@ -2,12 +2,13 @@
 {% macro select(hash) %}
 {% set def = 'select' %}
 {% from 'macro/form/label.html.twig' import label %}
+{% from 'macro/form/class.html.twig' import classInput, ClassSelect %}
 {{ label(hash.label|default(def)) }}
-<select name="{{ hash.name|default(hash.label|default(def)) }}">
+<select name="{{ hash.name|default(hash.label|default(def)) }}" {{ ClassSelect() }}>
     {% for value in hash.array %}
     <option value='{{ value }}' {% if value == hash.select %}selected{% endif %}>
         {{ value }}
     </option>
     {% endfor %}
 </select>
-{% endmacro select %}
+{% endmacro %}

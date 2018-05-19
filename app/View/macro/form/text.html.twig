@@ -2,10 +2,12 @@
 {% macro text(hash) %}
 {% set def = 'text' %}
 {% from 'macro/form/label.html.twig' import label %}
+{% from 'macro/form/class.html.twig' import classInput, ClassSelect %}
 {{ label(hash.label|default(def)) }}
-<input tuype="text"
+<input type="text"
+       {{ classInput() }}
        name="{{ hash.name|default(hash.label|default(def)) }}"
        value="{{ hash.value }}"
        maxlength="{{ hash.size|default(40) }}"
        required>
-{% endmacro text %}
+{% endmacro %}

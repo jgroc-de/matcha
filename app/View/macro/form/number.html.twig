@@ -2,11 +2,13 @@
 {% macro number(hash) %}
 {% set def = 'number' %}
 {% from 'macro/form/label.html.twig' import label %}
+{% from 'macro/form/class.html.twig' import classInput, ClassSelect %}
 {{ label(hash.label|default(def)) }}
 <input name="{{ hash.name|default(def) }}"
+       {{ classInput() }}
        type="number"
        value="{{ hash.value }}"
        min="{{ hash.min }}"
        max="{{ hash.max }}">
 </textarea>
-{% endmacro number %}
+{% endmacro %}

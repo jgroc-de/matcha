@@ -67,12 +67,8 @@ $container['debug'] = function ($container) {
  * faker app
  */
 $container['fake'] = function () {
-    $faker = Faker\Factory::create();
-    return $faker;
-};
-
-$container['setup'] = function ($container) {
-    return new \App\Model\SetupModel($container);
+    //return Faker\Factory::create('fr_FR');
+    return Faker\Factory::create();
 };
 
 $container['mail'] = function () {

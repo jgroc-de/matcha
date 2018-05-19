@@ -2,9 +2,11 @@
 {% macro email(hash) %}
 {% set def = 'email' %}
 {% from 'macro/form/label.html.twig' import label %}
+{% from 'macro/form/class.html.twig' import classInput, ClassSelect %}
 {{ label(hash.label|default(def)) }}
 <input type='email'
+{{ classInput() }}
        name='{{ hash.name|default(def) }}'
        value='{{ hash.value }}'
        required/>
-{% endmacro email %}
+{% endmacro %}

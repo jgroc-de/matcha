@@ -1,15 +1,18 @@
-{% extends "layout.html.twig" %}
+{% extends 'templates/logForm.html.twig' %}
 {% from 'macro/form/text.html.twig' import text %}
 {% from 'macro/form/password.html.twig' import password %}
 {% from 'macro/form/email.html.twig' import email %}
 {% from 'macro/form/select.html.twig' import select %}
+{% from 'macro/form/class.html.twig' import classCard, classh2, classForm %}
 
-{% block title %}
+{% block h2 %}Sign up{% endblock %}
+
+{% block action %}
+{{ path_for('signup') }}
 {% endblock %}
 
-{% block content %}
-<form action="{{ path_for('signup') }}" method="post">
-    <a href='{{ path_for('login') }}'>login In?</a>
+{% block form %}
+    <a href='{{ path_for('login') }}'>login In</a>
     <div>
         {{ text({'label': 'pseudo'}) }}
     </div>
@@ -20,11 +23,10 @@
         {{ email() }}
     </div>
     <div>
-        {{ select({'name': 'gender', 'array': characters}) }}
+        {{ select({'name': 'you are a:', 'array': characters}) }}
     </div>
     <div>
         <input type="submit" value="submit">
         <input type="reset" value="reset">
     </div>
-</form>
 {% endblock %}

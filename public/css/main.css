@@ -1,32 +1,42 @@
-body {
-    background: url('../img/23661-rick-and-morty-rick-and-morty.jpg') no-repeat center fixed;
+.main {
+    width: 100vw;
+    height: 85vh;
+    background: url('../img/139885-top-rick-and-morty-wallpaper-1920x1080-1920x1080-full-hd.jpg') no-repeat center bottom;
     background-size: cover;
-    color: white;
 }
+
 footer, header{
+    color: white;
     position: fixed;
     left: 0;
-    width: 98vw;
+    width: 100vw;
     margin:0;
 }
 
 header {
-    top: -10px;
-    padding: 5px 20px;
+    bottom: 5vh;
+    height: 10vh;
+    padding: 0px 20px;
 }
 
 footer {
-    padding: 5px 20px;
     bottom: 0;
+    height: 5vh;
     text-align: right;
 }
 
-form    {
-    color: black;
-    background-color: white;
-    border-radius: 10px;
-    padding:10px;
-    max-width: 250px;
-    margin: auto;
-    margin-top: 25vh;
+hr {
+    margin: 10px 0 0 0;
+}
+
+em  {
+    padding-right: 20px;
+}
+
+h1, h2, h3, h4, h5, h6, footer, header {
+    font-family: "Amatic SC", Verdana, sans-serif;
+}
+
+header, footer {
+    background: #371b0f;
 }
