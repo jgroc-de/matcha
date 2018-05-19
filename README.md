@@ -6,15 +6,16 @@ Introduction à un outil plus évolué pour réaliser vos applications web : le 
 
 - Micro-framework
 - Comptes utilisateur avancés
-- Web temps réel
+- Web socket
 - Géolocalisation
 - Sécurité / Validation de données 
 
 # Langages:
 
-| Back-end | Front-end | bdd |
-|---|---|---|
-| PHP/Slim3 | HTML5, CSS3, JS, JQuery, Bootstrap | MySQL |
+|-| Back-end | Front-end | bdd |
+|---|---|---|---|
+| langage | PHP7 | HTML5, CSS3, JS | MySQL |
+| framework | slim3 | twig, w3.css, Jquery |-|
 
 # Contraintes Techniques, composants interdits:
 
