@@ -1,0 +1,14 @@
+{% macro input(type, label, hash) %}
+{% from 'macro/form/label.html.twig' import Label %}
+{{ Label(label|default(type)) }}
+<input class="w3-input w3-border"
+       type="{{ type }}"
+       name="{{ hash.name|default(label) }}"
+       {% for key, value in hash if key != name %}
+           {{ key }}="{{ value }}"
+       {% endfor %}
+       {% if hash.type == 'password' %}
+       pattern="{{ hash.pattern|default('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}') }}"
+       {% endif %}
+       required>
+{% endmacro %}

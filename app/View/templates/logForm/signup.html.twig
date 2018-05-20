@@ -1,31 +1,33 @@
 {% extends 'templates/logForm.html.twig' %}
-{% from 'macro/form/text.html.twig' import text %}
-{% from 'macro/form/password.html.twig' import password %}
-{% from 'macro/form/email.html.twig' import email %}
+{% from 'macro/form/input.html.twig' import input %}
+{% from 'macro/form/button.html.twig' import button %}
 {% from 'macro/form/select.html.twig' import select %}
 
 {% block h2 %}Sign up{% endblock %}
+
+{% block link %}
+or <a href='{{ path_for('login') }}'>log in</a>
+{% endblock %}
 
 {% block action %}
 {{ path_for('signup') }}
 {% endblock %}
 
 {% block form %}
-    <a href='{{ path_for('login') }}'>login In</a>
-    <div>
-        {{ text({'label': 'pseudo'}) }}
-    </div>
-    <div>
-        {{ password() }}
-    </div>
-    <div>
-        {{ email() }}
-    </div>
-    <div>
-        {{ select({'label': 'you are a', 'name': 'gender', 'array': characters}) }}
-    </div>
-    <div>
-        <input type="submit" value="submit">
-        <input type="reset" value="reset">
-    </div>
+<div class="w3-section">
+    {{ input('text', 'pseudo') }}
+</div>
+<div class="w3-section">
+    {{ input('password') }}
+</div>
+<div class="w3-section">
+    {{ input('email') }}
+</div>
+<div class="w3-section">
+    {{ select({'label': 'you are a', 'name': 'gender', 'array': characters}) }}
+</div>
+<div class="w3-section">
+    {{ button('submit') }}
+    {{ button('reset') }}
+</div>
 {% endblock %}
