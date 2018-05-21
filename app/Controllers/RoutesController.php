@@ -19,9 +19,9 @@ class RoutesController extends \App\Constructor
         {
             return $this->view->render(
                 $response,
-                'templates/home.html.twig',
+                'templates/home/home.html.twig',
                 [
-                    'name' => $_SESSION['pseudo']
+                    'profil' => $this->user->getUser($_SESSION['pseudo'])
                 ]
             );
         }
@@ -134,12 +134,13 @@ class RoutesController extends \App\Constructor
         {
             if ($this->form->checkProfil($request))
                 $this->user->updateUser();
+            return $response->withRedirect('/home');
         }
         else
         {
             return $this->view->render(
                 $response,
-                'templates/profil.html.twig',
+                'templates/home/profil.html.twig',
                 [
                     'profil' => $this->user->getUser($_SESSION['pseudo']),
                     'characters' => $this->characters,
@@ -160,8 +161,9 @@ class RoutesController extends \App\Constructor
         {
             if ($_POST['password'] === $_POST['password1'] && $this->form->check($request))
                 $this->user->updatePassUser();
+            return $response->withRedirect('/profil');
         }
         else
-            return $this->view->render($response, 'templates/password.html.twig');
+            return $this->view->render($response, 'templates/home/password.html.twig');
     }
 }

@@ -4,16 +4,19 @@
 <link rel="stylesheet" href="css/login.css" type="text/css"/>
 {% endblock %}
 
-{% block title %}{% endblock %}
+{% block header %}
+<a href='{{ path_for('home') }}'><h1>Match a Rick&Morty</h1></a>
+<h3>even if it's such a pain in the ass</h3>
+{% endblock %}
 
-{% block content %}
+{% block main %}
 <div class="w3-card-4 w3-display-topmiddle w3-margin-top">
     <div class="w3-container w3-display-container w3-theme-l1">
         <h2 class="w3-left">
             {% block h2 %}{% endblock %}
         </h2>
         <p class="w3-display-bottomright w3-margin-right">
-            {% block link %}{% endblock %}
+        {% block link %}{% endblock %}
         </p>
 
     </div>

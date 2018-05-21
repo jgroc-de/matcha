@@ -1,6 +1,33 @@
 {% extends "layout.html.twig" %}
 
-{% block content %}
-    <h2>Hi {{ name }}</h2>
-<a href={{ path_for('profil') }}>profil</a>
+{% block head %}
+<link rel="stylesheet" href="css/home.css" type="text/css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
+
+{% block header %}
+    <a href='{{ path_for('home') }}'><h1 class="w3-container" >Match a Rick&Morty</h1></a>
+    <div class="w3-bar">
+        {% set class = "w3-bar-item w3-button" %}
+        {% set classR = "w3-bar-item w3-button w3-right" %}
+        <a href="#" class="{{ class }}"><i class="fa fa-bars" alt="menu" title="menu"></i></a>
+        <a href={{ path_for('home') }} class="{{ class }}">home</a>
+        <a href="#" class="{{ class }}">search</a>
+        <a href="{{ path_for('logout') }}" class="{{ classR }}"><i class="fa fa-power-off" alt="logout" title="logout"></i></a>
+        <div class="w3-dropdown-hover w3-right">
+            <a href="{{ path_for('profil') }}" class="w3-button"><i class="fa fa-gears" alt="edit profile" title="edit profile"></i></a>
+            <div class="w3-dropdown-content w3-bar-block w3-border">
+                <a href="{{ path_for('profil') }}" class="w3-bar-item w3-button">profil</a>
+                <a href="{{ path_for('password') }}" class="w3-bar-item w3-button">password</a>
+            </div>
+        </div>
+        <a href="#" class="{{ classR }}"><i class="fa fa-anchor" alt="new like" title="new like"></i></a>
+        <a href="#" class="{{ classR }}"><i class="fa fa-send" alt="new message" title="new message"></i></a>
+    </div>
+{% endblock %}
+
+{% block main %}
+<div class="w3-content"> 
+    <div class="w3-theme-l5 w3-padding-large w3-margin">{% block content %}{% endblock %}</div>
+</div>
+{% endblock %} 

@@ -12,18 +12,15 @@
         {% endblock %}
     </head>
     <body>
-        <header>    
-            <a href='{{ path_for('home') }}'><h1>Match a Rick&Morty</h1></a>
-            <h3>even if it's such a pain in the ass</h3>
-            {% block title %}{% endblock %}
+        <header>
+            {% block header %}{% endblock %}
         </header>
-        <div class="main w3-display-container">
-            {% block content %}{% endblock %}
-        </div>
-        <footer>
+        <main class="w3-container w3-center">
+            {% block main %}{% endblock %}
+        </main>
+        <footer class="">
             <hr>
             <em>© jgroc-de 2018</em>
         </footer>
-
     </body>
 </html>

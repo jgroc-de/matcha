@@ -1,0 +1,64 @@
+{% extends "templates/home.html.twig" %}
+{% from 'macro/form/input.html.twig' import input %}
+{% from 'macro/form/button.html.twig' import button %}
+{% from 'macro/form/textarea.html.twig' import textarea %}
+{% from 'macro/form/select.html.twig' import select %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<div>
+    <form action='{{ path_for('profil') }}' method="post" class="w3-left-align">
+        <a href='{{ path_for('password') }}'>change your password</a>
+        <div class="w3-section">
+            {{ input('text', 'pseudo', {'value': profil.pseudo}) }}
+        </div>
+        <div class="w3-section">
+            {{ input('email', 'email', {'value': profil.email}) }}
+        </div>
+        <div class="w3-section">
+            {{ input('text', 'forname', {'value': profil.forname}) }}
+        </div>
+        <div class="w3-section">
+            {{ input('text', 'name', {'value': profil.name}) }}
+        </div>
+        <div class="w3-section">
+            {{ input(
+            'number',
+            'birthdate',
+            {
+            'value': profil.birthdate,
+            'min': 1850,
+            'max': 2020,
+            'name': 'birthdate'
+            })
+            }}
+        </div>
+        <div>
+            {{ select({
+            'label': 'gender',
+            'array': characters,
+            'select': profil.gender,
+            })
+            }}
+        </div>
+        <div>
+            {{ select({
+            'label': 'sexual orientation',
+            'array': sexualPattern,
+            'select': profil.sexuality,
+            'name': sexuality
+            }) 
+            }}
+        </div>
+        <div>
+            {{ textarea({'label': 'Biography', 'value': profil.biography}) }}
+        </div>
+        <div class="w3-section">
+            {{ button('submit') }}
+        </div>
+    </form>
+</div>
+{% endblock %}
+

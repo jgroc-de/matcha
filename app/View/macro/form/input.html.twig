@@ -3,7 +3,7 @@
 {{ Label(label|default(type)) }}
 <input class="w3-input w3-border"
        type="{{ type }}"
-       name="{{ hash.name|default(label) }}"
+       name="{{ hash.name|default(label|default(type)) }}"
        {% for key, value in hash if key != name %}
            {{ key }}="{{ value }}"
        {% endfor %}

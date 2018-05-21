@@ -1,8 +1,22 @@
-header a, h1 {
-    text-decoration: none;
-    font-weight: bold;
+main {
+    width: 100vw;
+    height: 85vh;
 }
 
-h1, h3 {
-    margin: 0;
+footer, header{
+    position: fixed;
+    left: 0;
+    width: 100vw;
+    margin:0;
+}
+
+header {
+    bottom: 5vh;
+    height: 10vh;
+    padding: 0px 20px;
+}
+
+footer {
+    bottom: 0;
+    height: 5vh;
 }

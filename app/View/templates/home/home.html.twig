@@ -1,0 +1,31 @@
+{% extends 'templates/home.html.twig' %}
+
+{% block content %}
+<h2>Hi {{ profil.pseudo }}</h2>
+<div class="w3-row">
+    <div class="w3-card-4 w3-half">
+        <img src='../img/633262.png' alt='profil image' title='profil image' style="width:100%">
+    </div>
+    <div class="w3-half w3-padding">
+        <h3>Your personnal information</h3>
+        <p class="w3-left-align">
+        age: {{ profil.birthdate }}<br>
+        you are a: {{ profil.gender }}<br>
+        orientation: {{ profil.sexuality }}<br>
+        bio: {{ profil.biography }}<br>
+        <a href='{{ path_for('profil') }}' class="w3-right">edit your profil</a>
+        </p>
+    </div>
+</div>
+<div class="w3-theme-l5 w3-row">
+    <div class="w3-third w3-left">
+        <h3>Your interest</h3>
+    </div>
+    <div class="w3-third w3-left">
+        <h3>People you like</h3>
+    </div>
+    <div class="w3-third w3-left">
+        <h3>Friends</h3>
+    </div>
+</div>
+{% endblock %}
