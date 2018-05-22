@@ -30,22 +30,6 @@ class RoutesHomeController extends \App\Constructor
      * @param $response responseInterface
      * @return twig view
      */
-    public function search ($request, $response)
-    {
-        return $this->view->render(
-            $response,
-            'templates/home/search.html.twig',
-            [
-                'users' => $this->user->getUsers()
-            ]
-        );
-    }
-
-    /**
-     * @param $request requestInterface
-     * @param $response responseInterface
-     * @return twig view
-     */
     public function profil ($request, $response, $args)
     {
         if(!empty($user = $this->user->getUserById($args['id'])))
@@ -59,6 +43,22 @@ class RoutesHomeController extends \App\Constructor
                 ]
             );
         }
+    }
+
+    /**
+     * @param $request requestInterface
+     * @param $response responseInterface
+     * @return twig view
+     */
+    public function search ($request, $response)
+    {
+        return $this->view->render(
+            $response,
+            'templates/home/search.html.twig',
+            [
+                'users' => $this->user->getUsers()
+            ]
+        );
     }
 
     /**

@@ -22,15 +22,13 @@ class Setup extends Constructor
     {
         $count = 10;
         $profil = array();
-        $faker = $this->container->fake;
-        //$faker = Faker\Factory::create();
+        $faker = \Faker\Factory::create();
         for ($i = 0; $i < $count; $i++)
         {
             $this->debug->ft_print([$count, $i]);
             $gender = rand(0, 4);
             $orientation = rand(0, 2);
             $forname = $faker->firstName;
-            $lastname = $faker->lastName;
             $profil['gender'] = $this->characters[$gender];
             $profil['pseudo'] = $profil['gender'] . $forname;
             $_SESSION['pseudo'] = $profil['gender'] . $forname;

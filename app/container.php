@@ -63,14 +63,6 @@ $container['debug'] = function ($container) {
     return new \App\Lib\Debug();
 };
 
-/**
- * faker app
- */
-$container['fake'] = function () {
-    //return Faker\Factory::create('fr_FR');
-    return Faker\Factory::create();
-};
-
 $container['mail'] = function () {
     return new \App\Lib\MailSender();
 };
