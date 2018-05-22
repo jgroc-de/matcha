@@ -42,7 +42,7 @@ class UserModel extends \App\Constructor
         );
         $req = $this->db->prepare('
                 INSERT INTO user (pseudo, password, email, gender, activ, token, img)
-                VALUES (?, ?, ?, ?, ?, ?)');
+                VALUES (?, ?, ?, ?, ?, ?, ?)');
         $req->execute(array(
                 $post['pseudo'],
                 $post['password'],
@@ -105,7 +105,7 @@ class UserModel extends \App\Constructor
                 $post['name'],
                 $post['birthdate'],
                 $post['gender'],
-                $post['seuality'],
+                $post['sexuality'],
                 $post['biography'],
                 $_SESSION['pseudo']
         ));
