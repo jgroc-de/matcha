@@ -1,31 +1,42 @@
 {% extends 'templates/home.html.twig' %}
 
 {% block content %}
-<h2>Hi {{ profil.pseudo }}</h2>
+{% if profil.pseudo == user.pseudo %}
+    {% set hi = 'Hi ' %}
+    {% set your = 'Your ' %}
+    {% set home = true %}
+{% endif %}
+<h2>{{ hi }}{{ profil.pseudo }}</h2>
 <div class="w3-row">
     <div class="w3-card-4 w3-half">
         <img src='../img/633262.png' alt='profil image' title='profil image' style="width:100%">
     </div>
     <div class="w3-half w3-padding">
-        <h3>Your personnal information</h3>
+        <h3>{{ your }}personnal information</h3>
         <p class="w3-left-align">
+        {% if home %}
+        name: {{ profil.forname}} {{profil.name}}<br>
+        email: {{ profil.email }}<br>
+        {% endif %}
         age: {{ profil.birthdate }}<br>
-        you are a: {{ profil.gender }}<br>
+        {% if home %}you are {% else %} it's {% endif %}a: {{ profil.gender }}<br>
         orientation: {{ profil.sexuality }}<br>
         bio: {{ profil.biography }}<br>
-        <a href='{{ path_for('profil') }}' class="w3-right">edit your profil</a>
+        {% if home %}
+        <a href='{{ path_for('editProfil') }}' class="w3-right">edit your profil</a>
+        {% endif %}
         </p>
     </div>
 </div>
 <div class="w3-theme-l5 w3-row">
     <div class="w3-third w3-left">
-        <h3>Your interest</h3>
+        <h3>{{ your }}Interest</h3>
     </div>
     <div class="w3-third w3-left">
-        <h3>People you like</h3>
+        <h3>{{ your }}Likes</h3>
     </div>
     <div class="w3-third w3-left">
-        <h3>Friends</h3>
+        <h3>{{ your }}Friends</h3>
     </div>
 </div>
 {% endblock %}

@@ -31,6 +31,7 @@ CREATE TABLE `user` (
     `gender` ENUM('Rick','Morty','Summer','Beth','Jerry') NOT NULL DEFAULT 'Rick',
     `sexuality` ENUM('bi','hetero','homo') NOT NULL DEFAULT 'bi',
     `popularity` TINYINT NOT NULL DEFAULT 50,
+    `img` TEXT NOT NULL,
     CONSTRAINT PK_user PRIMARY KEY (`id`, `pseudo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

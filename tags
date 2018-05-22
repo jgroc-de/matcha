@@ -2259,7 +2259,7 @@ a	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/TemplateTest.php	/^    pr
 accNo	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/en_US/PaymentTest.php	/^        $accNo = $this->faker->bankAccountNumber;$/;"	v	line:24	method:Faker\Provider\en_US\PaymentTest::testBankAccountNumber
 acceptHeader	/home/gg/www/matcha/vendor/slim/slim/Slim/Handlers/AbstractHandler.php	/^        $acceptHeader = $request->getHeaderLine('Accept');$/;"	v	line:42	method:Slim\Handlers\AbstractHandler::determineContentType
 account	/home/gg/www/matcha/app/Controllers/FormChecker.php	/^                $account = $this->user->getUser($post['pseudo']);$/;"	v	line:63	method:App\Controllers\FormChecker::checkSignup
-account	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^        $account = $this->user->getUser($get['login']);$/;"	v	line:66	method:App\Controllers\RoutesController::validation
+account	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^        $account = $this->user->getUser($get['login']);$/;"	v	line:111	method:App\Controllers\RoutesController::validation
 activate	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function activate()$/;"	m	line:97	class:App\Model\UserModel	access:public
 actives	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Extension/Profiler.php	/^    private $actives = array();$/;"	p	line:14	class:Twig_Extension_Profiler	access:private
 add	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^    public function add($prefix, $paths, $prepend = false)$/;"	m	line:109	class:Composer\Autoload\ClassLoader	access:public
@@ -3842,6 +3842,7 @@ cookies	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^        $co
 cookies	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^        $this->cookies = $cookies;$/;"	v	line:190	method:Slim\Http\Request::__construct
 cookies	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^    protected $cookies;$/;"	p	line:75	class:Slim\Http\Request	access:protected
 coordinate	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/AddressTest.php	/^        $coordinate = $this->faker->localCoordinates();$/;"	v	line:37	method:Faker\Test\Provider\AddressTest::testCoordinate
+count	/home/gg/www/matcha/app/Setup.php	/^        $count = 10;$/;"	v	line:23	method:App\Setup::fakeFactory
 count	/home/gg/www/matcha/vendor/nikic/fast-route/src/DataGenerator/CharCountBased.php	/^        $count = count($regexToRoutesMap);$/;"	v	line:19	method:FastRoute\DataGenerator\CharCountBased::processChunk
 count	/home/gg/www/matcha/vendor/slim/slim/Slim/Collection.php	/^    public function count()$/;"	m	line:184	class:Slim\Collection	access:public
 count	/home/gg/www/matcha/vendor/slim/twig-view/src/Twig.php	/^    public function count()$/;"	m	line:240	class:Slim\Views\Twig	access:public
@@ -4263,6 +4264,7 @@ ean13	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Barcode.php
 ean8	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Barcode.php	/^    public function ean8()$/;"	m	line:82	class:Faker\Provider\Barcode	access:public
 eanChecksum	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Barcode.php	/^    protected static function eanChecksum($input)$/;"	m	line:25	class:Faker\Provider\Barcode	access:protected
 eanChecksum	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/BarcodeTest.php	/^    public static function eanChecksum($input)$/;"	m	line:41	class:Faker\Test\Provider\TestableBarcode	access:public
+editProfil	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function editProfil ($request, $response)$/;"	m	line:176	class:App\Controllers\RoutesController	access:public
 elements	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Base.php	/^        $elements = static::randomElements($array, 1);$/;"	v	line:212	method:Faker\Provider\Base::randomElement
 elements	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/BaseTest.php	/^        $elements = array('23', 'e', 32, '#');$/;"	v	line:138	method:Faker\Test\Provider\BaseTest::testRandomElementReturnsElementFromArray
 elements	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/BaseTest.php	/^        $elements = array('tata' => '23', 'toto' => 'e', 'tutu' => 32, 'titi' => '#');$/;"	v	line:144	method:Faker\Test\Provider\BaseTest::testRandomElementReturnsElementFromAssociativeArray
@@ -4535,8 +4537,8 @@ factories	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Container.php	/^  
 factories	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Container.php	/^    private $factories;$/;"	p	line:42	class:Pimple\Container	access:private
 factory	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Container.php	/^        $factory = $this->values[$id];$/;"	v	line:256	method:Pimple\Container::extend
 factory	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Container.php	/^    public function factory($callable)$/;"	m	line:163	class:Pimple\Container	access:public
-fakeFactory	/home/gg/www/matcha/app/Setup.php	/^    public function fakeFactory ($request, $response, $count = 500)$/;"	m	line:21	class:App\Setup	access:public
-faker	/home/gg/www/matcha/app/Setup.php	/^        $faker = $this->fake;$/;"	v	line:24	method:App\Setup::fakeFactory
+fakeFactory	/home/gg/www/matcha/app/Setup.php	/^    public function fakeFactory ($request, $response)$/;"	m	line:21	class:App\Setup	access:public
+faker	/home/gg/www/matcha/app/Setup.php	/^        $faker = $this->fake;$/;"	v	line:25	method:App\Setup::fakeFactory
 faker	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/AddressTest.php	/^        $faker = new Generator();$/;"	v	line:14	method:Faker\Test\Provider\AddressTest::setUp
 faker	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/AddressTest.php	/^        $this->faker = $faker;$/;"	v	line:16	method:Faker\Test\Provider\AddressTest::setUp
 faker	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/AddressTest.php	/^    private $faker;$/;"	p	line:10	class:Faker\Test\Provider\AddressTest	access:private
@@ -5445,7 +5447,7 @@ generator	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/TextTe
 generator	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/TextTest.php	/^    $generator = new Generator();$/;"	v	line:38	method:Faker\Test\Provider\TextTest::testTextMinIndex
 generator	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/TextTest.php	/^    $generator = new Generator();$/;"	v	line:49	method:Faker\Test\Provider\TextTest::testTextMinLength
 generator	/home/gg/www/matcha/vendor/fzaninotto/faker/test/documentor.php	/^$generator = Faker\Factory::create();$/;"	v	line:4
-get	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^        $get = $request->getParams();$/;"	v	line:65	method:App\Controllers\RoutesController::validation
+get	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^        $get = $request->getParams();$/;"	v	line:110	method:App\Controllers\RoutesController::validation
 get	/home/gg/www/matcha/vendor/nikic/fast-route/src/RouteCollector.php	/^    public function get($route, $handler)$/;"	m	line:73	class:FastRoute\RouteCollector	access:public
 get	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Psr11/Container.php	/^    public function get($id)$/;"	m	line:46	class:Pimple\Psr11\Container	access:public
 get	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Psr11/ServiceLocator.php	/^    public function get($id)$/;"	m	line:59	class:Pimple\Psr11\ServiceLocator	access:public
@@ -6771,8 +6773,8 @@ locator	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Tests/Psr11/ServiceL
 logError	/home/gg/www/matcha/vendor/slim/slim/Slim/Handlers/AbstractError.php	/^    protected function logError($message)$/;"	m	line:95	class:Slim\Handlers\AbstractError	access:protected
 logicalPathPsr0	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^            $logicalPathPsr0 = substr($logicalPathPsr4, 0, $pos + 1)$/;"	v	line:402	method:Composer\Autoload\ClassLoader::findFileWithExtension
 logicalPathPsr4	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^        $logicalPathPsr4 = strtr($class, '\\', DIRECTORY_SEPARATOR) . $ext;$/;"	v	line:373	method:Composer\Autoload\ClassLoader::findFileWithExtension
-login	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function login ($request, $response)$/;"	m	line:107	class:App\Controllers\RoutesController	access:public
-logout	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function logout ($request, $response)$/;"	m	line:120	class:App\Controllers\RoutesController	access:public
+login	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function login ($request, $response)$/;"	m	line:152	class:App\Controllers\RoutesController	access:public
+logout	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function logout ($request, $response)$/;"	m	line:165	class:App\Controllers\RoutesController	access:public
 longLastNames	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/nl_NL/Person.php	/^    protected static $longLastNames = array($/;"	p	line:202	class:Faker\Provider\nl_NL\Person	access:protected
 longitude	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Address.php	/^    public static function longitude($min = -180, $max = 180)$/;"	m	line:123	class:Faker\Provider\Address	access:public
 longitude	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/AddressTest.php	/^        $longitude = $this->faker->longitude();$/;"	v	line:29	method:Faker\Test\Provider\AddressTest::testLongitude
@@ -7826,7 +7828,7 @@ parts	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Loader/Filesystem.php	/^    
 pass	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^        $pass = isset($parts['pass']) ? $parts['pass'] : '';$/;"	v	line:149	method:Slim\Http\Uri::createFromString
 passportNumber	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/lt_LT/Person.php	/^    public function passportNumber()$/;"	m	line:285	class:Faker\Provider\lt_LT\Person	access:public
 passportNumber	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/lv_LV/Person.php	/^    public function passportNumber()$/;"	m	line:104	class:Faker\Provider\lv_LV\Person	access:public
-password	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function password ($request, $response)$/;"	m	line:157	class:App\Controllers\RoutesController	access:public
+password	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function password ($request, $response)$/;"	m	line:203	class:App\Controllers\RoutesController	access:public
 password	/home/gg/www/matcha/app/Lib/Validator.php	/^    public function password($test)$/;"	m	line:57	class:App\Lib\Validator	access:public
 password	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Internet.php	/^    public function password($minLength = 6, $maxLength = 20)$/;"	m	line:112	class:Faker\Provider\Internet	access:public
 password	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^            $clone->password = $password ? $this->filterUserInfo($password) : '';$/;"	v	line:383	method:Slim\Http\Uri::withUserInfo
@@ -8174,8 +8176,8 @@ processChunk	/home/gg/www/matcha/vendor/nikic/fast-route/src/DataGenerator/Regex
 processGroups	/home/gg/www/matcha/vendor/slim/slim/Slim/Router.php	/^    protected function processGroups()$/;"	m	line:302	class:Slim\Router	access:protected
 processInvalidMethod	/home/gg/www/matcha/vendor/slim/slim/Slim/App.php	/^    protected function processInvalidMethod(ServerRequestInterface $request, ResponseInterface $response)$/;"	m	line:355	class:Slim\App	access:protected
 prod	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ/Company.php	/^        $prod = 0;$/;"	v	line:107	method:Faker\Provider\cs_CZ\Company::ico
-profil	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function profil ($request, $response)$/;"	m	line:131	class:App\Controllers\RoutesController	access:public
-profil	/home/gg/www/matcha/app/Setup.php	/^        $profil = array();$/;"	v	line:23	method:App\Setup::fakeFactory
+profil	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function profil ($request, $response, $args)$/;"	m	line:58	class:App\Controllers\RoutesController	access:public
+profil	/home/gg/www/matcha/app/Setup.php	/^        $profil = array();$/;"	v	line:24	method:App\Setup::fakeFactory
 profile	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Profiler/Dumper/AbstractTest.php	/^        $profile = $this->getMockBuilder('Twig_Profiler_Profile')->disableOriginalConstructor()->getMock();$/;"	v	line:16	method:Twig_Tests_Profiler_Dumper_AbstractTest::getProfile
 profile	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Profiler/Dumper/AbstractTest.php	/^        $profile = $this->getMockBuilder('Twig_Profiler_Profile')->disableOriginalConstructor()->getMock();$/;"	v	line:86	method:Twig_Tests_Profiler_Dumper_AbstractTest::generateProfile
 profile	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Profiler/ProfileTest.php	/^        $profile = new Twig_Profiler_Profile('template', 'type', 'name');$/;"	v	line:16	method:Twig_Tests_Profiler_ProfileTest::testConstructor
@@ -8345,7 +8347,7 @@ raw	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Container.php	/^    publ
 raw	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Compiler.php	/^    public function raw($string)$/;"	m	line:96	class:Twig_Compiler	access:public
 rawMessage	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Error.php	/^        $this->rawMessage = $message;$/;"	v	line:81	method:Twig_Error::__construct
 rawMessage	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Error.php	/^    private $rawMessage;$/;"	p	line:38	class:Twig_Error	access:private
-reInitPassword	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function reInitPassword ($request, $response)$/;"	m	line:85	class:App\Controllers\RoutesController	access:public
+reInitPassword	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function reInitPassword ($request, $response)$/;"	m	line:130	class:App\Controllers\RoutesController	access:public
 read	/home/gg/www/matcha/vendor/psr/http-message/src/StreamInterface.php	/^    public function read($length);$/;"	m	line:134	interface:StreamInterface	access:public
 read	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Stream.php	/^    public function read($length)$/;"	m	line:386	class:Slim\Http\Stream	access:public
 readable	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Stream.php	/^                $this->readable = true;$/;"	v	line:274	method:Slim\Http\Stream::isReadable
@@ -8815,6 +8817,7 @@ scheme	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^        $scheme 
 scheme	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^        $scheme = str_replace('://', '', strtolower((string)$scheme));$/;"	v	line:305	method:Slim\Http\Uri::filterScheme
 scheme	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^        $this->scheme = $this->filterScheme($scheme);$/;"	v	line:122	method:Slim\Http\Uri::__construct
 scheme	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^    protected $scheme = '';$/;"	p	line:42	class:Slim\Http\Uri	access:protected
+search	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function search ($request, $response)$/;"	m	line:37	class:App\Controllers\RoutesController	access:public
 secondSequenceBitWeights	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/kk_KZ/Person.php	/^    public static $secondSequenceBitWeights = array(3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2);$/;"	p	line:33	class:Faker\Provider\kk_KZ\Person	access:public
 second_algorithm	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/pt_BR/check_digit.php	/^    $second_algorithm = $length >= 12;$/;"	v	line:17	function:check_digit
 secondaryAddress	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/ar_JO/Address.php	/^    public static function secondaryAddress()$/;"	m	line:132	class:Faker\Provider\ar_JO\Address	access:public
@@ -9093,7 +9096,7 @@ shuffledArray	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Bas
 shuffledArray	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/BaseTest.php	/^        $shuffledArray = BaseProvider::shuffleArray($arr);$/;"	v	line:191	method:Faker\Test\Provider\BaseTest::testShuffleArrayReturnsADifferentArrayThanTheOriginal
 shuffledString	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/BaseTest.php	/^        $shuffledString = BaseProvider::shuffleString($string);$/;"	v	line:227	method:Faker\Test\Provider\BaseTest::testShuffleStringReturnsADifferentStringThanTheOriginal
 siblings	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/HtmlLorem.php	/^        $siblings = mt_rand(1, $maxWidth);$/;"	v	line:76	method:Faker\Provider\HtmlLorem::addRandomSubTree
-signup	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function signup ($request, $response)$/;"	m	line:37	class:App\Controllers\RoutesController	access:public
+signup	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function signup ($request, $response)$/;"	m	line:82	class:App\Controllers\RoutesController	access:public
 simpleDispatcher	/home/gg/www/matcha/vendor/nikic/fast-route/src/functions.php	/^    function simpleDispatcher(callable $routeDefinitionCallback, array $options = [])$/;"	f	line:12	namespace:FastRoute
 siren	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/fr_FR/Company.php	/^            $siren = substr($siren, 0, 3) . ' ' . substr($siren, 3, 3) . ' ' . substr($siren, 6, 3);$/;"	v	line:137	method:Faker\Provider\fr_FR\Company::siren
 siren	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/fr_FR/Company.php	/^        $siren = $this->numerify('%#######');$/;"	v	line:134	method:Faker\Provider\fr_FR\Company::siren
@@ -11063,7 +11066,7 @@ validStart	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/zh_TW/
 validYearProvider	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/ro_RO/PersonTest.php	/^    public function validYearProvider()$/;"	m	line:56	class:Faker\Test\Provider\ro_RO\PersonTest	access:public
 validate	/home/gg/www/matcha/app/Lib/Validator.php	/^    public function validate(array $array, array $keys)$/;"	m	line:22	class:App\Lib\Validator	access:public
 validateName	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Loader/Filesystem.php	/^    private function validateName($name)$/;"	m	line:250	class:Twig_Loader_Filesystem	access:private
-validation	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function validation ($request, $response)$/;"	m	line:63	class:App\Controllers\RoutesController	access:public
+validation	/home/gg/www/matcha/app/Controllers/RoutesController.php	/^    public function validation ($request, $response)$/;"	m	line:108	class:App\Controllers\RoutesController	access:public
 validator	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/ValidGenerator.php	/^            $validator = function () {$/;"	v	line:23	method:Faker\ValidGenerator::__construct
 validator	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/ValidGenerator.php	/^        $this->validator = $validator;$/;"	v	line:30	method:Faker\ValidGenerator::__construct
 validator	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/ValidGenerator.php	/^    protected $validator;$/;"	p	line:12	class:Faker\ValidGenerator	access:protected

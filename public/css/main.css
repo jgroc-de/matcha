@@ -24,6 +24,7 @@ header a, h1 {
 main {
     background: url('../img/139885-top-rick-and-morty-wallpaper-1920x1080-1920x1080-full-hd.jpg') no-repeat center bottom;
     background-size: cover;
+    min-height: 70vh;
 }
 
 footer {

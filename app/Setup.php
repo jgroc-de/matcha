@@ -18,21 +18,33 @@ class Setup extends Constructor
         $this->db->exec($file);
     } 
 
-    public function fakeFactory ($request, $response, $count = 500)
+    public function fakeFactory ($request, $response)
     {
+        $count = 10;
         $profil = array();
         $faker = $this->fake;
         //$faker = Faker\Factory::create();
         for ($i = 0; $i < $count; $i++)
         {
-            $index = rand(0, 4);
-            $profil['password'] = 'trollB1';
+            $this->debug->ft_print([$count, $i]);
+            $gender = rand(0, 4);
+            $orientation = rand(0, 2);
+            $forname = $faker->firstName;
+            $lastname = $faker->lastName;
+            $profil['pseudo'] = $profil['gender'] . $forname;
+            $_SESSION['pseudo'] = $profil['gender'] . $forname;
             $profil['email'] = $faker->email();
-            $profil['gender'] = $this->characters[$index];
-            $profil['pseudo'] = $profil['gender'] . $faker->firstName;
+            $profil['forname'] = $forname;
+            $profil['name'] = $lastname;
+            $profi['birthdate'] = rand(1970, 2000);
+            $profil['gender'] = $this->characters[$gender];
+            $profil['sexuality'] = $this->sexualPattern[$orienation];
+            $profil['biography'] = 'lol';
+            $profil['password'] = 'trollB1';
             $profil['activ'] = 1;
             $profil['token'] = 'a';
-            $this->user->setUser($profil);
+            $this->container->user->setUser($profil);
+            $this->container->user->updateUser($profil);
         }
     }
 }

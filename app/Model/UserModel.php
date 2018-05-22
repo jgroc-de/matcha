@@ -33,8 +33,15 @@ class UserModel extends \App\Constructor
      */
     public function setUser(array $post)
     {
+        $img = array(
+            'Rick' => 'img/rick.png',
+            'Morty' => 'img/morty.jpg',
+            'Beth' => 'img/beth.jpg',
+            'Jerry' => 'img/jerry.png',
+            'Summer' => 'img/summer.jpg'
+        );
         $req = $this->db->prepare('
-                INSERT INTO user (pseudo, password, email, gender, activ, token)
+                INSERT INTO user (pseudo, password, email, gender, activ, token, img)
                 VALUES (?, ?, ?, ?, ?, ?)');
         $req->execute(array(
                 $post['pseudo'],
@@ -42,7 +49,8 @@ class UserModel extends \App\Constructor
                 $post['email'],
                 $post['gender'],
                 $post['activ'],
-                $post['token']
+                $post['token'],
+                $img[$post['gender']]
             ));
     }
 
@@ -68,18 +76,39 @@ class UserModel extends \App\Constructor
         return $req->fetch();
     }
     
-    public function updateUser()
+    public function updateUser($data)
     {
         $post = array();
-        foreach ($_POST as $value)
-            $post[] = $value;
-        array_pop($post);
-        $post[] = $_SESSION['id'];
+        if ('' === 'post')
+        { 
+            foreach ($_POST as $key => $value)
+                $post[$key] = $value;
+        }
+        else
+            $post = $data;
         $req = $this->db->prepare('
             UPDATE user
-            SET pseudo = ?, email = ?, forname = ?, name = ?, birthdate = ?, gender = ?, sexuality = ?, biography = ?
-            where id = ?');
-        $req->execute($post);
+            SET pseudo = ?,
+                email = ?,
+                forname = ?,
+                name = ?,
+                birthdate = ?,
+                gender = ?,
+                sexuality = ?,
+                biography = ?
+            where pseudo = ?'
+        );
+        $req->execute(array(
+                $post['pseudo'],
+                $post['email'],
+                $post['forname'],
+                $post['name'],
+                $post['birthdate'],
+                $post['gender'],
+                $post['seuality'],
+                $post['biography'],
+                $_SESSION['pseudo']
+        ));
     }
     
     public function updatePassUser()

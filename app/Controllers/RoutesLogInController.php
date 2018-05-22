@@ -6,29 +6,8 @@ namespace App\Controllers;
  * class PagesController
  * this class is called by each routes
  */
-class RoutesController extends \App\Constructor
+class RoutesLogInController extends \App\Constructor
 {
-    /**
-     * @param $request requestInterface
-     * @param $response responseInterface
-     * @return twig view
-     */
-    public function home ($request, $response)
-    {
-        if (isset($_SESSION['id']))
-        {
-            return $this->view->render(
-                $response,
-                'templates/home/home.html.twig',
-                [
-                    'profil' => $this->user->getUser($_SESSION['pseudo'])
-                ]
-            );
-        }
-        else
-            return $response->withRedirect('/login');
-    }
-    
     /**
      * @param $request requestInterface
      * @param $response responseInterface
@@ -82,7 +61,7 @@ class RoutesController extends \App\Constructor
      * @param $response responseInterface
      * @return redirection to home
      */
-    public function reInitPassword ($request, $response)
+    public function resetPassword ($request, $response)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']))
         {
@@ -90,13 +69,13 @@ class RoutesController extends \App\Constructor
             {
                 $account['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
                 $this->user->updateToken($account['pseudo'], $account['token']);
-                $this->mail->sendReInitMail($account['pseudo'], $account['email'], $account['token']);
+                $this->mail->sendResetMail($account['pseudo'], $account['email'], $account['token']);
                 return $response->withRedirect('/');
             }
             var_dump('unknown mail');
         }
         else
-            return $this->view->render($response, 'templates/logForm/reInitPassword.html.twig');
+            return $this->view->render($response, 'templates/logForm/resetPassword.html.twig');
     }
 
     /**
@@ -121,49 +100,5 @@ class RoutesController extends \App\Constructor
     {
         session_destroy();
         return $response->withRedirect('/login');
-    }
-
-    /**
-     * @param $request requestInterface
-     * @param $response responseInterface
-     * @return twig view
-     */
-    public function profil ($request, $response)
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            if ($this->form->checkProfil($request))
-                $this->user->updateUser();
-            return $response->withRedirect('/home');
-        }
-        else
-        {
-            return $this->view->render(
-                $response,
-                'templates/home/profil.html.twig',
-                [
-                    'profil' => $this->user->getUser($_SESSION['pseudo']),
-                    'characters' => $this->characters,
-                    'sexualPattern' => $this->sexualPattern,
-                ]
-            );
-        }
-    }
-
-    /**
-     * @param $request requestInterface
-     * @param $response responseInterface
-     * @return twig view
-     */
-    public function password ($request, $response)
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            if ($_POST['password'] === $_POST['password1'] && $this->form->check($request))
-                $this->user->updatePassUser();
-            return $response->withRedirect('/profil');
-        }
-        else
-            return $this->view->render($response, 'templates/home/password.html.twig');
     }
 }

@@ -9,8 +9,8 @@
 
 {% block content %}
 <div>
-    <form action='{{ path_for('profil') }}' method="post" class="w3-left-align">
-        <a href='{{ path_for('password') }}'>change your password</a>
+    <form action='{{ path_for('editProfil') }}' method="post" class="w3-left-align">
+        <a href='{{ path_for('editPassword') }}'>change your password</a>
         <div class="w3-section">
             {{ input('text', 'pseudo', {'value': profil.pseudo}) }}
         </div>
