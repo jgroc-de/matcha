@@ -2,24 +2,15 @@
 
 {% block content %}
     <h2>Members</h2>
-    {% set i = 0 %}
     {% for user in users %}
-        {% if i == 0 %}
-            <div class="w3-row">
-        {% endif %}
-        <div class="w3-third w3-padding">
-            <div class="w3-card">
-                <a href="/profil/{{ user.id }}">
-                    <img src="../{{ user.img }}" style="width:100%">
-                    <div class="w3-container">
-                        <span>{{ user.pseudo }}</span><br>
-                        <span>{{ user.gender }}</span>
-                    </div>
-                </a>
-            </div>
-            {% if i == 2 %}
+        <a href="/profil/{{ user.id }}">
+            <div class="w3-bar w3-border w3-theme-l3" style="width:100%">
+                <img src="../{{ user.img }}" class="w3-bar-item" style="width:120px">
+                <div class="w3-container w3-bar-item">
+                    <span>{{ user.pseudo }}</span><br>
+                    <span>{{ user.gender }}</span>
                 </div>
-            {% endif %}
             </div>
+        </a>
     {% endfor %}
 {% endblock %}
