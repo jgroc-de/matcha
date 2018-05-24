@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controllers;
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * class PagesController
@@ -9,11 +11,11 @@ namespace App\Controllers;
 class RoutesHomeController extends \App\Constructor
 {
     /**
-     * @param $request requestInterface
+     * @param request $request requestInterface
      * @param $response responseInterface
      * @return twig view
      */
-    public function home ($request, $response)
+    public function home (request $request, response $response)
     {
         return $this->view->render(
             $response,
@@ -26,11 +28,11 @@ class RoutesHomeController extends \App\Constructor
     }
 
     /**
-     * @param $request requestInterface
+     * @param request $request requestInterface
      * @param $response responseInterface
      * @return twig view
      */
-    public function profil ($request, $response, $args)
+    public function profil (request $request, response $response, $args)
     {
         if(!empty($user = $this->user->getUserById($args['id'])))
         {
@@ -46,11 +48,11 @@ class RoutesHomeController extends \App\Constructor
     }
 
     /**
-     * @param $request requestInterface
+     * @param request $request requestInterface
      * @param $response responseInterface
      * @return twig view
      */
-    public function search ($request, $response)
+    public function search (request $request, response $response)
     {
         return $this->view->render(
             $response,
@@ -62,11 +64,11 @@ class RoutesHomeController extends \App\Constructor
     }
 
     /**
-     * @param $request requestInterface
+     * @param request $request requestInterface
      * @param $response responseInterface
      * @return twig view
      */
-    public function editProfil ($request, $response)
+    public function editProfil (request $request, response $response)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
@@ -89,11 +91,11 @@ class RoutesHomeController extends \App\Constructor
     }
 
     /**
-     * @param $request requestInterface
+     * @param request $request requestInterface
      * @param $response responseInterface
      * @return twig view
      */
-    public function editPassword ($request, $response)
+    public function editPassword (request $request, response $response)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {

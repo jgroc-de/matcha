@@ -19,10 +19,10 @@ $app->any('/signup', RoutesLogInController::class . ':signup')->setName('signup'
 $app->get('/validation', RoutesLogInController::class . ':validation')->setName('validation');
 $app->any('/resetPassword', RoutesLogInController::class . ':resetPassword')->setName('resetPassword');
 
-$app->get('/', RoutesHomeController::class . ':home')->setName('home');
-$app->get('/search', RoutesHomeController::class . ':search')->setName('search');
-$app->get('/profil/{id}', RoutesHomeController::class . ':profil')->setName('profil/{id}');
-$app->any('/profil', RoutesHomeController::class . ':editProfil')->setName('editProfil');
-$app->any('/password', RoutesHomeController::class . ':editPassword')->setName('editPassword');
+$app->get('/', RoutesHomeController::class . ':home')->setName('home')->add(new \App\Middlewares\authMiddleware());
+$app->get('/search', RoutesHomeController::class . ':search')->setName('search')->add(new \App\Middlewares\authMiddleware());
+$app->get('/profil/{id}', RoutesHomeController::class . ':profil')->setName('profil/{id}')->add(new \App\Middlewares\authMiddleware());
+$app->any('/profil', RoutesHomeController::class . ':editProfil')->setName('editProfil')->add(new \App\Middlewares\authMiddleware());
+$app->any('/password', RoutesHomeController::class . ':editPassword')->setName('editPassword')->add(new \App\Middlewares\authMiddleware());
 
 $app->run();

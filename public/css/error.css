@@ -1,0 +1,22 @@
+main {
+    background: none;
+    background: #371b0f;
+}
+
+footer, header{
+    position: fixed;
+    left: 0;
+    width: 100vw;
+    margin:0;
+ }
+
+header {
+    bottom: 5vh;
+    height: 10vh;
+    padding: 0px 20px;
+}
+
+footer {
+    bottom: 0;
+    height: 5vh;
+}

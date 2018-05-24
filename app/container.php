@@ -31,17 +31,6 @@ $container['db'] = function ($container) {
 };
 
 /**
- * database controller called only to create th database
- */
-$container['dbCreate'] = function ($container) {
-    $db = $container['settings']['db'];
-    $pdo = new PDO('mysql:host=' . $db['host'], $db['user'], $db['pass']);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    return $pdo;
-};
-
-/**
  * @class UserModel
  */
 $container['user'] = function ($container) { 
@@ -65,4 +54,12 @@ $container['debug'] = function ($container) {
 
 $container['mail'] = function () {
     return new \App\Lib\MailSender();
+};
+
+$container['notFoundHandler'] = function ($container) {
+    return new \App\Lib\CustomError($container);
+};
+
+$container['notAllowedHandler'] = function ($container) {
+    return new \App\Lib\CustomError($container);
 };

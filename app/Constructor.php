@@ -15,12 +15,12 @@ class Constructor
     protected $sexualPattern = ['bi', 'homo', 'hetero'];
 
     /**
-     * @var array : for $container
+     * @var \Slim\Container : for $container
      */
     protected $container;
 
     /**
-     * @param $container array
+     * @param \Slim\Container $container
      */
     public function __construct($container)
     {
@@ -33,7 +33,7 @@ class Constructor
      */
     public function __get($name)
     {
-        //if (isset($container[$name]))
+        if (isset($this->container[$name]))
             return $this->container->get($name);
     }
 }

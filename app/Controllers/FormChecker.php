@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use \Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * class FormController
@@ -13,7 +14,7 @@ class FormChecker extends \App\Constructor
      * @return string error if any
      * à transformer en middleware
      */
-    public function check ($request)
+    public function check (request $request)
     {
         $post = $request->getParams();
         if ($this->validator->validate($post, array_keys($post)))
@@ -26,7 +27,7 @@ class FormChecker extends \App\Constructor
      * @param $request requestInterface
      * @return string error if any
      */
-    public function checkLogin ($request)
+    public function checkLogin (request $request)
     {
         if (($post = $this->check($request)))
         {
@@ -40,10 +41,10 @@ class FormChecker extends \App\Constructor
                     $_SESSION['id'] = $account['id'];
                 }
                 else
-                    return "mauvais mot de passe";
+                    return "wrong password";
             } 
             else
-                return "mauvais login";
+                return "wrong login";
         }
     }
 
@@ -51,21 +52,22 @@ class FormChecker extends \App\Constructor
      * @param $request requestInterface
      * @return string error if any
      */
-    public function checkSignup ($request)
+    public function checkSignup (request $request)
     {
+        $user = $this->container->user;
         if (($post = $this->check($request)))
         {
             $post['activ'] = 0;
             $post['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
-            if (empty($this->user->getuser($post['pseudo'])))
+            if (empty($user->getUser($post['pseudo'])))
             {
-                $this->user->setUser($post);
-                $account = $this->user->getUser($post['pseudo']);
+                $user->setUser($post);
+                $account = $user->getUser($post['pseudo']);
                 $this->mail->sendValidationMail($account['pseudo'], $account['email'], $account['token']);
                 var_dump('mail sent');
             }
             else
-                var_dump("pseudo deja pris");
+                var_dump("pseudo already taken");
         }
     }
 
@@ -73,19 +75,20 @@ class FormChecker extends \App\Constructor
      * @param $request requestInterface
      * @return string error if any
      */
-    public function checkProfil ($request)
+    public function checkProfil (request $request)
     {
+        $user = $this->container->user;
         if (($post = $this->check($request)))
         {
-            if (empty($this->user->getUser($post['pseudo'])) || $post['pseudo'] === $_SESSION['pseudo'])
+            if (empty($user->getUser($post['pseudo'])) || $post['pseudo'] === $_SESSION['pseudo'])
             {
-                $this->user->updateUser($post);
+                $user->updateUser($post);
                 $_SESSION['pseudo'] = $post['pseudo']; 
                 var_dump('done');
                 return $post;
             }
             else
-                var_dump("pseudo deja pris");
+                var_dump("pseudo already taken");
         }
     }
 

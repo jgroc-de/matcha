@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controllers;
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * class PagesController
@@ -13,7 +15,7 @@ class RoutesLogInController extends \App\Constructor
      * @param $response responseInterface
      * @return twig view
      */
-    public function signup ($request, $response)
+    public function signup (request $request, response $response)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
@@ -39,7 +41,7 @@ class RoutesLogInController extends \App\Constructor
      * @param $response responseInterface
      * @return redirection to home
      */
-    public function validation ($request, $response)
+    public function validation (request $request, response $response)
     {
         $get = $request->getParams();
         $account = $this->user->getUser($get['login']);
@@ -61,14 +63,15 @@ class RoutesLogInController extends \App\Constructor
      * @param $response responseInterface
      * @return redirection to home
      */
-    public function resetPassword ($request, $response)
+    public function resetPassword (request $request, response $response)
     {
+        $user = $this->container->user;
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']))
         {
-            if (!empty(($account = $this->user->getUserByEmail($_POST['email']))))
+            if (!empty(($account = $user->getUserByEmail($_POST['email']))))
             {
                 $account['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
-                $this->user->updateToken($account['pseudo'], $account['token']);
+                $user->updateToken($account['pseudo'], $account['token']);
                 $this->mail->sendResetMail($account['pseudo'], $account['email'], $account['token']);
                 return $response->withRedirect('/');
             }
@@ -83,7 +86,7 @@ class RoutesLogInController extends \App\Constructor
      * @param $response responseInterface
      * @return twig view
      */
-    public function login ($request, $response)
+    public function login (request $request, response $response)
     {
         $this->form->checkLogin($request, $response);
         if (isset($_SESSION['id']))
@@ -96,7 +99,7 @@ class RoutesLogInController extends \App\Constructor
      * @param $response responseInterface
      * @return twig view
      */
-    public function logout ($request, $response)
+    public function logout (request $request, response $response)
     {
         session_destroy();
         return $response->withRedirect('/login');

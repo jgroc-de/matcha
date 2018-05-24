@@ -1,0 +1,17 @@
+{% extends 'layout.html.twig' %}
+
+{% block head %}
+<link rel="stylesheet" href="css/error.css" type="text/css"/>
+{% endblock %}
+
+{% block header %}
+<a href='{{ path_for('home') }}'><h1>Match a Rick&Morty</h1></a>
+<h3>even if it's such a pain in the ass</h3>
+{% endblock %}
+
+{% block main %}
+    <h1 class="w3-left w3-jumbo w3-text-white">
+    {{ error }}
+    </h1>
+    <img src="../img/error.jpg" style="width:100%">
+{% endblock %}
