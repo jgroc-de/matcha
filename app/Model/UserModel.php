@@ -79,13 +79,14 @@ class UserModel extends \App\Constructor
     public function updateUser($data)
     {
         $post = array();
-        if ('' === 'post')
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')
         { 
             foreach ($_POST as $key => $value)
                 $post[$key] = $value;
         }
         else
             $post = $data;
+        $this->debug->ft_print($post);
         $req = $this->db->prepare('
             UPDATE user
             SET pseudo = ?,

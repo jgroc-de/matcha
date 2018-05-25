@@ -74,7 +74,7 @@ class Validator
         return in_array($test, $this->characters);
     }
     
-    public function sexual_orientation($test)
+    public function sexuality($test)
     {
         return in_array($test, $this->sexualPattern);
     }

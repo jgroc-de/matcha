@@ -45,15 +45,15 @@
         </div>
         <div>
             {{ select({
-            'label': 'sexual orientation',
+            'label': 'orientation',
             'array': sexualPattern,
             'select': profil.sexuality,
-            'name': sexuality
+            'name': 'sexuality'
             }) 
             }}
         </div>
         <div>
-            {{ textarea({'label': 'Biography', 'value': profil.biography}) }}
+            {{ textarea({'label': 'Biography', 'name': 'biography', 'value': profil.biography}) }}
         </div>
         <div class="w3-section">
             {{ button('submit') }}

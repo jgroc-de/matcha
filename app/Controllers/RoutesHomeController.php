@@ -74,7 +74,7 @@ class RoutesHomeController extends \App\Constructor
         {
             if ($this->form->checkProfil($request))
                 $this->user->updateUser();
-            return $response->withRedirect('/home');
+            return $response->withRedirect('/');
         }
         else
         {

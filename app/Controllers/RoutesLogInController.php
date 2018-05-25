@@ -73,12 +73,12 @@ class RoutesLogInController extends \App\Constructor
                 $account['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
                 $user->updateToken($account['pseudo'], $account['token']);
                 $this->mail->sendResetMail($account['pseudo'], $account['email'], $account['token']);
-                return $response->withRedirect('/');
+                $this->flash->addMessage('Success', 'Seems good, mail sent');
             }
-            var_dump('unknown mail');
+            else
+                $this->flash->addMessage('Failure', "It's a major fail… unknown mail");
         }
-        else
-            return $this->view->render($response, 'templates/logForm/resetPassword.html.twig');
+        return $this->view->render($response, 'templates/logForm/resetPassword.html.twig');
     }
 
     /**

@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Controllers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
@@ -7,7 +7,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
  * class SetupModel
  * generate fake profil
  */
-class Setup extends Constructor
+class SetupController extends \App\Constructor
 {
     public function init (request $request, response $response)
     {
