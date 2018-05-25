@@ -30,8 +30,8 @@ class FormChecker extends \App\Constructor
         {
             if (!empty($account = $this->user->getUser($post['pseudo'])))
             {
-                if ($account['activ'] === false)
-                    $this->flash->addMessage('failure', 'inactiv account');
+                if ($account['activ'] == 0)
+                    $this->flash->addMessage('failure', 'account need activation');
                 elseif ($this->checkPassword($account['password'], $post['password']))
                 {
                     $_SESSION['pseudo'] = $account['pseudo'];
