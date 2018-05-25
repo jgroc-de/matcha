@@ -15,16 +15,16 @@ or <a href='{{ path_for('login') }}'>log in</a>
 
 {% block form %}
 <div class="w3-section">
-    {{ input('text', 'pseudo') }}
+    {{ input('text', 'pseudo', {'value': post.pseudo}) }}
 </div>
 <div class="w3-section">
     {{ input('password') }}
 </div>
 <div class="w3-section">
-    {{ input('email') }}
+    {{ input('email', 'email', {'value': post.email }) }}
 </div>
 <div class="w3-section">
-    {{ select({'label': 'you are a', 'name': 'gender', 'array': characters}) }}
+    {{ select({'label': 'you are a', 'name': 'gender', 'array': characters, 'select': post.gender}) }}
 </div>
 <div class="w3-section">
     {{ button('submit') }}

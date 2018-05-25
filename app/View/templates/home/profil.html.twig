@@ -9,6 +9,15 @@
 
 {% block content %}
 <div>
+    {% for key, message in flash %}
+        {% if key == "success" %}
+            <div class="w3-panel w3-green">
+        {% else %}
+            <div class="w3-panel w3-red">
+        {% endif %}
+        <p>{{ message }}</p>
+            </div>
+    {% endfor %}
     <form action='{{ path_for('editProfil') }}' method="post" class="w3-left-align">
         <a href='{{ path_for('editPassword') }}'>change your password</a>
         <div class="w3-section">

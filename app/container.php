@@ -56,6 +56,10 @@ $container['mail'] = function () {
     return new \App\Lib\MailSender();
 };
 
+$container['flash'] = function () {
+    return new \App\Lib\FlashMessage();
+};
+
 $container['notFoundHandler'] = function ($container) {
     return new \App\Lib\CustomError($container);
 };

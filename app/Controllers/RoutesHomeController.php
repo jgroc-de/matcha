@@ -73,21 +73,22 @@ class RoutesHomeController extends \App\Constructor
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             if ($this->form->checkProfil($request))
+            {
                 $this->user->updateUser();
-            return $response->withRedirect('/home');
+                $this->flash->addMessage('success', 'profil updated!');
+            }
         }
-        else
-        {
-            return $this->view->render(
-                $response,
-                'templates/home/profil.html.twig',
-                [
-                    'profil' => $this->user->getUser($_SESSION['pseudo']),
-                    'characters' => $this->characters,
-                    'sexualPattern' => $this->sexualPattern,
-                ]
-            );
-        }
+        return $this->view->render(
+            $response,
+            'templates/home/profil.html.twig',
+            [
+                'profil' => $this->user->getUser($_SESSION['pseudo']),
+                'characters' => $this->characters,
+                'sexualPattern' => $this->sexualPattern,
+                'flash' => $this->flash->getMessages(),
+                'post' => $_POST
+            ]
+        );
     }
 
     /**
@@ -97,13 +98,22 @@ class RoutesHomeController extends \App\Constructor
      */
     public function editPassword (request $request, response $response)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $this->form->check($request))
         {
-            if ($_POST['password'] === $_POST['password1'] && $this->form->check($request))
+            if ($_POST['password'] === $_POST['password1'])
+            {
                 $this->user->updatePassUser();
-            return $response->withRedirect('/profil');
+                $this->flash->addMessage('success', 'password updated!');
+            }
+            else
+                $this->flash->addMessage('fail', 'passwords doesnt match');
         }
-        else
-            return $this->view->render($response, 'templates/home/password.html.twig');
+        return $this->view->render(
+            $response,
+            'templates/home/password.html.twig',
+            [
+                'flash' => $this->flash->getMessages(),
+            ]
+        );
     }
 }
