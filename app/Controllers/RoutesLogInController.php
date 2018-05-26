@@ -18,24 +18,20 @@ class RoutesLogInController extends \App\Constructor
     public function signup (request $request, response $response)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
             $this->form->checkSignup($request, $response);
-            return $response->withRedirect('/login');
-        }
-        else
-        {
-            return $this->view->render(
-                $response,
-                'templates/logForm/signup.html.twig',
-                [
-                    'characters' => $this->characters
-                ]
-            );
-        }
+        return $this->view->render(
+            $response,
+            'templates/logForm/signup.html.twig',
+            [
+                'characters' => $this->characters,
+                'flash' => $this->flash->getMessages(),
+                'post' => $_POST
+            ]
+        );
     }
 
     /**
-     * validation of an ccount
+     * validation of an account
      *
      * @param $request requestInterface
      * @param $response responseInterface
@@ -73,12 +69,19 @@ class RoutesLogInController extends \App\Constructor
                 $account['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
                 $user->updateToken($account['pseudo'], $account['token']);
                 $this->mail->sendResetMail($account['pseudo'], $account['email'], $account['token']);
-                $this->flash->addMessage('Success', 'Seems good, mail sent');
+                $this->flash->addMessage('success', 'Check your mail!');
             }
             else
-                $this->flash->addMessage('Failure', "It's a major fail… unknown mail");
+                $this->flash->addMessage('failure', 'unknown mail address…');
         }
-        return $this->view->render($response, 'templates/logForm/resetPassword.html.twig');
+        return $this->view->render(
+            $response,
+            'templates/logForm/resetPassword.html.twig',
+            [
+                'flash' => $this->flash->getMessages(),
+                'post' => $_POST
+            ]
+        );
     }
 
     /**
@@ -91,7 +94,14 @@ class RoutesLogInController extends \App\Constructor
         $this->form->checkLogin($request, $response);
         if (isset($_SESSION['id']))
             return $response->withRedirect('/');
-        return $this->view->render($response, 'templates/logForm/login.html.twig');
+        return $this->view->render(
+            $response,
+            'templates/logForm/login.html.twig',
+            [
+                'flash' => $this->flash->getMessages(),
+                'post' => $_POST
+            ]
+        );
     }
     
     /**

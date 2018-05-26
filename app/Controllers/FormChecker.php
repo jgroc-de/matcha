@@ -11,7 +11,6 @@ class FormChecker extends \App\Constructor
 {
     /**
      * @param $request requestInterface
-     * @return string error if any
      * à transformer en middleware
      */
     public function check (request $request)
@@ -19,13 +18,11 @@ class FormChecker extends \App\Constructor
         $post = $request->getParams();
         if ($this->validator->validate($post, array_keys($post)))
             return $post;
-        var_dump('burp!');
-        return null;
+        $this->flash->addMessage('failure', 'burp!');
     }
 
     /**
      * @param $request requestInterface
-     * @return string error if any
      */
     public function checkLogin (request $request)
     {
@@ -33,18 +30,18 @@ class FormChecker extends \App\Constructor
         {
             if (!empty($account = $this->user->getUser($post['pseudo'])))
             {
-                if ($account['activ'] === false)
-                    return "compte inactif";
+                if ($account['activ'] == 0)
+                    $this->flash->addMessage('failure', 'account need activation');
                 elseif ($this->checkPassword($account['password'], $post['password']))
                 {
                     $_SESSION['pseudo'] = $account['pseudo'];
                     $_SESSION['id'] = $account['id'];
                 }
                 else
-                    return "wrong password";
-            } 
+                    $this->flash->addMessage('failure', 'wrong password');
+            }
             else
-                return "wrong login";
+                $this->flash->addMessage('failure', 'wrong login');
         }
     }
 
@@ -64,10 +61,10 @@ class FormChecker extends \App\Constructor
                 $user->setUser($post);
                 $account = $user->getUser($post['pseudo']);
                 $this->mail->sendValidationMail($account['pseudo'], $account['email'], $account['token']);
-                var_dump('mail sent');
+                $this->flash->addMessage('success', 'mail sent! Check yourmail box (including trash, spam, whatever…)');
             }
             else
-                var_dump("pseudo already taken");
+                $this->flash->addMessage('failure', 'pseudo already taken');
         }
     }
 
@@ -84,11 +81,11 @@ class FormChecker extends \App\Constructor
             {
                 $user->updateUser($post);
                 $_SESSION['pseudo'] = $post['pseudo']; 
-                var_dump('done');
+                $this->flash->addMessage('success', 'done');
                 return $post;
             }
             else
-                var_dump("pseudo already taken");
+                $this->flash->addMessage('failure', 'pseudo already taken');
         }
     }
 

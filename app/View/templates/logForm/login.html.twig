@@ -16,7 +16,7 @@ or <a href='{{ path_for('signup') }}'>sign up</a>
 
 {% block form %}
 <div class="w3-section">
-    {{ input('text', 'pseudo') }}
+    {{ input('text', 'pseudo', {'value': post.pseudo}) }}
 </div>
 <div class="w3-section">
     {{ input('password') }}

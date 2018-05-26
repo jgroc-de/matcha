@@ -46,7 +46,7 @@ class MailSender
      * @param $dest string mail
      * @param $token string hash key
      */
-    public function sendReInitMail($login, $dest, $token)
+    public function sendResetMail($login, $dest, $token)
     {
         $subject = 'Matcha Reinitialisation link';
         $header = 'From: jgroc2s@free.fr';
