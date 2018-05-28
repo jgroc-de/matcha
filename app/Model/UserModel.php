@@ -13,7 +13,7 @@ class UserModel extends \App\Constructor
      */
     public function getUsers()
     {
-        $req = $this->db->query('select * from user');
+        $req = $this->db->query('SELECT * FROM user LIMIT 40');
         return $req->fetchAll();
     }
 
@@ -96,7 +96,9 @@ class UserModel extends \App\Constructor
                 birthdate = ?,
                 gender = ?,
                 sexuality = ?,
-                biography = ?
+                biography = ?,
+                lattitude = ?,
+                longitude = ?
             where pseudo = ?'
         );
         $req->execute(array(
@@ -108,6 +110,8 @@ class UserModel extends \App\Constructor
                 $post['gender'],
                 $post['sexuality'],
                 $post['biography'],
+                $post['lattitude'],
+                $post['longitude'],
                 $_SESSION['pseudo']
         ));
     }

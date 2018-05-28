@@ -19,10 +19,12 @@ $app->any('/signup', LogIn::class . ':signup')->setName('signup');
 $app->get('/validation', LogIn::class . ':validation')->setName('validation');
 $app->any('/resetPassword', LogIn::class . ':resetPassword')->setName('resetPassword');
 
-$app->get('/', Home::class . ':home')->setName('home')->add(new \App\Middlewares\authMiddleware());
-$app->get('/search', Home::class . ':search')->setName('search')->add(new \App\Middlewares\authMiddleware());
-$app->get('/profil/{id}', Home::class . ':profil')->setName('profil/{id}')->add(new \App\Middlewares\authMiddleware());
-$app->any('/profil', Home::class . ':editProfil')->setName('editProfil')->add(new \App\Middlewares\authMiddleware());
-$app->any('/password', Home::class . ':editPassword')->setName('editPassword')->add(new \App\Middlewares\authMiddleware());
+$app->group('', function () {
+    $this->get('/', Home::class . ':home')->setName('home');
+    $this->get('/search', Home::class . ':search')->setName('search');
+    $this->get('/profil/{id}', Home::class . ':profil')->setName('profil/{id}');
+    $this->any('/profil', Home::class . ':editProfil')->setName('editProfil');
+    $this->any('/password', Home::class . ':editPassword')->setName('editPassword');
+})->add(new \App\Middlewares\authMiddleware());
 
 $app->run();

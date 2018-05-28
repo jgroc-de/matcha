@@ -7,7 +7,7 @@
        {% for key, value in hash if key != name %}
            {{ key }}="{{ value }}"
        {% endfor %}
-       {% if hash.type == 'password' %}
+       {% if type == 'password' %}
        pattern="{{ hash.pattern|default('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}') }}"
        {% endif %}
        required>

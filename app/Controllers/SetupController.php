@@ -19,7 +19,7 @@ class SetupController extends \App\Constructor
         $pdo->exec('DROP DATABASE IF EXISTS ' . $db['dbname']);
         $pdo->exec('CREATE DATABASE ' . $db['dbname']);
         $pdo->exec('USE ' . $db['dbname']);
-        $file = file_get_contents(__DIR__ . '/../database/matcha.sql');
+        $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
         $this->db->exec($file);
     } 
 
@@ -48,6 +48,8 @@ class SetupController extends \App\Constructor
             $profil['password'] = 'trollB1';
             $profil['activ'] = 1;
             $profil['token'] = 'a';
+            $profil['lattitude'] = rand(488000, 489100) / 10000;
+            $profil['longitude'] = rand(22200, 24200) / 10000;
             $user->setUser($profil);
             $user->updateUser($profil);
         }

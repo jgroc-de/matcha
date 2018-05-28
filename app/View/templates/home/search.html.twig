@@ -1,16 +1,38 @@
 {% extends 'templates/home.html.twig' %}
 
 {% block content %}
-    <h2>Members</h2>
-    {% for user in users %}
-        <a href="/profil/{{ user.id }}">
-            <div class="w3-bar w3-border w3-theme-l3" style="width:100%">
-                <img src="../{{ user.img }}" class="w3-bar-item" style="width:120px">
-                <div class="w3-container w3-bar-item">
-                    <span>{{ user.pseudo }}</span><br>
-                    <span>{{ user.gender }}</span>
-                </div>
+<div id="map" style="height:300px"></div>
+<h2>Members</h2>
+{% for user in users %}
+    <a href="/profil/{{ user.id }}">
+        <div class="w3-bar w3-border w3-theme-l3" style="width:100%">
+            <img src="../{{ user.img }}" class="w3-bar-item" style="width:120px">
+            <div class="w3-container w3-bar-item">
+                <span>{{ user.pseudo }}</span><br>
+                <span>{{ user.gender }}</span>
             </div>
-        </a>
-    {% endfor %}
+        </div>
+    </a>
+{% endfor %}
+{% endblock %}
+
+{% block script %}
+<script>
+var myPos = navigator.geolocation.getCurrentPosition(success);
+    console.log(myPos);
+function success(pos) {
+    myPos =  {lat: pos.coords.latitude, lng: pos.coords.longitude};
+    console.log(myPos);
+}
+var myPos = {lat: 48.890, lng: 2.520};
+var usersPos = [
+{% for user in users %}
+{lat: {{ user.lattitude }}, lng: {{ user.longitude }}, title: '{{ user.pseudo }}', img: '{{ user.img }}', id: '{{ user.id }}'},
+{% endfor %}
+];
+</script>
+<script src="js/map.js">
+</script>
+<script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap">
+</script>
 {% endblock %}
