@@ -38,5 +38,33 @@
     <div class="w3-third w3-left">
         <h3>{{ your }}Friends</h3>
     </div>
+        <h3>{{ your }}Localisation</h3>
+    <div id="map" style="height:300px">
+    </div>
 </div>
 {% endblock %}
+
+{% block script %}
+<script>
+/*var myPos2 = navigator.geolocation.getCurrentPosition(success);
+    console.log(myPos2);
+function success(pos) {
+    myPos =  {lat: pos.coords.latitude, lng: pos.coords.longitude};
+}*/
+
+var user =  {lat: {{ profil.lattitude }}, lng: {{ profil.longitude }}, title: '{{ profil.pseudo }}'};
+
+function initMap() {
+    var map = new google.maps.Map(
+            document.getElementById('map'),
+            {center: user, zoom: 11}
+            );
+    var marker = new google.maps.Marker({
+        position: user,
+        map: map,
+        title: user.title
+    });
+}
+</script>
+<script defer async src="https://maps.googleapis.com/maps/api/js?key=MY_KEY&callback=initMap"></script>
+{%endblock %}

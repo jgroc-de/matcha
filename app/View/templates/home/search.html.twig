@@ -24,14 +24,7 @@
 {% endblock %}
 
 {% block script %}
-<script src="googleMap/markerclusterer/src/markerclusterer.js"></script>
 <script>
-var myPos = navigator.geolocation.getCurrentPosition(success);
-    console.log(myPos);
-function success(pos) {
-    myPos =  {lat: pos.coords.latitude, lng: pos.coords.longitude};
-    console.log(myPos);
-}
 var myPos = {lat: {{ me.lattitude }}, lng: {{ me.longitude }}};
 var usersPos = [
 {% for user in users %}
@@ -46,8 +39,8 @@ function closeInfo(id)
     document.getElementById('' + id).style.display = "none";
 }
 </script>
-<script src="js/map.js">
-</script>
-<script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap">
+<script src="js/map.js"></script>
+<script src="googleMap/markerclusterer/src/markerclusterer.js"></script>
+<script defer async src="https://maps.googleapis.com/maps/api/js?key=MY_KEY&callback=initMap">
 </script>
 {% endblock %}
