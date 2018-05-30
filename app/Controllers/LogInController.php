@@ -8,7 +8,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
  * class PagesController
  * this class is called by each routes
  */
-class RoutesLogInController extends \App\Constructor
+class LogInController extends \App\Constructor
 {
     /**
      * @param $request requestInterface
@@ -45,6 +45,7 @@ class RoutesLogInController extends \App\Constructor
         {
             $_SESSION['pseudo'] = $account['pseudo'];
             $_SESSION['id'] = $account['id'];
+            $_SESSION['profil'] = $account;
             if ($get['action'] === 'reinit')
                 return $response->withRedirect('/password');
             $this->user->activate();

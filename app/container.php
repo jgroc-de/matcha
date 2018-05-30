@@ -38,6 +38,13 @@ $container['user'] = function ($container) {
 };
 
 /**
+ * @class FriendsModel
+ */
+$container['friends'] = function ($container) { 
+    return new \App\Model\FriendsModel($container);
+};
+
+/**
  * etc…
  */
 $container['form'] = function ($container) { 

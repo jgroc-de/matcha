@@ -5,8 +5,8 @@
 <h2>Focus</h2>
 {% for user in users %}
 <div class="hide" id="{{ user.id }}">
-<div class="w3-bar w3-border w3-theme-l3" style="width:100%">
-        <a href="/profil/{{ user.id }}">
+    <div class="w3-bar w3-border w3-theme-l3" style="width:100%">
+        <a href="{{ path_for('profil', user) }}">
             <img src="../{{ user.img }}" class="w3-bar-item" style="width:120px">
             <div class="w3-container w3-bar-item">
                 <span>{{ user.pseudo }}</span><br>
@@ -41,6 +41,5 @@ function closeInfo(id)
 </script>
 <script src="js/map.js"></script>
 <script src="googleMap/markerclusterer/src/markerclusterer.js"></script>
-<script defer async src="https://maps.googleapis.com/maps/api/js?key=MY_KEY&callback=initMap">
-</script>
+<script defer async src="https://maps.googleapis.com/maps/api/js?key=AAAIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
 {% endblock %}

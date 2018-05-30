@@ -133,7 +133,7 @@ class UserModel extends \App\Constructor
         $req = $this->db->prepare('UPDATE user SET activ = 1 WHERE id = ?');
         $req->execute(array($_SESSION['id']));
     }
-
+    
     public function updateToken($pseudo, $token)
     {
         $req = $this->db->prepare('UPDATE user SET token = ? WHERE pseudo = ?');

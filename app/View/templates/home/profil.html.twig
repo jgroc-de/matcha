@@ -7,10 +7,20 @@
     {% set home = true %}
 {% endif %}
 <h2>{{ hi }}{{ profil.pseudo }}</h2>
+<div id="flash"></div>
+{% if home %}
+<a href='{{ path_for('editProfil') }}' class="w3-right">edit your profil</a><br>
+<a href='{{ path_for('editPassword') }}' class="w3-right">change your password</a>
+{% else %}
+<a href='#' class="w3-right" onclick="addFriend('{{ path_for('addFriend', profil ) }}')">add friend</a><br>
+<a href='#' class="w3-right" onclick="chat('{{ path_for('chat', profil) }}')">chat</a><br>
+{% endif %}
 <div class="w3-row">
     <div class="w3-card-4 w3-half">
         <img src='../{{ profil.img }}' alt='profil image' title='profil image' style="width:100%">
     </div>
+</div>
+<div class="w3-row">
     <div class="w3-half w3-padding">
         <h3>{{ your }}personnal information</h3>
         <p class="w3-left-align">
@@ -22,22 +32,23 @@
         {% if home %}you are {% else %} it's {% endif %}a: {{ profil.gender }}<br>
         orientation: {{ profil.sexuality }}<br>
         bio: {{ profil.biography }}<br>
-        {% if home %}
-        <a href='{{ path_for('editProfil') }}' class="w3-right">edit your profil</a>
-        {% endif %}
         </p>
     </div>
-</div>
-<div class="w3-theme-l5 w3-row">
-    <div class="w3-third w3-left">
+    <div class="w3-half w3-left">
         <h3>{{ your }}Interest</h3>
     </div>
-    <div class="w3-third w3-left">
+</div>
+{% if home %}
+<div class="w3-theme-l5 w3-row">
+    <div class="w3-half w3-left">
         <h3>{{ your }}Likes</h3>
     </div>
-    <div class="w3-third w3-left">
+    <div class="w3-half w3-left">
         <h3>{{ your }}Friends</h3>
     </div>
+</div>
+{% endif %}
+<div>
         <h3>{{ your }}Localisation</h3>
     <div id="map" style="height:300px">
     </div>
@@ -46,25 +57,37 @@
 
 {% block script %}
 <script>
-/*var myPos2 = navigator.geolocation.getCurrentPosition(success);
-    console.log(myPos2);
-function success(pos) {
-    myPos =  {lat: pos.coords.latitude, lng: pos.coords.longitude};
-}*/
+function addFriend(path)
+{
+    var xmlhttp = new XMLHttpRequest();
 
-var user =  {lat: {{ profil.lattitude }}, lng: {{ profil.longitude }}, title: '{{ profil.pseudo }}'};
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200)
+            document.getElementById("flash").textContent = this.responseText;
+        else
+            document.getElementById("flash").textContent = 'burp';
+    };
+    xmlhttp.open("GET", path, true);
+    xmlhttp.send();
+}
 
-function initMap() {
-    var map = new google.maps.Map(
-            document.getElementById('map'),
-            {center: user, zoom: 11}
-            );
-    var marker = new google.maps.Marker({
-        position: user,
-        map: map,
-        title: user.title
-    });
+function chat(path)
+{
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200)
+            document.getElementById("flash").textContent = this.responseText;
+        else
+            document.getElementById("flash").textContent = 'burp';
+    };
+    xmlhttp.open("GET", path, true);
+    xmlhttp.send();
 }
 </script>
-<script defer async src="https://maps.googleapis.com/maps/api/js?key=MY_KEY&callback=initMap"></script>
+<script>
+var user =  {lat: {{ profil.lattitude }}, lng: {{ profil.longitude }}, title: '{{ profil.pseudo }}'};
+</script>
+<script src="../js/geolocation.js"></script>
+<script defer async src="https://maps.googleapis.com/maps/api/js?key=AAAIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
 {%endblock %}

@@ -71,26 +71,24 @@
     <div id="mapholder"></div>
     <div id="map" style="height:100%"></div>
 </div>
+<script src="js/geolocation.js"></script>
 <script>
-if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var latlon = position.coords.latitude + "," + position.coords.longitude;
-        var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg";
-        document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
-    })
+var user;
+
+if (navigator.geolocation)
+{
+    navigator.geolocation.getCurrentPosition(success, error);
+    console.log(user);
 }
-</script>
-<script>
-    var map;
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 40.74135, lng: -73.9980},
-            zoom: 13
-        });
-    }
-</script>
-<script async defer
-         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&v=3&callback=initMap">
+if (!user)
+{
+    console.log('nop');
+    user =  {
+        lat: {{ profil.lattitude }},
+        lng: {{ profil.longitude }},
+    };
+}
+user.title = '{{ profil.pseudo }}';
 </script>
 {% endblock %}
 

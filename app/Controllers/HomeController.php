@@ -8,7 +8,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
  * class PagesController
  * this class is called by each routes
  */
-class RoutesHomeController extends \App\Constructor
+class HomeController extends \App\Constructor
 {
     /**
      * @param request $request requestInterface

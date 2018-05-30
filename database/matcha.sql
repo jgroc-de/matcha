@@ -36,10 +36,19 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `like`
+-- Table structure for table `friendsReq`
 --
 
-CREATE TABLE `like` (
+CREATE TABLE `friendsReq` (
+    `id_user1` INT(11) NOT NULL,
+    `id_user2` INT(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `friends`
+--
+
+CREATE TABLE `friends` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
