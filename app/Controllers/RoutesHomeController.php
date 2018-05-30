@@ -19,9 +19,9 @@ class RoutesHomeController extends \App\Constructor
     {
         return $this->view->render(
             $response,
-            'templates/home/home.html.twig',
+            'templates/home/profil.html.twig',
             [
-                'profil' => $this->user->getUser($_SESSION['pseudo']),
+                'profil' => $_SESSION['profil'],
                 'user' => $_SESSION
             ]
         );
@@ -38,7 +38,7 @@ class RoutesHomeController extends \App\Constructor
         {
             return $this->view->render(
                 $response,
-                'templates/home/home.html.twig',
+                'templates/home/profil.html.twig',
                 [
                     'profil' => $user,
                     'user' => $_SESSION
@@ -58,6 +58,7 @@ class RoutesHomeController extends \App\Constructor
             $response,
             'templates/home/search.html.twig',
             [
+                'me' => $_SESSION['profil'],
                 'users' => $this->user->getUsers()
             ]
         );
@@ -80,9 +81,9 @@ class RoutesHomeController extends \App\Constructor
         }
         return $this->view->render(
             $response,
-            'templates/home/profil.html.twig',
+            'templates/home/editProfil.html.twig',
             [
-                'profil' => $this->user->getUser($_SESSION['pseudo']),
+                'profil' => $_SESSION['profil'],
                 'characters' => $this->characters,
                 'sexualPattern' => $this->sexualPattern,
                 'flash' => $this->flash->getMessages(),
@@ -110,7 +111,7 @@ class RoutesHomeController extends \App\Constructor
         }
         return $this->view->render(
             $response,
-            'templates/home/password.html.twig',
+            'templates/home/editPassword.html.twig',
             [
                 'flash' => $this->flash->getMessages(),
             ]

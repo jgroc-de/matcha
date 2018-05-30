@@ -1,96 +1,42 @@
-{% extends "templates/home.html.twig" %}
-{% from 'macro/form/input.html.twig' import input %}
-{% from 'macro/form/button.html.twig' import button %}
-{% from 'macro/form/textarea.html.twig' import textarea %}
-{% from 'macro/form/select.html.twig' import select %}
-
-{% block title %}
-{% endblock %}
+{% extends 'templates/home.html.twig' %}
 
 {% block content %}
-<div>
-    {% for key, message in flash %}
-        {% if key == "success" %}
-            <div class="w3-panel w3-green">
-        {% else %}
-            <div class="w3-panel w3-red">
+{% if profil.id == user.id %}
+    {% set hi = 'Hi ' %}
+    {% set your = 'Your ' %}
+    {% set home = true %}
+{% endif %}
+<h2>{{ hi }}{{ profil.pseudo }}</h2>
+<div class="w3-row">
+    <div class="w3-card-4 w3-half">
+        <img src='../{{ profil.img }}' alt='profil image' title='profil image' style="width:100%">
+    </div>
+    <div class="w3-half w3-padding">
+        <h3>{{ your }}personnal information</h3>
+        <p class="w3-left-align">
+        {% if home %}
+        name: {{ profil.forname}} {{profil.name}}<br>
+        email: {{ profil.email }}<br>
         {% endif %}
-        <p>{{ message }}</p>
-            </div>
-    {% endfor %}
-    <form action='{{ path_for('editProfil') }}' method="post" class="w3-left-align">
-        <a href='{{ path_for('editPassword') }}'>change your password</a>
-        <div class="w3-section">
-            {{ input('text', 'pseudo', {'value': profil.pseudo}) }}
-        </div>
-        <div class="w3-section">
-            {{ input('email', 'email', {'value': profil.email}) }}
-        </div>
-        <div class="w3-section">
-            {{ input('text', 'forname', {'value': profil.forname}) }}
-        </div>
-        <div class="w3-section">
-            {{ input('text', 'name', {'value': profil.name}) }}
-        </div>
-        <div class="w3-section">
-            {{ input(
-            'number',
-            'birthdate',
-            {
-            'value': profil.birthdate,
-            'min': 1850,
-            'max': 2020,
-            'name': 'birthdate'
-            })
-            }}
-        </div>
-        <div>
-            {{ select({
-            'label': 'gender',
-            'array': characters,
-            'select': profil.gender,
-            })
-            }}
-        </div>
-        <div>
-            {{ select({
-            'label': 'orientation',
-            'array': sexualPattern,
-            'select': profil.sexuality,
-            'name': 'sexuality'
-            }) 
-            }}
-        </div>
-        <div>
-            {{ textarea({'label': 'Biography', 'name': 'biography', 'value': profil.biography}) }}
-        </div>
-        <div class="w3-section">
-            {{ button('submit') }}
-        </div>
-    </form>
-    <div id="mapholder"></div>
-    <div id="map" style="height:100%"></div>
+        age: {{ 2018 - profil.birthdate }}<br>
+        {% if home %}you are {% else %} it's {% endif %}a: {{ profil.gender }}<br>
+        orientation: {{ profil.sexuality }}<br>
+        bio: {{ profil.biography }}<br>
+        {% if home %}
+        <a href='{{ path_for('editProfil') }}' class="w3-right">edit your profil</a>
+        {% endif %}
+        </p>
+    </div>
 </div>
-<script>
-if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var latlon = position.coords.latitude + "," + position.coords.longitude;
-        var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg";
-        document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
-    })
-}
-</script>
-<script>
-    var map;
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 40.74135, lng: -73.9980},
-            zoom: 13
-        });
-    }
-</script>
-<script async defer
-         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&v=3&callback=initMap">
-</script>
+<div class="w3-theme-l5 w3-row">
+    <div class="w3-third w3-left">
+        <h3>{{ your }}Interest</h3>
+    </div>
+    <div class="w3-third w3-left">
+        <h3>{{ your }}Likes</h3>
+    </div>
+    <div class="w3-third w3-left">
+        <h3>{{ your }}Friends</h3>
+    </div>
+</div>
 {% endblock %}
-

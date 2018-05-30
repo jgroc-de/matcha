@@ -34,8 +34,8 @@ class FormChecker extends \App\Constructor
                     $this->flash->addMessage('failure', 'account need activation');
                 elseif ($this->checkPassword($account['password'], $post['password']))
                 {
-                    $_SESSION['pseudo'] = $account['pseudo'];
                     $_SESSION['id'] = $account['id'];
+                    $_SESSION['profil'] = $account;
                 }
                 else
                     $this->flash->addMessage('failure', 'wrong password');
