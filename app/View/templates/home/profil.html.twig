@@ -49,9 +49,9 @@
         <div class="w3-theme-l4 w3-margin w3-padding">
             <h3 class="w3-margin-bottom">{{ your }}Friend Request</h3>
             {% for req in friendReq %}
-                <div class=" w3-bar w3-theme-l1 w3-round-xxlarge">
+                <div class=" w3-bar w3-theme-l1 w3-round-xxlarge" id="req{{ req.id }}">
                     <a href="{{ path_for('profil', req) }}" class="w3-padding w3-hover-opacity">{{ req.pseudo }}</a>
-                    <button class="w3-button w3-theme-d1" style="border-radius:0 100px 100px 0">x</button>
+                    <button class="w3-button w3-theme-d1" style="border-radius:0 100px 100px 0" onclick="delFriendReq('{{ path_for('delFriendReq', req) }}', {{ req.id }})">x</button>
                 </div>
             {% endfor %}
         </div>
@@ -60,9 +60,9 @@
         <div class="w3-theme-l4 w3-margin w3-padding">
             <h3 class="w3-margin-bottom">{{ your }}Friends</h3>
             {% for friend in friends %}
-                <div class=" w3-bar w3-theme-l1 w3-round-xxlarge">
+                <div class=" w3-bar w3-theme-l1 w3-round-xxlarge" id="friend{{ friend.id }}">
                     <a href="{{ path_for('profil', friend) }}" class="w3-padding w3-hover-opacity">{{ friend.pseudo }}</a>
-                    <button class="w3-button w3-theme-d1" style="border-radius:0 100px 100px 0">x</button>
+                    <button class="w3-button w3-theme-d1" style="border-radius:0 100px 100px 0" onclick="delFriend('{{ path_for('delFriend', friend) }}', {{ friend.id }})">x</button>
                 </div>
             {% endfor %}
         </div>
@@ -77,10 +77,9 @@
 {% endblock %}
 
 {% block script %}
-{% if not home %}
+<script src="../js/delFriend.js"></script>
 <script src="../js/addFriend.js"></script>
 <script src="../js/openTchat.js"></script>
-{% endif %}
 <script>
 var user =  {lat: {{ profil.lattitude }}, lng: {{ profil.longitude }}, title: '{{ profil.pseudo }}'};
 </script>

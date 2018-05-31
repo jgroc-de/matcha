@@ -10,11 +10,30 @@ class AjaxController extends \App\Constructor
     {
         $response->getBody()->write(
             $this->container->friends->setFriendsReq(
-                $_SESSION['id'], $args['id']
+                $_SESSION['id'],
+                $args['id']
             ));
         return $response;
     }
     
+    public function delFriendRequest (Request $request, Response $response, array $args)
+    {
+        $this->container->friends->delFriendReq(
+            $_SESSION['id'],
+            $args['id']
+        );
+        return $response;
+    }
+
+    public function delFriend (Request $request, Response $response, array $args)
+    {
+        $this->container->friends->delFriend(
+            $_SESSION['id'],
+            $args['id']
+        );
+        return $response;
+    }
+
     public function tchat (Request $request, Response $response, array $args)
     {
         $friends = $this->container->friends;
