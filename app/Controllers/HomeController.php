@@ -22,7 +22,9 @@ class HomeController extends \App\Constructor
             'templates/home/profil.html.twig',
             [
                 'profil' => $_SESSION['profil'],
-                'user' => $_SESSION
+                'user' => $_SESSION,
+                'friendReq' => $this->friends->getFriendsReqs($_SESSION['id']),
+                'friends' => $this->friends->getFriends($_SESSION['id'])
             ]
         );
     }

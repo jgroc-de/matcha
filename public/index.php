@@ -26,11 +26,10 @@ $app->group('', function () {
     $this->get('/search', Home::class . ':search')->setName('search');
     $this->get('/profil/{id}', Home::class . ':profil')->setName('profil');
     $this->get('/addFriend/{id}', Ajax::class . ':friendRequest')->setName('addFriend');
-    $this->get('/chat/{id}', Ajax::class . ':chat')->setName('chat');
+    $this->get('/chat/{id}', Ajax::class . ':tchat')->setName('chat');
     $this->any('/editProfil', Home::class . ':editProfil')->setName('editProfil');
     $this->any('/editPassword', Home::class . ':editPassword')->setName('editPassword');
     $this->get('/logout', LogIn::class . ':logout')->setName('logout');
-
 })->add(new \App\Middlewares\authMiddleware());
 
 $app->run();

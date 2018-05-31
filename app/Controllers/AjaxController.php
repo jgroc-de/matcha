@@ -15,7 +15,7 @@ class AjaxController extends \App\Constructor
         return $response;
     }
     
-    public function chat (Request $request, Response $response, array $args)
+    public function tchat (Request $request, Response $response, array $args)
     {
         $friends = $this->container->friends;
         if ($friends->getFriend($_SESSION['id'], $args['id']))

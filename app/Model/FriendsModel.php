@@ -19,17 +19,52 @@ class FriendsModel extends \App\Constructor
         return $req->fetch();
     }
 
+    public function getFriends($id)
+    {
+        $req1 = $this->db->prepare('
+            SELECT *
+            FROM friends
+            INNER JOIN user
+            ON friends.id_user2 = user.id
+            WHERE id_user1 = ?
+        ');
+        $req2 = $this->db->prepare('
+            SELECT *
+            FROM friends
+            INNER JOIN user
+            ON friends.id_user1 = user.id
+            WHERE id_user2 = ?
+        ');
+        $req1->execute(array($id));
+        $req2->execute(array($id));
+        return array_merge($req1->fetchAll(), $req2->fetchAll());
+    }
+
     public function setFriend($id1, $id2)
     {
-        $req = $this->db->prepare('iNSERT INTO friends VALUES (?, ?)');
+        $this->deleteFriendsReqs($id1, $id2);
+        $this->deleteFriendsReqs($id2, $id1);
+        $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?)');
         $req->execute($this->sortId($id1, $id2));
+    }
+
+    public function deleteFriendsReqs($id1, $id2)
+    {
+        $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
+        $req->execute(array($id1, $id2));
     }
 
     public function getFriendsReqs($id)
     {
-        $req = $this->db->prepare('SELECT * FROM friendsReq WHERE id_user1 = ? OR id_user2 = ?');
-        $req->execute(array($id, $id));
-        return $req->fetch();
+        $req = $this->db->prepare('
+            SELECT *
+            FROM friendsReq
+            INNER JOIN user
+            ON friendsReq.id_user2 = user.id
+            WHERE id_user1 = ?
+        ');
+        $req->execute(array($id));
+        return $req->fetchAll();
     }
 
     public function getFriendReq($id1, $id2)

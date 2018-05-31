@@ -12,8 +12,9 @@
 <a href='{{ path_for('editProfil') }}' class="w3-right">edit your profil</a><br>
 <a href='{{ path_for('editPassword') }}' class="w3-right">change your password</a>
 {% else %}
-<a href='#' class="w3-right" onclick="addFriend('{{ path_for('addFriend', profil ) }}')">add friend</a><br>
-<a href='#' class="w3-right" onclick="chat('{{ path_for('chat', profil) }}')">chat</a><br>
+<a href='#' class="w3-right" onclick="addFriend('{{ path_for('addFriend', profil ) }}')">add to friend list</a><br>
+<a href='#' class="w3-right" onclick="addFriend('{{ path_for('addFriend', profil ) }}')">remove from friend list</a><br>
+<a href='#' class="w3-right" onclick="openTchat('{{ path_for('chat', profil) }}')">chat</a><br>
 {% endif %}
 <div class="w3-row">
     <div class="w3-card-4 w3-half">
@@ -29,7 +30,7 @@
         email: {{ profil.email }}<br>
         {% endif %}
         age: {{ 2018 - profil.birthdate }}<br>
-        {% if home %}you are {% else %} it's {% endif %}a: {{ profil.gender }}<br>
+        {% if home %}you are {% else %} it's {% endif %}a {{ profil.gender }}<br>
         orientation: {{ profil.sexuality }}<br>
         bio: {{ profil.biography }}<br>
         </p>
@@ -41,10 +42,19 @@
 {% if home %}
 <div class="w3-theme-l5 w3-row">
     <div class="w3-half w3-left">
-        <h3>{{ your }}Likes</h3>
+        <h3>{{ your }}Friend Request</h3>
+        {% for req in friendReq %}
+        <div>
+            <a href="{{ path_for('profil', req) }}" class="w3-button w3-margin-bottom w3-theme-l1 w3-round-xxlarge">{{ req.pseudo }}</a>
+            <button class="w3-button w3-circle w3-theme-d2 w3-margin-bottom" style="line-height:0.75;vertical-align: middle;text-align:center;padding: 8px 8px">x</button>
+        </div>
+        {% endfor %}
     </div>
     <div class="w3-half w3-left">
         <h3>{{ your }}Friends</h3>
+        {% for friend in friends %}
+            <a href="{{ path_for('profil', friend) }}" class="w3-button w3-margin-bottom w3-theme-l2 w3-round-xxlarge">{{ friend.pseudo }}</a>
+        {% endfor %}
     </div>
 </div>
 {% endif %}
@@ -56,38 +66,11 @@
 {% endblock %}
 
 {% block script %}
-<script>
-function addFriend(path)
-{
-    var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200)
-            document.getElementById("flash").textContent = this.responseText;
-        else
-            document.getElementById("flash").textContent = 'burp';
-    };
-    xmlhttp.open("GET", path, true);
-    xmlhttp.send();
-}
-
-function chat(path)
-{
-    var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200)
-            document.getElementById("flash").textContent = this.responseText;
-        else
-            document.getElementById("flash").textContent = 'burp';
-    };
-    xmlhttp.open("GET", path, true);
-    xmlhttp.send();
-}
-</script>
+<script src="../js/addFriend.js"></script>
+<script src="../js/openTchat.js"></script>
 <script>
 var user =  {lat: {{ profil.lattitude }}, lng: {{ profil.longitude }}, title: '{{ profil.pseudo }}'};
 </script>
 <script src="../js/geolocation.js"></script>
-<script defer async src="https://maps.googleapis.com/maps/api/js?key=AAAIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
+<script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
 {%endblock %}
