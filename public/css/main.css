@@ -1,6 +1,7 @@
 h1, h2, h3, h4, h5, h6, footer, header {
     font-family: "Amatic SC", Verdana, sans-serif;
-    font-weight: bold;
+    background-color: #371b0f;
+    color: white;
 }
 
 h1, h3 {
@@ -9,6 +10,7 @@ h1, h3 {
 
 body {
     background: #371b0f;
+    font-family: "Verdana, sans-serif;
 }
 
 header, footer {
@@ -16,9 +18,12 @@ header, footer {
     background: #371b0f;
 }
 
-header a, h1 {
+a {
     text-decoration: none;
-    font-weight: bold;
+}
+
+header a {
+    font-size: 1.4em;
 }
 
 main {

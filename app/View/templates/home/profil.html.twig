@@ -22,52 +22,65 @@
     </div>
 </div>
 <div class="w3-row">
-    <div class="w3-half w3-padding">
-        <h3>{{ your }}personnal information</h3>
-        <p class="w3-left-align">
-        {% if home %}
-        name: {{ profil.forname}} {{profil.name}}<br>
-        email: {{ profil.email }}<br>
-        {% endif %}
-        age: {{ 2018 - profil.birthdate }}<br>
-        {% if home %}you are {% else %} it's {% endif %}a {{ profil.gender }}<br>
-        orientation: {{ profil.sexuality }}<br>
-        bio: {{ profil.biography }}<br>
-        </p>
+    <div class="w3-half">
+        <div class="w3-theme-l4 w3-margin w3-padding">
+            <h3>{{ your }}personnal information</h3>
+            <p class="w3-left-align">
+            {% if home %}
+            name: {{ profil.forname}} {{profil.name}}<br>
+            email: {{ profil.email }}<br>
+            {% endif %}
+            age: {{ 2018 - profil.birthdate }}<br>
+            {% if home %}you are {% else %} it's {% endif %}a {{ profil.gender }}<br>
+            orientation: {{ profil.sexuality }}<br>
+            bio: {{ profil.biography }}<br>
+            </p>
+        </div>
     </div>
-    <div class="w3-half w3-left">
-        <h3>{{ your }}Interest</h3>
+    <div class="w3-half">
+        <div class="w3-theme-l4 w3-margin w3-padding">
+            <h3>{{ your }}Interest</h3>
+        </div>
     </div>
 </div>
 {% if home %}
-<div class="w3-theme-l5 w3-row">
-    <div class="w3-half w3-left">
-        <h3>{{ your }}Friend Request</h3>
-        {% for req in friendReq %}
-        <div>
-            <a href="{{ path_for('profil', req) }}" class="w3-button w3-margin-bottom w3-theme-l1 w3-round-xxlarge">{{ req.pseudo }}</a>
-            <button class="w3-button w3-circle w3-theme-d2 w3-margin-bottom" style="line-height:0.75;vertical-align: middle;text-align:center;padding: 8px 8px">x</button>
+<div class="w3-row">
+    <div class="w3-half">
+        <div class="w3-theme-l4 w3-margin w3-padding">
+            <h3 class="w3-margin-bottom">{{ your }}Friend Request</h3>
+            {% for req in friendReq %}
+                <div class=" w3-bar w3-theme-l1 w3-round-xxlarge">
+                    <a href="{{ path_for('profil', req) }}" class="w3-padding w3-hover-opacity">{{ req.pseudo }}</a>
+                    <button class="w3-button w3-theme-d1" style="border-radius:0 100px 100px 0">x</button>
+                </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-    <div class="w3-half w3-left">
-        <h3>{{ your }}Friends</h3>
-        {% for friend in friends %}
-            <a href="{{ path_for('profil', friend) }}" class="w3-button w3-margin-bottom w3-theme-l2 w3-round-xxlarge">{{ friend.pseudo }}</a>
-        {% endfor %}
+    <div class="w3-half">
+        <div class="w3-theme-l4 w3-margin w3-padding">
+            <h3 class="w3-margin-bottom">{{ your }}Friends</h3>
+            {% for friend in friends %}
+                <div class=" w3-bar w3-theme-l1 w3-round-xxlarge">
+                    <a href="{{ path_for('profil', friend) }}" class="w3-padding w3-hover-opacity">{{ friend.pseudo }}</a>
+                    <button class="w3-button w3-theme-d1" style="border-radius:0 100px 100px 0">x</button>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endif %}
 <div>
-        <h3>{{ your }}Localisation</h3>
+    <h3>{{ your }}Localisation</h3>
     <div id="map" style="height:300px">
     </div>
 </div>
 {% endblock %}
 
 {% block script %}
+{% if not home %}
 <script src="../js/addFriend.js"></script>
 <script src="../js/openTchat.js"></script>
+{% endif %}
 <script>
 var user =  {lat: {{ profil.lattitude }}, lng: {{ profil.longitude }}, title: '{{ profil.pseudo }}'};
 </script>
