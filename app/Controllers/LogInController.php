@@ -15,7 +15,7 @@ class LogInController extends \App\Constructor
      * @param $response responseInterface
      * @return twig view
      */
-    public function signup (request $request, response $response)
+    public function signup (Request $request, Response $response)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
             $this->form->checkSignup($request, $response);
@@ -37,7 +37,7 @@ class LogInController extends \App\Constructor
      * @param $response responseInterface
      * @return redirection to home
      */
-    public function validation (request $request, response $response)
+    public function validation (Request $request, Response $response)
     {
         $get = $request->getParams();
         $account = $this->user->getUser($get['login']);
@@ -60,7 +60,7 @@ class LogInController extends \App\Constructor
      * @param $response responseInterface
      * @return redirection to home
      */
-    public function resetPassword (request $request, response $response)
+    public function resetPassword (Request $request, Response $response)
     {
         $user = $this->container->user;
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']))
@@ -90,7 +90,7 @@ class LogInController extends \App\Constructor
      * @param $response responseInterface
      * @return twig view
      */
-    public function login (request $request, response $response)
+    public function login (Request $request, Response $response)
     {
         $this->form->checkLogin($request, $response);
         if (isset($_SESSION['id']))
@@ -110,7 +110,7 @@ class LogInController extends \App\Constructor
      * @param $response responseInterface
      * @return twig view
      */
-    public function logout (request $request, response $response)
+    public function logout (Request $request, Response $response)
     {
         session_destroy();
         return $response->withRedirect('/login');

@@ -45,6 +45,13 @@ $container['friends'] = function ($container) {
 };
 
 /**
+ * @class TagModel
+ */
+$container['tag'] = function ($container) {
+    return new \App\Model\TagModel($container);
+};
+
+/**
  * etc…
  */
 $container['form'] = function ($container) { 

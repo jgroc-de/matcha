@@ -13,7 +13,7 @@ class UserModel extends \App\Constructor
      */
     public function getUsers()
     {
-        $req = $this->db->query('SELECT * FROM user LIMIT 40');
+        $req = $this->db->query('SELECT * FROM user LIMIT 50');
         return $req->fetchAll();
     }
 
@@ -126,6 +126,18 @@ class UserModel extends \App\Constructor
             SET password = ?
             where id = ?');
         $req->execute($post);
+    }
+
+    public function updateGeolocation($lat, $lon)
+    {
+        var_dump($lat);
+        var_dump($lon);
+        $req = $this->db->prepare('
+            UPDATE user
+            SET lattitude = ?, longitude = ?
+            WHERE id = ?
+        ');
+        return $req->execute(array(floatval($lat), floatval($lon), $_SESSION['id']));
     }
 
     public function activate()

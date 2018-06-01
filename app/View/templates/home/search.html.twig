@@ -1,8 +1,9 @@
 {% extends 'templates/home.html.twig' %}
 
 {% block content %}
+<h2>Search</h2>
 <div id="map" style="height:500px"></div>
-<h2>Focus</h2>
+<h3>Focus</h3>
 {% for user in users %}
 <div class="hide" id="{{ user.id }}">
     <div class="w3-bar w3-border w3-theme-l3" style="width:100%">

@@ -26,9 +26,12 @@ $app->group('', function () {
     $this->get('/search', Home::class . ':search')->setName('search');
     $this->get('/profil/{id}', Home::class . ':profil')->setName('profil');
     $this->get('/addFriend/{id}', Ajax::class . ':friendRequest')->setName('addFriend');
+    $this->post('/addTag', Ajax::class . ':addTag')->setName('addTag');
     $this->get('/delFriend/{id}', Ajax::class . ':delFriend')->setName('delFriend');
+    $this->get('/delUserTag/{id}', Ajax::class . ':delUserTag')->setName('delUserTag');
     $this->get('/delFriendReq/{id}', Ajax::class . ':delFriendRequest')->setName('delFriendReq');
-    $this->get('/chat/{id}', Ajax::class . ':tchat')->setName('chat');
+    $this->post('/updateGeolocation', Ajax::class . ':updateGeolocation')->setName('updateGeolocation');
+    $this->get('/tchat/{id}', Ajax::class . ':tchat')->setName('tchat');
     $this->any('/editProfil', Home::class . ':editProfil')->setName('editProfil');
     $this->any('/editPassword', Home::class . ':editPassword')->setName('editPassword');
     $this->get('/logout', LogIn::class . ':logout')->setName('logout');

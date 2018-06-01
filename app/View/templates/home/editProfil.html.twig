@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+<h2>Edit your profil</h2>
 <div>
     {% for key, message in flash %}
         {% if key == "success" %}
@@ -19,7 +20,6 @@
             </div>
     {% endfor %}
     <form action='{{ path_for('editProfil') }}' method="post" class="w3-left-align">
-        <a href='{{ path_for('editPassword') }}'>change your password</a>
         <div class="w3-section">
             {{ input('text', 'pseudo', {'value': profil.pseudo}) }}
         </div>
@@ -68,27 +68,7 @@
             {{ button('submit') }}
         </div>
     </form>
-    <div id="mapholder"></div>
-    <div id="map" style="height:100%"></div>
+    <a href='{{ path_for('editPassword') }}'>change your password</a>
 </div>
-<script src="js/geolocation.js"></script>
-<script>
-var user;
-
-if (navigator.geolocation)
-{
-    navigator.geolocation.getCurrentPosition(success, error);
-    console.log(user);
-}
-if (!user)
-{
-    console.log('nop');
-    user =  {
-        lat: {{ profil.lattitude }},
-        lng: {{ profil.longitude }},
-    };
-}
-user.title = '{{ profil.pseudo }}';
-</script>
 {% endblock %}
 

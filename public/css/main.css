@@ -10,7 +10,10 @@ h1, h3 {
 
 body {
     background: #371b0f;
-    font-family: "Verdana, sans-serif;
+    font-family: Verdana, sans-serif;
+}
+.w3-myfont {
+    font-family: Verdana, sans-serif;
 }
 
 header, footer {

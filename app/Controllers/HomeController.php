@@ -17,6 +17,7 @@ class HomeController extends \App\Constructor
      */
     public function home (request $request, response $response)
     {
+        var_dump($_SESSION['profil']);
         return $this->view->render(
             $response,
             'templates/home/profil.html.twig',
@@ -24,7 +25,8 @@ class HomeController extends \App\Constructor
                 'profil' => $_SESSION['profil'],
                 'user' => $_SESSION,
                 'friendReq' => $this->friends->getFriendsReqs($_SESSION['id']),
-                'friends' => $this->friends->getFriends($_SESSION['id'])
+                'friends' => $this->friends->getFriends($_SESSION['id']),
+                'tags' => $this->tag->getUserTags($_SESSION['id'])
             ]
         );
     }
@@ -43,7 +45,8 @@ class HomeController extends \App\Constructor
                 'templates/home/profil.html.twig',
                 [
                     'profil' => $user,
-                    'user' => $_SESSION
+                    'user' => $_SESSION,
+                    'tags' => $this->tag->getUserTags($user['id'])
                 ]
             );
         }

@@ -6,6 +6,35 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class AjaxController extends \App\Constructor
 {
+    public function delUserTag (Request $request, Response $response, array $args)
+    {
+        if ($this->container->tag->delUserTag($args['id'], $_SESSION['id']))
+            return $response;
+        else
+            return $response->withStatus(400);
+    }
+
+    public function addTag (Request $request, Response $response)
+    {
+        if ($this->container->tag->setUserTag($_POST['tag']))
+        {
+            $response->getBody()->write($_POST['tag']);
+            return $response;
+        }
+        return $response->withStatus(400);
+    }
+    public function updateGeolocation (Request $request, Response $response, array $args)
+    {
+        if ($this->user->updateGeolocation($_POST['lat'], $_POST['lng']))
+        {
+            $_SESSION['profil']['lattitude'] = $_POST['lat'];
+            $_SESSION['profil']['longitude'] = $_POST['lng'];
+            return $response;
+        }
+        else
+            return $response->withStatus(400);
+    }
+
     public function friendRequest (Request $request, Response $response, array $args)
     {
         $response->getBody()->write(
