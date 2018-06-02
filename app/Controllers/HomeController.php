@@ -17,7 +17,6 @@ class HomeController extends \App\Constructor
      */
     public function home (request $request, response $response)
     {
-        var_dump($_SESSION['profil']);
         return $this->view->render(
             $response,
             'templates/home/profil.html.twig',

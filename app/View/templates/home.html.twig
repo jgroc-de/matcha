@@ -6,8 +6,11 @@
 {% endblock %}
 
 {% block header %}
-    <a href='{{ path_for('home') }}'><h1 class="w3-container" >Match a Rick&Morty</h1></a>
-    <div class="w3-bar">
+    <a href='{{ path_for('home') }}'><h1>Match a Rick&Morty</h1></a>
+{% endblock %}
+
+{% block navbar %}
+    <div class="w3-bar gg-navbar w3-theme-d1">
         {% set class = "w3-bar-item w3-button" %}
         {% set classR = "w3-bar-item w3-button w3-right" %}
         <a href="#" class="{{ class }}"><i class="fa fa-bars" alt="menu" title="menu"></i></a>

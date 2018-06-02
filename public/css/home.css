@@ -9,3 +9,22 @@ header {
 .hide {
     display:none;
 }
+
+.gg-button {
+    border-radius:0 100px 100px 0;
+}
+
+.gg-map-small {
+    height: 300px;
+}
+
+.gg-map-med {
+    height: 500px;
+}
+
+.gg-navbar {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}

@@ -2,7 +2,7 @@
 
 {% block content %}
 <h2>Search</h2>
-<div id="map" style="height:500px"></div>
+<div id="map" class="gg-map-med"></div>
 <h3>Focus</h3>
 {% for user in users %}
 <div class="hide" id="{{ user.id }}">
@@ -33,14 +33,11 @@ var usersPos = [
 {% endfor %}
 ];
 
-</script>
-<script>
-function closeInfo(id)
-{
+function closeInfo(id) {
     document.getElementById('' + id).style.display = "none";
 }
 </script>
 <script src="googleMap/markerclusterer/src/markerclusterer.js"></script>
-<script src="js/map.js"></script>
+<script src="js/mapSearch.js"></script>
 <script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
 {% endblock %}

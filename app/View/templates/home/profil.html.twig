@@ -1,4 +1,9 @@
 {% extends 'templates/home.html.twig' %}
+{% from 'macro/home/profilButton.html.twig' import profilButton %}
+
+{# ------------ #}
+{# main content #}
+{# ------------ #}
 
 {% block content %}
 {% if profil.id == user.id %}
@@ -46,7 +51,7 @@
         </div>
     </div>
     <div class="w3-half">
-        <div class="w3-theme-l4 w3-margin w3-padding">
+        <div class="w3-theme-l4 w3-margin w3-padding" id="userTag">
             <h3 class="w3-middle w3-display-container w3-margin-bottom">
                 {{ your }}Interest
                 {% if home %}
@@ -54,10 +59,7 @@
                 {% endif %}
             </h3>
                 {% for tag in tags %}
-                <div class=" w3-bar w3-theme-l1 w3-round-xxlarge" id="tag{{ tag.id }}">
-                    <span class="w3-padding">#{{ tag.tag }}</span>
-                    <button class="w3-button w3-theme-d1" style="border-radius:0 100px 100px 0" onclick="delUserTag('{{ path_for('delUserTag', tag) }}', {{ tag.id }})">x</button>
-                </div>
+                    {{ profilButton(tag.id, tag.tag, 'delUserTag', path_for('delUserTag', tag), home) }}
                 {% endfor %}
         </div>
     </div>
@@ -68,10 +70,7 @@
         <div class="w3-theme-l4 w3-margin w3-padding">
             <h3 class="w3-margin-bottom">{{ your }}Friend Request</h3>
             {% for req in friendReq %}
-                <div class=" w3-bar w3-theme-l1 w3-round-xxlarge" id="req{{ req.id }}">
-                    <a href="{{ path_for('profil', req) }}" class="w3-padding w3-hover-opacity">{{ req.pseudo }}</a>
-                    <button class="w3-button w3-theme-d1" style="border-radius:0 100px 100px 0" onclick="delFriendReq('{{ path_for('delFriendReq', req) }}', {{ req.id }})">x</button>
-                </div>
+                {{ profilButton(req.id, req.pseudo, 'delFriendReq', path_for('delFriendReq', req), home, path_for('profil', req)) }}
             {% endfor %}
         </div>
     </div>
@@ -79,84 +78,32 @@
         <div class="w3-theme-l4 w3-margin w3-padding">
             <h3 class="w3-margin-bottom">{{ your }}Friends</h3>
             {% for friend in friends %}
-                <div class=" w3-bar w3-theme-l1 w3-round-xxlarge" id="friend{{ friend.id }}">
-                    <a href="{{ path_for('profil', friend) }}" class="w3-padding w3-hover-opacity">{{ friend.pseudo }}</a>
-                    <button class="w3-button w3-theme-d1" style="border-radius:0 100px 100px 0" onclick="delFriend('{{ path_for('delFriend', friend) }}', {{ friend.id }})">x</button>
-                </div>
+                {{ profilButton(friend.id, friend.pseudo, 'delFriendReq', path_for('delFriendReq', friend), home, path_for('profil', friend)) }}
             {% endfor %}
         </div>
     </div>
 </div>
 {% endif %}
 <div>
-    <h3 class="w3-display-container">{{ your }}Localisation
+    <h3 class="w3-display-container">{{ your }}Location
     {% if home %}
     <button onclick="updateGeolocation()" class="w3-button w3-right w3-small w3-myfont">update</button>
     {% endif %}
     </h3>
-    <div id="map" style="height:300px">
+    <div id="map" class="gg-map-small">
     </div>
 </div>
 {% endblock %}
 
+{# -------------- #}
+{# Javascript src #}
+{# -------------- #}
+
 {% block script %}
 {% if profil.id == user.id %}
-    {% set home = true %}
+<script src='../js/myProfile.js'></script>
 {% endif %}
-<script src="../js/delFriend.js"></script>
-<script>
-function dropdown(target) {
-    var x = document.getElementById(target);
-
-    if (x.className.indexOf("w3-show") == -1) { 
-        x.className += " w3-show";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
-</script>
-<script>
-function addTag(path) {
-    var tag;
-    var xhr = new XMLHttpRequest();
-        
-    if (tag = prompt('ajouter un tag:'))
-    {
-        xhr.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200)
-            {
-                var child = document.getElementById('tag' + id);
-                this.responseText;
-                child.parentNode.removeChild(child);
-            }
-            else
-                console.log('fail');
-        };
-        xhr.open('POST', path, true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send('tag=' + tag);
-    }
-}
-</script>
-<script>
-function delUserTag(path, id) {
-    var xhr = new XMLHttpRequest();
-
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200)
-        {
-            var child = document.getElementById('tag' + id);
-            child.parentNode.removeChild(child);
-        }
-    };
-    xhr.open('GET', path, true);
-    xhr.send();
-}
-</script>
-{% if not home %}
-<script src="../js/addFriend.js"></script>
-<script src="../js/openTchat.js"></script>
-{% endif %}
+<script src='../js/commonProfile.js'></script>
 <script>
 var user =  {lat: {{ profil.lattitude }}, lng: {{ profil.longitude }}, title: '{{ profil.pseudo }}'};
 </script>
