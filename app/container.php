@@ -81,3 +81,7 @@ $container['notFoundHandler'] = function ($container) {
 $container['notAllowedHandler'] = function ($container) {
     return new \App\Lib\CustomError($container);
 };
+
+$container['geoIP'] = function () {
+    return new GeoIp2\Database\Reader('../geoIP2/GeoLite2-City_20180501/GeoLite2-City.mmdb');
+};

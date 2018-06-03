@@ -4293,8 +4293,8 @@ ean13	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Barcode.php
 ean8	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Barcode.php	/^    public function ean8()$/;"	m	line:82	class:Faker\Provider\Barcode	access:public
 eanChecksum	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Barcode.php	/^    protected static function eanChecksum($input)$/;"	m	line:25	class:Faker\Provider\Barcode	access:protected
 eanChecksum	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/BarcodeTest.php	/^    public static function eanChecksum($input)$/;"	m	line:41	class:Faker\Test\Provider\TestableBarcode	access:public
-editPassword	/home/gg/www/matcha/app/Controllers/HomeController.php	/^    public function editPassword (request $request, response $response)$/;"	m	line:105	class:App\Controllers\HomeController	access:public
-editProfil	/home/gg/www/matcha/app/Controllers/HomeController.php	/^    public function editProfil (request $request, response $response)$/;"	m	line:77	class:App\Controllers\HomeController	access:public
+editPassword	/home/gg/www/matcha/app/Controllers/HomeController.php	/^    public function editPassword (request $request, response $response)$/;"	m	line:104	class:App\Controllers\HomeController	access:public
+editProfil	/home/gg/www/matcha/app/Controllers/HomeController.php	/^    public function editProfil (request $request, response $response)$/;"	m	line:76	class:App\Controllers\HomeController	access:public
 elements	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Base.php	/^        $elements = static::randomElements($array, 1);$/;"	v	line:212	method:Faker\Provider\Base::randomElement
 elements	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/BaseTest.php	/^        $elements = array('23', 'e', 32, '#');$/;"	v	line:138	method:Faker\Test\Provider\BaseTest::testRandomElementReturnsElementFromArray
 elements	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/BaseTest.php	/^        $elements = array('tata' => '23', 'toto' => 'e', 'tutu' => 32, 'titi' => '#');$/;"	v	line:144	method:Faker\Test\Provider\BaseTest::testRandomElementReturnsElementFromAssociativeArray
@@ -8221,7 +8221,7 @@ processChunk	/home/gg/www/matcha/vendor/nikic/fast-route/src/DataGenerator/Regex
 processGroups	/home/gg/www/matcha/vendor/slim/slim/Slim/Router.php	/^    protected function processGroups()$/;"	m	line:302	class:Slim\Router	access:protected
 processInvalidMethod	/home/gg/www/matcha/vendor/slim/slim/Slim/App.php	/^    protected function processInvalidMethod(ServerRequestInterface $request, ResponseInterface $response)$/;"	m	line:355	class:Slim\App	access:protected
 prod	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ/Company.php	/^        $prod = 0;$/;"	v	line:107	method:Faker\Provider\cs_CZ\Company::ico
-profil	/home/gg/www/matcha/app/Controllers/HomeController.php	/^    public function profil (request $request, response $response, $args)$/;"	m	line:39	class:App\Controllers\HomeController	access:public
+profil	/home/gg/www/matcha/app/Controllers/HomeController.php	/^    public function profil (request $request, response $response, $args)$/;"	m	line:38	class:App\Controllers\HomeController	access:public
 profil	/home/gg/www/matcha/app/Controllers/SetupController.php	/^        $profil = array();$/;"	v	line:29	method:App\Controllers\SetupController::fakeFactory
 profile	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Profiler/Dumper/AbstractTest.php	/^        $profile = $this->getMockBuilder('Twig_Profiler_Profile')->disableOriginalConstructor()->getMock();$/;"	v	line:16	method:Twig_Tests_Profiler_Dumper_AbstractTest::getProfile
 profile	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Profiler/Dumper/AbstractTest.php	/^        $profile = $this->getMockBuilder('Twig_Profiler_Profile')->disableOriginalConstructor()->getMock();$/;"	v	line:86	method:Twig_Tests_Profiler_Dumper_AbstractTest::generateProfile
@@ -8878,7 +8878,7 @@ scheme	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^        $scheme 
 scheme	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^        $scheme = str_replace('://', '', strtolower((string)$scheme));$/;"	v	line:305	method:Slim\Http\Uri::filterScheme
 scheme	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^        $this->scheme = $this->filterScheme($scheme);$/;"	v	line:122	method:Slim\Http\Uri::__construct
 scheme	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^    protected $scheme = '';$/;"	p	line:42	class:Slim\Http\Uri	access:protected
-search	/home/gg/www/matcha/app/Controllers/HomeController.php	/^    public function search (request $request, response $response)$/;"	m	line:60	class:App\Controllers\HomeController	access:public
+search	/home/gg/www/matcha/app/Controllers/HomeController.php	/^    public function search (request $request, response $response)$/;"	m	line:59	class:App\Controllers\HomeController	access:public
 secondSequenceBitWeights	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/kk_KZ/Person.php	/^    public static $secondSequenceBitWeights = array(3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2);$/;"	p	line:33	class:Faker\Provider\kk_KZ\Person	access:public
 second_algorithm	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/pt_BR/check_digit.php	/^    $second_algorithm = $length >= 12;$/;"	v	line:17	function:check_digit
 secondaryAddress	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/ar_JO/Address.php	/^    public static function secondaryAddress()$/;"	m	line:132	class:Faker\Provider\ar_JO\Address	access:public

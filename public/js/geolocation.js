@@ -1,16 +1,12 @@
 function updateGeolocation() {
-    user = {};
     if (navigator.geolocation)
         navigator.geolocation.getCurrentPosition(success, error);
     else
-    {
-        majLocation();
-    }
+        error();
 }
 
 function success(pos) {
     user = {lat: pos.coords.latitude, lng: pos.coords.longitude};
-    console.log(user);
     majLocation();
 }
 
@@ -20,9 +16,7 @@ function majLocation () {
 
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200)
-        {
             initMap(); 
-        }
     };
     request.open('POST', '/updateGeolocation', true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -30,7 +24,6 @@ function majLocation () {
 }
 
 function initMap() {
-    console.log(user);
     var map = new google.maps.Map(
             document.getElementById('map'),
             {center: user, zoom: 11}
@@ -43,5 +36,7 @@ function initMap() {
 }
 
 function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+    user.lat = 0;
+    user.lng = 0;
+    majLocation();
 }
