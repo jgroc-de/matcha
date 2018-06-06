@@ -85,3 +85,7 @@ $container['notAllowedHandler'] = function ($container) {
 $container['geoIP'] = function () {
     return new GeoIp2\Database\Reader('../geoIP2/GeoLite2-City_20180501/GeoLite2-City.mmdb');
 };
+
+$container['ft_geoIP'] = function ($container) {
+    return new \App\Lib\ft_geoIP($container);
+};

@@ -10,7 +10,7 @@ function initMap() {
             position: usersPos[x],
             map: map,
             icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + getColor(usersPos[x].kind),
-            title: usersPos[x].title
+            title: 'click me!'
         });
         attachInfo(marker, usersPos[x]);
         markers.push(marker);
@@ -25,7 +25,7 @@ function initMap() {
 function attachInfo(marker, info)
 {
     var infowindow = new google.maps.InfoWindow({
-        content: '<a href="/profil/' + info.id + '"><div class="w3-bar w3-theme-l3"><img src="../' + info.img + '" class="w3-bar-item" style="height:60px"><p class="w3-bar-item">' + info.title + '</p></div></a>'
+        content: '<div class="w3-theme-l1"><img src="../' + info.img + '" class="w3-image" style="height:100px"><h3 class="">' + info.title + '</h3></div>'
             
     });
     marker.addListener('mouseover', function() {

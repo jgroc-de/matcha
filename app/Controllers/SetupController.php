@@ -48,8 +48,9 @@ class SetupController extends \App\Constructor
             $profil['password'] = 'trollB1';
             $profil['activ'] = 1;
             $profil['token'] = 'a';
-            $profil['lattitude'] = rand(488000, 489100) / 10000;
-            $profil['longitude'] = rand(22200, 24200) / 10000;
+            $profil['lat'] = rand(488000, 489100) / 10000;
+            $profil['lng'] = rand(22200, 24200) / 10000;
+            $profil['popularity'] = rand(0, 100);
             $user->setUser($profil);
             $user->updateUser($profil);
         }

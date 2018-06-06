@@ -1,40 +1,78 @@
 {% extends 'templates/home.html.twig' %}
 
 {% block content %}
-<h2>Search</h2>
-<div id="map" class="gg-map-med"></div>
-<h3>Focus</h3>
-{% for user in users %}
-<div class="hide" id="{{ user.id }}">
-    <div class="w3-bar w3-border w3-theme-l3" style="width:100%">
-        <a href="{{ path_for('profil', user) }}">
-            <img src="../{{ user.img }}" class="w3-bar-item" style="width:120px">
-            <div class="w3-container w3-bar-item">
-                <span>{{ user.pseudo }}</span><br>
-                <span>{{ user.gender }}</span>
-            </div>
-            <div class="w3-container w3-bar-item">
-                <span>{{ 2018 - user.birthdate }}</span><br>
-                <span>{{ user.biography }}</span>
-            </div>
-        </a>
-        <button class="w3-button w3-black w3-right" onclick="closeInfo({{ user.id }})">x</button>
+    <h2>Search</h2>
+    <div class="w3-row">
+        <div class="w3-quarter">
+            <h3>age</h3>
+            <div id="" class=""></div>
+        </div>
+        <div class="w3-quarter">
+            <h3>kind</h3>
+            <div id="" class=""></div>
+        </div>
+        <div class="w3-quarter">
+            <h3>distance</h3>
+            <div id="" class=""></div>
+        </div>
+        <div class="w3-quarter">
+            <h3>interest</h3>
+            <div id="" class=""></div>
+        </div>
     </div>
-</div>
-{% endfor %}
+    <div class="w3-row">
+        <div class="w3-third">
+            <h3>Focus</h3>
+            {% for user in users %}
+            <div class="hide" id="{{ user.id }}">
+                <div class="w3-theme-l4" style="height:100px;overflow:auto">
+                    <div class="w3-theme-l1" style="width:100%;height:31px;position:sticky;top:0">
+                        <a href="{{ path_for('profil', user) }}">
+                            <h4 class="w3-margin-left w3-left w3-theme-l1">{{ user.pseudo }}: {{ user.gender }}, {{ 2018 - user.birthdate }}</h4>
+                        </a>
+                        <i class="w3-button w3-right fa fa-remove w3-hover-red" onclick="closeInfo({{ user.id }})"></i>
+                    </div>
+                        <img src="../{{ user.img1 }}" class="w3-right" style="width:50%">
+                        <p class="w3-small">{{ user.biography }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="w3-rest">
+            <h3>Map</h3>
+            <div id="map" class="gg-map-med"></div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block script %}
-<script>
+    <script>
 var myPos = {lat: {{ me.lattitude }}, lng: {{ me.longitude }}};
 var usersPos = [
 {% for user in users %}
-    {lat: {{ user.lattitude }}, lng: {{ user.longitude }}, title: '{{ user.pseudo }}', img: '{{ user.img }}', id: '{{ user.id }}', kind: '{{ user.gender }}'},
+    {lat: {{ user.lattitude }}, lng: {{ user.longitude }}, title: '{{ user.pseudo }}', img: '{{ user.img1 }}', id: '{{ user.id }}', kind: '{{ user.gender }}'},
 {% endfor %}
 ];
 
 function closeInfo(id) {
     document.getElementById('' + id).style.display = "none";
+}
+
+function modal(id, imgU) {
+    var modal = document.getElementById(id);
+    var img = document.getElementById(imgU);
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    var span = document.getElementsByClassName("close")[0];
+    
+    img.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+    span.onclick = function() {
+            modal.style.display = "none";
+    } </span></span>
 }
 </script>
 <script src="googleMap/markerclusterer/src/markerclusterer.js"></script>

@@ -7,7 +7,7 @@
     {% endif %}
     <a href="{{ a }}" class="w3-padding w3-hover-opacity">{{ req.pseudo }}</a>
     {% if home %}
-        <button class="w3-button w3-theme-d1 gg-button" onclick="{{ function }}('{{ path }}', {{ id }})">x</button>
+        <i class="w3-button w3-theme-d1 gg-button w3-hover-red fa fa-remove" onclick="{{ function }}('{{ path }}', {{ id }})" title="remove"></i>
     {% endif %}
 </div>
 {% endmacro %}

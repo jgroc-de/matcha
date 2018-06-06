@@ -103,4 +103,14 @@ class Validator
     {
         return ($test === 'Envoyer');
     }
+
+    public function lat($test)
+    {
+        return ($test != 0);
+    }
+
+    public function lng($test)
+    {
+        return ($test != 0);
+    }
 }

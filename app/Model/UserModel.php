@@ -41,8 +41,8 @@ class UserModel extends \App\Constructor
             'Summer' => 'img/summer.jpg'
         );
         $req = $this->db->prepare('
-                INSERT INTO user (pseudo, password, email, gender, activ, token, img)
-                VALUES (?, ?, ?, ?, ?, ?, ?)');
+                INSERT INTO user (pseudo, password, email, gender, activ, token, img1, lattitude, longitude)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $req->execute(array(
                 $post['pseudo'],
                 $post['password'],
@@ -50,7 +50,9 @@ class UserModel extends \App\Constructor
                 $post['gender'],
                 $post['activ'],
                 $post['token'],
-                $img[$post['gender']]
+                $img[$post['gender']],
+                $post['lat'],
+                $post['lng']
             ));
     }
 
@@ -110,8 +112,8 @@ class UserModel extends \App\Constructor
                 $post['gender'],
                 $post['sexuality'],
                 $post['biography'],
-                $post['lattitude'],
-                $post['longitude'],
+                $post['lat'],
+                $post['lng'],
                 $_SESSION['pseudo']
         ));
     }

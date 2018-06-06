@@ -22,7 +22,7 @@ class HomeController extends \App\Constructor
             'templates/home/profil.html.twig',
             [
                 'profil' => $_SESSION['profil'],
-                'user' => $_SESSION,
+                'me' => $_SESSION['profil'],
                 'friendReq' => $this->friends->getFriendsReqs($_SESSION['id']),
                 'friends' => $this->friends->getFriends($_SESSION['id']),
                 'tags' => $this->tag->getUserTags($_SESSION['id'])
@@ -44,7 +44,7 @@ class HomeController extends \App\Constructor
                 'templates/home/profil.html.twig',
                 [
                     'profil' => $user,
-                    'user' => $_SESSION,
+                    'me' => $_SESSION['profil'],
                     'tags' => $this->tag->getUserTags($user['id'])
                 ]
             );

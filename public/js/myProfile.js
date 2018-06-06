@@ -40,10 +40,9 @@ function addTag(path) {
                 div.setAttribute('class', 'w3-bar w3-theme-l1 w3-round-xxlarge');
                 span.setAttribute('class', 'w3-padding');
                 span.textContent = '#' + tag;
-                button.setAttribute('class', 'w3-button w3-theme-d1');
+                button.setAttribute('class', 'w3-button w3-theme-d1 w3-hover-red fa fa-remove');
                 button.setAttribute('style', 'border-radius: 0 100px 100px 0');
                 button.setAttribute('onclick', 'delUserTag("/delUserTag/' + id + '", ' + id + ')');
-                button.textContent = 'x';
                 document.getElementById('userTag').appendChild(div);
                 document.getElementById(div.id).appendChild(span);
                 document.getElementById(div.id).appendChild(button);

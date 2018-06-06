@@ -30,8 +30,12 @@ CREATE TABLE `user` (
     `longitude` FLOAT NOT NULL DEFAULT 2.349,
     `gender` ENUM('Rick','Morty','Summer','Beth','Jerry') NOT NULL DEFAULT 'Rick',
     `sexuality` ENUM('bi','hetero','homo') NOT NULL DEFAULT 'bi',
-    `popularity` TINYINT NOT NULL DEFAULT 50,
-    `img` TEXT NOT NULL,
+    `popularity` TINYINT NOT NULL DEFAULT 0,
+    `img1` TEXT,
+    `img2` TEXT,
+    `img3` TEXT,
+    `img4` TEXT,
+    `img5` TEXT,
     CONSTRAINT PK_user PRIMARY KEY (`id`, `pseudo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

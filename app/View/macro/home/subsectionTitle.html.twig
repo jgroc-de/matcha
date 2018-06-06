@@ -1,0 +1,20 @@
+{% macro subtitle(your, title, home, icon, path, id, link) %}
+<div class="w3-theme-l4">
+<div class="w3-bar w3-theme-d1 w3-display-container" style="width:100%;min-height:38px">
+    <h3 class="w3-bar-item w3-display-middle" style="padding:0" >
+        {{ your }}{{ title }}
+    </h3>
+{% if home %}
+    {% if link %}
+    <a href="{{ path }} "class="w3-bar-item w3-button w3-right w3-hover-green" title="{{ id }}">
+        <i class="{{ icon }} w3-large"></i>
+    </a>
+    {% else %}
+    <div class="w3-bar-item w3-button w3-right w3-hover-green" onclick="{{ path }}" title="{{ id }}">
+        <i class="{{ icon }} w3-large"></i>
+    </div>
+    {% endif %}
+{% endif %}
+</div>
+</div>
+{% endmacro %}

@@ -23,15 +23,10 @@ class AjaxController extends \App\Constructor
         }
         return $response->withStatus(400);
     }
+
     public function updateGeolocation (Request $request, Response $response, array $args)
     {
-        if ($_POST['lat'] == 0 && $_POST['lng'] == 0)
-        {
-            //$ip = $this->geoIP->city($_SERVER['REMOTE_ADDR']);
-            $ip = $this->geoIP->city('82.231.186.199');
-            $_POST['lat'] = $ip->location->latitude;
-            $_POST['lng'] = $ip->location->longitude;
-        }
+        $this->ft_geoIP->setLatLng();
         if ($this->user->updateGeolocation($_POST['lat'], $_POST['lng']))
         {
             $_SESSION['profil']['lattitude'] = $_POST['lat'];

@@ -1,12 +1,14 @@
 {% extends 'templates/home.html.twig' %}
 {% from 'macro/home/profilButton.html.twig' import profilButton %}
+{% from 'macro/home/img.html.twig' import img %}
+{% from 'macro/home/subsectionTitle.html.twig' import subtitle %}
 
 {# ------------ #}
 {# main content #}
 {# ------------ #}
 
 {% block content %}
-{% if profil.id == user.id %}
+{% if profil.id == me.id %}
     {% set hi = 'Hi ' %}
     {% set your = 'Your ' %}
     {% set home = true %}
@@ -16,29 +18,27 @@
 {% if not home %}
 <a href='#' class="w3-right" onclick="addFriend('{{ path_for('addFriend', profil ) }}')">add to friend list</a><br>
 <a href='#' class="w3-right" onclick="addFriend('{{ path_for('addFriend', profil ) }}')">remove from friend list</a><br>
-<a href='#' class="w3-right" onclick="openTchat('{{ path_for('tchat', profil) }}')">chat</a><br>
 {% endif %}
-<div class="w3-row">
-    <div class="w3-card-4 w3-half">
-        <img src='../{{ profil.img }}' alt='profil image' title='profil image' style="width:100%">
+<div class="w3-row w3-display-container w3-margin" style="height:250px">
+    {% if home %}
+    {{ img(profil.img1, 'left', 'w3-card-4') }}
+    <div class="w3-card-4 w3-half w3-display-right w3-black" style="height:inherit">
+        <div class="w3-row w3-display-container" style="height:50%">
+            {{ img(profil.img2, 'left') }}
+            {{ img(profil.img3, 'right') }}
+        </div>
+        <div class="w3-row w3-display-container" style="height:50%">
+            {{ img(profil.img4, 'left') }}
+            {{ img(profil.img5, 'right') }}
+        </div>
     </div>
+    {% endif %}
 </div>
 <div class="w3-row">
-    <div class="w3-half">
-        <div class="w3-theme-l4 w3-margin w3-padding">
-            <h3 class="w3-display-container">
-                {{ your }}personnal information
-                {% if home %}
-                <div class="w3-right w3-dropdown-click">
-                    <button onclick="dropdown('dropTarget')" class="w3-button w3-small fa fa-gear" alt="edit" title="edit profile"></button>
-                    <div id="dropTarget" class="w3-dropdown-content w3-bar-block w3-border">
-                        <a href="{{ path_for('editProfil') }}" class="w3-bar-item w3-button">profil</a>
-                        <a href="{{ path_for('editPassword') }}" class="w3-bar-item w3-button">password</a>
-                    </div>
-                </div>
-                {% endif %}
-            </h3>
-            <p class="w3-left-align">
+    <div class="w3-half w3-padding">
+        {{ subtitle(your, 'Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
+        <div class="w3-theme-l4 w3-padding" style="max-height:300px;overflow:auto">
+            <div class="w3-left-align">
             {% if home %}
             name: {{ profil.forname}} {{profil.name}}<br>
             email: {{ profil.email }}<br>
@@ -47,36 +47,31 @@
             {% if home %}you are {% else %} it's {% endif %}a {{ profil.gender }}<br>
             orientation: {{ profil.sexuality }}<br>
             bio: {{ profil.biography }}<br>
-            </p>
+            </div>
         </div>
     </div>
-    <div class="w3-half">
-        <div class="w3-theme-l4 w3-margin w3-padding" id="userTag">
-            <h3 class="w3-middle w3-display-container w3-margin-bottom">
-                {{ your }}Interest
-                {% if home %}
-                <button onclick="addTag('{{ path_for('addTag') }}')" class="w3-button w3-display-right w3-small w3-myfont" id="tag">add tags</button>
-                {% endif %}
-            </h3>
-                {% for tag in tags %}
-                    {{ profilButton(tag.id, tag.tag, 'delUserTag', path_for('delUserTag', tag), home) }}
-                {% endfor %}
+    <div class="w3-half w3-padding">
+        {{ subtitle(your, 'Interest', home, 'fa fa-plus',  "addTag('#{ path_for('addTag') }')", 'add tag') }}
+        <div class="w3-theme-l4" id="userTag" style="max-height:300px;overflow:auto">
+            {% for tag in tags %}
+                {{ profilButton(tag.id, tag.tag, 'delUserTag', path_for('delUserTag', tag), home) }}
+            {% endfor %}
         </div>
     </div>
 </div>
 {% if home %}
 <div class="w3-row">
-    <div class="w3-half">
-        <div class="w3-theme-l4 w3-margin w3-padding">
-            <h3 class="w3-margin-bottom">{{ your }}Friend Request</h3>
+    <div class="w3-half w3-padding">
+        <h3>{{ your }}Friend Request</h3>
+        <div class="w3-theme-l4 w3-padding" style="max-height:300px;overflow:auto">
             {% for req in friendReq %}
                 {{ profilButton(req.id, req.pseudo, 'delFriendReq', path_for('delFriendReq', req), home, path_for('profil', req)) }}
             {% endfor %}
         </div>
     </div>
-    <div class="w3-half">
-        <div class="w3-theme-l4 w3-margin w3-padding">
-            <h3 class="w3-margin-bottom">{{ your }}Friends</h3>
+    <div class="w3-half w3-padding">
+        <h3>{{ your }}Friends</h3>
+        <div class="w3-theme-l4 w3-padding" style="max-height:300px;overflow:auto">
             {% for friend in friends %}
                 {{ profilButton(friend.id, friend.pseudo, 'delFriendReq', path_for('delFriendReq', friend), home, path_for('profil', friend)) }}
             {% endfor %}
@@ -84,14 +79,9 @@
     </div>
 </div>
 {% endif %}
-<div>
-    <h3 class="w3-display-container">{{ your }}Location
-    {% if home %}
-    <button onclick="updateGeolocation()" class="w3-button w3-right w3-small w3-myfont">update</button>
-    {% endif %}
-    </h3>
-    <div id="map" class="gg-map-small">
-    </div>
+<div class="w3-padding w3-row">
+    {{ subtitle(your, 'Location', home, 'fa fa-repeat',  "updateGeolocation()", 'update') }}
+    <div id="map" class="gg-map-small"></div>
 </div>
 {% endblock %}
 
@@ -100,7 +90,7 @@
 {# -------------- #}
 
 {% block script %}
-{% if profil.id == user.id %}
+{% if profil.id == me.id %}
 <script src='../js/myProfile.js'></script>
 {% endif %}
 <script src='../js/commonProfile.js'></script>

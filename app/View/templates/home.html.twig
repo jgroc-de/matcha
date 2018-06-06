@@ -18,14 +18,18 @@
         <a href="{{ path_for('search') }}" class="{{ class }}">search</a>
         <a href="{{ path_for('logout') }}" class="{{ classR }}"><i class="fa fa-power-off" alt="logout" title="logout"></i></a>
         <div class="w3-dropdown-hover w3-right">
-            <a href="{{ path_for('editProfil') }}" class="w3-button"><i class="fa fa-gears" alt="edit profile" title="edit profile"></i></a>
-            <div class="w3-dropdown-content w3-bar-block w3-border">
+            <a href="#" class="w3-button w3"><i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
+            </a>
+            <div class="w3-dropdown-content w3-bar-block" style="right:0">
                 <a href="{{ path_for('editProfil') }}" class="w3-bar-item w3-button">profil</a>
                 <a href="{{ path_for('editPassword') }}" class="w3-bar-item w3-button">password</a>
             </div>
         </div>
         <a href="#" class="{{ classR }}"><i class="fa fa-anchor" alt="new like" title="new like"></i></a>
         <a href="#" class="{{ classR }}"><i class="fa fa-send" alt="new message" title="new message"></i></a>
+        <div class="w3-right w3-theme-l5 w3-border w3-round" style="width:100px;margin:10px" title="popularity: {{ me.popularity }}/100">
+            <div class="w3-round w3-green w3-border" style="width:{{ me.popularity }}%;height:16px"></div>
+        </div>
     </div>
 {% endblock %}
 

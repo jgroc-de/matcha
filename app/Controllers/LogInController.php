@@ -17,8 +17,12 @@ class LogInController extends \App\Constructor
      */
     public function signup (Request $request, Response $response)
     {
+        $this->ft_geoIP->setLatLng();
+        $this->debug->ft_print($_POST);
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
             $this->form->checkSignup($request, $response);
+        }
         return $this->view->render(
             $response,
             'templates/logForm/signup.html.twig',

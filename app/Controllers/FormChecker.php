@@ -15,7 +15,7 @@ class FormChecker extends \App\Constructor
      */
     public function check (request $request)
     {
-        $post = $request->getParams();
+        $post = $_POST;
         if ($this->validator->validate($post, array_keys($post)))
             return $post;
         $this->flash->addMessage('failure', 'burp!');
