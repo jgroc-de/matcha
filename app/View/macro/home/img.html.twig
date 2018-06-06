@@ -1,9 +1,11 @@
-{% macro img(img, position, class) %}
-<div class="{% if class %}{{ class }}{% endif %} w3-half w3-display-container {% if not img %}w3-hover-green{% endif %} w3-black" style="height:100%">
+{% macro img(img, gender, home, class) %}
+<div class="{% if class %}{{ class }}{% endif %} w3-half w3-display-container {% if not img and home %}w3-hover-green{% endif %} w3-black" style="height:100%">
     {% if img %}
-        <img src='../{{ img }}' alt='{{ img }}' title='{{ img }}' class="w3-image w3-display-middle">
+        <img src='../{{ img }}' alt='{{ img }}' title='{{ gender }}' class="w3-image w3-display-middle">
+        {% if home %}
         <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture"></i>
-    {% else %}
+        {% endif %}
+    {% elseif home %}
         <i class="w3-jumbo w3-display-middle fa fa-plus" title="add picture"></i>
     {% endif %}
 </div>

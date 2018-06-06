@@ -13,26 +13,32 @@
     {% set your = 'Your ' %}
     {% set home = true %}
 {% endif %}
-<h2>{{ hi }}{{ profil.pseudo }}</h2>
+<div class="w3-display-container" style="width:100%">
+    <h2>{{ hi }}{{ profil.pseudo }}</h2>
+    <div class="w3-display-right w3-theme-l5 w3-border w3-round w3-margin-right" style="width:100px" title="popularity: {{ profil.popularity }}/100">
+        <div class="w3-round w3-green w3-border" style="width:{{ profil.popularity }}%;height:16px"></div>
+    </div>
+</div>
 <div id="flash"></div>
 {% if not home %}
+    {% if not friend %}
 <a href='#' class="w3-right" onclick="addFriend('{{ path_for('addFriend', profil ) }}')">add to friend list</a><br>
+    {% else %}
 <a href='#' class="w3-right" onclick="addFriend('{{ path_for('addFriend', profil ) }}')">remove from friend list</a><br>
+    {% endif %}
 {% endif %}
 <div class="w3-row w3-display-container w3-margin" style="height:250px">
-    {% if home %}
-    {{ img(profil.img1, 'left', 'w3-card-4') }}
+    {{ img(profil.img1, profil.gender, home, 'w3-card-4') }}
     <div class="w3-card-4 w3-half w3-display-right w3-black" style="height:inherit">
         <div class="w3-row w3-display-container" style="height:50%">
-            {{ img(profil.img2, 'left') }}
-            {{ img(profil.img3, 'right') }}
+            {{ img(profil.img2, profil.gender, home) }}
+            {{ img(profil.img3, profil.gender, home) }}
         </div>
         <div class="w3-row w3-display-container" style="height:50%">
-            {{ img(profil.img4, 'left') }}
-            {{ img(profil.img5, 'right') }}
+            {{ img(profil.img4, profil.gender, home) }}
+            {{ img(profil.img5, profil.gender, home) }}
         </div>
     </div>
-    {% endif %}
 </div>
 <div class="w3-row">
     <div class="w3-half w3-padding">

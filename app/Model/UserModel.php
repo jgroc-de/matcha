@@ -153,4 +153,10 @@ class UserModel extends \App\Constructor
         $req = $this->db->prepare('UPDATE user SET token = ? WHERE pseudo = ?');
         $req->execute(array($token, $pseudo));
     }
+
+    public function updatePopularity(array $profil)
+    {
+        $req = $this->db->prepare('UPDATE user SET popularity = ? WHERE pseudo = ?');
+        $req->execute(array($profil['popularity'], $profil['pseudo']));
+    }
 }

@@ -30,6 +30,7 @@ header a {
 }
 
 main {
+    background: url('../img/search2.jpg') no-repeat center bottom;
     background: url('../img/background.jpg') no-repeat center bottom;
     background-size: cover;
     min-height: 70vh;

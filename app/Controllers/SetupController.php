@@ -53,6 +53,13 @@ class SetupController extends \App\Constructor
             $profil['popularity'] = rand(0, 100);
             $user->setUser($profil);
             $user->updateUser($profil);
+            $user->updatePopularity($profil);
+            $bot = $user->getUserByEmail($profil['email']);
+            $_SESSION['id'] = $bot['id'];
+            for ($j = 0; $j < $i; $j++)
+            {
+                $this->tag->setUserTag($faker->word());
+            }
         }
     }
 }
