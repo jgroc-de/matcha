@@ -12,7 +12,7 @@
 {% block navbar %}
     <div class="w3-bar gg-navbar w3-theme-d1">
         {% set class = "w3-bar-item w3-button" %}
-        {% set classR = "w3-bar-item w3-button w3-right" %}
+        {% set classR = "w3-bar-item w3-button w3-right w3-large" %}
         <a href="#" class="{{ class }}"><i class="fa fa-bars" alt="menu" title="menu"></i></a>
         <a href={{ path_for('home') }} class="{{ class }}">home</a>
         <a href="{{ path_for('search') }}" class="{{ class }}">search</a>
@@ -25,7 +25,7 @@
                 <a href="{{ path_for('editPassword') }}" class="w3-bar-item w3-button">password</a>
             </div>
         </div>
-        <a href="#" class="{{ classR }}"><i class="fa fa-anchor" alt="new like" title="new like"></i></a>
+        <a href="#" class="{{ classR }}"><i class="fa fa-feed" alt="new like" title="new like"></i></a>
         <a href="#" class="{{ classR }}"><i class="fa fa-send" alt="new message" title="new message"></i></a>
         <div class="w3-right w3-theme-l5 w3-border w3-round" style="width:100px;margin:10px" title="popularity: {{ me.popularity }}/100">
             <div class="w3-round w3-green w3-border" style="width:{{ me.popularity }}%;height:16px"></div>

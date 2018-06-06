@@ -1,7 +1,18 @@
-{% macro img(img, gender, home, class) %}
-<div class="{% if class %}{{ class }}{% endif %} w3-half w3-display-container {% if not img and home %}w3-hover-green{% endif %} w3-black" style="height:100%">
+{% macro img(profil, id, home, class) %}
+{% if id == 1 %}
+    {% set img = profil.img1 %}
+{% elseif id == 2 %}
+    {% set img = profil.img2 %}
+{% elseif id == 3 %}
+    {% set img = profil.img3 %}
+{% elseif id == 4 %}
+    {% set img = profil.img4 %}
+{% elseif id == 5 %}
+    {% set img = profil.img5 %}
+{% endif %}
+<div class="{% if class %}{{ class }}{% endif %} w3-half w3-display-container {% if not img and home %}w3-hover-green{% endif %} w3-black" style="height:100%" id="img{{ id }}" {% if img %}onclick="deletePic({{ id }})"{% endif %}>
     {% if img %}
-        <img src='../{{ img }}' alt='{{ img }}' title='{{ gender }}' class="w3-image w3-display-middle">
+        <img src='{{ img }}' alt='{{ img }}' title='{{ profil.gender }}' class="w3-image w3-display-middle">
         {% if home %}
         <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture"></i>
         {% endif %}

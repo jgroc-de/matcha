@@ -6,6 +6,12 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class AjaxController extends \App\Constructor
 {
+    public function delPicture (Request $request, Response $response, array $args)
+    {
+        var_dump($args);
+        $this->user->delPicture($args['id']);
+        return $response;
+    }
     public function delUserTag (Request $request, Response $response, array $args)
     {
         if ($this->container->tag->delUserTag($args['id'], $_SESSION['id']))

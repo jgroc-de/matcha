@@ -28,15 +28,15 @@
     {% endif %}
 {% endif %}
 <div class="w3-row w3-display-container w3-margin" style="height:250px">
-    {{ img(profil.img1, profil.gender, home, 'w3-card-4') }}
+    {{ img(profil, 1, home, 'w3-card-4') }}
     <div class="w3-card-4 w3-half w3-display-right w3-black" style="height:inherit">
         <div class="w3-row w3-display-container" style="height:50%">
-            {{ img(profil.img2, profil.gender, home) }}
-            {{ img(profil.img3, profil.gender, home) }}
+            {{ img(profil, 2, home) }}
+            {{ img(profil, 3, home) }}
         </div>
         <div class="w3-row w3-display-container" style="height:50%">
-            {{ img(profil.img4, profil.gender, home) }}
-            {{ img(profil.img5, profil.gender, home) }}
+            {{ img(profil, 4, home) }}
+            {{ img(profil, 5, home) }}
         </div>
     </div>
 </div>
@@ -98,6 +98,28 @@
 {% block script %}
 {% if profil.id == me.id %}
 <script src='../js/myProfile.js'></script>
+<script>
+function deletePic (id) {
+    var xhttp = new XMLHttpRequest();
+    var parentNode = document.getElementById('img' + id);
+    var iElmt = document.createElement('i');
+
+    if (confirm("Delete?")) {
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                iElmt.setAttribute('class', "w3-jumbo w3-display-middle fa fa-plus");
+                iElmt.setAttribute('title', "remove picture");
+                while (parentNode.hasChildNodes()) {
+                    parentNode.removeChild(parentNode.firstChild);
+                }
+                parentNode.appendChild(iElmt); 
+            }
+        };
+        xhttp.open('GET', 'delPicture/' + id, true);
+        xhttp.send();
+    }
+}
+</script>
 {% endif %}
 <script src='../js/commonProfile.js'></script>
 <script>

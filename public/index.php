@@ -29,6 +29,7 @@ $app->group('', function () {
     $this->post('/addTag', Ajax::class . ':addTag')->setName('addTag');
     $this->get('/delFriend/{id}', Ajax::class . ':delFriend')->setName('delFriend');
     $this->get('/delUserTag/{id}', Ajax::class . ':delUserTag')->setName('delUserTag');
+    $this->get('/delPicture/{id}', Ajax::class . ':delPicture')->setName('delPicture');
     $this->get('/delFriendReq/{id}', Ajax::class . ':delFriendRequest')->setName('delFriendReq');
     $this->post('/updateGeolocation', Ajax::class . ':updateGeolocation')->setName('updateGeolocation');
     $this->get('/tchat/{id}', Ajax::class . ':tchat')->setName('tchat');
