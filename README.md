@@ -8,7 +8,7 @@ Introduction à un outil plus évolué pour réaliser vos applications web : le 
 
 [x] *Micro-framework*
 [x] Comptes utilisateur avancés
-[] Web socket
+[ ] Web socket
 [x] **Géolocalisation**
 [x] Sécurité / Validation de données 
 
