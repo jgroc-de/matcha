@@ -17,8 +17,8 @@
         <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture"></i>
         {% endif %}
     {% elseif home %}
-    <label class="w3-button w3-block w3-jumbo w3-display-middle fa fa-plus w3-padding-large w3-hover-green" onchange="alert('lol')" title="add picture">
-        <input type="file" style="display:none" value=""/>
+        <label class="w3-button w3-block w3-jumbo w3-display-middle fa fa-plus w3-padding-large w3-hover-green" onchange="addPicture({{ id }})" title="add picture">
+        <input id="" type="file" style="display:none"/>
     </label>
     {% endif %}
 </div>

@@ -121,8 +121,9 @@ function deletePic(id) {
     }
 }
 
-function addPicture(data, filter) {
-    var xhttp = new XMLHttpRequest();
+function addPicture(id) {
+    alert(id);
+    /*var xhttp = new XMLHttpRequest();
     var str = 'data=' + data;
     var i = 0;
 
@@ -143,10 +144,10 @@ function addPicture(data, filter) {
             document.getElementById('new').appendChild(img);
         }
     };
-    xhttp.open('POST', 'ajax/createPic.php', true);
+    */
+    xhttp.open('POST', '/addPic', true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send(str);
-}
 }
 </script>
 {% endif %}
