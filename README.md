@@ -6,11 +6,11 @@ Introduction à un outil plus évolué pour réaliser vos applications web : le 
 
 ## Objectifs pédagogique
 
-[x] *Micro-framework*
-[x] Comptes utilisateur avancés
-[ ] Web socket
-[x] **Géolocalisation**
-[x] Sécurité / Validation de données 
+- [x] *Micro-framework*
+- [x] Comptes utilisateur avancés
+- [ ] Web socket
+- [x] **Géolocalisation**
+- [x] Sécurité / Validation de données 
 
 ## Langages:
 
