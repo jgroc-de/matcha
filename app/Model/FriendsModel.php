@@ -22,11 +22,12 @@ class FriendsModel extends \App\Constructor
     public function getFriends($id)
     {
         $req1 = $this->db->prepare('
-            SELECT *
+            SELECT id, pseudo
             FROM friends
             INNER JOIN user
             ON friends.id_user2 = user.id
             WHERE id_user1 = ?
+            ORDER BY user.pseudo
         ');
         $req2 = $this->db->prepare('
             SELECT *
@@ -34,6 +35,7 @@ class FriendsModel extends \App\Constructor
             INNER JOIN user
             ON friends.id_user1 = user.id
             WHERE id_user2 = ?
+            ORDER BY user.pseudo
         ');
         $req1->execute(array($id));
         $req2->execute(array($id));
@@ -68,6 +70,7 @@ class FriendsModel extends \App\Constructor
             INNER JOIN user
             ON friendsReq.id_user2 = user.id
             WHERE id_user1 = ?
+            ORDER BY user.pseudo
         ');
         $req->execute(array($id));
         return $req->fetchAll();
@@ -86,10 +89,10 @@ class FriendsModel extends \App\Constructor
         {
             $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?)');
             $req->execute(array($id1, $id2));
-            return 'added!';
+            //return 'added!';
         }
-        else
-            return'already added';
+        //else
+            //return'already added';
     }
 }
 

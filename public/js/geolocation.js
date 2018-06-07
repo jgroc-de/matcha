@@ -16,7 +16,12 @@ function majLocation () {
 
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200)
+        {
+            var response = JSON.parse(this.responseText);
+            user.lat = response.lat;
+            user.lng = response.lng;
             initMap(); 
+        }
     };
     request.open('POST', '/updateGeolocation', true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

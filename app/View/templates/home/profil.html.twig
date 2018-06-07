@@ -22,14 +22,15 @@
 <div id="flash"></div>
 {% if not home %}
     {% if not friend %}
-<a href='#' class="w3-right" onclick="addFriend('{{ path_for('addFriend', profil ) }}')">add to friend list</a><br>
+        <a href='#' class="w3-right" onclick="addFriend('/addFriend/{{ profil.id }}')">add to friend list</a><br>
     {% else %}
-<a href='#' class="w3-right" onclick="addFriend('{{ path_for('addFriend', profil ) }}')">remove from friend list</a><br>
+        <a href='#' class="w3-right" onclick="addFriend('/addFriend/{{ profil.id }}')">remove from friend list</a><br>
     {% endif %}
 {% endif %}
-<div class="w3-row w3-display-container w3-margin" style="height:250px">
+<div class="w3-row w3-margin" style="height:250px">
+    <h3>{{ your }}Pictures</h3>
     {{ img(profil, 1, home, 'w3-card-4') }}
-    <div class="w3-card-4 w3-half w3-display-right w3-black" style="height:inherit">
+    <div class="w3-card-4 w3-half w3-black" style="height:inherit">
         <div class="w3-row w3-display-container" style="height:50%">
             {{ img(profil, 2, home) }}
             {{ img(profil, 3, home) }}
@@ -57,10 +58,10 @@
         </div>
     </div>
     <div class="w3-half w3-padding">
-        {{ subtitle(your, 'Interest', home, 'fa fa-plus',  "addTag('#{ path_for('addTag') }')", 'add tag') }}
+        {{ subtitle(your, 'Interest', home, 'fa fa-plus',  "addTag('/addTag')", 'add tag') }}
         <div class="w3-theme-l4" id="userTag" style="max-height:300px;overflow:auto">
             {% for tag in tags %}
-                {{ profilButton(tag.id, tag.tag, 'delUserTag', path_for('delUserTag', tag), home) }}
+                {{ profilButton(tag.id, tag.tag, "delUserTag('/delUserTag/', #{ tag.id })", home) }}
             {% endfor %}
         </div>
     </div>
@@ -71,7 +72,7 @@
         <h3>{{ your }}Friend Request</h3>
         <div class="w3-theme-l4 w3-padding" style="max-height:300px;overflow:auto">
             {% for req in friendReq %}
-                {{ profilButton(req.id, req.pseudo, 'delFriendReq', path_for('delFriendReq', req), home, path_for('profil', req)) }}
+                {{ profilButton(req.id, req.pseudo, "delFriendReq('/delFriendReq/#{ req.id }')", home, path_for('profil', req)) }}
             {% endfor %}
         </div>
     </div>
@@ -79,7 +80,7 @@
         <h3>{{ your }}Friends</h3>
         <div class="w3-theme-l4 w3-padding" style="max-height:300px;overflow:auto">
             {% for friend in friends %}
-                {{ profilButton(friend.id, friend.pseudo, 'delFriendReq', path_for('delFriendReq', friend), home, path_for('profil', friend)) }}
+                {{ profilButton(friend.id, friend.pseudo, "/delFriendReq/#{friend.id}", home, path_for('profil', friend)) }}
             {% endfor %}
         </div>
     </div>
@@ -99,7 +100,7 @@
 {% if profil.id == me.id %}
 <script src='../js/myProfile.js'></script>
 <script>
-function deletePic (id) {
+function deletePic(id) {
     var xhttp = new XMLHttpRequest();
     var parentNode = document.getElementById('img' + id);
     var iElmt = document.createElement('i');
@@ -118,6 +119,34 @@ function deletePic (id) {
         xhttp.open('GET', 'delPicture/' + id, true);
         xhttp.send();
     }
+}
+
+function addPicture(data, filter) {
+    var xhttp = new XMLHttpRequest();
+    var str = 'data=' + data;
+    var i = 0;
+
+    while (filter[i]) {
+        str += '&title' + i + '=' + filter[i];
+        i++;
+    }
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+
+            var path = this.responseText;
+            var img = document.createElement('img');
+
+            img.src = id;
+            img.alt = '';
+            img.id = path;
+            img.setAttribute('onclick','deletePic(' + path + ')');
+            document.getElementById('new').appendChild(img);
+        }
+    };
+    xhttp.open('POST', 'ajax/createPic.php', true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(str);
+}
 }
 </script>
 {% endif %}

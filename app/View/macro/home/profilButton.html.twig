@@ -1,4 +1,4 @@
-{% macro profilButton(id, key, function, path, home, href) %}
+{% macro profilButton(id, key, function, home, href) %}
 <div class=" w3-bar w3-theme-l1 w3-round-xxlarge" id="tag{{ id }}">
     {% if href %}
     <a href="{{ href }}" class="w3-padding w3-hover-opacity">{{ key }}</a>
@@ -6,7 +6,7 @@
     <span class="w3-padding">#{{ key }}</span>
     {% endif %}
     {% if home %}
-        <i class="w3-button w3-theme-d1 gg-button w3-hover-red fa fa-remove" onclick="{{ function }}('{{ path }}', {{ id }})" title="remove"></i>
+        <i class="w3-button w3-theme-d1 gg-button w3-hover-red fa fa-remove" onclick="{{ function }}" title="remove"></i>
     {% endif %}
 </div>
 {% endmacro %}

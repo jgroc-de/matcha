@@ -24,7 +24,8 @@ class AjaxController extends \App\Constructor
     {
         if ($this->container->tag->setUserTag($_POST['tag']))
         {
-            $response->getBody()->write($_POST['tag']);
+            $tag = $this->tag->getUserTagByName($_POST['tag'], $_SESSION['id']);
+            $response->getBody()->write($tag['id']);
             return $response;
         }
         return $response->withStatus(400);
@@ -37,6 +38,7 @@ class AjaxController extends \App\Constructor
         {
             $_SESSION['profil']['lattitude'] = $_POST['lat'];
             $_SESSION['profil']['longitude'] = $_POST['lng'];
+            $response->write(json_encode($_POST, JSON_NUMERIC_CHECK));
             return $response;
         }
         return $response->withStatus(400);

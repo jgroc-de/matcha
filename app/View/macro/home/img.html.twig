@@ -10,14 +10,16 @@
 {% elseif id == 5 %}
     {% set img = profil.img5 %}
 {% endif %}
-<div class="{% if class %}{{ class }}{% endif %} w3-half w3-display-container {% if not img and home %}w3-hover-green{% endif %} w3-black" style="height:100%" id="img{{ id }}" {% if img %}onclick="deletePic({{ id }})"{% endif %}>
+<div class="{% if class %}{{ class }}{% endif %} w3-half w3-display-container w3-black" style="height:100%" id="img{{ id }}" {% if img %}onclick="deletePic({{ id }})"{% endif %}>
     {% if img %}
-        <img src='{{ img }}' alt='{{ img }}' title='{{ profil.gender }}' class="w3-image w3-display-middle">
+        <img src='{{ img }}' alt='{{ img }}' title='{{ profil.gender }}' class="w3-image w3-display-middle" style="max-height:250px">
         {% if home %}
         <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture"></i>
         {% endif %}
     {% elseif home %}
-        <i class="w3-jumbo w3-display-middle fa fa-plus" title="add picture"></i>
+    <label class="w3-button w3-block w3-jumbo w3-display-middle fa fa-plus w3-padding-large w3-hover-green" onchange="alert('lol')" title="add picture">
+        <input type="file" style="display:none" value=""/>
+    </label>
     {% endif %}
 </div>
 {% endmacro %}

@@ -32,7 +32,7 @@
                         </a>
                         <i class="w3-button w3-right fa fa-remove w3-hover-red" onclick="closeInfo({{ user.id }})"></i>
                     </div>
-                        <img src="../{{ user.img1 }}" class="w3-right" style="width:50%">
+                        <img src="{{ user.img1 }}" class="w3-right" style="width:50%">
                         <p class="w3-small">{{ user.biography }}</p>
                 </div>
             </div>
@@ -75,7 +75,7 @@ function modal(id, imgU) {
     }
 }
 </script>
-<script src="googleMap/markerclusterer/src/markerclusterer.js"></script>
+<!--<script src="googleMap/markerclusterer/src/markerclusterer.js"></script>-->
 <script src="js/mapSearch.js"></script>
 <script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
 {% endblock %}

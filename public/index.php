@@ -25,17 +25,17 @@ $app->group('', function () {
     $this->get('/', Home::class . ':home')->setName('home');
     $this->get('/search', Home::class . ':search')->setName('search');
     $this->get('/profil/{id}', Home::class . ':profil')->setName('profil');
-    $this->get('/addFriend/{id}', Ajax::class . ':friendRequest')->setName('addFriend');
-    $this->post('/addTag', Ajax::class . ':addTag')->setName('addTag');
-    $this->get('/delFriend/{id}', Ajax::class . ':delFriend')->setName('delFriend');
-    $this->get('/delUserTag/{id}', Ajax::class . ':delUserTag')->setName('delUserTag');
-    $this->get('/delPicture/{id}', Ajax::class . ':delPicture')->setName('delPicture');
-    $this->get('/delFriendReq/{id}', Ajax::class . ':delFriendRequest')->setName('delFriendReq');
-    $this->post('/updateGeolocation', Ajax::class . ':updateGeolocation')->setName('updateGeolocation');
-    $this->get('/tchat/{id}', Ajax::class . ':tchat')->setName('tchat');
     $this->any('/editProfil', Home::class . ':editProfil')->setName('editProfil');
     $this->any('/editPassword', Home::class . ':editPassword')->setName('editPassword');
     $this->get('/logout', LogIn::class . ':logout')->setName('logout');
+    $this->get('/addFriend/{id}', Ajax::class . ':friendRequest');
+    $this->post('/addTag', Ajax::class . ':addTag');
+    $this->get('/delFriend/{id}', Ajax::class . ':delFriend');
+    $this->get('/delUserTag/{id}', Ajax::class . ':delUserTag');
+    $this->get('/delPicture/{id}', Ajax::class . ':delPicture');
+    $this->get('/delFriendReq/{id}', Ajax::class . ':delFriendRequest');
+    $this->post('/updateGeolocation', Ajax::class . ':updateGeolocation');
+    $this->get('/tchat/{id}', Ajax::class . ':tchat');
 })->add(new \App\Middlewares\authMiddleware());
 
 $app->run();

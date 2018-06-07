@@ -96,6 +96,6 @@ class FormChecker extends \App\Constructor
      */
     public function checkPassword ($real, $test)
     {
-        return ($real === $test);
+        return (password_verify($test, $real));
     }
 }

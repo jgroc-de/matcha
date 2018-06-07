@@ -8,7 +8,7 @@ function delUserTag(path, id) {
             child.parentNode.removeChild(child);
         }
     };
-    xhr.open('GET', path, true);
+    xhr.open('GET', path + id, true);
     xhr.send();
 }
 
@@ -42,13 +42,11 @@ function addTag(path) {
                 span.textContent = '#' + tag;
                 button.setAttribute('class', 'w3-button w3-theme-d1 w3-hover-red fa fa-remove');
                 button.setAttribute('style', 'border-radius: 0 100px 100px 0');
-                button.setAttribute('onclick', 'delUserTag("/delUserTag/' + id + '", ' + id + ')');
+                button.setAttribute('onclick', 'delUserTag("/delUserTag/", ' + id + ')');
                 document.getElementById('userTag').appendChild(div);
                 document.getElementById(div.id).appendChild(span);
                 document.getElementById(div.id).appendChild(button);
             }
-            else
-                console.log('fail');
         };
         xhr.open('POST', path, true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

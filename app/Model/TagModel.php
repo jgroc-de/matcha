@@ -30,9 +30,23 @@ class TagModel extends \App\Constructor
         return false;
     }
 
-    public function getUserTag($tag, $user)
+    public function getUserTag($id, $user)
     {
         $req = $this->db->prepare('SELECT * FROM usertags WHERE idtag = ? AND iduser = ?');
+        $req->execute(array($id, $user));
+        return $req->fetch();
+    }
+
+    public function getUserTagByName($tag, $user)
+    {
+        $req = $this->db->prepare('
+            SELECT *
+            FROM usertags
+            INNER JOIN hashtags
+            ON hashtags.id = usertags.idtag
+            WHERE hashtags.tag = ?
+            AND iduser = ?
+        ');
         $req->execute(array($tag, $user));
         return $req->fetch();
     }
@@ -45,6 +59,7 @@ class TagModel extends \App\Constructor
             INNER JOIN hashtags
             ON usertags.idtag = hashtags.id
             WHERE iduser = ?
+            ORDER BY hashtags.tag
         ');
         $req->execute(array($userId));
         return $req->fetchAll();

@@ -33,24 +33,25 @@ class UserModel extends \App\Constructor
      */
     public function setUser(array $post)
     {
-        $img = array(
-            'Rick' => 'img/rick.png',
-            'Morty' => 'img/morty.jpg',
-            'Beth' => 'img/beth.jpg',
-            'Jerry' => 'img/jerry.png',
-            'Summer' => 'img/summer.jpg'
-        );
+        $dir = scandir('img');
+        $img = array();
+        foreach ($dir as $value)
+        {
+            if (strpos($value, strtolower($post['gender'])) !== false)
+                $img[] = $value;
+        }
+
         $req = $this->db->prepare('
                 INSERT INTO user (pseudo, password, email, gender, activ, token, img1, lattitude, longitude)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $req->execute(array(
                 $post['pseudo'],
-                $post['password'],
+                password_hash($post['password'], PASSWORD_DEFAULT),
                 $post['email'],
                 $post['gender'],
                 $post['activ'],
                 $post['token'],
-                $img[$post['gender']],
+                '/img/' . $img[rand(0, 4)],
                 $post['lat'],
                 $post['lng']
             ));
@@ -121,7 +122,7 @@ class UserModel extends \App\Constructor
     public function updatePassUser()
     {
         $post = array();
-        $post[] = $_POST['password'];
+        $post[] = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $post[] = $_SESSION['id'];
         $req = $this->db->prepare('
             UPDATE user
@@ -132,8 +133,6 @@ class UserModel extends \App\Constructor
 
     public function updateGeolocation($lat, $lon)
     {
-        var_dump($lat);
-        var_dump($lon);
         $req = $this->db->prepare('
             UPDATE user
             SET lattitude = ?, longitude = ?
