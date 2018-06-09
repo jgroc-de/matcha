@@ -58,7 +58,7 @@ class MailSender extends \App\Constructor
 
             ---------------
             This is an automatic mail, thx to not reply.';
-        self::sendMail($dest, $subject, $message);
+        $this->sendMail($dest, $subject, $message);
     }
 
     /**
@@ -78,6 +78,6 @@ class MailSender extends \App\Constructor
 
             ---------------
             This is an automatic mail, thx to not reply.';
-        self::sendMail($dest, $subject, $message);
+        $this->sendMail($dest, $subject, $message);
     }
 }
