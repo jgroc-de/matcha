@@ -2412,10 +2412,10 @@ a	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/TemplateTest.php	/^    pr
 accNo	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/en_US/PaymentTest.php	/^        $accNo = $this->faker->bankAccountNumber;$/;"	v	line:24	method:Faker\Provider\en_US\PaymentTest::testBankAccountNumber
 acceptHeader	/home/gg/www/matcha/vendor/slim/slim/Slim/Handlers/AbstractHandler.php	/^        $acceptHeader = $request->getHeaderLine('Accept');$/;"	v	line:42	method:Slim\Handlers\AbstractHandler::determineContentType
 account	/home/gg/www/matcha/app/Controllers/FormChecker.php	/^                $account = $user->getUser($post['pseudo']);$/;"	v	line:62	method:App\Controllers\FormChecker::checkSignup
-account	/home/gg/www/matcha/app/Controllers/LogInController.php	/^        $account = $this->user->getUser($get['login']);$/;"	v	line:47	method:App\Controllers\LogInController::validation
+account	/home/gg/www/matcha/app/Controllers/LogInController.php	/^        $account = $this->user->getUser($get['login']);$/;"	v	line:46	method:App\Controllers\LogInController::validation
 accountId	/home/gg/www/matcha/vendor/maxmind/web-service-common/src/WebService/Client.php	/^        $this->accountId = $accountId;$/;"	v	line:54	method:MaxMind\WebService\Client::__construct
 accountId	/home/gg/www/matcha/vendor/maxmind/web-service-common/src/WebService/Client.php	/^    private $accountId;$/;"	p	line:35	class:MaxMind\WebService\Client	access:private
-activate	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function activate()$/;"	m	line:145	class:App\Model\UserModel	access:public
+activate	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function activate()$/;"	m	line:144	class:App\Model\UserModel	access:public
 actives	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Extension/Profiler.php	/^    private $actives = array();$/;"	p	line:14	class:Twig_Extension_Profiler	access:private
 add	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^    public function add($prefix, $paths, $prepend = false)$/;"	m	line:109	class:Composer\Autoload\ClassLoader	access:public
 add	/home/gg/www/matcha/vendor/slim/slim/Slim/App.php	/^    public function add($callable)$/;"	m	line:104	class:Slim\App	access:public
@@ -4381,13 +4381,13 @@ defined	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/TemplateTest.php	/^
 defined	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/TemplateTest.php	/^    public $defined = 'defined';$/;"	p	line:515	class:Twig_TemplatePropertyObject	access:public
 defport	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Environment.php	/^            $defport = 443;$/;"	v	line:36	method:Slim\Http\Environment::mock
 defscheme	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Environment.php	/^            $defscheme = 'https';$/;"	v	line:35	method:Slim\Http\Environment::mock
-delFriend	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function delFriend (Request $request, Response $response, array $args)$/;"	m	line:64	class:App\Controllers\AjaxController	access:public
-delFriend	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function delFriend($id1, $id2)$/;"	m	line:57	class:App\Model\FriendsModel	access:public
-delFriendReq	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function delFriendReq($id1, $id2)$/;"	m	line:51	class:App\Model\FriendsModel	access:public
-delFriendRequest	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function delFriendRequest (Request $request, Response $response, array $args)$/;"	m	line:55	class:App\Controllers\AjaxController	access:public
+delFriend	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function delFriend (Request $request, Response $response, array $args)$/;"	m	line:66	class:App\Controllers\AjaxController	access:public
+delFriend	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function delFriend($id1, $id2)$/;"	m	line:59	class:App\Model\FriendsModel	access:public
+delFriendReq	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function delFriendReq($id1, $id2)$/;"	m	line:53	class:App\Model\FriendsModel	access:public
+delFriendRequest	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function delFriendRequest (Request $request, Response $response, array $args)$/;"	m	line:57	class:App\Controllers\AjaxController	access:public
 delPicture	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function delPicture (Request $request, Response $response, array $args)$/;"	m	line:9	class:App\Controllers\AjaxController	access:public
 delUserTag	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function delUserTag (Request $request, Response $response, array $args)$/;"	m	line:15	class:App\Controllers\AjaxController	access:public
-delUserTag	/home/gg/www/matcha/app/Model/TagModel.php	/^    public function delUserTag($idTag, $idUser)$/;"	m	line:53	class:App\Model\TagModel	access:public
+delUserTag	/home/gg/www/matcha/app/Model/TagModel.php	/^    public function delUserTag($idTag, $idUser)$/;"	m	line:68	class:App\Model\TagModel	access:public
 delete	/home/gg/www/matcha/vendor/nikic/fast-route/src/RouteCollector.php	/^    public function delete($route, $handler)$/;"	m	line:112	class:FastRoute\RouteCollector	access:public
 delete	/home/gg/www/matcha/vendor/slim/slim/Slim/App.php	/^    public function delete($pattern, $callable)$/;"	m	line:193	class:Slim\App	access:public
 department	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/fr_FR/Address.php	/^    public static function department()$/;"	m	line:105	class:Faker\Provider\fr_FR\Address	access:public
@@ -4413,6 +4413,7 @@ digits	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/nb_NO/Pers
 digits	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/vi_VN/PhoneNumber.php	/^            $digits = 8;$/;"	v	line:56	method:Faker\Provider\vi_VN\PhoneNumber::phoneNumber
 digits	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/vi_VN/PhoneNumber.php	/^        $digits = 7;$/;"	v	line:53	method:Faker\Provider\vi_VN\PhoneNumber::phoneNumber
 digits	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/zh_TW/Address.php	/^        $digits = array($/;"	v	line:362	method:Faker\Provider\zh_TW\Address::randomChineseNumber
+dir	/home/gg/www/matcha/app/Model/UserModel.php	/^        $dir = scandir('img');$/;"	v	line:36	method:App\Model\UserModel::setUser
 dir	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Image.php	/^        $dir = is_null($dir) ? sys_get_temp_dir() : $dir; // GNU/Linux / OS X / Windows compatible$/;"	v	line:66	method:Faker\Provider\Image::image
 dir	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Cache/Filesystem.php	/^        $dir = dirname($key);$/;"	v	line:50	method:Twig_Cache_Filesystem::write
 dir	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Cache/FilesystemTest.php	/^        $dir = dirname($key);$/;"	v	line:146	method:Twig_Tests_Cache_FilesystemTest::testGetTimestamp
@@ -5637,8 +5638,8 @@ freeEmailDomain	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/s
 freeEmailDomain	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/tr_TR/Internet.php	/^    protected static $freeEmailDomain = array('gmail.com', 'hotmail.com', 'yahoo.com', 'yandex.com.tr', 'mynet.com', 'turk.net', 'superposta.com');$/;"	p	line:7	class:Faker\Provider\tr_TR\Internet	access:protected
 freeEmailDomain	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/uk_UA/Internet.php	/^    protected static $freeEmailDomain = array('gmail.com', 'mail.ru', 'ukr.net', 'i.ua', 'rambler.ru');$/;"	p	line:8	class:Faker\Provider\uk_UA\Internet	access:protected
 freeEmailDomain	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/zh_CN/Internet.php	/^    protected static $freeEmailDomain = array($/;"	p	line:7	class:Faker\Provider\zh_CN\Internet	access:protected
-friendRequest	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function friendRequest (Request $request, Response $response, array $args)$/;"	m	line:45	class:App\Controllers\AjaxController	access:public
-friends	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^        $friends = $this->container->friends;$/;"	v	line:75	method:App\Controllers\AjaxController::tchat
+friendRequest	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function friendRequest (Request $request, Response $response, array $args)$/;"	m	line:47	class:App\Controllers\AjaxController	access:public
+friends	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^        $friends = $this->container->friends;$/;"	v	line:77	method:App\Controllers\AjaxController::tchat
 from	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Extension/Core.php	/^        $from = iterator_to_array($from);$/;"	v	line:450	function:twig_replace_filter
 fromEncoding	/home/gg/www/matcha/vendor/symfony/polyfill-mbstring/Mbstring.php	/^                $fromEncoding = 'Windows-1252';$/;"	v	line:100	method:Symfony\Polyfill\Mbstring\Mbstring::mb_convert_encoding
 fromEncoding	/home/gg/www/matcha/vendor/symfony/polyfill-mbstring/Mbstring.php	/^            $fromEncoding = $toEncoding;$/;"	v	line:91	method:Symfony\Polyfill\Mbstring\Mbstring::mb_convert_encoding
@@ -5747,7 +5748,7 @@ generator	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/TextTe
 generator	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/TextTest.php	/^    $generator = new Generator();$/;"	v	line:38	method:Faker\Test\Provider\TextTest::testTextMinIndex
 generator	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/TextTest.php	/^    $generator = new Generator();$/;"	v	line:49	method:Faker\Test\Provider\TextTest::testTextMinLength
 generator	/home/gg/www/matcha/vendor/fzaninotto/faker/test/documentor.php	/^$generator = Faker\Factory::create();$/;"	v	line:4
-get	/home/gg/www/matcha/app/Controllers/LogInController.php	/^        $get = $request->getParams();$/;"	v	line:46	method:App\Controllers\LogInController::validation
+get	/home/gg/www/matcha/app/Controllers/LogInController.php	/^        $get = $request->getParams();$/;"	v	line:45	method:App\Controllers\LogInController::validation
 get	/home/gg/www/matcha/vendor/geoip2/geoip2/src/Model/AbstractModel.php	/^    protected function get($field)$/;"	m	line:27	class:GeoIp2\Model\AbstractModel	access:protected
 get	/home/gg/www/matcha/vendor/maxmind-db/reader/src/MaxMind/Db/Reader.php	/^    public function get($ipAddress)$/;"	m	line:89	class:MaxMind\Db\Reader	access:public
 get	/home/gg/www/matcha/vendor/maxmind/web-service-common/src/WebService/Client.php	/^    public function get($service, $path)$/;"	m	line:127	class:MaxMind\WebService\Client	access:public
@@ -5943,9 +5944,9 @@ getFormatters	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Documentor.p
 getFragment	/home/gg/www/matcha/vendor/psr/http-message/src/UriInterface.php	/^    public function getFragment();$/;"	m	line:174	interface:UriInterface	access:public
 getFragment	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^    public function getFragment()$/;"	m	line:746	class:Slim\Http\Uri	access:public
 getFriend	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function getFriend($id1, $id2)$/;"	m	line:15	class:App\Model\FriendsModel	access:public
-getFriendReq	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function getFriendReq($id1, $id2)$/;"	m	line:76	class:App\Model\FriendsModel	access:public
+getFriendReq	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function getFriendReq($id1, $id2)$/;"	m	line:79	class:App\Model\FriendsModel	access:public
 getFriends	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function getFriends($id)$/;"	m	line:22	class:App\Model\FriendsModel	access:public
-getFriendsReqs	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function getFriendsReqs($id)$/;"	m	line:63	class:App\Model\FriendsModel	access:public
+getFriendsReqs	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function getFriendsReqs($id)$/;"	m	line:65	class:App\Model\FriendsModel	access:public
 getFunction	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Environment.php	/^    public function getFunction($name)$/;"	m	line:844	class:Twig_Environment	access:public
 getFunction	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/ExtensionSet.php	/^    public function getFunction($name)$/;"	m	line:193	class:Twig_ExtensionSet	access:public
 getFunctionName	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Sandbox/SecurityNotAllowedFunctionError.php	/^    public function getFunctionName()$/;"	m	line:27	class:Twig_Sandbox_SecurityNotAllowedFunctionError	access:public
@@ -6284,12 +6285,13 @@ getUri	/home/gg/www/matcha/vendor/psr/http-message/src/RequestInterface.php	/^  
 getUri	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^    public function getUri()$/;"	m	line:553	class:Slim\Http\Request	access:public
 getUseIncludePath	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^    public function getUseIncludePath()$/;"	m	line:249	class:Composer\Autoload\ClassLoader	access:public
 getUser	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function getUser($pseudo)$/;"	m	line:24	class:App\Model\UserModel	access:public
-getUserByEmail	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function getUserByEmail($email)$/;"	m	line:74	class:App\Model\UserModel	access:public
-getUserById	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function getUserById($id)$/;"	m	line:63	class:App\Model\UserModel	access:public
+getUserByEmail	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function getUserByEmail($email)$/;"	m	line:75	class:App\Model\UserModel	access:public
+getUserById	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function getUserById($id)$/;"	m	line:64	class:App\Model\UserModel	access:public
 getUserInfo	/home/gg/www/matcha/vendor/psr/http-message/src/UriInterface.php	/^    public function getUserInfo();$/;"	m	line:77	interface:UriInterface	access:public
 getUserInfo	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^    public function getUserInfo()$/;"	m	line:359	class:Slim\Http\Uri	access:public
-getUserTag	/home/gg/www/matcha/app/Model/TagModel.php	/^    public function getUserTag($tag, $user)$/;"	m	line:33	class:App\Model\TagModel	access:public
-getUserTags	/home/gg/www/matcha/app/Model/TagModel.php	/^    public function getUserTags($userId)$/;"	m	line:40	class:App\Model\TagModel	access:public
+getUserTag	/home/gg/www/matcha/app/Model/TagModel.php	/^    public function getUserTag($id, $user)$/;"	m	line:33	class:App\Model\TagModel	access:public
+getUserTagByName	/home/gg/www/matcha/app/Model/TagModel.php	/^    public function getUserTagByName($tag, $user)$/;"	m	line:40	class:App\Model\TagModel	access:public
+getUserTags	/home/gg/www/matcha/app/Model/TagModel.php	/^    public function getUserTags($userId)$/;"	m	line:54	class:App\Model\TagModel	access:public
 getUsers	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function getUsers()$/;"	m	line:14	class:App\Model\UserModel	access:public
 getValue	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Token.php	/^    public function getValue()$/;"	m	line:101	class:Twig_Token	access:public
 getVarName	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Compiler.php	/^    public function getVarName()$/;"	m	line:236	class:Twig_Compiler	access:public
@@ -6506,7 +6508,7 @@ imageUrl	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Image.ph
 imei	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/PhoneNumber.php	/^        $imei = (string) static::numerify('##############');$/;"	v	line:39	method:Faker\Provider\PhoneNumber::imei
 imei	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/PhoneNumber.php	/^    public function imei()$/;"	m	line:37	class:Faker\Provider\PhoneNumber	access:public
 imei	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/PhoneNumberTest.php	/^        $imei = $this->faker->imei();$/;"	v	line:32	method:Faker\Test\Provider\PhoneNumberTest::testImeiReturnsValidNumber
-img	/home/gg/www/matcha/app/Model/UserModel.php	/^        $img = array($/;"	v	line:36	method:App\Model\UserModel::setUser
+img	/home/gg/www/matcha/app/Model/UserModel.php	/^        $img = array();$/;"	v	line:37	method:App\Model\UserModel::setUser
 immune	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/escapingTest.php	/^        $immune = array(',', '.', '-', '_'); // Exceptions to escaping ranges$/;"	v	line:281	method:Twig_Test_EscapingTest::testHtmlAttributeEscapingEscapesOwaspRecommendedRanges
 immune	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/escapingTest.php	/^        $immune = array(',', '.', '_'); // Exceptions to escaping ranges$/;"	v	line:258	method:Twig_Test_EscapingTest::testJavascriptEscapingEscapesOwaspRecommendedRanges
 implode	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Text.php	/^    protected static function implode($words)$/;"	m	line:118	class:Faker\Provider\Text	access:protected
@@ -7163,8 +7165,8 @@ locator	/home/gg/www/matcha/vendor/pimple/pimple/src/Pimple/Tests/Psr11/ServiceL
 logError	/home/gg/www/matcha/vendor/slim/slim/Slim/Handlers/AbstractError.php	/^    protected function logError($message)$/;"	m	line:95	class:Slim\Handlers\AbstractError	access:protected
 logicalPathPsr0	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^            $logicalPathPsr0 = substr($logicalPathPsr4, 0, $pos + 1)$/;"	v	line:402	method:Composer\Autoload\ClassLoader::findFileWithExtension
 logicalPathPsr4	/home/gg/www/matcha/vendor/composer/ClassLoader.php	/^        $logicalPathPsr4 = strtr($class, '\\', DIRECTORY_SEPARATOR) . $ext;$/;"	v	line:373	method:Composer\Autoload\ClassLoader::findFileWithExtension
-login	/home/gg/www/matcha/app/Controllers/LogInController.php	/^    public function login (Request $request, Response $response)$/;"	m	line:97	class:App\Controllers\LogInController	access:public
-logout	/home/gg/www/matcha/app/Controllers/LogInController.php	/^    public function logout (Request $request, Response $response)$/;"	m	line:117	class:App\Controllers\LogInController	access:public
+login	/home/gg/www/matcha/app/Controllers/LogInController.php	/^    public function login (Request $request, Response $response)$/;"	m	line:96	class:App\Controllers\LogInController	access:public
+logout	/home/gg/www/matcha/app/Controllers/LogInController.php	/^    public function logout (Request $request, Response $response)$/;"	m	line:116	class:App\Controllers\LogInController	access:public
 longLastNames	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/nl_NL/Person.php	/^    protected static $longLastNames = array($/;"	p	line:202	class:Faker\Provider\nl_NL\Person	access:protected
 longitude	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/Address.php	/^    public static function longitude($min = -180, $max = 180)$/;"	m	line:123	class:Faker\Provider\Address	access:public
 longitude	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/AddressTest.php	/^        $longitude = $this->faker->longitude();$/;"	v	line:29	method:Faker\Test\Provider\AddressTest::testLongitude
@@ -8474,8 +8476,8 @@ post	/home/gg/www/matcha/app/Controllers/FormChecker.php	/^        $post = $_POS
 post	/home/gg/www/matcha/app/Controllers/FormChecker.php	/^        if (($post = $this->check($request)))$/;"	v	line:29	method:App\Controllers\FormChecker::checkLogin
 post	/home/gg/www/matcha/app/Controllers/FormChecker.php	/^        if (($post = $this->check($request)))$/;"	v	line:55	method:App\Controllers\FormChecker::checkSignup
 post	/home/gg/www/matcha/app/Controllers/FormChecker.php	/^        if (($post = $this->check($request)))$/;"	v	line:78	method:App\Controllers\FormChecker::checkProfil
-post	/home/gg/www/matcha/app/Model/UserModel.php	/^        $post = array();$/;"	v	line:123	method:App\Model\UserModel::updatePassUser
-post	/home/gg/www/matcha/app/Model/UserModel.php	/^        $post = array();$/;"	v	line:83	method:App\Model\UserModel::updateUser
+post	/home/gg/www/matcha/app/Model/UserModel.php	/^        $post = array();$/;"	v	line:124	method:App\Model\UserModel::updatePassUser
+post	/home/gg/www/matcha/app/Model/UserModel.php	/^        $post = array();$/;"	v	line:84	method:App\Model\UserModel::updateUser
 post	/home/gg/www/matcha/vendor/maxmind/web-service-common/src/WebService/Client.php	/^    public function post($service, $path, $input)$/;"	m	line:101	class:MaxMind\WebService\Client	access:public
 post	/home/gg/www/matcha/vendor/maxmind/web-service-common/src/WebService/Http/CurlRequest.php	/^    public function post($body)$/;"	m	line:32	class:MaxMind\WebService\Http\CurlRequest	access:public
 post	/home/gg/www/matcha/vendor/maxmind/web-service-common/src/WebService/Http/Request.php	/^    public function post($body);$/;"	m	line:23	interface:Request	access:public
@@ -8983,32 +8985,33 @@ repr	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Node.php	/^        $repr = ar
 repr	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/TokenStreamTest.php	/^        $repr = array();$/;"	v	line:33	method:Twig_Tests_TokenStreamTest::testNext
 representedCountry	/home/gg/www/matcha/vendor/geoip2/geoip2/src/Model/Country.php	/^        $this->representedCountry = new \GeoIp2\Record\RepresentedCountry($/;"	v	line:63	method:GeoIp2\Model\Country::__construct
 representedCountry	/home/gg/www/matcha/vendor/geoip2/geoip2/src/Model/Country.php	/^    protected $representedCountry;$/;"	p	line:37	class:GeoIp2\Model\Country	access:protected
-req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^            $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?)');$/;"	v	line:87	method:App\Model\FriendsModel::setFriendsReq
-req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req = $this->db->prepare('$/;"	v	line:65	method:App\Model\FriendsModel::getFriendsReqs
-req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? AND id_user2 = ?');$/;"	v	line:59	method:App\Model\FriendsModel::delFriend
-req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');$/;"	v	line:53	method:App\Model\FriendsModel::delFriendReq
-req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?)');$/;"	v	line:47	method:App\Model\FriendsModel::setFriend
+req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^            $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?)');$/;"	v	line:90	method:App\Model\FriendsModel::setFriendsReq
+req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req = $this->db->prepare('$/;"	v	line:67	method:App\Model\FriendsModel::getFriendsReqs
+req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? AND id_user2 = ?');$/;"	v	line:61	method:App\Model\FriendsModel::delFriend
+req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');$/;"	v	line:55	method:App\Model\FriendsModel::delFriendReq
+req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?)');$/;"	v	line:49	method:App\Model\FriendsModel::setFriend
 req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req = $this->db->prepare('SELECT * FROM friends WHERE id_user1 = ? AND id_user2 = ?');$/;"	v	line:17	method:App\Model\FriendsModel::getFriend
-req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req = $this->db->prepare('SELECT * FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');$/;"	v	line:78	method:App\Model\FriendsModel::getFriendReq
+req	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req = $this->db->prepare('SELECT * FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');$/;"	v	line:81	method:App\Model\FriendsModel::getFriendReq
 req	/home/gg/www/matcha/app/Model/TagModel.php	/^            $req = $this->db->prepare('INSERT INTO usertags (idtag, iduser) VALUES (?,?)');$/;"	v	line:27	method:App\Model\TagModel::setUserTag
-req	/home/gg/www/matcha/app/Model/TagModel.php	/^        $req = $this->db->prepare('$/;"	v	line:42	method:App\Model\TagModel::getUserTags
-req	/home/gg/www/matcha/app/Model/TagModel.php	/^        $req = $this->db->prepare('DELETE FROM usertags WHERE idtag = ? AND iduser = ?');$/;"	v	line:55	method:App\Model\TagModel::delUserTag
+req	/home/gg/www/matcha/app/Model/TagModel.php	/^        $req = $this->db->prepare('$/;"	v	line:42	method:App\Model\TagModel::getUserTagByName
+req	/home/gg/www/matcha/app/Model/TagModel.php	/^        $req = $this->db->prepare('$/;"	v	line:56	method:App\Model\TagModel::getUserTags
+req	/home/gg/www/matcha/app/Model/TagModel.php	/^        $req = $this->db->prepare('DELETE FROM usertags WHERE idtag = ? AND iduser = ?');$/;"	v	line:70	method:App\Model\TagModel::delUserTag
 req	/home/gg/www/matcha/app/Model/TagModel.php	/^        $req = $this->db->prepare('INSERT INTO hashtags (tag) VALUES (?)');$/;"	v	line:9	method:App\Model\TagModel::setTag
 req	/home/gg/www/matcha/app/Model/TagModel.php	/^        $req = $this->db->prepare('SELECT * FROM hashtags WHERE tag = ?');$/;"	v	line:15	method:App\Model\TagModel::getTag
 req	/home/gg/www/matcha/app/Model/TagModel.php	/^        $req = $this->db->prepare('SELECT * FROM usertags WHERE idtag = ? AND iduser = ?');$/;"	v	line:35	method:App\Model\TagModel::getUserTag
-req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('$/;"	v	line:126	method:App\Model\UserModel::updatePassUser
-req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('$/;"	v	line:137	method:App\Model\UserModel::updateGeolocation
-req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('$/;"	v	line:43	method:App\Model\UserModel::setUser
-req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('$/;"	v	line:92	method:App\Model\UserModel::updateUser
-req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('UPDATE user SET activ = 1 WHERE id = ?');$/;"	v	line:147	method:App\Model\UserModel::activate
-req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('UPDATE user SET popularity = ? WHERE pseudo = ?');$/;"	v	line:159	method:App\Model\UserModel::updatePopularity
-req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('UPDATE user SET token = ? WHERE pseudo = ?');$/;"	v	line:153	method:App\Model\UserModel::updateToken
-req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('select * from user where email = ?');$/;"	v	line:76	method:App\Model\UserModel::getUserByEmail
-req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('select * from user where id = ?');$/;"	v	line:65	method:App\Model\UserModel::getUserById
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('$/;"	v	line:127	method:App\Model\UserModel::updatePassUser
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('$/;"	v	line:136	method:App\Model\UserModel::updateGeolocation
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('$/;"	v	line:44	method:App\Model\UserModel::setUser
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('$/;"	v	line:93	method:App\Model\UserModel::updateUser
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('UPDATE user SET activ = 1 WHERE id = ?');$/;"	v	line:146	method:App\Model\UserModel::activate
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('UPDATE user SET popularity = ? WHERE pseudo = ?');$/;"	v	line:158	method:App\Model\UserModel::updatePopularity
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('UPDATE user SET token = ? WHERE pseudo = ?');$/;"	v	line:152	method:App\Model\UserModel::updateToken
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('select * from user where email = ?');$/;"	v	line:77	method:App\Model\UserModel::getUserByEmail
+req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('select * from user where id = ?');$/;"	v	line:66	method:App\Model\UserModel::getUserById
 req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->prepare('select * from user where pseudo = ?');$/;"	v	line:26	method:App\Model\UserModel::getUser
 req	/home/gg/www/matcha/app/Model/UserModel.php	/^        $req = $this->db->query('SELECT * FROM user LIMIT 50');$/;"	v	line:16	method:App\Model\UserModel::getUsers
 req1	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req1 = $this->db->prepare('$/;"	v	line:24	method:App\Model\FriendsModel::getFriends
-req2	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req2 = $this->db->prepare('$/;"	v	line:31	method:App\Model\FriendsModel::getFriends
+req2	/home/gg/www/matcha/app/Model/FriendsModel.php	/^        $req2 = $this->db->prepare('$/;"	v	line:32	method:App\Model\FriendsModel::getFriends
 request	/home/gg/www/matcha/vendor/maxmind/web-service-common/src/WebService/Client.php	/^        $request = $this->createRequest($/;"	v	line:111	method:MaxMind\WebService\Client::post
 request	/home/gg/www/matcha/vendor/maxmind/web-service-common/src/WebService/Client.php	/^        $request = $this->createRequest($path);$/;"	v	line:129	method:MaxMind\WebService\Client::get
 request	/home/gg/www/matcha/vendor/maxmind/web-service-common/src/WebService/Http/RequestFactory.php	/^    public function request($url, $options)$/;"	m	line:22	class:MaxMind\WebService\Http\RequestFactory	access:public
@@ -9037,7 +9040,7 @@ res	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/pt_PT/Person.
 reset	/home/gg/www/matcha/vendor/composer/ca-bundle/src/CaBundle.php	/^    public static function reset()$/;"	m	line:302	class:Composer\CaBundle\CaBundle	access:public
 reset	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Profiler/Profile.php	/^    public function reset()$/;"	m	line:152	class:Twig_Profiler_Profile	access:public
 reset	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Extension/SandboxTest.php	/^    public static function reset()$/;"	m	line:297	class:FooObject	access:public
-resetPassword	/home/gg/www/matcha/app/Controllers/LogInController.php	/^    public function resetPassword (Request $request, Response $response)$/;"	m	line:67	class:App\Controllers\LogInController	access:public
+resetPassword	/home/gg/www/matcha/app/Controllers/LogInController.php	/^    public function resetPassword (Request $request, Response $response)$/;"	m	line:66	class:App\Controllers\LogInController	access:public
 resolve	/home/gg/www/matcha/vendor/slim/slim/Slim/CallableResolver.php	/^    public function resolve($toResolve)$/;"	m	line:49	class:Slim\CallableResolver	access:public
 resolve	/home/gg/www/matcha/vendor/slim/slim/Slim/Interfaces/CallableResolverInterface.php	/^    public function resolve($toResolve);$/;"	m	line:26	interface:CallableResolverInterface	access:public
 resolveCallable	/home/gg/www/matcha/vendor/slim/slim/Slim/CallableResolver.php	/^    protected function resolveCallable($class, $method = '__invoke')$/;"	m	line:83	class:Slim\CallableResolver	access:protected
@@ -9455,8 +9458,8 @@ setDispatcher	/home/gg/www/matcha/vendor/slim/slim/Slim/Router.php	/^    public 
 setEscaper	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Extension/Core.php	/^    public function setEscaper($strategy, callable $callable)$/;"	m	line:25	class:Twig_Extension_Core	access:public
 setExtensions	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Environment.php	/^    public function setExtensions(array $extensions)$/;"	m	line:681	class:Twig_Environment	access:public
 setExtensions	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/ExtensionSet.php	/^    public function setExtensions(array $extensions)$/;"	m	line:103	class:Twig_ExtensionSet	access:public
-setFriend	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function setFriend($id1, $id2)$/;"	m	line:43	class:App\Model\FriendsModel	access:public
-setFriendsReq	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function setFriendsReq($id1, $id2)$/;"	m	line:83	class:App\Model\FriendsModel	access:public
+setFriend	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function setFriend($id1, $id2)$/;"	m	line:45	class:App\Model\FriendsModel	access:public
+setFriendsReq	/home/gg/www/matcha/app/Model/FriendsModel.php	/^    public function setFriendsReq($id1, $id2)$/;"	m	line:86	class:App\Model\FriendsModel	access:public
 setIndex	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Node/Module.php	/^    public function setIndex($index)$/;"	m	line:61	class:Twig_Node_Module	access:public
 setLatLng	/home/gg/www/matcha/app/Lib/ft_geoIP.php	/^    public function setLatLng()$/;"	m	line:6	class:App\Lib\ft_geoIP	access:public
 setLexer	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Environment.php	/^    public function setLexer(Twig_Lexer $lexer)$/;"	m	line:494	class:Twig_Environment	access:public
@@ -10212,6 +10215,7 @@ tableMap	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/ORM/Propel/Entity
 tableMap	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/ORM/Propel/EntityPopulator.php	/^        $tableMap = $peerClass::getTableMap();$/;"	v	line:62	method:Faker\ORM\Propel\EntityPopulator::guessColumnFormatters
 tableMap	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/ORM/Propel2/EntityPopulator.php	/^        $tableMap = $peerClass::getTableMap();$/;"	v	line:148	method:Faker\ORM\Propel2\EntityPopulator::guessModifiers
 tableMap	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/ORM/Propel2/EntityPopulator.php	/^        $tableMap = $peerClass::getTableMap();$/;"	v	line:62	method:Faker\ORM\Propel2\EntityPopulator::guessColumnFormatters
+tag	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^            $tag = $this->tag->getUserTagByName($_POST['tag'], $_SESSION['id']);$/;"	v	line:27	method:App\Controllers\AjaxController::addTag
 tag	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Node.php	/^        $this->tag = $tag;$/;"	v	line:48	method:Twig_Node::__construct
 tag	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Node.php	/^    protected $tag;$/;"	p	line:23	class:Twig_Node	access:protected
 tagInfo	/home/gg/www/matcha/app/Model/TagModel.php	/^        $tagInfo = $this->getTag($tag);$/;"	v	line:24	method:App\Model\TagModel::setUserTag
@@ -10232,7 +10236,7 @@ taxId	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/it_IT/Pers
 taxpayerIdentificationNumber	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/pl_PL/Person.php	/^    public static function taxpayerIdentificationNumber()$/;"	m	line:206	class:Faker\Provider\pl_PL\Person	access:public
 taxpayerIdentificationNumber	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/pt_PT/Person.php	/^    public static function taxpayerIdentificationNumber()$/;"	m	line:58	class:Faker\Provider\pt_PT\Person	access:public
 tbody	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/Provider/HtmlLorem.php	/^        $tbody = $element->ownerDocument->createElement(static::TBODY_TAG);$/;"	v	line:242	method:Faker\Provider\HtmlLorem::addRandomTable
-tchat	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function tchat (Request $request, Response $response, array $args)$/;"	m	line:73	class:App\Controllers\AjaxController	access:public
+tchat	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function tchat (Request $request, Response $response, array $args)$/;"	m	line:75	class:App\Controllers\AjaxController	access:public
 tearDown	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/DateTimeTest.php	/^    public function tearDown()$/;"	m	line:16	class:Faker\Test\Provider\DateTimeTest	access:public
 tearDown	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/ro_RO/PersonTest.php	/^    public function tearDown()$/;"	m	line:31	class:Faker\Test\Provider\ro_RO\PersonTest	access:public
 tearDown	/home/gg/www/matcha/vendor/twig/twig/test/Twig/Tests/Cache/FilesystemTest.php	/^    protected function tearDown()$/;"	m	line:28	class:Twig_Tests_Cache_FilesystemTest	access:protected
@@ -11463,14 +11467,14 @@ unspacedVat	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/at_A
 unspacedVat	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/bg_BG/PaymentTest.php	/^        $unspacedVat = $this->faker->vat(false);$/;"	v	line:26	method:Faker\Test\Provider\bg_BG\PaymentTest::testVatIsValid
 unspacedVat	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/fr_BE/PaymentTest.php	/^        $unspacedVat = $this->faker->vat(false);$/;"	v	line:25	method:Faker\Test\Provider\fr_BE\PaymentTest::testVatIsValid
 unspacedVat	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provider/nl_BE/PaymentTest.php	/^        $unspacedVat = $this->faker->vat(false);$/;"	v	line:25	method:Faker\Test\Provider\nl_BE\PaymentTest::testVatIsValid
-updateGeolocation	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function updateGeolocation (Request $request, Response $response, array $args)$/;"	m	line:33	class:App\Controllers\AjaxController	access:public
-updateGeolocation	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function updateGeolocation($lat, $lon)$/;"	m	line:133	class:App\Model\UserModel	access:public
+updateGeolocation	/home/gg/www/matcha/app/Controllers/AjaxController.php	/^    public function updateGeolocation (Request $request, Response $response, array $args)$/;"	m	line:34	class:App\Controllers\AjaxController	access:public
+updateGeolocation	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function updateGeolocation($lat, $lon)$/;"	m	line:134	class:App\Model\UserModel	access:public
 updateOptionsHash	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Environment.php	/^    private function updateOptionsHash()$/;"	m	line:956	class:Twig_Environment	access:private
-updatePassUser	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function updatePassUser()$/;"	m	line:121	class:App\Model\UserModel	access:public
-updatePopularity	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function updatePopularity(array $profil)$/;"	m	line:157	class:App\Model\UserModel	access:public
+updatePassUser	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function updatePassUser()$/;"	m	line:122	class:App\Model\UserModel	access:public
+updatePopularity	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function updatePopularity(array $profil)$/;"	m	line:156	class:App\Model\UserModel	access:public
 updateRepr	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Error.php	/^    private function updateRepr()$/;"	m	line:156	class:Twig_Error	access:private
-updateToken	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function updateToken($pseudo, $token)$/;"	m	line:151	class:App\Model\UserModel	access:public
-updateUser	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function updateUser($data)$/;"	m	line:81	class:App\Model\UserModel	access:public
+updateToken	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function updateToken($pseudo, $token)$/;"	m	line:150	class:App\Model\UserModel	access:public
+updateUser	/home/gg/www/matcha/app/Model/UserModel.php	/^    public function updateUser($data)$/;"	m	line:82	class:App\Model\UserModel	access:public
 uploadedFiles	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^        $clone->uploadedFiles = $uploadedFiles;$/;"	v	line:854	method:Slim\Http\Request::withUploadedFiles
 uploadedFiles	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^        $this->uploadedFiles = $uploadedFiles;$/;"	v	line:194	method:Slim\Http\Request::__construct
 uploadedFiles	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Request.php	/^        $uploadedFiles = UploadedFile::createFromEnvironment($environment);$/;"	v	line:146	method:Slim\Http\Request::createFromEnvironment
@@ -11551,7 +11555,7 @@ usedTags	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Node/CheckSecurity.php	/^
 usedTags	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Node/CheckSecurity.php	/^    private $usedTags;$/;"	p	line:18	class:Twig_Node_CheckSecurity	access:private
 user	/home/gg/www/matcha/app/Controllers/FormChecker.php	/^        $user = $this->container->user;$/;"	v	line:54	method:App\Controllers\FormChecker::checkSignup
 user	/home/gg/www/matcha/app/Controllers/FormChecker.php	/^        $user = $this->container->user;$/;"	v	line:77	method:App\Controllers\FormChecker::checkProfil
-user	/home/gg/www/matcha/app/Controllers/LogInController.php	/^        $user = $this->container->user;$/;"	v	line:69	method:App\Controllers\LogInController::resetPassword
+user	/home/gg/www/matcha/app/Controllers/LogInController.php	/^        $user = $this->container->user;$/;"	v	line:68	method:App\Controllers\LogInController::resetPassword
 user	/home/gg/www/matcha/app/Controllers/SetupController.php	/^        $user = $this->container->user;$/;"	v	line:31	method:App\Controllers\SetupController::fakeFactory
 user	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^        $clone->user = $this->filterUserInfo($user);$/;"	v	line:381	method:Slim\Http\Uri::withUserInfo
 user	/home/gg/www/matcha/vendor/slim/slim/Slim/Http/Uri.php	/^        $this->user = $user;$/;"	v	line:128	method:Slim\Http\Uri::__construct
@@ -11622,7 +11626,7 @@ validYearProvider	/home/gg/www/matcha/vendor/fzaninotto/faker/test/Faker/Provide
 validate	/home/gg/www/matcha/app/Lib/Validator.php	/^    public function validate(array $array, array $keys)$/;"	m	line:22	class:App\Lib\Validator	access:public
 validateCaFile	/home/gg/www/matcha/vendor/composer/ca-bundle/src/CaBundle.php	/^    public static function validateCaFile($filename, LoggerInterface $logger = null)$/;"	m	line:161	class:Composer\CaBundle\CaBundle	access:public
 validateName	/home/gg/www/matcha/vendor/twig/twig/lib/Twig/Loader/Filesystem.php	/^    private function validateName($name)$/;"	m	line:250	class:Twig_Loader_Filesystem	access:private
-validation	/home/gg/www/matcha/app/Controllers/LogInController.php	/^    public function validation (Request $request, Response $response)$/;"	m	line:44	class:App\Controllers\LogInController	access:public
+validation	/home/gg/www/matcha/app/Controllers/LogInController.php	/^    public function validation (Request $request, Response $response)$/;"	m	line:43	class:App\Controllers\LogInController	access:public
 validator	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/ValidGenerator.php	/^            $validator = function () {$/;"	v	line:23	method:Faker\ValidGenerator::__construct
 validator	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/ValidGenerator.php	/^        $this->validator = $validator;$/;"	v	line:30	method:Faker\ValidGenerator::__construct
 validator	/home/gg/www/matcha/vendor/fzaninotto/faker/src/Faker/ValidGenerator.php	/^    protected $validator;$/;"	p	line:12	class:Faker\ValidGenerator	access:protected

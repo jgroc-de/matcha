@@ -5,7 +5,7 @@ $container = $app->getContainer();
  * twig container
  */
 $container['view'] = function ($container) {
-    $view = new \Slim\Views\Twig('../app/View', [
+    $view = new Slim\Views\Twig('../app/View', [
         'cache' => false, //'../tmp/cache',
         'debug' => true
     ]);
