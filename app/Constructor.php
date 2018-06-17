@@ -4,20 +4,23 @@ namespace App;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * constructor for each route.
+ */
 abstract class Constructor
 {
     /**
-     * @var array
+     * @var array all kind available
      */
     protected $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
 
     /**
-     * @var array
+     * @var array all orientation available
      */
     protected $sexualPattern = ['bi', 'homo', 'hetero'];
 
     /**
-     * @var \Slim\Container : for $container
+     * @var \Slim\Container for $container
      */
     protected $container;
 
@@ -30,16 +33,14 @@ abstract class Constructor
     }
 
     /**
-     * @param $request RequestInterface
-     * @param $response ResponseInterface
-     * @param $args array
-     *
-     * @return $response ResponseInterface
+     * @param Request $request RequestInterface
+     * @param Respone $response ResponseInterface
+     * @param array $args
      */
     abstract protected function route(Request $request, Response $response, array $args);
 
     /**
-     * @param $name string : shortcut to access dependencies in $container
+     * @param string $name shortcut to access dependencies in $container
      * @return $container['$name'] : matching class from container if any
      */
     public function __get($name)

@@ -3,17 +3,8 @@ namespace App;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-/**
- * class InitializeDB
- * set the database
- */
 class InitializeDB extends \App\Constructor
 {
-    /**
-     * @param $request RequestInterface
-     * @param $response ResponseInterface
-     * @param $args array
-     */
     public function route(Request $request, Response $response, array $args)
     {
         $db = $this->container['settings']['db'];

@@ -3,18 +3,9 @@ namespace App;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-/**
- * class FakeFactory
- * generate fake profil
- */
 class FakeFactory extends \App\Constructor
 {
-    /**
-     * @param $request RequestInterface
-     * @param $response ResponseInterface
-     * @param $args array
-     */
-    public function route(request $request, response $response, array $args)
+    public function route(Request $request, Response $response, array $args)
     {
         $count = 10;
         $profil = array();
