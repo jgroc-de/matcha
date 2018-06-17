@@ -7,7 +7,7 @@ require '../config/config.php';
 $app = new \Slim\App(['settings' => $config]);
 require '../app/container.php';
 
-$app->get('/setup', App\Controllers\Initialize::class . ':route')->setName('setup');
+$app->get('/setup', App\Controllers\InitializeDB::class . ':route')->setName('setup');
 $app->get('/seed', App\Controllers\FakeFactory::class . ':route')->setName('seed');
 
 $app->group('', function () {

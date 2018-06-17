@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Lib;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 
 /**

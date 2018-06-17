@@ -55,7 +55,7 @@ $container['tag'] = function ($container) {
  * etc…
  */
 $container['form'] = function ($container) { 
-    return new \App\Controllers\FormChecker($container);
+    return new \App\Lib\FormChecker($container);
 };
 
 $container['validator'] = function ($container) {

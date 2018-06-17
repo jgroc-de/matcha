@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Controllers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class Login extends \App\Constructor
+class Login extends Route
 {
     public function route(Request $request, Response $response, array $args)
     {

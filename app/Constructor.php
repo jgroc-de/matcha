@@ -33,13 +33,6 @@ abstract class Constructor
     }
 
     /**
-     * @param Request $request RequestInterface
-     * @param Respone $response ResponseInterface
-     * @param array $args
-     */
-    abstract protected function route(Request $request, Response $response, array $args);
-
-    /**
      * @param string $name shortcut to access dependencies in $container
      * @return $container['$name'] : matching class from container if any
      */
