@@ -1,8 +1,10 @@
 <?php
 
 namespace App;
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
-class Constructor
+abstract class Constructor
 {
     /**
      * @var array
@@ -26,6 +28,15 @@ class Constructor
     {
         $this->container = $container;
     }
+
+    /**
+     * @param $request RequestInterface
+     * @param $response ResponseInterface
+     * @param $args array
+     *
+     * @return $response ResponseInterface
+     */
+    abstract protected function route(Request $request, Response $response, array $args);
 
     /**
      * @param $name string : shortcut to access dependencies in $container

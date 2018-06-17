@@ -1,14 +1,14 @@
 function delUserTag(path, id) {
     var xhr = new XMLHttpRequest();
 
+    xhr.open('GET', path + id, true);
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200)
-        {
+        if (this.readyState == 4 && this.status == 200) {
             var child = document.getElementById('tag' + id);
+
             child.parentNode.removeChild(child);
         }
     };
-    xhr.open('GET', path + id, true);
     xhr.send();
 }
 
@@ -24,13 +24,15 @@ function dropdown(target) {
 
 function addTag(path) {
     var tag;
-    var xhr = new XMLHttpRequest();
         
     if (tag = prompt("add a tag (without the '#'):"))
     {
+        var xhr = new XMLHttpRequest();
+       
+        xhr.open('POST', path, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200)
-            {
+            if (this.readyState == 4 && this.status == 200) {
                 var id = this.responseText;
                 var div = document.createElement('div');
                 var span = document.createElement('span');
@@ -48,8 +50,29 @@ function addTag(path) {
                 document.getElementById(div.id).appendChild(button);
             }
         };
-        xhr.open('POST', path, true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.send('tag=' + tag);
     }
 }
+
+function deletePic(id) {
+    var xhttp = new XMLHttpRequest();
+    var parentNode = document.getElementById('img' + id);
+    var iElmt = document.createElement('i');
+
+    if (confirm('Delete?')) {
+        xhttp.open('GET', 'delPicture/' + id, true);
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                iElmt.setAttribute('class', 'w3-jumbo w3-display-middle fa fa-plus w3-hover-green w3-block w3-padding-large');
+                iElmt.setAttribute('title', 'remove picture');
+                iElmt.setAttribute('onclick', '"addPicture(' + id +')'"');
+                while (parentNode.hasChildNodes()) {
+                    parentNode.removeChild(parentNode.firstChild);
+                }
+                parentNode.appendChild(iElmt); 
+            }
+        };
+        xhttp.send();
+    }
+}
+

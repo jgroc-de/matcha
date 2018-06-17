@@ -4,7 +4,7 @@ namespace App\Controllers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
- * class FormController
+ * @class FormController
  * manage forms data
  */
 class FormChecker extends \App\Constructor

@@ -10,15 +10,16 @@
 {% elseif id == 5 %}
     {% set img = profil.img5 %}
 {% endif %}
-<div class="{% if class %}{{ class }}{% endif %} w3-half w3-display-container w3-black" style="height:100%" id="img{{ id }}" {% if img %}onclick="deletePic({{ id }})"{% endif %}>
+<div class="{% if class %}{{ class }}{% endif %} w3-half w3-display-container w3-black" style="height:100%" id="img{{ id }}">
     {% if img %}
         <img src='{{ img }}' alt='{{ img }}' title='{{ profil.gender }}' class="w3-image w3-display-middle" style="max-height:250px">
         {% if home %}
-        <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture"></i>
+        <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic({{ id }})"></i>
         {% endif %}
     {% elseif home %}
         <label class="w3-button w3-block w3-jumbo w3-display-middle fa fa-plus w3-padding-large w3-hover-green" onchange="addPicture({{ id }})" title="add picture">
-        <input id="" type="file" style="display:none"/>
+        <input type="hidden" style="MAX_FILE_SIZE" value="30000"/>
+        <input id="" name="test" type="file" style="display:none"/>
     </label>
     {% endif %}
 </div>

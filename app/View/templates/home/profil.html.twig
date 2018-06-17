@@ -97,57 +97,41 @@
 {# -------------- #}
 
 {% block script %}
-{% if profil.id == me.id %}
-<script src='../js/myProfile.js'></script>
-<script>
-function deletePic(id) {
-    var xhttp = new XMLHttpRequest();
-    var parentNode = document.getElementById('img' + id);
-    var iElmt = document.createElement('i');
-
-    if (confirm("Delete?")) {
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                iElmt.setAttribute('class', "w3-jumbo w3-display-middle fa fa-plus");
-                iElmt.setAttribute('title', "remove picture");
-                while (parentNode.hasChildNodes()) {
-                    parentNode.removeChild(parentNode.firstChild);
-                }
-                parentNode.appendChild(iElmt); 
-            }
-        };
-        xhttp.open('GET', 'delPicture/' + id, true);
-        xhttp.send();
-    }
-}
+    {% if profil.id == me.id %}
+        <script src='../js/myProfile.js'></script>
+        <script>
+window.URL = window.URL || window.webkitURL;
 
 function addPicture(id) {
-    alert(id);
-    /*var xhttp = new XMLHttpRequest();
-    var str = 'data=' + data;
-    var i = 0;
+    var file    = document.querySelector('input[type=file]').files[id - 1];
+    var reader  = new FileReader();
 
-    while (filter[i]) {
-        str += '&title' + i + '=' + filter[i];
-        i++;
+    reader.addEventListener("load", function () {
+        var xhttp = new XMLHttpRequest();
+          
+        xhttp.open('POST', '/addPic', true);
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var path = this.responseText;
+
+                alert('path');
+                /*
+                   var img = document.createElement('img');
+
+                   img.src = id;
+                   img.alt = '';
+                   img.id = path;
+                   img.setAttribute('onclick','deletePic(' + path + ')');
+                   document.getElementById('new').appendChild(img);*/
+            }
+        };
+        xhttp.send(reader.result);
+    }, false);
+
+    if (file) {
+        reader.readAsDataURL(file);
     }
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-
-            var path = this.responseText;
-            var img = document.createElement('img');
-
-            img.src = id;
-            img.alt = '';
-            img.id = path;
-            img.setAttribute('onclick','deletePic(' + path + ')');
-            document.getElementById('new').appendChild(img);
-        }
-    };
-    */
-    xhttp.open('POST', '/addPic', true);
-    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhttp.send(str);
 }
 </script>
 {% endif %}

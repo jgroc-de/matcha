@@ -33,23 +33,23 @@ class UserModel extends \App\Constructor
      */
     public function setUser(array $post)
     {
-        $dir = scandir('img');
+        $files = scandir('img');
         $img = array();
-        foreach ($dir as $value)
+        foreach ($files as $file)
         {
-            if (strpos($value, strtolower($post['gender'])) !== false)
-                $img[] = $value;
+            if (strpos($file, strtolower($post['gender'])) !== false)
+                $img[] = $file;
         }
 
         $req = $this->db->prepare('
-                INSERT INTO user (pseudo, password, email, gender, activ, token, img1, lattitude, longitude)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+                INSERT INTO user (pseudo, password, email, gender, token, img1, lattitude, longitude)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
         $req->execute(array(
                 $post['pseudo'],
                 password_hash($post['password'], PASSWORD_DEFAULT),
                 $post['email'],
                 $post['gender'],
-                $post['activ'],
+                //$post['activ'],
                 $post['token'],
                 '/img/' . $img[rand(0, 4)],
                 $post['lat'],
@@ -157,5 +157,16 @@ class UserModel extends \App\Constructor
     {
         $req = $this->db->prepare('UPDATE user SET popularity = ? WHERE pseudo = ?');
         $req->execute(array($profil['popularity'], $profil['pseudo']));
+    }
+
+    public function delPicture($nb)
+    {
+        $nb = 'img' . $nb;
+        $req = $this->db->prepare('SELECT ? FROM user WHERE id = ?');
+        $req->execute(array($nb, $_SESSION['id']));
+        $url = $req->fetch();
+        $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = NULL WHERE pseudo = ?');
+        $req->execute(array($_SESSION['id']));
+        return $url[$nb];
     }
 }

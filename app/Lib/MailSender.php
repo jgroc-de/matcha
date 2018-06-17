@@ -34,7 +34,8 @@ class MailSender extends \App\Constructor
         $mail->addAddress($dest);
         $mail->Subject = $subject;
         $mail->Body = $message;
-        if ($mail->send())
+        //if ($mail->send())
+        if (false)
             return 'Registration Success! A validation mail has been sent';
         else
             return 'Registration Success! but mail not sent…';
