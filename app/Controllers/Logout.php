@@ -5,11 +5,11 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * class PagesController
- * this class is called by each routes
+ * this class is called by each __invokes
  */
-class Logout extends \App\Constructor
+class Logout extends Route
 {
-    public function route(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args)
     {
         session_unset();
         session_destroy();

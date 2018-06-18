@@ -3,9 +3,9 @@ namespace App\Controllers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class ResetPassword extends \App\Constructor
+class ResetPassword extends Route
 {
-    public function route(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']))
         {

@@ -3,9 +3,9 @@ namespace App\Controllers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class FakeFactory extends \App\Constructor
+class FakeFactory extends Route
 {
-    public function route(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args)
     {
         $count = 10;
         $profil = array();

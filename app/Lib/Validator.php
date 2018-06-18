@@ -2,18 +2,11 @@
 
 namespace App\Lib;
 
+/**
+ * check data type
+ */
 class Validator
 {
-    /**
-     * @var array
-     */
-    protected $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
-
-    /**
-     * @var array
-     */
-    protected $sexualPattern = ['bi', 'homo', 'hetero'];
-
     /**
      * @param $array array
      * @param $keys ... string can be multiple string
@@ -48,68 +41,133 @@ class Validator
         return true;
     }
 
-    public function pseudo($test)
+    /**
+     * @param string $test
+     *
+     * @return bool
+     */
+    public function pseudo(string $test)
     {
         $len = strlen($test);
         return ($len > 0 && $len < 41) ? true: false;
     }
 
-    public function password($test)
+    /**
+     * @param string $test
+     *
+     * @return bool
+     */
+    public function password(string $test)
     {
         return (preg_match('#(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}#', $test));
     }
 
-    public function password1($test)
+    /**
+     * @param string $test
+     *
+     * @return bool
+     */
+    public function password1(string $test)
     {
         return (preg_match('#(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}#', $test));
     }
 
-    public function email($test)
+    /**
+     * @param string $test
+     *
+     * @return bool
+     */
+    public function email(string $test)
     {
         return (preg_match('#^[a-z0-9-_\.]+@[a-z0-9-_\.]{2,}\.[a-z]{2,4}$#', $test));
     }
 
-    public function gender($test)
+    /**
+     * @param string $test
+     *
+     * @return bool
+     */
+    public function gender(string $test)
     {
-        return in_array($test, $this->characters);
+        return in_array($test, ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer']);
     }
     
-    public function sexuality($test)
+    /**
+     * @param string $test
+     *
+     * @return bool
+     */
+    public function sexuality(string $test)
     {
-        return in_array($test, $this->sexualPattern);
+        return in_array($test, ['bi', 'homo', 'hetero']);
     }
     
-    public function birthdate($test)
+    /**
+     * @param int $test
+     *
+     * @return bool
+     */
+    public function birthdate(int $test)
     {
         return is_numeric($test);
     }
     
-    public function name($test)
+    /**
+     * @param string $test
+     *
+     * @return bool
+     */
+    public function name(string $test)
     {
         return !is_null($test);
     }
     
-    public function forname($test)
+    /**
+     * @param string $test
+     *
+     * @return bool
+     */
+    public function forname(string $test)
     {
         return !is_null($test);
     }
     
-    public function biography($test)
+    /**
+     * @param string $test
+     *
+     * @return bool
+     */
+    public function biography(string $test)
     {
         return true;
     }
 
-    public function submit($test)
+    /**
+     * @param string $test
+     *
+     * @return bool
+     */
+    public function submit(string $test)
     {
         return ($test === 'Envoyer');
     }
 
-    public function lat($test)
+    /**
+     * @param float $test
+     *
+     * @return bool
+     */
+    public function lat(float $test)
     {
         return ($test != 0);
     }
 
-    public function lng($test)
+    /**
+     * @param float $test
+     *
+     * @return bool
+     */
+    public function lng(float $test)
     {
         return ($test != 0);
     }

@@ -4,14 +4,14 @@ namespace App\Lib;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
- * @class FormController
- * manage forms data
+ * check form data
  */
 class FormChecker extends \App\Constructor
 {
     /**
-     * @param $request requestInterface
      * à transformer en middleware
+     *
+     * @param $request requestInterface
      */
     public function check (request $request)
     {
@@ -47,6 +47,7 @@ class FormChecker extends \App\Constructor
 
     /**
      * @param $request requestInterface
+     *
      * @return string error if any
      */
     public function checkSignup (request $request)
@@ -70,6 +71,7 @@ class FormChecker extends \App\Constructor
 
     /**
      * @param $request requestInterface
+     *
      * @return string error if any
      */
     public function checkProfil (request $request)
@@ -92,6 +94,7 @@ class FormChecker extends \App\Constructor
     /**
      * @param $real string
      * @param $test string
+     *
      * @return bool
      */
     public function checkPassword ($real, $test)

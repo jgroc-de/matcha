@@ -3,9 +3,9 @@ namespace App\Controllers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class DeleteUserTag extends \App\Constructor
+class DeleteUserTag extends Route
 {
-    public function route(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args)
     {
         if ($this->container->tag->delUserTag($args['id'], $_SESSION['id']))
             return $response;

@@ -2,20 +2,24 @@
 
 namespace App\Lib;
 
+/**
+ * managing mail sending
+ */
 class MailSender extends \App\Constructor
 {
     const USER = 'jgroc-de';
     const EXP = 'lol@lol.com';
     const PASS = '';
     const URL = 'http://localhost:8100';
+
     /**
-     * @param $dest string mail
-     * @param $subject string mail
-     * @param $message string mail
-     * @param $header string mail
+     * @param string $dest    email address
+     * @param string $subject 
+     * @param string $message 
+     *
      * @return string for success or failure
      */
-    public function sendMail($dest, $subject, $message)
+    public function sendMail(string $dest, string $subject, string $message)
     {
         $mail =  new \PHPMailer\PHPMailer\PHPMailer(true);
         //$mail = $this->PHPMailer;
@@ -42,11 +46,11 @@ class MailSender extends \App\Constructor
     }
 
     /**
-     * @param $login string
-     * @param $dest string mail
-     * @param $token string hash key
+     * @param string $login name
+     * @param string $dest  email address
+     * @param string $token hashed key
      */
-    public function sendValidationMail($login, $dest, $token)
+    public function sendValidationMail(string $login, string $dest, string $token)
     {
         $subject = 'Matcha Activation link';
         $url = 'localhost:8100';
@@ -63,11 +67,11 @@ class MailSender extends \App\Constructor
     }
 
     /**
-     * @param $login string
-     * @param $dest string mail
-     * @param $token string hash key
+     * @param string $login name
+     * @param string $dest  email address
+     * @param string $token hashed key
      */
-    public function sendResetMail($login, $dest, $token)
+    public function sendResetMail(string $login, string $dest, string $token)
     {
         $subject = 'Matcha Reinitialisation link';
         $message = 'Hi ' . $login .',

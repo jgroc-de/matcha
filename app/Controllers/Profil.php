@@ -3,9 +3,9 @@ namespace App\Controllers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class Profil extends \App\Constructor
+class Profil extends Route
 {
-    public function route(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args)
     {
         $user = $this->user->getUserById($args['id']);
         if ($user)

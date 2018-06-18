@@ -3,9 +3,9 @@ namespace App\Controllers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class InitializeDB extends \App\Constructor
+class InitializeDB extends Route
 {
-    public function route(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args)
     {
         $db = $this->container['settings']['db'];
         $this->debug->ft_print($db);

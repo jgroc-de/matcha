@@ -7,7 +7,7 @@ namespace App\Model;
  */
 class FriendsModel extends \App\Constructor
 {
-    protected function sortId($id1, $id2)
+    private function sortId($id1, $id2)
     {
         return (($id1 < $id2) ? [$id1, $id2] : [$id2, $id1]);
     }

@@ -3,6 +3,9 @@ namespace App\Lib;
 
 class ft_geoIP extends \App\Constructor
 {
+    /**
+     * set geolocation by IP
+     */
     public function setLatLng()
     {
         $keys = ['lat', 'lng'];

@@ -3,11 +3,13 @@
 namespace App\Lib;
 
 /**
- * class debug
+ * debugging tool
  */
 class Debug
 {
     /**
+     * print array in a nice way.
+     *
      * @param array $array
      */
     public function ft_print(array $array)

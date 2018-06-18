@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class Login extends Route
 {
-    public function route(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args)
     {
         $this->form->checkLogin($request, $response);
         if (isset($_SESSION['id']))
