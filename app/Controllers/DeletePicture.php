@@ -11,8 +11,7 @@ class DeletePicture extends Route
         {
             if (strncmp('/img/', $url, 5))
             {
-                echo $url;
-                //unlink($url);
+                unlink($url);
             }
             $_SESSION['profil']['img' . $args['id']] = '';
         }

@@ -18,9 +18,9 @@
         {% endif %}
     {% elseif home %}
         <label class="w3-button w3-block w3-jumbo w3-display-middle fa fa-plus w3-padding-large w3-hover-green" onchange="addPicture({{ id }})" title="add picture">
-        <input type="hidden" style="MAX_FILE_SIZE" value="30000"/>
-        <input id="" name="test" type="file" style="display:none"/>
-    </label>
+            <input type="hidden" style="MAX_FILE_SIZE" value="30000"/>
+            <input id="{{ id }}" type="file" style="display:none"/>
+        </label>
     {% endif %}
 </div>
 {% endmacro %}

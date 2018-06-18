@@ -26,6 +26,7 @@ $app->group('', function () {
     $this->get('/logout', App\Controllers\Logout::class)->setName('logout');
     $this->get('/addFriend/{id}', App\Controllers\AddFriend::class);
     $this->post('/addTag', App\Controllers\AddTag::class);
+    $this->post('/addPicture/{id}', App\Controllers\AddPicture::class);
     $this->get('/delFriend/{id}', App\Controllers\DeleteFriend::class);
     $this->get('/delUserTag/{id}', App\Controllers\DeleteUserTag::class);
     $this->get('/delPicture/{id}', App\Controllers\DeletePicture::class);

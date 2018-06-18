@@ -165,8 +165,15 @@ class UserModel extends \App\Constructor
         $req = $this->db->prepare('SELECT ? FROM user WHERE id = ?');
         $req->execute(array($nb, $_SESSION['id']));
         $url = $req->fetch();
-        $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = NULL WHERE pseudo = ?');
+        $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = NULL WHERE id = ?');
         $req->execute(array($_SESSION['id']));
         return $url[$nb];
+    }
+
+    public function addPicture($nb, $path)
+    {
+        $nb = 'img' . $nb;
+        $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = ? WHERE id = ?');
+        return $req->execute(array('/user_img/' . $path, $_SESSION['id']));
     }
 }

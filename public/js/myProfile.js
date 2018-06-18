@@ -56,20 +56,31 @@ function addTag(path) {
 
 function deletePic(id) {
     var xhttp = new XMLHttpRequest();
-    var parentNode = document.getElementById('img' + id);
-    var iElmt = document.createElement('i');
 
     if (confirm('Delete?')) {
         xhttp.open('GET', 'delPicture/' + id, true);
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                iElmt.setAttribute('class', 'w3-jumbo w3-display-middle fa fa-plus w3-hover-green w3-block w3-padding-large');
-                iElmt.setAttribute('title', 'remove picture');
-                iElmt.setAttribute('onclick', '"addPicture(' + id +')'"');
+                var labelElmt = document.createElement('label');
+                var parentNode = document.getElementById('img' + id);
+                var inputElemt = document.createElement('input');
+                var inputElemt2 = document.createElement('input');
+                
+                labelElmt.setAttribute('class', 'w3-button w3-jumbo w3-display-middle fa fa-plus w3-hover-green w3-block w3-padding-large');
+                labelElmt.setAttribute('title', 'add picture');
+                inputElemt.setAttribute('id', id);
+                inputElemt.setAttribute('type', 'file');
+                inputElemt2.setAttribute('type', 'hidden');
+                inputElemt.setAttribute('style', 'display:none');
+                inputElemt2.setAttribute('style', 'MAX_FILE_SIZE');
+                inputElemt2.setAttribute('value', '30000');
                 while (parentNode.hasChildNodes()) {
                     parentNode.removeChild(parentNode.firstChild);
                 }
-                parentNode.appendChild(iElmt); 
+                parentNode.appendChild(labelElmt); 
+                labelElmt.appendChild(inputElemt2);
+                labelElmt.appendChild(inputElemt);
+                addPicture();
             }
         };
         xhttp.send();
