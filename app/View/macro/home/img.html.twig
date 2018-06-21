@@ -1,26 +1,38 @@
-{% macro img(profil, id, home, class) %}
-{% if id == 1 %}
-    {% set img = profil.img1 %}
-{% elseif id == 2 %}
-    {% set img = profil.img2 %}
-{% elseif id == 3 %}
-    {% set img = profil.img3 %}
-{% elseif id == 4 %}
-    {% set img = profil.img4 %}
-{% elseif id == 5 %}
-    {% set img = profil.img5 %}
-{% endif %}
-<div class="{% if class %}{{ class }}{% endif %} w3-half w3-display-container w3-black" style="height:100%" id="img{{ id }}">
-    {% if img %}
-        <img src='{{ img }}' alt='{{ img }}' title='{{ profil.gender }}' class="w3-image w3-display-middle" style="max-height:250px">
-        {% if home %}
-        <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic({{ id }})"></i>
+{% macro myImg(profil) %}
+{% for key, url in profil %}
+
+{% if key starts with 'img' %}
+
+        {% if key is 'img2' or key is 'img4' %}
+            <div class="w3-row w3-display-container" style="height:50%">
         {% endif %}
-    {% elseif home %}
-        <label class="w3-button w3-block w3-jumbo w3-display-middle fa fa-plus w3-padding-large w3-hover-green" onchange="addPicture({{ id }})" title="add picture">
-            <input type="hidden" style="MAX_FILE_SIZE" value="30000"/>
-            <input id="{{ id }}" type="file" style="display:none"/>
-        </label>
+<div class="w3-half w3-display-container w3-black" style="height:100%" id="img{{ id }}">
+    {% if url %}
+    <img src='{{ url }}' alt='{{ url }}' title='{{ profil.gender }}_{{ id }}' class="w3-image w3-display-middle" style="max-height:100%" onclick="displayModal('{{ url }}')">
+    <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic({{ id }})"></i>
+    {% else %}
+    <label class="w3-button w3-block w3-jumbo w3-display-middle fa fa-plus w3-padding-large w3-hover-green" onchange="addPicture({{ id }})" title="add picture">
+        <input type="hidden" style="MAX_FILE_SIZE" value="30000"/>
+        <input id="{{ id }}" type="file" style="display:none"/>
+    </label>
     {% endif %}
 </div>
+    {% if key is 'img3' or key is 'img5' %}
+</div>
+    {% endif %}
+    {% if key is 'img1' %}
+        <div class="w3-card-4 w3-half w3-black" style="height:inherit">
+    {% endif %}
+{% endif %}
+{% endfor %}
+{% endmacro %}
+
+{% macro otherImg(profil) %}
+{% for key, url in profil %}
+    {% if key starts with 'img' and url %}
+<div class=" w3-half w3-display-container w3-black" style="height:100%; width:100%" id="{{ key }}">
+    <img src='{{ url }}' alt='{{ url }}' title='{{ profil.gender }}_{{ id }}' class="w3-image w3-display-middle" style="max-height:100%" onclick="displayModal('{{ url }}')">
+</div>
+    {% endif %}
+{% endfor %}
 {% endmacro %}

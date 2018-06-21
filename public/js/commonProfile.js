@@ -1,3 +1,11 @@
+function displayModal(url)
+{
+    var modal = document.getElementById('Modal');
+    
+    modal.childNodes[1].childNodes[1].childNodes[1].src = url;
+    modal.style.display='block';
+}
+
 function addFriend(path)
 {
     var xmlhttp = new XMLHttpRequest();

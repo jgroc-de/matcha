@@ -11,7 +11,7 @@ $app->get('/setup', App\Controllers\InitializeDB::class)->setName('setup');
 $app->get('/seed', App\Controllers\FakeFactory::class)->setName('seed');
 
 $app->group('', function () {
-    $this->any('/login', \App\Controllers\Login::class)->setName('login');
+    $this->any('/login', App\Controllers\Login::class)->setName('login');
     $this->any('/signup', App\Controllers\Signup::class)->setName('signup');
     $this->get('/validation', App\Controllers\Validation::class)->setName('validation');
     $this->any('/resetPassword', App\Controllers\ResetPassword::class)->setName('resetPassword');

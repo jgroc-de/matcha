@@ -1,6 +1,7 @@
 {% extends 'templates/home.html.twig' %}
 {% from 'macro/home/profilButton.html.twig' import profilButton %}
-{% from 'macro/home/img.html.twig' import img %}
+{% from 'macro/home/img.html.twig' import myImg %}
+{% from 'macro/home/img.html.twig' import otherImg %}
 {% from 'macro/home/subsectionTitle.html.twig' import subtitle %}
 
 {# ------------ #}
@@ -13,6 +14,14 @@
     {% set your = 'Your ' %}
     {% set home = true %}
 {% endif %}
+<!-- The Modal -->
+<div id="Modal" class="w3-modal" onclick="document.getElementById('Modal').style.display='none'"> 
+    <div class="w3-modal-content w3-card-4 w3-padding-64" style="width:90vw;background-color:black">
+        <div class="w3-display-container"> 
+            <img class="w3-display-midlle" src="" style="max-height:80vh;max-width:100%"></img>
+        </div>
+    </div>
+</div>
 <div class="w3-display-container" style="width:100%">
     <h2>{{ hi }}{{ profil.pseudo }}</h2>
     <div class="w3-display-right w3-theme-l5 w3-border w3-round w3-margin-right" style="width:100px" title="popularity: {{ profil.popularity }}/100">
@@ -29,17 +38,21 @@
 {% endif %}
 <div class="w3-row w3-margin" style="height:250px">
     <h3>{{ your }}Pictures</h3>
-    {{ img(profil, 1, home, 'w3-card-4') }}
+    {% if home %}
+    {{ myImg(profil) }}
     <div class="w3-card-4 w3-half w3-black" style="height:inherit">
         <div class="w3-row w3-display-container" style="height:50%">
-            {{ img(profil, 2, home) }}
-            {{ img(profil, 3, home) }}
+            {{ myImg(profil, 2) }}
+            {{ myImg(profil, 3) }}
         </div>
         <div class="w3-row w3-display-container" style="height:50%">
-            {{ img(profil, 4, home) }}
-            {{ img(profil, 5, home) }}
+            {{ myImg(profil, 4) }}
+            {{ myImg(profil, 5) }}
         </div>
     </div>
+    {% else %}
+        {{ otherImg(profil) }}
+    {% endif %}
 </div>
 <div class="w3-row">
     <div class="w3-half w3-padding">
@@ -99,61 +112,11 @@
 {% block script %}
     {% if profil.id == me.id %}
         <script src='../js/myProfile.js'></script>
-        <script>
-window.URL = window.URL || window.webkitURL;
-
-function addPicture() {
-    var files = document.querySelectorAll('input[type=file]');
-    var len = files.length;
-
-    for (var i = 0; i < len; i++)
-    {
-        files[i].addEventListener('change', addEvent);
-    }
-}
-
-function addEvent() {
-    var reader = new FileReader();
-    var id = this.id;
-    var form = new FormData();
-
-    reader.addEventListener('load', () => {
-        var xhttp = new XMLHttpRequest();
-
-        xhttp.open('POST', '/addPicture/' + id, true);
-        xhttp.setRequestHeader('enctype', 'multipart/form-data');
-        xhttp.onreadystatechange = function() {
-            if (xhttp.readyState == 4 && this.status == 200) {
-                var path = this.responseText;
-
-                if (path !== 'fail')
-                {
-                    alert(path);
-                }
-                /*
-                   var img = document.createElement('img');
-
-                   img.src = id;
-                   img.alt = '';
-                   img.id = path;
-                   img.setAttribute('onclick','deletePic(' + path + ')');
-                   document.getElementById('new').appendChild(img);*/
-            }
-        };
-        xhttp.send(form);
-    });
-
-    form.append('file', this.files[0]);
-    reader.readAsDataURL(this.files[0]);
-}
-
-addPicture();
-</script>
-{% endif %}
-<script src='../js/commonProfile.js'></script>
-<script>
+    {% endif %}
+    <script src='../js/commonProfile.js'></script>
+    <script>
 var user =  {lat: {{ profil.lattitude }}, lng: {{ profil.longitude }}, title: '{{ profil.pseudo }}'};
-</script>
-<script src="../js/geolocation.js"></script>
-<script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
+    </script>
+    <script src="../js/geolocation.js"></script>
+    <script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
 {% endblock %}
