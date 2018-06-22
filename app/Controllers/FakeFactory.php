@@ -7,14 +7,14 @@ class FakeFactory extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
-        $count = 10;
+        $count = 100;
         $profil = array();
         $faker = \Faker\Factory::create();
         $user = $this->container->user;
         $debug = $this->container->debug;
         for ($i = 0; $i < $count; $i++)
         {
-            $debug->ft_print([$count, $i]);
+            //$debug->ft_print([$count, $i]);
             $gender = rand(0, 4);
             $orientation = rand(0, 2);
             $forname = $faker->firstName;
@@ -30,8 +30,8 @@ class FakeFactory extends Route
             $profil['password'] = 'trollB1';
             $profil['activ'] = 1;
             $profil['token'] = 'a';
-            $profil['lat'] = rand(488000, 489100) / 10000;
-            $profil['lng'] = rand(22200, 24200) / 10000;
+            $profil['lat'] = rand(485500, 490500) / 10000;
+            $profil['lng'] = rand(21000, 26000) / 10000;
             $profil['popularity'] = rand(0, 100);
             $user->setUser($profil);
             $user->updateUser($profil);
