@@ -15,7 +15,7 @@
     {% set home = true %}
 {% endif %}
 <!-- The Modal -->
-<div id="Modal" class="w3-modal" onclick="document.getElementById('Modal').style.display='none'"> 
+<div id="Modal" class="w3-modal" style="cursor:pointer" onclick="document.getElementById('Modal').style.display='none'"> 
     <div class="w3-modal-content w3-card-4 w3-padding-64" style="width:90vw;background-color:black">
         <div class="w3-display-container"> 
             <img class="w3-display-midlle" src="" style="max-height:80vh;max-width:100%"></img>
@@ -39,17 +39,7 @@
 <div class="w3-row w3-margin" style="height:250px">
     <h3>{{ your }}Pictures</h3>
     {% if home %}
-    {{ myImg(profil) }}
-    <div class="w3-card-4 w3-half w3-black" style="height:inherit">
-        <div class="w3-row w3-display-container" style="height:50%">
-            {{ myImg(profil, 2) }}
-            {{ myImg(profil, 3) }}
-        </div>
-        <div class="w3-row w3-display-container" style="height:50%">
-            {{ myImg(profil, 4) }}
-            {{ myImg(profil, 5) }}
-        </div>
-    </div>
+        {{ myImg(profil) }}
     {% else %}
         {{ otherImg(profil) }}
     {% endif %}

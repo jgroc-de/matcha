@@ -24,7 +24,7 @@ $app->group('', function () {
     $this->any('/editProfil', App\Controllers\EditProfil::class)->setName('editProfil');
     $this->any('/editPassword', App\Controllers\EditPassword::class)->setName('editPassword');
     $this->get('/logout', App\Controllers\Logout::class)->setName('logout');
-    $this->get('/addFriend/{id}', App\Controllers\AddFriend::class);
+    $this->get('/addFriend/{id}', App\Controllers\AddFriendRequest::class);
     $this->post('/addTag', App\Controllers\AddTag::class);
     $this->post('/addPicture/{id}', App\Controllers\AddPicture::class);
     $this->get('/delFriend/{id}', App\Controllers\DeleteFriend::class);

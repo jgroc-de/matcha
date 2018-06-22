@@ -14,5 +14,5 @@ abstract class Route extends \App\Constructor
      * @param Respone $response ResponseInterface
      * @param array $args
      */
-    abstract protected function __invoke(Request $request, Response $response, array $args);
+    abstract public function __invoke(Request $request, Response $response, array $args);
 }

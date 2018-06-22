@@ -60,11 +60,11 @@ function deletePic(id) {
     var xhttp = new XMLHttpRequest();
 
     if (confirm('Delete?')) {
-        xhttp.open('GET', 'delPicture/' + id, true);
+        xhttp.open('GET', 'delPicture/' + id.charAt(3), true);
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 var labelElmt = document.createElement('label');
-                var parentNode = document.getElementById('img' + id);
+                var parentNode = document.getElementById(id);
                 var inputElemt = document.createElement('input');
                 var inputElemt2 = document.createElement('input');
                 
@@ -110,7 +110,7 @@ function addEvent() {
         var reader = new FileReader();
         
         form.append('file', this.files[0]);
-        xhttp.open('POST', '/addPicture/' + id, true);
+        xhttp.open('POST', '/addPicture/' + id.charAt(3), true);
         xhttp.setRequestHeader('enctype', 'multipart/form-data');
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -133,7 +133,7 @@ function addEvent() {
                     prev.appendChild(imgElement);
                     iElement.setAttribute('class', 'w3-button w3-display-topright w3-hover-red fa fa-remove');
                     iElement.title = 'remove picture';
-                    iElement.setAttribute('onclick', 'deletePic(' + id + ')');
+                    iElement.setAttribute('onclick', 'deletePic("' + id + '")');
                     prev.appendChild(iElement);
                 }
             }
