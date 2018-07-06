@@ -14,7 +14,7 @@ class FakeFactory extends Route
         $debug = $this->container->debug;
         for ($i = 0; $i < $count; $i++)
         {
-            $debug->ft_print([$count, $i]);
+            //$debug->ft_print([$count, $i]);
             $gender = rand(0, 4);
             $orientation = rand(0, 2);
             $forname = $faker->firstName;
@@ -30,8 +30,8 @@ class FakeFactory extends Route
             $profil['password'] = 'trollB1';
             $profil['activ'] = 1;
             $profil['token'] = 'a';
-            $profil['lat'] = rand(487900, 489200) / 10000;
-            $profil['lng'] = rand(22100, 24300) / 10000;
+            $profil['lat'] = rand(485500, 490500) / 10000;
+            $profil['lng'] = rand(21000, 26000) / 10000;
             $profil['popularity'] = rand(0, 100);
             $user->setUser($profil);
             $user->updateFakeUser($profil);

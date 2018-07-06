@@ -13,7 +13,7 @@ class UserModel extends \App\Constructor
      */
     public function getUsers()
     {
-        $req = $this->db->query('SELECT * FROM user LIMIT 50');
+        $req = $this->db->query('SELECT * FROM user LIMIT 500');
         return $req->fetchAll();
     }
 
