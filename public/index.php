@@ -20,6 +20,8 @@ $app->group('', function () {
 $app->group('', function () {
     $this->get('/', App\Controllers\Home::class)->setName('home');
     $this->get('/search', App\Controllers\Search::class)->setName('search');
+    $this->post('/search', App\Controllers\Search::class . ':Criteria')->setName('searchByCriteria');
+    $this->post('/search2', App\Controllers\Search::class . ':Name')->setName('searchByName');
     $this->get('/profil/{id}', App\Controllers\Profil::class)->setName('profil');
     $this->any('/editProfil', App\Controllers\EditProfil::class)->setName('editProfil');
     $this->any('/editPassword', App\Controllers\EditPassword::class)->setName('editPassword');

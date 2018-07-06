@@ -64,7 +64,7 @@
         {{ subtitle(your, 'Interest', home, 'fa fa-plus',  "addTag('/addTag')", 'add tag') }}
         <div class="w3-theme-l4" id="userTag" style="max-height:300px;overflow:auto">
             {% for tag in tags %}
-                {{ profilButton(tag.id, tag.tag, "delUserTag('/delUserTag/', #{ tag.id })", home) }}
+            {{ profilButton(tag.id, tag.tag, "delUserTag('/delUserTag/', #{ tag.id })", home, NULL, 'tag') }}
             {% endfor %}
         </div>
     </div>
@@ -75,7 +75,7 @@
         <h3>{{ your }}Friend Request</h3>
         <div class="w3-theme-l4 w3-padding" style="max-height:300px;overflow:auto">
             {% for req in friendReq %}
-                {{ profilButton(req.id, req.pseudo, "delFriendReq('/delFriendReq/#{ req.id }')", home, path_for('profil', req)) }}
+            {{ profilButton(req.id, req.pseudo, "delFriendReq('/delFriendReq/', #{ req.id })", home, path_for('profil', req), 'req') }}
             {% endfor %}
         </div>
     </div>
@@ -83,7 +83,7 @@
         <h3>{{ your }}Friends</h3>
         <div class="w3-theme-l4 w3-padding" style="max-height:300px;overflow:auto">
             {% for friend in friends %}
-                {{ profilButton(friend.id, friend.pseudo, "/delFriendReq/#{friend.id}", home, path_for('profil', friend)) }}
+            {{ profilButton(friend.id, friend.pseudo, "delFriend('/delFriend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}
             {% endfor %}
         </div>
     </div>
@@ -102,10 +102,17 @@
 {% block script %}
     {% if profil.id == me.id %}
         <script src='../js/myProfile.js'></script>
+    {% else %}
+        <script src='../js/otherProfil.js'></script>
     {% endif %}
     <script src='../js/commonProfile.js'></script>
     <script>
 var user =  {lat: {{ profil.lattitude }}, lng: {{ profil.longitude }}, title: '{{ profil.pseudo }}'};
+var usersPos = [
+{% for user in friends %}
+    {lat: {{ user.lattitude }}, lng: {{ user.longitude }}, title: '{{ user.pseudo }}', img: '{{ user.img1 }}', id: '{{ user.id }}', kind: '{{ user.gender }}'},
+{% endfor %}
+];
     </script>
     <script src="../js/geolocation.js"></script>
     <script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>

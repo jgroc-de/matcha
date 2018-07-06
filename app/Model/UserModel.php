@@ -17,6 +17,70 @@ class UserModel extends \App\Constructor
         return $req->fetchAll();
     }
 
+    public function getUsersBi($age_min, $age_max, $delta_lng = 0.2, $delta_lat = 0.2)
+    {
+        $req = $this->db->prepare(
+            'SELECT pseudo, biography, lattitude, longitude, img1, birthdate, gender, id
+            FROM user
+            WHERE birthdate BETWEEN ? AND ?
+            AND lattitude BETWEEN ? AND ?
+            AND longitude BETWEEN ? AND ?
+            ');
+        $req->execute(array(
+            $age_max,
+            $age_min,
+            $_SESSION['profil']['lattitude'] - $delta_lat,
+            $_SESSION['profil']['lattitude'] + $delta_lat,
+            $_SESSION['profil']['longitude'] - $delta_lng,
+            $_SESSION['profil']['longitude'] + $delta_lng
+        ));
+        return $req->fetchAll();
+    }
+
+    public function getUsersHomo($age_min, $age_max, $gender, $delta_lng = 0.2, $delta_lat = 0.2)
+    {
+        $req = $this->db->prepare(
+            'SELECT pseudo, biography, lattitude, longitude, img1, birthdate, gender, id
+            FROM user
+            WHERE gender = ?
+            AND birthdate BETWEEN ? AND ?
+            AND lattitude BETWEEN ? AND ?
+            AND longitude BETWEEN ? AND ?'
+        );
+        $req->execute(array(
+            $_SESSION['profil']['gender'],
+            $age_max,
+            $age_min,
+            $_SESSION['profil']['lattitude'] - $delta_lat,
+            $_SESSION['profil']['lattitude'] + $delta_lat,
+            $_SESSION['profil']['longitude'] - $delta_lng,
+            $_SESSION['profil']['longitude'] + $delta_lng
+        ));
+        return $req->fetchAll();
+    }
+
+    public function getUsersHetero($age_min, $age_max, $gender, $delta_lng = 0.2, $delta_lat =0.2)
+    {
+        $req = $this->db->prepare(
+            'SELECT pseudo, biography, lattitude, longitude, img1, birthdate, gender, id
+            FROM user
+            WHERE gender <> ?
+            AND birthdate BETWEEN ? AND ?
+            AND lattitude BETWEEN ? AND ?
+            AND longitude BETWEEN ? AND ?'
+        );
+        $req->execute(array(
+            $_SESSION['profil']['gender'],
+            $age_max,
+            $age_min,
+            $_SESSION['profil']['lattitude'] - $delta_lat,
+            $_SESSION['profil']['lattitude'] + $delta_lat,
+            $_SESSION['profil']['longitude'] - $delta_lng,
+            $_SESSION['profil']['longitude'] + $delta_lng
+        ));
+        return $req->fetchAll();
+    }
+
     /**
      * @param $pseudo string
      * @return array
@@ -68,6 +132,13 @@ class UserModel extends \App\Constructor
         return $req->fetch();
     }
     
+    public function getUserByCriteria($id)
+    {
+        $req = $this->db->prepare('select * from user where id = ?');
+        $req->execute(array($id));
+        return $req->fetch();
+    }
+    
     /**
      * @param $email string email
      * @return array
@@ -79,32 +150,55 @@ class UserModel extends \App\Constructor
         return $req->fetch();
     }
     
-    public function updateUser($data)
+    public function updateFakeUser($data)
     {
-        $post = array();
+        $post = $data;
+        $req = $this->db->prepare(
+            'UPDATE user
+            SET pseudo = ?,
+            email = ?,
+            forname = ?,
+            name = ?,
+            birthdate = ?,
+            gender = ?,
+            sexuality = ?,
+            biography = ?,
+            lattitude = ?,
+            longitude = ?
+            where pseudo = ?');
+        $req->execute(array(
+            $post['pseudo'],
+            $post['email'],
+            $post['forname'],
+            $post['name'],
+            $post['birthdate'],
+            $post['gender'],
+            $post['sexuality'],
+            $post['biography'],
+            $post['lat'],
+            $post['lng'],
+            $_SESSION['pseudo']
+        ));
+    }
+    
+    public function updateUser($post)
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
         { 
-            foreach ($_POST as $key => $value)
-                $post[$key] = $value;
-        }
-        else
-            $post = $data;
-        $this->debug->ft_print($post);
-        $req = $this->db->prepare('
-            UPDATE user
-            SET pseudo = ?,
+            $this->debug->ft_print($post);
+            print_r($_SESSION);
+            $req = $this->db->prepare(
+                'UPDATE user
+                SET pseudo = ?,
                 email = ?,
                 forname = ?,
                 name = ?,
                 birthdate = ?,
                 gender = ?,
                 sexuality = ?,
-                biography = ?,
-                lattitude = ?,
-                longitude = ?
-            where pseudo = ?'
-        );
-        $req->execute(array(
+                biography = ?
+                where pseudo = ?');
+            return $req->execute(array(
                 $post['pseudo'],
                 $post['email'],
                 $post['forname'],
@@ -113,10 +207,10 @@ class UserModel extends \App\Constructor
                 $post['gender'],
                 $post['sexuality'],
                 $post['biography'],
-                $post['lat'],
-                $post['lng'],
-                $_SESSION['pseudo']
-        ));
+                $_SESSION['profil']['pseudo']
+            ));
+        }
+        return false;
     }
     
     public function updatePassUser()

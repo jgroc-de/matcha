@@ -36,6 +36,8 @@ class FormChecker extends \App\Constructor
                 {
                     $_SESSION['id'] = $account['id'];
                     $_SESSION['profil'] = $account;
+                    $_SESSION['profil']['lattitude'] = floatval($_SESSION['profil']['lattitude']);
+                    $_SESSION['profil']['longitude'] = floatval($_SESSION['profil']['longitude']);
                 }
                 else
                     $this->flash->addMessage('failure', 'wrong password');
@@ -79,11 +81,8 @@ class FormChecker extends \App\Constructor
         $user = $this->container->user;
         if (($post = $this->check($request)))
         {
-            if (empty($user->getUser($post['pseudo'])) || $post['pseudo'] === $_SESSION['pseudo'])
+            if (empty($user->getUser($post['pseudo'])) || $post['pseudo'] === $_SESSION['profil']['pseudo'])
             {
-                $user->updateUser($post);
-                $_SESSION['pseudo'] = $post['pseudo']; 
-                $this->flash->addMessage('success', 'done');
                 return $post;
             }
             else

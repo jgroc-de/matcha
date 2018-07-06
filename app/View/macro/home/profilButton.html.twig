@@ -1,5 +1,5 @@
-{% macro profilButton(id, key, function, home, href) %}
-<div class=" w3-bar w3-theme-l1 w3-round-xxlarge" id="tag{{ id }}">
+{% macro profilButton(id, key, function, home, href, type) %}
+<div class=" w3-bar w3-theme-l1 w3-round-xxlarge" id="{{ type }}{{ id }}">
     {% if href %}
     <a href="{{ href }}" class="w3-padding w3-hover-opacity">{{ key }}</a>
     {% else %}

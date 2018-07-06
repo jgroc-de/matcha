@@ -22,7 +22,7 @@ class FriendsModel extends \App\Constructor
     public function getFriends($id)
     {
         $req1 = $this->db->prepare('
-            SELECT id, pseudo
+            SELECT *
             FROM friends
             INNER JOIN user
             ON friends.id_user2 = user.id
@@ -68,8 +68,8 @@ class FriendsModel extends \App\Constructor
             SELECT *
             FROM friendsReq
             INNER JOIN user
-            ON friendsReq.id_user2 = user.id
-            WHERE id_user1 = ?
+            ON friendsReq.id_user1 = user.id
+            WHERE id_user2 = ?
             ORDER BY user.pseudo
         ');
         $req->execute(array($id));
@@ -87,8 +87,15 @@ class FriendsModel extends \App\Constructor
     {
         if (!($this->getFriendReq($id1, $id2)))
         {
-            $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?)');
-            $req->execute(array($id1, $id2));
+            if ($this->getFriendReq($id2, $id1))
+            {
+                $this->setFriend($id1, $id2);
+            }
+            else
+            {
+                $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?)');
+                $req->execute(array($id1, $id2));
+            }
             //return 'added!';
         }
         //else

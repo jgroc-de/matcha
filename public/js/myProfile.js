@@ -1,19 +1,5 @@
 window.URL = window.URL || window.webkitURL;
 
-function delUserTag(path, id) {
-    var xhr = new XMLHttpRequest();
-
-    xhr.open('GET', path + id, true);
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var child = document.getElementById('tag' + id);
-
-            child.parentNode.removeChild(child);
-        }
-    };
-    xhr.send();
-}
-
 function dropdown(target) {
     var x = document.getElementById(target);
 
@@ -142,5 +128,57 @@ function addEvent() {
         reader.readAsDataURL(this.files[0]);
     }
 }
+
+function delFriend(path, id)
+{
+    if (confirm('R U SURE?'))
+    {
+        var request = new XMLHttpRequest();
+
+        request.open('GET', path + id, true);
+        request.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                var child = document.getElementById('friend' + id);
+                child.parentNode.removeChild(child);
+            }
+        };
+        request.send();
+    }
+}
+
+function delFriendReq(path, id)
+{
+    if (confirm('R U SURE?'))
+    {
+        var request = new XMLHttpRequest();
+
+        request.open('GET', path + id, true);
+        request.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                var child = document.getElementById('req' + id);
+
+                child.parentNode.removeChild(child);
+            }
+        };
+        request.send();
+    }
+}
+
+function delUserTag(path, id) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', path + id, true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var child = document.getElementById('tag' + id);
+
+            child.parentNode.removeChild(child);
+        }
+    };
+    xhr.send();
+}
+
 
 addPicture();

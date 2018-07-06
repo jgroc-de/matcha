@@ -9,21 +9,27 @@ class EditProfil extends Route
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-            if ($this->form->checkProfil($request))
+            if ($post = $this->form->checkProfil($request))
             {
-                $this->user->updateUser();
-                $this->flash->addMessage('success', 'profil updated!');
+                if ($this->user->updateUser($post))
+                {
+                    $_SESSION['profil'] = array_replace($_SESSION['profil'], $post);
+                    $this->flash->addMessage('success', 'profil updated!');
+                }
+                else
+                    $this->flash->addMessage('failure', 'something went wrong');
             }
         }
+        else
+            $post = $_SESSION['profil'];
         return $this->view->render(
             $response,
             'templates/home/editProfil.html.twig',
             [
-                'profil' => $_SESSION['profil'],
+                'profil' => $post,
                 'characters' => $this->characters,
                 'sexualPattern' => $this->sexualPattern,
-                'flash' => $this->flash->getMessages(),
-                'post' => $_POST
+                'flash' => $this->flash->getMessages()
             ]
         );
     }

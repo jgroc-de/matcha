@@ -1,52 +1,78 @@
 {% extends 'templates/home.html.twig' %}
+{% from 'macro/form/button.html.twig' import button %}
+{% from 'macro/form/input.html.twig' import input %}
+{% from 'macro/form/select.html.twig' import select %}
 
 {% block content %}
     <h2>Search</h2>
-    <div class="w3-row">
-        <div class="w3-quarter">
-            <h3>age</h3>
-            <div id="" class="">
-                <form class="w3-container">
-                    min<input type="range" min="12" max="118">
-                    max<input type="range" min="12" max="118">
-                </form>
+    <form action="{{ path_for('searchByCriteria') }}" method="post">
+        <fieldset class="w3-row">
+            <legend>Search by Criteria</legend>
+            <div class="w3-quarter">
+                <h3>age</h3>
+                <div id="" class="">
+            {{ input(
+            'number',
+            'min',
+            {
+            'value': age.min,
+            'min': 18,
+            'max': 118,
+            'name': 'min'
+            })
+            }}
+            {{ input(
+            'number',
+            'max',
+            {
+            'value': age.max,
+            'min': 18,
+            'max': 118,
+            'name': 'max'
+            })
+            }}
+                </div>
             </div>
-        </div>
-        <div class="w3-quarter">
-            <h3>kind</h3>
-            <div id="" class="">
-                <form class="w3-container">
-                    <p>
-                    <input class="w3-check" type="checkbox" name="" value="Rick">
-                    <label>Rick</label></p>
-                    <p>
-                    <input class="w3-check" type="checkbox" name="" value="Morty">
-                    <label>Morty</label></p>
-                    <p>
-                    <input class="w3-check" type="checkbox" name="" value="Beth">
-                    <label>Beth</label></p>
-                    <p>
-                    <input class="w3-check" type="checkbox" name="" value="Jerry">
-                    <label>Jerry</label></p>
-                    <p>
-                    <input class="w3-check" type="checkbox" name="" value="Summer">
-                    <label>Summer</label></p>
-                </form>
+            <div class="w3-quarter">
+                <h3>kind</h3>
+                <div id="" class="">
+                    <select name="gender" size="5" multiple style="width:100%">
+                        {% for char in target %}
+                            <option value="{{ char }}">{{ char }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="w3-quarter">
-            <h3>distance</h3>
-            <div id="" class="">
-                <form class="w3-container">
-                    min<input type="range" min="1" max="1000">
-                </form>
+            <div class="w3-quarter">
+                <h3>distance</h3>
+                <div id="" class="">
+            {{ select({
+            'label': '< (km)',
+            'array': distance,
+            'select': distSel,
+            })
+            }}
+                </div>
             </div>
-        </div>
-        <div class="w3-quarter">
-            <h3>interest</h3>
-            <div id="" class=""></div>
-        </div>
-    </div>
+            <div class="w3-quarter">
+                <h3>interest</h3>
+                <select name="gender" size="5" multiple style="width:100%">
+                    {% for tag in tags %}
+                        <option value="{{ tag }}">{{ tag }}</option>
+                    {% endfor %}
+                </select>
+                <div id="" class=""></div>
+            </div>
+        </fieldset>
+        {{ button('search') }}
+    </form>
+    <form action="{{ path_for('searchByName') }}" method="post">
+        <fieldset class="w3-row">
+            <legend>Search by Name</legend>
+            {{ input('text', 'pseudo', {'value': ''}) }}
+        </fieldset>
+        {{ button('search') }}
+    </form>
     <div class="w3-row">
         <div class="w3-third">
             <h3>Focus</h3>
@@ -83,23 +109,6 @@ var usersPos = [
 
 function closeInfo(id) {
     document.getElementById('' + id).style.display = "none";
-}
-
-function modal(id, imgU) {
-    var modal = document.getElementById(id);
-    var img = document.getElementById(imgU);
-    var modalImg = document.getElementById("img01");
-    var captionText = document.getElementById("caption");
-    var span = document.getElementsByClassName("close")[0];
-    
-    img.onclick = function(){
-        modal.style.display = "block";
-        modalImg.src = this.src;
-        captionText.innerHTML = this.alt;
-    }
-    span.onclick = function() {
-            modal.style.display = "none";
-    }
 }
 </script>
 <!--<script src="googleMap/markerclusterer/src/markerclusterer.js"></script>-->

@@ -10,23 +10,34 @@
 {% endblock %}
 
 {% block navbar %}
-    <div class="w3-bar gg-navbar w3-theme-d1">
-        {% set class = "w3-bar-item w3-button" %}
+    <div class="w3-bar w3-theme-d1">
+        {% set class = "w3-bar-item w3-button w3-large" %}
         {% set classR = "w3-bar-item w3-button w3-right w3-large" %}
-        <a href="#" class="{{ class }}"><i class="fa fa-bars" alt="menu" title="menu"></i></a>
-        <a href={{ path_for('home') }} class="{{ class }}">home</a>
-        <a href="{{ path_for('search') }}" class="{{ class }}">search</a>
-        <a href="{{ path_for('logout') }}" class="{{ classR }}"><i class="fa fa-power-off" alt="logout" title="logout"></i></a>
-        <div class="w3-dropdown-hover w3-right">
-            <a href="#" class="w3-button w3"><i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
+        <!--<a href="#" class="{{ class }}"><i class="fa fa-bars" alt="menu" title="menu"></i></a>-->
+        <a href={{ path_for('home') }} class="{{ class }}">
+            <i class="fa fa-home" alt="home" title="your profil"></i>
+        </a>
+        <a href="{{ path_for('search') }}" class="{{ class }}">
+            <i class="fa fa-search" alt="search" title="new search"></i>
+        </a>
+        <a href="#" class="{{ class }}">
+            <i class="fa fa-send" alt="messages" title="new messages"></i>
+        </a>
+        <a href="#" class="{{ class }}">
+            <i class="fa fa-feed" alt="like" title="new likes"></i>
+        </a>
+        <a href="{{ path_for('logout') }}" class="{{ classR }}">
+            <i class="fa fa-power-off" alt="logout" title="logout"></i>
+        </a>
+        <div class="w3-dropdown-hover w3-right w3-large">
+            <a href="#" class="w3-button w3">
+                <i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
             </a>
-            <div class="w3-dropdown-content w3-bar-block" style="right:0">
+            <div class="w3-dropdown-content w3-bar-block" style="right:47px">
                 <a href="{{ path_for('editProfil') }}" class="w3-bar-item w3-button">profil</a>
                 <a href="{{ path_for('editPassword') }}" class="w3-bar-item w3-button">password</a>
             </div>
         </div>
-        <a href="#" class="{{ classR }}"><i class="fa fa-feed" alt="new like" title="new like"></i></a>
-        <a href="#" class="{{ classR }}"><i class="fa fa-send" alt="new message" title="new message"></i></a>
         <div class="w3-right w3-theme-l5 w3-border w3-round" style="width:100px;margin:10px" title="popularity: {{ me.popularity }}/100">
             <div class="w3-round w3-green w3-border" style="width:{{ me.popularity }}%;height:16px"></div>
         </div>
