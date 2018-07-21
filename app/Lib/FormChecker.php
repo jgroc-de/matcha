@@ -13,18 +13,17 @@ class FormChecker extends \App\Constructor
      *
      * @param $request requestInterface
      */
-    public function check (request $request)
+    public function check(request $request)
     {
-        $post = $_POST;
-        if ($this->validator->validate($post, array_keys($post)))
-            return $post;
+        if ($this->validator->validate($_POST, array_keys($_POST)))
+            return $_POST;
         $this->flash->addMessage('failure', 'burp!');
     }
 
     /**
      * @param $request requestInterface
      */
-    public function checkLogin (request $request)
+    public function checkLogin(request $request)
     {
         if (($post = $this->check($request)))
         {
@@ -52,7 +51,7 @@ class FormChecker extends \App\Constructor
      *
      * @return string error if any
      */
-    public function checkSignup (request $request)
+    public function checkSignup(request $request)
     {
         $user = $this->container->user;
         if (($post = $this->check($request)))
@@ -76,7 +75,7 @@ class FormChecker extends \App\Constructor
      *
      * @return string error if any
      */
-    public function checkProfil (request $request)
+    public function checkProfil(request $request)
     {
         $user = $this->container->user;
         if (($post = $this->check($request)))
@@ -96,7 +95,7 @@ class FormChecker extends \App\Constructor
      *
      * @return bool
      */
-    public function checkPassword ($real, $test)
+    public function checkPassword($real, $test)
     {
         return (password_verify($test, $real));
     }

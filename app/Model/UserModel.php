@@ -93,6 +93,17 @@ class UserModel extends \App\Constructor
     }
 
     /**
+     * @param $pseudo string
+     * @return array
+     */
+    public function getUserByPseudo($pseudo)
+    {
+        $req = $this->db->prepare('SELECT pseudo, biography, lattitude, longitude, img1, birthdate, gender, id FROM user WHERE pseudo LIKE ? ORDER BY pseudo LIMIT 20');
+        $req->execute(array($pseudo . '%'));
+        return $req->fetchAll();
+    }
+
+    /**
      * @param $post array
      */
     public function setUser(array $post)
@@ -104,7 +115,6 @@ class UserModel extends \App\Constructor
             if (strpos($file, strtolower($post['gender'])) !== false)
                 $img[] = $file;
         }
-
         $req = $this->db->prepare('
                 INSERT INTO user (pseudo, password, email, gender, token, img1, lattitude, longitude)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
@@ -132,11 +142,30 @@ class UserModel extends \App\Constructor
         return $req->fetch();
     }
     
-    public function getUserByCriteria($id)
+    public function getUserByCriteria($min, $max, $target = array(), $dist)
     {
-        $req = $this->db->prepare('select * from user where id = ?');
-        $req->execute(array($id));
-        return $req->fetch();
+        print_r($target);
+        $delta_lat = 5;
+        $delta_lng = 5;
+        $count = str_repeat('?,', count($target) - 1) . '?';
+        $req = $this->db->prepare(
+            "SELECT pseudo, biography, lattitude, longitude, img1, birthdate, gender, id
+            FROM user
+            WHERE gender IN ($count)
+            AND birthdate BETWEEN ? AND ?
+            AND lattitude BETWEEN ? AND ?
+            AND longitude BETWEEN ? AND ?"
+        );
+        print_r($req);
+        $array = array_merge($target, [
+            $max,
+            $min,
+            $_SESSION['profil']['lattitude'] - $delta_lat,
+            $_SESSION['profil']['lattitude'] + $delta_lat,
+            $_SESSION['profil']['longitude'] - $delta_lng,
+            $_SESSION['profil']['longitude'] + $delta_lng]);
+        $req->execute($array);
+        return $req->fetchAll();
     }
     
     /**
