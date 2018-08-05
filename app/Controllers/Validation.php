@@ -15,7 +15,7 @@ class Validation extends Route
             $_SESSION['id'] = $account['id'];
             $_SESSION['profil'] = $account;
             if ($get['action'] === 'reinit')
-                return $response->withRedirect('/password');
+                return $response->withRedirect('/editPassword');
             $this->user->activate();
         }
         return $response->withRedirect('/');

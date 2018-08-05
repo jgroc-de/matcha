@@ -15,8 +15,10 @@ class ResetPassword extends Route
             {
                 $account['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
                 $user->updateToken($account['pseudo'], $account['token']);
-                $this->mail->sendResetMail($account['pseudo'], $account['email'], $account['token']);
-                $this->flash->addMessage('success', 'Check your mail!');
+                if($this->mail->sendResetMail($account['pseudo'], $account['email'], $account['token']))
+                    $this->flash->addMessage('success', 'Check your mail!');
+                else
+                    $this->flash->addMessage('failure', 'Mail not sent');
             }
             else
                 $this->flash->addMessage('failure', 'unknown mail address…');

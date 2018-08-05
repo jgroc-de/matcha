@@ -16,7 +16,7 @@ class Signup extends Route
             $response,
             'templates/logForm/signup.html.twig',
             [
-                'characters' => $this>characters,
+                'characters' => $this->characters,
                 'flash' => $this->flash->getMessages(),
                 'post' => $_POST
             ]

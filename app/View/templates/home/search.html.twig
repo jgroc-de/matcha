@@ -3,8 +3,11 @@
 {% from 'macro/form/input.html.twig' import input %}
 {% from 'macro/form/select.html.twig' import select %}
 
-{% block content %}
-    <h2>Search</h2>
+
+{% block main %}
+<div class="w3-content"> 
+    <div class="w3-theme-l5 w3-padding-large w3-margin w3-round-large">
+    <h2 class='w3-theme-l1'>Search</h2>
     <form action="{{ path_for('searchByCriteria') }}" method="post">
         <fieldset class="w3-row">
             <legend>Search by Criteria</legend>
@@ -110,4 +113,6 @@ function closeInfo(id) {
 <!--<script src="googleMap/markerclusterer/src/markerclusterer.js"></script>-->
 <script src="js/mapSearch.js"></script>
 <script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
-{% endblock %}
+    </div>
+</div>
+{% endblock %} 

@@ -1,15 +1,23 @@
 {% extends "templates/home.html.twig" %}
+{% use "templates/form.html.twig" %}
 {% from 'macro/form/input.html.twig' import input %}
 {% from 'macro/form/button.html.twig' import button %}
 {% from 'macro/form/textarea.html.twig' import textarea %}
 {% from 'macro/form/select.html.twig' import select %}
 
-{% block title %}
+{% block h2 %}
+<a class="w3-theme-d1" href='{{ path_for('editProfil') }}'>Edit your profil</a>
+/ <a class="w3-hover-green" href='{{ path_for('editPassword') }}'>Change your password</a>
 {% endblock %}
 
-{% block content %}
-<h2>Edit your profil</h2>
-<div>
+{% block link %}
+{% endblock %}
+
+{% block action %}
+{{ path_for('editProfil') }}
+{% endblock %}
+
+{% block form %}
     {% for key, message in flash %}
         {% if key == "success" %}
             <div class="w3-panel w3-green">
@@ -19,9 +27,6 @@
         <p>{{ message }}</p>
             </div>
     {% endfor %}
-    <form action='{{ path_for('editProfil') }}' method="post" class="w3-left-align">
-        <fieldset>
-            <legend>Your profil</legend>
         <div class="w3-section">
             {{ input('text', 'pseudo', {'value': profil.pseudo}) }}
         </div>
@@ -46,7 +51,7 @@
             })
             }}
         </div>
-        <div>
+        <div class="w3-section">
             {{ select({
             'label': 'gender',
             'array': characters,
@@ -54,7 +59,7 @@
             })
             }}
         </div>
-        <div>
+        <div class="w3-section">
             {{ select({
             'label': 'orientation',
             'array': sexualPattern,
@@ -63,13 +68,10 @@
             }) 
             }}
         </div>
-        <div>
+        <div class="w3-section">
             {{ textarea({'label': 'Biography', 'name': 'biography', 'value': profil.biography}) }}
         </div>
-        </fieldset>
-        {{ button('submit') }}
+    {{ button('submit') }}
     </form>
-    <a href='{{ path_for('editPassword') }}'>change your password</a>
-</div>
 {% endblock %}
 

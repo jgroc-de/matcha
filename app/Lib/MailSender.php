@@ -5,12 +5,12 @@ namespace App\Lib;
 /**
  * managing mail sending
  */
-class MailSender extends \App\Constructor
+class MailSender
 {
     const USER = 'jgroc-de';
     const EXP = 'lol@lol.com';
     const PASS = '';
-    const URL = 'http://localhost:8100';
+    const URL = 'http://localhost:8080';
 
     /**
      * @param string $dest    email address
@@ -38,11 +38,7 @@ class MailSender extends \App\Constructor
         $mail->addAddress($dest);
         $mail->Subject = $subject;
         $mail->Body = $message;
-        //if ($mail->send())
-        if (false)
-            return 'Registration Success! A validation mail has been sent';
-        else
-            return 'Registration Success! but mail not sent…';
+        return $mail->send();
     }
 
     /**
@@ -59,11 +55,11 @@ class MailSender extends \App\Constructor
             Welcome on match a Rick&Morty!
             To activate your account, plz click on the link bellow or paste it into your web browser.
 
-            ' . self::URL . '/validation?action=activation&login=' . urlencode($login) . '&key=' . urlencode($token) . '
+            ' . self::URL . '/validation?action=activation&login=' . urlencode($login) . '&token=' . urlencode($token) . '
 
             ---------------
             This is an automatic mail, thx to not reply.';
-        $this->sendMail($dest, $subject, $message);
+        return $this->sendMail($dest, $subject, $message);
     }
 
     /**
@@ -79,10 +75,10 @@ class MailSender extends \App\Constructor
             A password reinitialistion request has been made on our website.
             To proceed, plz click on the link bellow or paste it into your web browser.
 
-            ' . self::URL . '/validation?action=reinit&login=' . urlencode($login) . '&key=' . urlencode($token) . '
+            ' . self::URL . '/validation?action=reinit&login=' . urlencode($login) . '&token=' . urlencode($token) . '
 
             ---------------
             This is an automatic mail, thx to not reply.';
-        $this->sendMail($dest, $subject, $message);
+        return $this->sendMail($dest, $subject, $message);
     }
 }

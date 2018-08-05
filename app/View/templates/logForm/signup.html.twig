@@ -1,12 +1,16 @@
 {% extends 'templates/logForm.html.twig' %}
+{% use "templates/form.html.twig" %}
 {% from 'macro/form/input.html.twig' import input %}
 {% from 'macro/form/button.html.twig' import button %}
 {% from 'macro/form/select.html.twig' import select %}
 
-{% block h2 %}Sign up{% endblock %}
+{% block h2 %}
+<a class="w3-hover-green" href='{{ path_for('login') }}'>Log In</a>
+/ <a class="w3-theme-d1" href='{{ path_for('signup') }}'>sign up</a>
+/ <a class="w3-hover-green" href='{{ path_for('resetPassword') }}'>reset your password</a>
+{% endblock %}
 
 {% block link %}
-or <a href='{{ path_for('login') }}'>log in</a>
 {% endblock %}
 
 {% block action %}

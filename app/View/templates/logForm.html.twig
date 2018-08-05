@@ -8,29 +8,3 @@
 <a href='{{ path_for('home') }}'><h1>Match a Rick&Morty</h1></a>
 <h3>even if it's such a pain in the ass</h3>
 {% endblock %}
-
-{% block main %}
-<div class="w3-card-4 w3-display-topmiddle w3-margin-top">
-    <div class="w3-container w3-display-container w3-theme-l1">
-        <h2 class="w3-left">
-            {% block h2 %}{% endblock %}
-        </h2>
-        <p class="w3-display-bottomright w3-margin-right">
-        {% block link %}{% endblock %}
-        </p>
-
-    </div>
-    <form class="w3-container w3-theme-light" style="opacity:0.95" action="{% block action %}{% endblock %}" method="post">
-    {% for key, message in flash %}
-        {% if key == "success" %}
-            <div class="w3-panel w3-green">
-        {% else %}
-            <div class="w3-panel w3-red">
-        {% endif %}
-        <p>{{ message }}</p>
-            </div>
-    {% endfor %}
-        {% block form %}{% endblock %}
-    </form>
-</div>
-{% endblock %}

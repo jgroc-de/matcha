@@ -10,7 +10,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 abstract class Constructor
 {
     /**
-     * @var array all kind available
+     * @var array of all kind available
      */
     protected $characters = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
 

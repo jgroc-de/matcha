@@ -8,18 +8,17 @@
          <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="/css/main.css" type="text/css"/>
         <link rel="stylesheet" href="/css/theme.css" type="text/css"/>
-        {% block head %}
-        {% endblock %}
+        {% block head %}{% endblock %}
     </head>
     <body>
         <header>
             {% block header %}{% endblock %}
         </header>
         {% block navbar %}{% endblock %}
-        <main class="w3-container w3-center">
+        <main class="w3-container">
             {% block main %}{% endblock %}
         </main>
-        <footer class="">
+        <footer>
             <hr>
             <em>© jgroc-de 2018</em>
         </footer>
