@@ -1,26 +1,49 @@
 {% extends 'templates/logForm.html.twig' %}
-{% use "templates/form.html.twig" %}
 {% from 'macro/form/input.html.twig' import input %}
 {% from 'macro/form/button.html.twig' import button %}
+{% from 'macro/form/select.html.twig' import select %}
+{% from 'macro/form/layout.html.twig' import form %}
 
-{% block h2 %}
-<a class="w3-theme-d1" href='{{ path_for('login') }}'>Log In</a>
-/ <a class="w3-hover-green" href='{{ path_for('signup') }}'>sign up</a>
-/ <a class="w3-hover-green" href='{{ path_for('resetPassword') }}'>reset your password</a>
-{% endblock %}
-
-{% block action %}
-{{ path_for('login') }}
-{% endblock %}
-
-{% block form %}
+{% block main %}
+<div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
+{{ form('Log In', 'login', flash, login) }}
 <div class="w3-section">
     {{ input('text', 'pseudo', {'value': post.pseudo}) }}
 </div>
 <div class="w3-section">
-    {{ input('password') }}
+    {{ input('password', 'password') }}
+</div>
+<div class="">
+    {{ button('submit') }}
+</div>
+    </form>
+
+{{ form('Sign Up', 'signup', flash, signup) }}
+<div class="w3-section">
+    {{ input('text', 'pseudo', {'value': post.pseudo}) }}
 </div>
 <div class="w3-section">
+    {{ input('password','password') }}
+</div>
+<div class="w3-section">
+    {{ input('email', 'email', {'value': post.email }) }}
+</div>
+<div class="w3-section">
+    {{ select({'label': 'you are a', 'name': 'gender', 'array': characters, 'select': post.gender}) }}
+</div>
+<div class="">
     {{ button('submit') }}
+    {{ button('reset') }}
+</div>
+    </form>
+
+{{ form('Reset Your Password', 'resetPassword', flash, reset) }}
+<div class="w3-section">
+    {{ input('email', 'email', {'value': post.email }) }}
+</div>
+<div class="">
+    {{ button('submit') }}
+</div>
+    </form>
 </div>
 {% endblock %}

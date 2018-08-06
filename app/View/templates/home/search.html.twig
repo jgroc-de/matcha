@@ -5,74 +5,14 @@
 
 
 {% block main %}
-<div class="w3-content"> 
-    <div class="w3-theme-l5 w3-padding-large w3-margin w3-round-large">
+<div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw;min-height:80vh"> 
+    <div class="w3-padding w3-row">
     <h2 class='w3-theme-l1'>Search</h2>
-    <form action="{{ path_for('searchByCriteria') }}" method="post">
-        <fieldset class="w3-row">
-            <legend>Search by Criteria</legend>
-            <div class="w3-quarter">
-                <h3>age</h3>
-            {{ input(
-            'number',
-            'min',
-            {
-            'value': age.min,
-            'min': 18,
-            'max': 118,
-            'name': 'min'
-            })
-            }}
-            {{ input(
-            'number',
-            'max',
-            {
-            'value': age.max,
-            'min': 18,
-            'max': 118,
-            'name': 'max'
-            })
-            }}
-            </div>
-            <div class="w3-quarter">
-                <h3>kind</h3>
-                <select name="gender" size="5" style="width:100%">
-                    {% for char in target %}
-                    <option value="{{ char }}">{{ char }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="w3-quarter">
-                <h3>distance</h3>
-            {{ select({
-            'label': '< (km)',
-            'name': 'distance',
-            'array': distance,
-            'select': distSel,
-            })
-            }}
-            </div>
-            <div class="w3-quarter">
-                <h3>interest</h3>
-                <select name="tags" size="5" style="width:100%">
-                    {% for tag in tags %}
-                        <option value="{{ tag }}">{{ tag }}</option>
-                    {% endfor %}
-                </select>
-                <div id="" class=""></div>
-            </div>
-        </fieldset>
-        </fieldset>
-        {{ button('submit', 'search') }}
-    </form>
-    <form action="{{ path_for('searchByName') }}" method="post">
-        <fieldset class="w3-row">
-            <legend>Search by Name</legend>
-            {{ input('text', 'pseudo', {'value': ''}) }}
-        </fieldset>
-        {{ button('submit', 'search') }}
-    </form>
-    <div class="w3-row">
+    <div class="w3-row w3-col l8">
+        <div class="w3-twothird">
+            <h3>Map</h3>
+            <div id="map" class="gg-map-med"></div>
+        </div>
         <div class="w3-third">
             <h3>Focus</h3>
             {% for user in users %}
@@ -90,11 +30,81 @@
             </div>
             {% endfor %}
         </div>
-        <div class="w3-rest">
-            <h3>Map</h3>
-            <div id="map" class="gg-map-med"></div>
-        </div>
     </div>
+    <form action="{{ path_for('searchByName') }}" method="post" class="w3-col l4">
+        <fieldset class="w3-row w3-section">
+            <legend>Search by Name</legend>
+            {{ input('text', '', {'value': '','placeholder':'pseudo', 'class':'w3-section w3-col s12 m9 l6', 'name': 'pseudo'}) }}
+        {{ button('submit', 'search') }}
+        </fieldset>
+    </form>
+    <form action="{{ path_for('searchByCriteria') }}" method="post" class="w3-col l4">
+        <fieldset class="w3-row">
+            <legend>Search by Criteria</legend>
+            <div class="w3-row w3-margin-bottom">
+            <div class="w3-half">
+                <h3>age</h3>
+                <div class="w3-col s6">
+            {{ input(
+            'number',
+            'min',
+            {
+            'value': age.min,
+            'min': 18,
+            'max': 118,
+            'name': 'min',
+            'style': 'width:90%'
+            })
+            }}
+                </div>
+                <div class="w3-col s6">
+            {{ input(
+            'number',
+            'max',
+            {
+            'value': age.max,
+            'min': 18,
+            'max': 118,
+            'name': 'max',
+            'style': 'width:90%'
+            })
+            }}
+                </div>
+            </div>
+            <div class="w3-half" style="text-align:center">
+                <h3>distance</h3>
+            {{ select({
+            'label': 'up to … km',
+            'name': 'distance',
+            'array': distance,
+            'select': distSel,
+            'style': 'width:85%;'
+            })
+            }}
+            </div>
+            </div>
+            <div class="w3-row">
+            <div class="w3-half">
+                <h3>kind</h3>
+                <select name="gender" size="5" style="width:100%">
+                    {% for char in target %}
+                    <option value="{{ char }}">{{ char }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="w3-half">
+                <h3>interest</h3>
+                <select name="tags" size="5" style="width:100%">
+                    {% for tag in tags %}
+                        <option value="{{ tag }}">{{ tag }}</option>
+                    {% endfor %}
+                </select>
+                <div id="" class=""></div>
+            </div>
+            </div>
+        {{ button('submit', 'search') }}
+        </fieldset>
+    </form>
 {% endblock %}
 
 {% block script %}

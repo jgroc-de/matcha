@@ -19,9 +19,13 @@ class EditPassword extends Route
         }
         return $this->view->render(
             $response,
-            'templates/home/editPassword.html.twig',
+            'templates/home/editProfil.html.twig',
             [
+                'profil' => $_SESSION['profil'],
+                'characters' => $this->characters,
+                'sexualPattern' => $this->sexualPattern,
                 'flash' => $this->flash->getMessages(),
+                'editPass' => true
             ]
         );
     }

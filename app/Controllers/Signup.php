@@ -14,11 +14,12 @@ class Signup extends Route
         }
         return $this->view->render(
             $response,
-            'templates/logForm/signup.html.twig',
+            'templates/logForm/login.html.twig',
             [
                 'characters' => $this->characters,
                 'flash' => $this->flash->getMessages(),
-                'post' => $_POST
+                'post' => $_POST,
+                'signup' => true
             ]
         );
     }

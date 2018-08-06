@@ -29,7 +29,8 @@ class EditProfil extends Route
                 'profil' => $post,
                 'characters' => $this->characters,
                 'sexualPattern' => $this->sexualPattern,
-                'flash' => $this->flash->getMessages()
+                'flash' => $this->flash->getMessages(),
+                'editProfil' => true
             ]
         );
     }

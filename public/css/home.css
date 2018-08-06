@@ -10,11 +10,11 @@ header {
 }
 
 .gg-map-small {
-    height: 300px;
+    height: 258px;
 }
 
 .gg-map-med {
-    height: 500px;
+    height: 50vh;
 }
 
 .gg-navbar {
@@ -31,4 +31,18 @@ header {
     content: "";
     clear: both;
     display: table;
+}
+
+img {
+    cursor: pointer;
+    margin: auto;
+}
+
+.gg-section {
+    height: 200px;
+    overflow: auto;
+}
+
+h3 {
+    height:38.5px;
 }

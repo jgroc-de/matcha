@@ -15,7 +15,8 @@ class Login extends Route
             'templates/logForm/login.html.twig',
             [
                 'flash' => $this->flash->getMessages(),
-                'post' => $_POST
+                'post' => $_POST,
+                'login' => true
             ]
         );
     }

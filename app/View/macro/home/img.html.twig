@@ -1,25 +1,41 @@
 {% macro myImg(profil) %}
 {% for key, url in profil %}
     {% if key starts with 'img' %}
-        {% if key == 'img2' or key == 'img4' %}
-<div class="w3-row w3-display-container" style="height:50%">
-        {% endif %}
-        <div class="w3-half w3-display-container w3-black" style="height:100%" id="{{ key }}">
-        {% if url %}
-        <img src='{{ url }}' alt='{{ url }}' title='{{ profil.pseudo }}_{{ key }}' class="w3-image w3-display-middle" style="max-height:100%;cursor:pointer" onclick="displayModal('{{ url }}')">
-        <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic('{{ key }}')"></i>
-        {% else %}
-        <label class="w3-button w3-block w3-jumbo w3-display-middle fa fa-plus w3-padding-large w3-hover-green" onchange='addPicture()' title="add picture">
-            <input type="hidden" style="MAX_FILE_SIZE" value="30000"/>
-            <input id="{{ key }}" type="file" style="display:none"/>
-        </label>
-        {% endif %}
-    </div>
-        {% if key == 'img3' or key == 'img5' %}
-</div>
-        {% endif %}
         {% if key == 'img1' %}
-    <div class="w3-card-4 w3-half w3-black" style="height:inherit">
+        <div class="w3-half" id="{{ key }}">
+            <div class="w3-display-container" style="height:250px">
+            {% if url %}
+                <img src='{{ url }}' alt='{{ url }}' title='{{ profil.pseudo }}_{{ key }}' class="w3-image w3-display-middle" style="max-height:250px" onclick="displayModal('{{ url }}')">
+                <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic('{{ key }}')"></i>
+            {% else %}
+            <label class="w3-button w3-display-middle w3-block w3-jumbo fa fa-plus w3-padding-large w3-hover-green" onchange='addPicture()' title="add picture">
+                <input type="hidden" style="MAX_FILE_SIZE" value="30000"/>
+                <input id="{{ key }}" type="file" style="display:none"/>
+            </label>
+            {% endif %}
+            </div>
+        </div>
+        <div class="w3-half">
+        {% else %}
+            {% if key == 'img2' or key == 'img4' %}
+            <div class="w3-row" style="height:125px">
+            {% endif %}
+            <div class="w3-half" id="{{ key }}">
+                <div class="w3-display-container" style="height:125px">
+            {% if url %}
+                <img src='{{ url }}' alt='{{ url }}' title='{{ profil.pseudo }}_{{ key }}' class="w3-image w3-display-middle" style="max-height:100%" onclick="displayModal('{{ url }}')">
+                <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic('{{ key }}')"></i>
+            {% else %}
+            <label class="w3-button w3-display-middle w3-block w3-jumbo fa fa-plus w3-padding-large w3-hover-green" onchange='addPicture()' title="add picture" style="vertical-align:middle">
+                <input type="hidden" style="MAX_FILE_SIZE" value="30000"/>
+                <input id="{{ key }}" type="file" style="display:none"/>
+            </label>
+            {% endif %}
+                </div>
+            </div>
+            {% if key == 'img3' or key == 'img5' %}
+            </div>
+            {% endif %}
         {% endif %}
     {% endif %}
 {% endfor %}
@@ -27,10 +43,10 @@
 {% endmacro %}
 
 {% macro otherImg(profil) %}
-<div class="w3-black w3-display-container" id="{{ key }}">
+<div class="w3-display-container" id="{{ key }}">
 {% for key, url in profil %}
     {% if key starts with 'img' and url %}
-    <img class="mySlides w3-image" src="{{ url }}" title='{{ profil.pseudo }}_{{ key }}' style="max-height:250px;margin:auto;cursor:pointer" onclick="displayModal('{{ url }}')">
+    <img class="mySlides w3-image" src="{{ url }}" title='{{ profil.pseudo }}_{{ key }}' style="max-height:250px" onclick="displayModal('{{ url }}')">
     {% endif %}
 {% endfor %}
     <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>

@@ -9,8 +9,8 @@
 {# ------------ #}
 
 {% block main %}
-<div class="w3-content w3-section"> 
-    <div class="w3-theme-l5 w3-padding w3-round-large w3-border">
+<div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw;min-height:80vh"> 
+    <div class="w3-padding w3-row">
 {% if profil.id == me.id %}
     {% set hi = 'Hi ' %}
     {% set your = 'Your ' %}
@@ -18,9 +18,9 @@
 {% endif %}
 <!-- The Modal -->
 <div id="Modal" class="w3-modal" style="cursor:pointer" onclick="document.getElementById('Modal').style.display='none'"> 
-    <div class="w3-modal-content w3-card-4 w3-padding-64" style="width:90vw;background-color:black">
-        <div class="w3-display-container">
-            <img class="w3-display-midle" src="" style="max-height:80vh;max-width:100%"></img>
+    <div class="w3-modal-content w3-card-4" style="width:90vw;background-color:black;">
+        <div class="w3-display-container" style="height:80vh">
+            <img class="w3-display-middle" src="" style="max-height:80vh;max-width:100%"></img>
         </div>
     </div>
 </div>
@@ -33,18 +33,10 @@
         <a href='#' class="w3-right" onclick="addFriend('/addFriend/{{ profil.id }}')">remove from friend list</a><br>
     {% endif %}
 {% endif %}
-<div class="w3-row">
-    <h3>{{ your }}Pictures</h3>
-    {% if home %}
-        {{ myImg(profil) }}
-    {% else %}
-        {{ otherImg(profil) }}
-    {% endif %}
-</div>
-<div class="w3-row w3-section">
+<div class="w3-row w3-section w3-col l6">
     <div class="w3-half">
         {{ subtitle(your, 'Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
-        <div class="w3-theme-l4 w3-padding" style="max-height:300px;overflow:auto">
+        <div class="w3-theme-l4 w3-padding gg-section">
             <div class="w3-left-align">
             {% if home %}
             name: {{ profil.forname}} {{profil.name}}<br>
@@ -60,7 +52,7 @@
     </div>
     <div class="w3-half">
         {{ subtitle(your, 'Interest', home, 'fa fa-plus',  "addTag('/addTag')", 'add tag') }}
-        <div class="w3-theme-l4" id="userTag" style="max-height:300px;overflow:auto">
+        <div class="w3-theme-l4 gg-section" id="userTag">
             {% for tag in tags %}
             {{ profilButton(tag.id, tag.tag, "delUserTag('/delUserTag/', #{ tag.id })", home, NULL, 'tag') }}
             {% endfor %}
@@ -68,10 +60,10 @@
     </div>
 </div>
 {% if home %}
-<div class="w3-row w3-section">
+<div class="w3-row w3-section w3-col l6">
     <div class="w3-half">
         <h3>{{ your }}Friend Request</h3>
-        <div class="w3-theme-l4 w3-padding" style="max-height:300px;overflow:auto">
+        <div class="w3-theme-l4 w3-padding gg-section">
             {% for req in friendReq %}
             {{ profilButton(req.id, req.pseudo, "delFriendReq('/delFriendReq/', #{ req.id })", home, path_for('profil', req), 'req') }}
             {% endfor %}
@@ -79,7 +71,7 @@
     </div>
     <div class="w3-half">
         <h3>{{ your }}Friends</h3>
-        <div class="w3-theme-l4 w3-padding" style="max-height:300px;overflow:auto">
+        <div class="w3-theme-l4 w3-padding gg-section">
             {% for friend in friends %}
             {{ profilButton(friend.id, friend.pseudo, "delFriend('/delFriend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}
             {% endfor %}
@@ -87,9 +79,19 @@
     </div>
 </div>
 {% endif %}
-<div class="w3-row w3-section">
+<div class="w3-row">
+<div class="w3-row w3-section w3-black w3-col l6" style="padding-bottom:8px;max-height:300px;overflow:auto">
+    <h3>{{ your }}Pictures</h3>
+    {% if home %}
+        {{ myImg(profil) }}
+    {% else %}
+        {{ otherImg(profil) }}
+    {% endif %}
+</div>
+<div class="w3-row w3-section w3-col l6">
     {{ subtitle(your, 'Location', home, 'fa fa-repeat',  "updateGeolocation()", 'update') }}
     <div id="map" class="gg-map-small"></div>
+</div>
 </div>
 {% endblock %}
 
