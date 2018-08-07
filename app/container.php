@@ -52,6 +52,13 @@ $container['tag'] = function ($container) {
 };
 
 /**
+ * @class MessageModel
+ */
+$container['msg'] = function ($container) {
+    return new \App\Model\MessageModel($container);
+};
+
+/**
  * etc…
  */
 $container['form'] = function ($container) { 

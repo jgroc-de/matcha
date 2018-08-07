@@ -1,9 +1,10 @@
+var forms = document.forms;
+var h2 = document.getElementsByTagName('h2');
+var len = forms.length, i;
+
 function display(id)
 {
     var x = document.getElementById(id);
-    var forms = document.forms;
-    var h2 = document.getElementsByTagName('h2');
-    var len = forms.length, i;
 
     console.log(x);
     for (i = 0; i < len; i++)

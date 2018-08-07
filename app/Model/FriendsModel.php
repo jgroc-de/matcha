@@ -101,5 +101,12 @@ class FriendsModel extends \App\Constructor
         //else
             //return'already added';
     }
+
+    public function isFriend(array $id)
+    {
+        $req = $this->db->prepare('select * from friends where id_user1 = ? and id_user2 = ?');
+        $req->execute($id);
+        return $req->fetch();
+    }
 }
 

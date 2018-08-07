@@ -1,7 +1,8 @@
 {% macro subtitle(your, title, home, icon, path, id, link) %}
 <div class="w3-theme-l4">
-<div class="w3-bar w3-theme-d1 w3-display-container" style="width:100%;min-height:38px">
-    <h3 class="w3-bar-item w3-display-middle" style="padding:0" >
+    {% if home %}
+    <div class="w3-bar w3-theme-d1 w3-display-container" style="width:100%">
+        <h3 class="w3-bar-item w3-display-middle w3-hover-green" style="padding:0;cursor:pointer" onclick="toggleDisplay('{{ title }}')">
         {{ your }}{{ title }}
     </h3>
 {% if home %}
@@ -16,5 +17,10 @@
     {% endif %}
 {% endif %}
 </div>
+{% else %}
+    <h3 class="w3-bar-item w3-hover-green" style="padding:0;cursor:pointer" onclick="toggleDisplay('{{ title }}')">
+        {{ title }}
+    </h3>
+{% endif %}
 </div>
 {% endmacro %}

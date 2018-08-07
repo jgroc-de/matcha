@@ -30,7 +30,7 @@ function majLocation () {
 
 function initMap() {
     var map = new google.maps.Map(
-            document.getElementById('map'),
+            document.getElementById('Location'),
             {center: user, zoom: 11}
             );
     var marker, markers = [];

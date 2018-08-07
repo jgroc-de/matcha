@@ -34,6 +34,8 @@ $app->group('', function () {
         ->setName('editPassword');
     $this->get('/logout', App\Controllers\Logout::class)
         ->setName('logout');
+    $this->get('/tchat', App\Controllers\Tchat::class)
+        ->setName('tchat');
     $this->get('/addFriend/{id}', App\Controllers\AddFriendRequest::class);
     $this->post('/addTag', App\Controllers\AddTag::class);
     $this->post('/addPicture/{id}', App\Controllers\AddPicture::class);
@@ -42,5 +44,5 @@ $app->group('', function () {
     $this->get('/delPicture/{id}', App\Controllers\DeletePicture::class);
     $this->get('/delFriendReq/{id}', App\Controllers\DeleteFriendRequest::class);
     $this->post('/updateGeolocation', App\Controllers\UpdateGeolocation::class);
-    $this->get('/tchat/{id}', App\Controllers\Tchat::class);
+    $this->post('/sendMessage', App\Controllers\Tchat::class . ':send');
 })->add(new \App\Middlewares\authMiddleware());

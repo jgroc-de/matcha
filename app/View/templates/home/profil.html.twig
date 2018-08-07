@@ -24,19 +24,22 @@
         </div>
     </div>
 </div>
-<h2 class='w3-theme-l1'>{{ hi }}{{ profil.pseudo }}</h2>
-<div id="flash"></div>
+<h2 class='w3-theme-l1 w3-display-container'>
+    {{ hi }}{{ profil.pseudo }}
 {% if not home %}
     {% if not friend %}
-        <a href='#' class="w3-right" onclick="addFriend('/addFriend/{{ profil.id }}')">add to friend list</a><br>
+    <a href='#' class="w3-display-right" onclick="addFriend('/addFriend/{{ profil.id }}')" ><i class="w3-hover-green fa fa-plus w3-padding" title="add to friendlist" alt="add"></i></a>
     {% else %}
-        <a href='#' class="w3-right" onclick="addFriend('/addFriend/{{ profil.id }}')">remove from friend list</a><br>
+    <a href='#' class="w3-display-right w3-margin-right" onclick="addFriend('/addFriend/{{ profil.id }}')"><i class="w3-hoover-green fa fa-minus w3-padding" title="remove from friendlist" alt="remove"></i></a>
     {% endif %}
 {% endif %}
+    
+</h2>
+<div id="flash"></div>
 <div class="w3-row w3-section w3-col l6">
     <div class="w3-half">
         {{ subtitle(your, 'Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
-        <div class="w3-theme-l4 w3-padding gg-section">
+        <div id="Profil" class="w3-theme-l4 w3-padding gg-section">
             <div class="w3-left-align">
             {% if home %}
             name: {{ profil.forname}} {{profil.name}}<br>
@@ -52,7 +55,7 @@
     </div>
     <div class="w3-half">
         {{ subtitle(your, 'Interest', home, 'fa fa-plus',  "addTag('/addTag')", 'add tag') }}
-        <div class="w3-theme-l4 gg-section" id="userTag">
+        <div id="Interest" class="w3-theme-l4 gg-section" id="userTag">
             {% for tag in tags %}
             {{ profilButton(tag.id, tag.tag, "delUserTag('/delUserTag/', #{ tag.id })", home, NULL, 'tag') }}
             {% endfor %}
@@ -62,16 +65,16 @@
 {% if home %}
 <div class="w3-row w3-section w3-col l6">
     <div class="w3-half">
-        <h3>{{ your }}Friend Request</h3>
-        <div class="w3-theme-l4 w3-padding gg-section">
+        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('FriendR')">{{ your }}Friend Request</h3>
+        <div id="FriendR" class="w3-theme-l4 w3-padding gg-section">
             {% for req in friendReq %}
             {{ profilButton(req.id, req.pseudo, "delFriendReq('/delFriendReq/', #{ req.id })", home, path_for('profil', req), 'req') }}
             {% endfor %}
         </div>
     </div>
     <div class="w3-half">
-        <h3>{{ your }}Friends</h3>
-        <div class="w3-theme-l4 w3-padding gg-section">
+        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('Friend')">{{ your }}Friends</h3>
+        <div id="Friend" class="w3-theme-l4 w3-padding gg-section">
             {% for friend in friends %}
             {{ profilButton(friend.id, friend.pseudo, "delFriend('/delFriend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}
             {% endfor %}
@@ -80,17 +83,19 @@
 </div>
 {% endif %}
 <div class="w3-row">
-<div class="w3-row w3-section w3-black w3-col l6" style="padding-bottom:8px;max-height:300px;overflow:auto">
-    <h3>{{ your }}Pictures</h3>
+<div class="w3-row w3-section w3-black w3-col l6" style="padding-bottom:1px;max-height:300px;overflow:auto">
+    <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('Picture')">{{ your }}Pictures</h3>
+    <div id="Picture">
     {% if home %}
         {{ myImg(profil) }}
     {% else %}
         {{ otherImg(profil) }}
     {% endif %}
 </div>
+</div>
 <div class="w3-row w3-section w3-col l6">
     {{ subtitle(your, 'Location', home, 'fa fa-repeat',  "updateGeolocation()", 'update') }}
-    <div id="map" class="gg-map-small"></div>
+    <div id="Location" class="gg-map-small"></div>
 </div>
 </div>
 {% endblock %}

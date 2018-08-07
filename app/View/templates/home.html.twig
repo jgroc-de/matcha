@@ -10,35 +10,44 @@
 {% endblock %}
 
 {% block navbar %}
-    <div class="w3-bar w3-theme-d1">
-        {% set class = "w3-bar-item w3-button w3-large" %}
+<script>
+function myFunction(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) { 
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
+    <div class="w3-bar w3-theme-d1 gg-navbar">
+        {% set class = "w3-bar-item w3-button w3-large gg-menu" %}
+        {% set class2 = "w3-bar-item w3-button w3-large gg-burger" %}
+        {% set classDD = "w3-bar-item w3-button w3-theme-l5" %}
         {% set classR = "w3-bar-item w3-button w3-right w3-large" %}
-        <!--<a href="#" class="{{ class }}"><i class="fa fa-bars" alt="menu" title="menu"></i></a>-->
-        <a href={{ path_for('home') }} class="{{ class }}">
-            <i class="fa fa-home" alt="home" title="your profil"></i>
-        </a>
-        <a href="{{ path_for('search') }}" class="{{ class }}">
-            <i class="fa fa-search" alt="search" title="new search"></i>
-        </a>
-        <a href="#" class="{{ class }}">
-            <i class="fa fa-send" alt="messages" title="new messages"></i>
-        </a>
-        <a href="#" class="{{ class }}">
-            <i class="fa fa-feed" alt="like" title="new likes"></i>
-        </a>
-        <a href="{{ path_for('logout') }}" class="{{ classR }}">
-            <i class="fa fa-power-off" alt="logout" title="logout"></i>
-        </a>
-        <div class="w3-dropdown-hover w3-right w3-large">
-            <a href="#" class="w3-button w3">
-                <i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
+        <div class="w3-dropdown-click">
+            <a href="#" class="{{ class2 }}" onclick="myFunction('demo1')">
+                <i class="fa fa-bars" alt="menu" title="menu"></i>
             </a>
-            <div class="w3-dropdown-content w3-bar-block" style="right:47px">
-                <a href="{{ path_for('editProfil') }}" class="w3-bar-item w3-button">profil</a>
-                <a href="{{ path_for('editPassword') }}" class="w3-bar-item w3-button">password</a>
+            <div id="demo1" class="w3-dropdown-content w3-bar-block" style="top:43px">
+                <a href={{ path_for('home') }} class="{{ classDD }}">Home</a>
+                <a href="{{ path_for('search') }}" class="{{ classDD }}">Search</a>
+                <a href="{{ path_for('tchat') }}" class="{{ classDD }}">Tchat</a>
             </div>
         </div>
-        <div class="w3-right w3-theme-l5 w3-border w3-round" style="width:100px;margin:10px" title="popularity: {{ me.popularity }}/100">
+        <a href={{ path_for('home') }} class="{{ class }}">Home</a>
+        <a href="{{ path_for('search') }}" class="{{ class }}">Search</a>
+        <a href="{{ path_for('tchat') }}" class="{{ class }}">Tchat</a>
+        <a href="{{ path_for('logout') }}" class="{{ classR }}" title="logout" alt="logout">
+            <i class="fa fa-power-off" alt="logout" title="logout"></i>
+        </a>
+        <a href="{{ path_for('editProfil') }}" class="{{ classR }}" title="edit profil"alt="edit">
+            <i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
+        </a>
+        <a href="#" class="{{ classR }}">
+            <i class="fa fa-feed" alt="like" title="new likes"></i>
+        </a>
+        <div class="w3-right w3-theme-l5 w3-border w3-round gg-pop" title="popularity: {{ me.popularity }}/100">
             <div class="w3-round w3-green w3-border" style="width:{{ me.popularity }}%;height:16px"></div>
         </div>
     </div>
