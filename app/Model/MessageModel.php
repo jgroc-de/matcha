@@ -13,7 +13,7 @@ class MessageModel extends \App\Constructor
      */
     public function getMessages($hash)
     {
-        $req = $this->db->prepare('SELECT owner, message FROM message WHERE id_user1 = ? AND id_user2 = ? ORDER BY date DESC LIMIT 100');
+        $req = $this->db->prepare('SELECT owner, message FROM message WHERE id_user1 = ? AND id_user2 = ? ORDER BY date ASC LIMIT 100');
         $req->execute($hash);
         return $req->fetchAll();
     }

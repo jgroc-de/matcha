@@ -1,0 +1,124 @@
+{% extends "templates/home.html.twig" %}
+{% from 'macro/form/button.html.twig' import button %}
+{% from 'macro/form/textarea.html.twig' import textarea %}
+{% from 'macro/form/layout.html.twig' import form %}
+
+{% block main %}
+<div class="w3-row">
+    <div class="w3-col l6 w3-card-4 w3-margin-top">
+        <h2 class="w3-theme-l1" style="margin:0">Choose your "Friend"</h2>
+        <div class="w3-row w3-theme-l5">
+            {% for user in friends %}
+            <div class="w3-col s6 m3 l3 w3-padding" style="overflow:hidden;">
+                <a href="#" class="w3-card-2 w3-theme-d1" onclick="tchatWith('{{ user.pseudo }}', {{ user.id }})">
+                    <h4 class="">{{ user.pseudo }}</h4>
+                    <img src="{{ user.img1 }}" class="w3-image">
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="tchatWindow" class="w3-col l6 w3-card-4 w3-margin-top w3-hide">
+        <div class="w3-content w3-theme-l5">
+            <h2 id="tchatTitle" class="w3-theme-l1" style="margin:0"></h2>
+            <div id="tchatMessages" class="w3-padding" style="height:400px;overflow:auto;background-color:white">
+            </div>
+            <button id="tchatButton" type="button" class="w3-button w3-right w3-ripple w3-theme-l1 w3-hover-green w3-margin-left" onclick="">send</button>
+            <textarea id="tchatMsg" class="w3-input" placeholder="type some insult here"></textarea>
+        </div>
+    </div>
+    <script>
+var TWindow = document.getElementById('tchatWindow');
+var title = document.getElementById('tchatTitle');
+var messages = document.getElementById('tchatMessages');
+var msg = document.getElementById('tchatMsg');
+var button = document.getElementById('tchatButton');
+
+function addMessage(text, owner, id)
+{
+    var div = document.createElement("div");
+    var p = document.createElement("span");
+
+    div.className = "w3-bar";
+    p.innerHTML = text;
+    if (owner != id)
+    {
+        p.className = "w3-theme-l2 w3-bar-item w3-round w3-right w3-padding";
+    }
+    else
+    {
+        p.className = "w3-theme-d1 w3-bar-item w3-round w3-left w3-padding";
+    }
+    p.style.wordWrap = "break-word";
+    p.style.maxWidth = "70%";
+    messages.appendChild(div);
+    div.appendChild(p);
+    p.scrollIntoView();
+}
+
+function tchatWith(name, id)
+{
+    var xhr = new XMLHttpRequest();
+
+    messages.innerHTML = "";
+    title.innerHTML = "flame " + name;
+    button.setAttribute("onclick", "sendMessageTo('" + name + "'," + id + ")");
+    xhr.open('POST', '/startTchat',true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var history = JSON.parse(this.response);
+
+            if (TWindow.className.indexOf('w3-hide') != -1)
+            {
+                TWindow.className = TWindow.className.replace('w3-hide', '');
+            }
+            history.forEach(function(value,index,array)
+                    {
+                        addMessage(value.message, value.owner, id)
+                    });
+            msg.scrollIntoView();
+            msg.focus();
+        }
+    }
+    xhr.send('id=' + id);
+}
+
+function sendMessageTo(name, id)
+{
+    var text = msg.value;
+
+    if (text)
+    {
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('POST', '/sendMessage',true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // addMessage(this.responseText, -1, id);
+               
+            }
+        }
+        xhr.send('msg=' + text + '&id=' + id);
+    }
+    msg.value = "";
+    msg.focus();
+}
+    </script>
+    <script src="https://gist.githubusercontent.com/cboden/fcae978cfc016d506639c5241f94e772/raw/e974ce895df527c83b8e010124a034cfcf6c9f4b/autobahn.js"></script>
+    <script>
+var conn = new ab.Session('ws://localhost:8100',
+        function() {
+            conn.subscribe('kittensCategory', function(topic, data) {
+                // This is where you would add the new article to the DOM (beyond the scope of this tutorial)
+                console.log('New article published to category "' + topic + '" : ' + data.title);
+            });
+        },
+        function() {
+            console.warn('WebSocket connection closed');
+        },
+        {'skipSubprotocolCheck': true}
+        );
+    </script>
+    {% endblock %}

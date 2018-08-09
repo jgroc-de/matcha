@@ -43,6 +43,7 @@ CREATE TABLE `user` (
 -- Table structure for table `friendsReq`
 --
 
+DROP TABLE IF EXISTS `friendsReq`;
 CREATE TABLE `friendsReq` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL
@@ -52,6 +53,7 @@ CREATE TABLE `friendsReq` (
 -- Table structure for table `friends`
 --
 
+DROP TABLE IF EXISTS `friends`;
 CREATE TABLE `friends` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL
@@ -61,10 +63,11 @@ CREATE TABLE `friends` (
 -- Table structure for table `message`
 --
 
+DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL,
-    `owner` TINYINT NOT NULL,
+    `owner` BOOL,
     `message` TEXT NOT NULL,
     `date` DATETIME NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -73,6 +76,7 @@ CREATE TABLE `message` (
 -- Table structure for table `hashtags`
 --
 
+DROP TABLE IF EXISTS `hashtags`;
 CREATE TABLE `hashtags` (
     `id` INT(11) PRiMARY KEY AUTO_INCREMENT,
     `tag` VARCHAR(255) NOT NULL UNIQUE
@@ -82,6 +86,7 @@ CREATE TABLE `hashtags` (
 -- Table structure for table `usertags`
 --
 
+DROP TABLE IF EXISTS `usertags`;
 CREATE TABLE `usertags` (
     `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
     `idtag` INT(11) NOT NULL,

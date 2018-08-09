@@ -16,7 +16,8 @@ class Login extends Route
             [
                 'flash' => $this->flash->getMessages(),
                 'post' => $_POST,
-                'login' => true
+                'login' => true,
+                'characters' => $this->characters
             ]
         );
     }

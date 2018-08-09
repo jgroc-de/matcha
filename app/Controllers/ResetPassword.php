@@ -27,6 +27,7 @@ class ResetPassword extends Route
             $response,
             'templates/logForm/login.html.twig',
             [
+                'characters' => $this->characters,
                 'flash' => $this->flash->getMessages(),
                 'post' => $_POST,
                 'reset' => true,

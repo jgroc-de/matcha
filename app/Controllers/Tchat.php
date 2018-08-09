@@ -9,16 +9,35 @@ class Tchat extends Route
     {
         $tab = array($_SESSION['id'], $_POST['id']);
         sort($tab);
-        $msg = $_POST['msg'];
+        $msg = array(
+            'category' => 'msg',
+            'exp'    => $_SESSION['id'],
+            'dest'    => $_POST['id'],
+            'msg'  => $_POST['msg'],
+            'myId'    => $_SESSION['id'],
+            'when'     => time()
+        );
         if ($this->friends->isFriend($tab))
         {
-            $this->msg->setMessage(array($tab[0], $tab[1], $_SESSION['id'], $msg, date('Y-m-d H:i:s')));
-            return $response->getBody()->write($msg);
+            $socket = $this->zmq;
+            
+            $socket->send(json_encode($msg));
+            $this->msg->setMessage(array($tab[0], $tab[1], $_SESSION['id'], $msg['msg'], date('Y-m-d H:i:s')));
+            return $response->withstatus(200);
         }
         else
         {
             return $response->withstatus(403);
         }
+    }
+
+    public function startTchat(Request $request, Response $response, array $args)
+    {
+        $tab = array($_SESSION['id'], $_POST['id']);
+        sort($tab);
+        $msgs = $this->msg->getMessages($tab);
+        $response->getBody()->write(json_encode($msgs));
+        return $response;
     }
 
     public function __invoke(Request $request, Response $response, array $args)

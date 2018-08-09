@@ -23,5 +23,4 @@ class Signup extends Route
             ]
         );
     }
-
 }

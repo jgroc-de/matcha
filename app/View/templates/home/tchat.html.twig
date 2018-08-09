@@ -10,7 +10,7 @@
         <div class="w3-row w3-theme-l5">
             {% for user in friends %}
             <div class="w3-col s6 m3 l3 w3-padding" style="overflow:hidden;">
-                <a href="#" class="w3-card-2 w3-theme-d1" onclick="tchatWith('{{ user.pseudo }}', {{ user.id }})">
+                <a href="#" class="w3-card-2 w3-theme-d1" onclick="tchatWith('{{ user.pseudo }}', {{ user.id }}, {{ me.id }})">
                     <h4 class="">{{ user.pseudo }}</h4>
                     <img src="{{ user.img1 }}" class="w3-image">
                 </a>
@@ -27,55 +27,9 @@
             <textarea id="tchatMsg" class="w3-input" placeholder="type some insult here"></textarea>
         </div>
     </div>
-    <script>
-var TWindow = document.getElementById('tchatWindow');
-var title = document.getElementById('tchatTitle');
-var messages = document.getElementById('tchatMessages');
-var msg = document.getElementById('tchatMsg');
-var button = document.getElementById('tchatButton');
+{% endblock %}
 
-function tchatWith(name, id)
-{
-    if (TWindow.className.indexOf('w3-hide') != -1)
-    {
-        TWindow.className = TWindow.className.replace('w3-hide', '');
-    }
-    title.innerHTML = "flame " + name;
-    messages.innerHTML = "";
-    button.setAttribute("onclick", "sendMessageTo('" + name + "'," + id + ")");
-    msg.scrollIntoView();
-    msg.focus();
-}
-
-function sendMessageTo(name, id)
-{
-    var text = msg.value;
-
-    if (text)
-    {
-        var xhr = new XMLHttpRequest();
-
-        xhr.open('POST', '/sendMessage',true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var div = document.createElement("div");
-                var p = document.createElement("span");
-
-                text = this.responseText;
-                div.className = "w3-bar";
-                p.innerHTML = text;
-                p.className = "w3-theme-l2 w3-bar-item w3-round w3-right w3-padding";
-                p.style.maxWidth = "50%";
-                messages.appendChild(div);
-                div.appendChild(p);
-                p.scrollIntoView();
-            }
-        }
-        xhr.send('msg=' + text + '&id=' + id);
-    }
-    msg.value = "";
-    msg.focus();
-}
-    </script>
+{% block script %}
+<script src="js/autobahn.js"></script>
+<script src="js/chat.js"></script>
 {% endblock %}
