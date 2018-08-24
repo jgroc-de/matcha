@@ -134,16 +134,20 @@ ab._version = AUTOBAHNJS_VERSION;
 
 
 // Helper to slice out browser / version from userAgent
-ab._sliceUserAgent = function (str, delim, delim2) {
+ab._sliceUserAgent = function (str, delim, delim2)
+{
    var ver = [];
    var ua = navigator.userAgent;
    var i = ua.indexOf(str);
    var j = ua.indexOf(delim, i);
+
    if (j < 0) {
       j = ua.length;
    }
+
    var agent = ua.slice(i, j).split(delim2);
    var v = agent[1].split('.');
+
    for (var k = 0; k < v.length; ++k) {
       ver.push(parseInt(v[k], 10));
    }
@@ -713,41 +717,48 @@ ab.Session.prototype.subscribe = function (topicuri, callback) {
 ab.Session.prototype.unsubscribe = function (topicuri, callback) {
 
    var self = this;
-
    var rtopicuri = self._prefixes.resolve(topicuri, true);
-   if (!(rtopicuri in self._subscriptions)) {
+
+   if (!(rtopicuri in self._subscriptions))
+   {
       throw "not subscribed to topic " + rtopicuri;
    }
-   else {
+   else
+   {
       var removed;
-      if (callback !== undefined) {
+
+      if (callback !== undefined)
+      {
          var idx = self._subscriptions[rtopicuri].indexOf(callback);
-         if (idx !== -1) {
+
+         if (idx !== -1)
+         {
             removed = callback;
             self._subscriptions[rtopicuri].splice(idx, 1);
          }
-         else {
+         else
+         {
             throw "no callback " + callback + " subscribed on topic " + rtopicuri;
          }
       }
-      else {
+      else
+      {
          removed = self._subscriptions[rtopicuri].slice();
          self._subscriptions[rtopicuri] = [];
       }
-
-      if (self._subscriptions[rtopicuri].length === 0) {
-
+      if (self._subscriptions[rtopicuri].length === 0)
+      {
          delete self._subscriptions[rtopicuri];
-
-         if (ab._debugpubsub) {
+         if (ab._debugpubsub)
+         {
             console.group("WAMP Unsubscribe");
             console.info(self._wsuri + "  [" + self._session_id + "]");
             console.log(topicuri);
             console.log(removed);
             console.groupEnd();
          }
-
          var msg = [ab._MESSAGE_TYPEID_UNSUBSCRIBE, topicuri];
+
          self._send(msg);
       }
    }

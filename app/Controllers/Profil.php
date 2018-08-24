@@ -10,6 +10,16 @@ class Profil extends Route
         $user = $this->user->getUserById($args['id']);
         if ($user)
         {
+            if ($user['id'] != $_SESSION['id'])
+            {
+                $msg = array(
+                    "category" => '"' . $user['publicToken'] . '"',
+                    "troll" => "lol",
+                    "link" => "/profil/" . $_SESSION['id'],
+                    "msg" => $_SESSION['profil']['pseudo'] . ' watched your profil!'
+                );
+                $this->MyZmq->send($msg);
+            }
             return $this->view->render(
                 $response,
                 'templates/home/profil.html.twig',

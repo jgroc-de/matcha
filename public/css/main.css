@@ -18,7 +18,7 @@ h1, h3, h4, h5, h6 {
 }
 
 h2 {
-    height: 46px;
+    min-height: 46px;
 }
 
 body {

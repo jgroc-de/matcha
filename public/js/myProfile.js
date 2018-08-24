@@ -24,16 +24,18 @@ function addTag(path) {
                 var id = this.responseText;
                 var div = document.createElement('div');
                 var span = document.createElement('span');
-                var button = document.createElement('button');
+                var button = document.createElement('i');
                 
                 div.id = 'tag' + id;
-                div.setAttribute('class', 'w3-bar w3-theme-l1 w3-round-xxlarge');
-                span.setAttribute('class', 'w3-padding');
+                div.setAttribute('class', 'w3-bar w3-theme-l1 w3-round-xxlarge w3-half');
+                span.setAttribute('class', 'w3-padding  w3-threequarter w3-theme-l1 w3-hover-green');
                 span.textContent = '#' + tag;
-                button.setAttribute('class', 'w3-button w3-theme-d1 w3-hover-red fa fa-remove');
+                span.style.height = '38px';
+                button.setAttribute('class', 'w3-button w3-quarter w3-right w3-theme-d1 w3-hover-red fa fa-remove');
                 button.setAttribute('style', 'border-radius: 0 100px 100px 0');
                 button.setAttribute('onclick', 'delUserTag("/delUserTag/", ' + id + ')');
-                document.getElementById('userTag').appendChild(div);
+                button.style.height = '38px';
+                document.getElementById('interest').appendChild(div);
                 document.getElementById(div.id).appendChild(span);
                 document.getElementById(div.id).appendChild(button);
             }

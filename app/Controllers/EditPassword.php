@@ -21,10 +21,11 @@ class EditPassword extends Route
             $response,
             'templates/home/editProfil.html.twig',
             [
-                'profil' => $_SESSION['profil'],
+                'me' => $_SESSION['profil'],
                 'characters' => $this->characters,
                 'sexualPattern' => $this->sexualPattern,
                 'flash' => $this->flash->getMessages(),
+                'year' => date('Y') - 18,
                 'editPass' => true
             ]
         );

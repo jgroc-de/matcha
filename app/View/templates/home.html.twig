@@ -10,23 +10,13 @@
 {% endblock %}
 
 {% block navbar %}
-<script>
-function myFunction(id) {
-    var x = document.getElementById(id);
-    if (x.className.indexOf("w3-show") == -1) { 
-        x.className += " w3-show";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
-</script>
     <div class="w3-bar w3-theme-d1 gg-navbar">
         {% set class = "w3-bar-item w3-button w3-large gg-menu" %}
         {% set class2 = "w3-bar-item w3-button w3-large gg-burger" %}
         {% set classDD = "w3-bar-item w3-button w3-theme-l5" %}
         {% set classR = "w3-bar-item w3-button w3-right w3-large" %}
         <div class="w3-dropdown-click">
-            <a href="#" class="{{ class2 }}" onclick="myFunction('demo1')">
+            <a href="#" class="{{ class2 }}" onclick="displayMenu('demo1')">
                 <i class="fa fa-bars" alt="menu" title="menu"></i>
             </a>
             <div id="demo1" class="w3-dropdown-content w3-bar-block" style="top:43px">
@@ -37,15 +27,16 @@ function myFunction(id) {
         </div>
         <a href={{ path_for('home') }} class="{{ class }}">Home</a>
         <a href="{{ path_for('search') }}" class="{{ class }}">Search</a>
-        <a href="{{ path_for('tchat') }}" class="{{ class }}">Tchat</a>
+        <a href="{{ path_for('tchat') }}" class="{{ class }}">Chat</a>
         <a href="{{ path_for('logout') }}" class="{{ classR }}" title="logout" alt="logout">
             <i class="fa fa-power-off" alt="logout" title="logout"></i>
         </a>
         <a href="{{ path_for('editProfil') }}" class="{{ classR }}" title="edit profil"alt="edit">
             <i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
         </a>
-        <a href="#" class="{{ classR }}">
-            <i class="fa fa-feed" alt="like" title="new likes"></i>
+        <a href="#" class="{{ classR }} w3-display-container">
+            <i class="fa fa-bell" alt="like" title="new likes" onclick="toggleDisplay('notification');resetBadge()"></i>
+                <span id="badge" class="w3-badge w3-display-topright w3-green w3-tiny w3-hide"></span>
         </a>
         <div class="w3-right w3-theme-l5 w3-border w3-round gg-pop" title="popularity: {{ me.popularity }}/100">
             <div class="w3-round w3-green w3-border" style="width:{{ me.popularity }}%;height:16px"></div>
@@ -53,6 +44,6 @@ function myFunction(id) {
     </div>
 {% endblock %}
 
-{% block script %}
-    <script src="js/displayForm.js"></script>
+{% block notification %}
+<div id="notification" class="w3-sidebar w3-bar-block w3-hide w3-card-4 w3-leftbar w3-theme-d3"></div>
 {% endblock %}

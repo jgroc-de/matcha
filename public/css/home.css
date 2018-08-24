@@ -34,6 +34,10 @@ header {
     display: table;
 }
 
+.gg-card-4 {
+    box-shadow: 0 4px 10px 0 #4CAF50;
+}
+
 img {
     cursor: pointer;
     margin: auto;
@@ -45,7 +49,7 @@ img {
 }
 
 h3 {
-    height:38.5px;
+    min-height:38.5px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -54,8 +58,21 @@ h3 {
     }
     
     .gg-pop {
-        width:50px;
-        margin:12px 6px;
+        display:none;
+    }
+    
+    .gg-main-image {
+        height:125px;
+    }
+
+    .gg-2nd-image {
+        height:125px;
+    }
+
+    #notification {
+        height:75%;
+        width:50%;
+        right:0;
     }
 }
 
@@ -67,5 +84,19 @@ h3 {
     .gg-pop {
         width:100px;
         margin:12px;
+    }
+
+    #notification {
+        height:75%;
+        width:25%;
+        right:0;
+    }
+    
+    .gg-main-image {
+        height:250px;
+    }
+    
+    .gg-2nd-image {
+        height:125px;
     }
 }

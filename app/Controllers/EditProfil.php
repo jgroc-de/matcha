@@ -26,10 +26,11 @@ class EditProfil extends Route
             $response,
             'templates/home/editProfil.html.twig',
             [
-                'profil' => $post,
+                'me' => $post,
                 'characters' => $this->characters,
                 'sexualPattern' => $this->sexualPattern,
                 'flash' => $this->flash->getMessages(),
+                'year' => date('Y') - 18,
                 'editProfil' => true
             ]
         );

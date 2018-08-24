@@ -9,35 +9,35 @@
 <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
     {{ form('Change your Password', 'editPassword', flash, editPass) }}
     <div class="w3-section">
-        {{ input('password','enter new password') }}
+        {{ input('password','enter new password', {'name': 'password'}) }}
     </div>
     <div class="w3-section">
-        {{ input('password', 're-enter new password') }}
+        {{ input('password', 're-enter new password', {'name': 'password1'}) }}
     </div>
     {{ button('submit') }}
     </form>
 
     {{ form('Edit your profil', 'editProfil', flash, editProfil) }}
     <div class="w3-section">
-        {{ input('text', 'pseudo', {'value': profil.pseudo}) }}
+        {{ input('text', 'pseudo', {'value': me.pseudo}) }}
     </div>
     <div class="w3-section">
-        {{ input('email', 'email', {'value': profil.email}) }}
+        {{ input('email', 'email', {'value': me.email}) }}
     </div>
     <div class="w3-section">
-        {{ input('text', 'forname', {'value': profil.forname}) }}
+        {{ input('text', 'forname', {'value': me.forname}) }}
     </div>
     <div class="w3-section">
-        {{ input('text', 'name', {'value': profil.name}) }}
+        {{ input('text', 'name', {'value': me.name}) }}
     </div>
     <div class="w3-section">
         {{ input(
         'number',
         'birthdate',
         {
-        'value': profil.birthdate,
+        'value': me.birthdate,
         'min': 1850,
-        'max': 2020,
+        'max': year,
         'name': 'birthdate'
         })
         }}
@@ -46,7 +46,7 @@
         {{ select({
         'label': 'gender',
         'array': characters,
-        'select': profil.gender,
+        'select': me.gender,
         })
         }}
     </div>
@@ -54,15 +54,24 @@
         {{ select({
         'label': 'orientation',
         'array': sexualPattern,
-        'select': profil.sexuality,
+        'select': me.sexuality,
         'name': 'sexuality'
         }) 
         }}
     </div>
     <div class="w3-section">
-        {{ textarea({'label': 'Biography', 'name': 'biography', 'value': profil.biography}) }}
+        {{ textarea({'label': 'Biography', 'name': 'biography', 'value': me.biography}) }}
     </div>
     {{ button('submit') }}
     </form>
     </div>
+{% endblock %}
+
+{% block script %}
+<script>
+var myId = '{{ me.publicToken }}';
+</script>
+<script src="js/autobahn.js"></script>
+<script src="js/notification.js"></script>
+<script src="js/displayForm.js"></script>
 {% endblock %}

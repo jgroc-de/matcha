@@ -97,6 +97,10 @@ $container['ft_geoIP'] = function ($container) {
     return new \App\Lib\ft_geoIP($container);
 };
 
+$container['MyZmq'] = function ($container) {
+    return new \App\Lib\MyZmq($container);
+};
+
 $container['zmq'] = function ($container) {
     $context = new ZMQContext();
     $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my pusher');

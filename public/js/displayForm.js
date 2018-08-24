@@ -6,7 +6,6 @@ function display(id)
 {
     var x = document.getElementById(id);
 
-    console.log(x);
     for (i = 0; i < len; i++)
     {
         h2[i].className = h2[i].className.replace("w3-theme-l1", "w3-theme-d1");
@@ -25,3 +24,26 @@ function display(id)
     }
 }
 
+function displayMenu(id)
+{
+    var x = document.getElementById(id);
+
+    if (x.className.indexOf("w3-show") == -1)
+        x.className += " w3-show";
+    else
+        x.className = x.className.replace(" w3-show", "");
+}
+
+function toggleDisplay(id)
+{
+    var x = document.getElementById(id);
+
+    if (x.className.indexOf("w3-hide") == -1)
+        x.className += " w3-hide";
+    else
+        x.className = x.className.replace(" w3-hide", "");
+}
+
+function closeInfo(id) {
+    document.getElementById('' + id).style.display = "none";
+}

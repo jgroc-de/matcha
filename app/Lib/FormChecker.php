@@ -37,6 +37,7 @@ class FormChecker extends \App\Constructor
                     $_SESSION['profil'] = $account;
                     $_SESSION['profil']['lattitude'] = floatval($_SESSION['profil']['lattitude']);
                     $_SESSION['profil']['longitude'] = floatval($_SESSION['profil']['longitude']);
+                    //$_SESSION['notification'] = $_SESSION['id'] . time() . random_bytes(4);
                 }
                 else
                     $this->flash->addMessage('failure', 'wrong password');

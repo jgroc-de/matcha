@@ -109,7 +109,7 @@ class Validator
      */
     public function birthdate(int $test)
     {
-        return is_numeric($test);
+        return (is_numeric($test) && $test <= date('Y') && $test >= 1850);
     }
     
     /**

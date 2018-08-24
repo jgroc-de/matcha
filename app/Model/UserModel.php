@@ -214,8 +214,6 @@ class UserModel extends \App\Constructor
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
         { 
-            $this->debug->ft_print($post);
-            print_r($_SESSION);
             $req = $this->db->prepare(
                 'UPDATE user
                 SET pseudo = ?,
@@ -268,6 +266,14 @@ class UserModel extends \App\Constructor
     {
         $req = $this->db->prepare('UPDATE user SET activ = 1 WHERE id = ?');
         $req->execute(array($_SESSION['id']));
+    }
+    
+    public function updatePublicToken()
+    {
+        $token = password_hash($_SESSION['id'] . $_SESSION['profil']['pseudo'], PASSWORD_DEFAULT);
+        $req = $this->db->prepare('UPDATE user SET publicToken = ? WHERE id = ?');
+        $req->execute(array($token, $_SESSION['id']));
+        $_SESSION['profil']['publicToken'] = $token;
     }
     
     public function updateToken($pseudo, $token)

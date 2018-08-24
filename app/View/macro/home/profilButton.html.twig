@@ -1,12 +1,18 @@
 {% macro profilButton(id, key, function, home, href, type) %}
-<div class="w3-bar w3-theme-d1 w3-round-xxlarge w3-hover-red w3-half" id="{{ type }}{{ id }}">
-    {% if href %}
-    <a href="{{ href }}" class="w3-padding w3-hover-opacity">{{ key }}</a>
-    {% else %}
-    <span class="w3-padding w3-threequarter w3-theme-l1 w3-hover-green" style="overflow:auto">#{{ key }}</span>
-    {% endif %}
-    {% if home %}
-        <i class="w3-button w3-quarter w3-right gg-button w3-hover-red fa fa-remove" onclick="{{ function }}" title="remove"></i>
-    {% endif %}
+{% if home %}
+    {% set classP = "w3-padding w3-theme-l1 w3-hover-green w3-col s8" %}
+{% else %}
+    {% set classP = "w3-padding w3-theme-l1 w3-hover-green w3-col s12" %}
+{% endif %}
+<div class="w3-bar w3-theme-d1 w3-round-xxlarge w3-half w3-row" id="{{ type }}{{ id }}">
+{% if href %}
+<a href="{{ href }}" class="{{ classP }}" style="height:40px;overflow:auto">{{ key }}</a>
+{% else %}
+<span class="{{ classP }}" style="height:40px;overflow:auto">#{{ key }}</span>
+{% endif %}
+{% if home %}
+        <i class="w3-button w3-right gg-button w3-hover-red w3-col s4 fa fa-remove" onclick="{{ function }}" title="remove" style="height:40px">
+    </i>
+{% endif %}
 </div>
 {% endmacro %}

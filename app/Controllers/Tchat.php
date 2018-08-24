@@ -10,7 +10,7 @@ class Tchat extends Route
         $tab = array($_SESSION['id'], $_POST['id']);
         sort($tab);
         $msg = array(
-            'category' => 'msg',
+            'category' => $_POST['token'],
             'exp'    => $_SESSION['id'],
             'dest'    => $_POST['id'],
             'msg'  => $_POST['msg'],
@@ -19,9 +19,7 @@ class Tchat extends Route
         );
         if ($this->friends->isFriend($tab))
         {
-            $socket = $this->zmq;
-            
-            $socket->send(json_encode($msg));
+            $this->MyZmq->send($msg);
             $this->msg->setMessage(array($tab[0], $tab[1], $_SESSION['id'], $msg['msg'], date('Y-m-d H:i:s')));
             return $response->withstatus(200);
         }
@@ -35,9 +33,23 @@ class Tchat extends Route
     {
         $tab = array($_SESSION['id'], $_POST['id']);
         sort($tab);
-        $msgs = $this->msg->getMessages($tab);
-        $response->getBody()->write(json_encode($msgs));
-        return $response;
+        if ($this->friends->isFriend($tab))
+        {
+            $user = $this->user->getUserById($_POST['id']);
+            $msg = array(
+                'category' => '"' . $user['publicToken'] .'"',
+                'msg' => $_SESSION['profil']['pseudo'] . ' sent you a new message!',
+                'link' => '/tchat'
+            );
+            $this->MyZmq->send($msg);
+            $msgs = $this->msg->getMessages($tab);
+            $response->getBody()->write(json_encode($msgs));
+            return $response;
+        }
+        else
+        {
+            return $response->withstatus(403);
+        }
     }
 
     public function __invoke(Request $request, Response $response, array $args)
@@ -51,5 +63,20 @@ class Tchat extends Route
                 'friends' => $friends
             ]
         );
+    }
+
+    public function status()
+    {
+        $friends = $this->friends->getFriends($_SESSION['id']);
+        $msg = array(
+            'category' => '"' . $_SESSION['profil']['publicToken'] . '"',
+            'status' => array()
+        );
+        foreach ($friends as $friend)
+        {
+            $msg['status'][$friend['id']] = '"' . $friend['publicToken'] . '"';
+        }
+        $this->MyZmq->send($msg);
+        return $response;
     }
 }

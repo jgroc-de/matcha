@@ -21,6 +21,7 @@ CREATE TABLE `user` (
     `password` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL DEFAULT 'jgroc2s@free.fr',
     `token` VARCHAR(255) NOT NULL DEFAULT 'auie',
+    `publicToken` VARCHAR(255) NOT NULL DEFAULT 'auie',
     `activ` BOOL NOT NULL DEFAULT true,
     `forname` VARCHAR(255) NOT NULL DEFAULT 'John',
     `name` VARCHAR(255) NOT NULL DEFAULT 'Doe',
@@ -46,7 +47,8 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `friendsReq`;
 CREATE TABLE `friendsReq` (
     `id_user1` INT(11) NOT NULL,
-    `id_user2` INT(11) NOT NULL
+    `id_user2` INT(11) NOT NULL,
+    `visible` BOOL DEFAULT TRUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -56,7 +58,8 @@ CREATE TABLE `friendsReq` (
 DROP TABLE IF EXISTS `friends`;
 CREATE TABLE `friends` (
     `id_user1` INT(11) NOT NULL,
-    `id_user2` INT(11) NOT NULL
+    `id_user2` INT(11) NOT NULL,
+    `suscriber` VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

@@ -9,7 +9,10 @@ class Login extends Route
     {
         $this->form->checkLogin($request, $response);
         if (isset($_SESSION['id']))
+        {
+            $this->user->updatePublicToken();
             return $response->withRedirect('/');
+        }
         return $this->view->render(
             $response,
             'templates/logForm/login.html.twig',

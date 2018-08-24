@@ -9,126 +9,133 @@
 {# ------------ #}
 
 {% block main %}
-    <div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw;min-height:80vh"> 
-        <div class="w3-padding w3-row">
-            {% if profil.id == me.id %}
-                {% set hi = 'Hi ' %}
-                {% set your = 'Your ' %}
-                {% set home = true %}
+<div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw;min-height:80vh"> 
+    <div class="w3-padding w3-row">
+        {% if profil.id == me.id %}
+            {% set hi = 'Hi ' %}
+            {% set your = 'Your ' %}
+            {% set home = true %}
+        {% endif %}
+        <!-- The Modal -->
+        <div id="Modal" class="w3-modal" style="cursor:pointer" onclick="document.getElementById('Modal').style.display='none'"> 
+            <div class="w3-modal-content w3-card-4" style="width:90vw;background-color:black;">
+                <div class="w3-display-container" style="height:80vh">
+                    <img class="w3-display-middle" src="" style="max-height:80vh;max-width:100%"></img>
+                </div>
+            </div>
+        </div>
+        <h2 class='w3-theme-l1 w3-display-container'>
+            {{ hi }}{{ profil.pseudo }}
+            {% if not home %}
+                {% if not friend %}
+                    <a href='#' class="w3-display-right" onclick="addFriend('/addFriend/{{ profil.id }}')" ><i class="w3-hover-green fa fa-plus w3-padding" title="add to friendlist" alt="add"></i></a>
+                {% else %}
+                    <a href='#' class="w3-display-right w3-margin-right" onclick="addFriend('/addFriend/{{ profil.id }}')"><i class="w3-hoover-green fa fa-minus w3-padding" title="remove from friendlist" alt="remove"></i></a>
+                {% endif %}
             {% endif %}
-            <!-- The Modal -->
-            <div id="Modal" class="w3-modal" style="cursor:pointer" onclick="document.getElementById('Modal').style.display='none'"> 
-                <div class="w3-modal-content w3-card-4" style="width:90vw;background-color:black;">
-                    <div class="w3-display-container" style="height:80vh">
-                        <img class="w3-display-middle" src="" style="max-height:80vh;max-width:100%"></img>
+
+        </h2>
+        <div id="flash"></div>
+        <div class="w3-row {% if home %}w3-col l6{% endif %}">
+            <div class="w3-half w3-padding">
+                <div class="w3-card-4">
+                    {{ subtitle('Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
+                    <div id="Profil" class="w3-theme-l4 w3-padding gg-section">
+                        <div class="w3-left-align">
+                            {% if home %}
+                                name: {{ profil.forname}} {{profil.name}}<br>
+                                email: {{ profil.email }}<br>
+                            {% endif %}
+                            {% if home %}you are{% else %}it's{% endif %} a {{ profil.gender }} aged of {{ 2018 - profil.birthdate }} yo and {{ profil.sexuality }}.<br>
+                                popularity : <div class="w3-theme-l5 w3-border w3-round w3-margin-right" style="width:100px;" title="popularity: {{ profil.popularity }}/100">
+                                    <div class="w3-round w3-green w3-border" style="width:{{ profil.popularity }}%;height:16px"></div>
+                                </div>
+                                story: {{ profil.biography }}<br>
+                        </div>
                     </div>
                 </div>
             </div>
-            <h2 class='w3-theme-l1 w3-display-container'>
-                {{ hi }}{{ profil.pseudo }}
-                {% if not home %}
-                    {% if not friend %}
-                        <a href='#' class="w3-display-right" onclick="addFriend('/addFriend/{{ profil.id }}')" ><i class="w3-hover-green fa fa-plus w3-padding" title="add to friendlist" alt="add"></i></a>
-                    {% else %}
-                        <a href='#' class="w3-display-right w3-margin-right" onclick="addFriend('/addFriend/{{ profil.id }}')"><i class="w3-hoover-green fa fa-minus w3-padding" title="remove from friendlist" alt="remove"></i></a>
-                    {% endif %}
-                {% endif %}
-
-            </h2>
-            <div id="flash"></div>
+            <div class="w3-half w3-padding">
+                <div class="w3-card-4">
+                    {{ subtitle('Interest', home, 'fa fa-plus',  "addTag('/addTag')", 'add tag') }}
+                    <div id="Interest" class="w3-theme-l4 gg-section w3-padding" id="userTag">
+                        {% for tag in tags %}
+                            {{ profilButton(tag.id, tag.tag, "delUserTag('/delUserTag/', #{ tag.id })", home, NULL, 'tag') }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if home %}
             <div class="w3-row w3-col l6">
                 <div class="w3-half w3-padding">
                     <div class="w3-card-4">
-                        {{ subtitle(your, 'Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
-                        <div id="Profil" class="w3-theme-l4 w3-padding gg-section">
-                            <div class="w3-left-align">
-                                {% if home %}
-                                    name: {{ profil.forname}} {{profil.name}}<br>
-                                    email: {{ profil.email }}<br>
+                        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('FriendR')">{{ your }}Friend Request</h3>
+                        <div id="FriendR" class="w3-theme-l4 w3-padding gg-section">
+                            {% for req in friendReq %}
+                                {% if req.visible %}
+                                    {{ profilButton(req.id, req.pseudo, "delFriendReq('/delFriendReq/', #{ req.id })", home, path_for('profil', req), 'req') }}
                                 {% endif %}
-                                {% if home %}you are{% else %}it's{% endif %} a {{ profil.gender }} aged of {{ 2018 - profil.birthdate }} yo and {{ profil.sexuality }}.<br>
-                                    popularity : <div class="w3-theme-l5 w3-border w3-round w3-margin-right" style="width:100px;" title="popularity: {{ profil.popularity }}/100">
-                                        <div class="w3-round w3-green w3-border" style="width:{{ profil.popularity }}%;height:16px"></div>
-                                    </div>
-                                    story: {{ profil.biography }}<br>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
                 <div class="w3-half w3-padding">
                     <div class="w3-card-4">
-                        {{ subtitle(your, 'Interest', home, 'fa fa-plus',  "addTag('/addTag')", 'add tag') }}
-                        <div id="Interest" class="w3-theme-l4 gg-section" id="userTag">
-                            {% for tag in tags %}
-                                {{ profilButton(tag.id, tag.tag, "delUserTag('/delUserTag/', #{ tag.id })", home, NULL, 'tag') }}
+                        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('Friend')">{{ your }}Friends</h3>
+                        <div id="Friend" class="w3-theme-l4 w3-padding gg-section">
+                            {% for friend in friends %}
+                                {{ profilButton(friend.id, friend.pseudo, "delFriend('/delFriend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            {% if home %}
-                <div class="w3-row w3-col l6">
-                    <div class="w3-half w3-padding">
-                        <div class="w3-card-4">
-                            <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('FriendR')">{{ your }}Friend Request</h3>
-                            <div id="FriendR" class="w3-theme-l4 w3-padding gg-section">
-                                {% for req in friendReq %}
-                                    {{ profilButton(req.id, req.pseudo, "delFriendReq('/delFriendReq/', #{ req.id })", home, path_for('profil', req), 'req') }}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w3-half w3-padding">
-                        <div class="w3-card-4">
-                            <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('Friend')">{{ your }}Friends</h3>
-                            <div id="Friend" class="w3-theme-l4 w3-padding gg-section">
-                                {% for friend in friends %}
-                                    {{ profilButton(friend.id, friend.pseudo, "delFriend('/delFriend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-            <div class="w3-row w3-padding w3-col s12">
-                <div class="w3-row w3-card-4 w3-black w3-col l6" style="padding-bottom:1px;max-height:300px;overflow:auto">
-                    <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('Picture')">{{ your }}Pictures</h3>
-                    <div id="Picture">
-                        {% if home %}
-                            {{ myImg(profil) }}
-                        {% else %}
-                            {{ otherImg(profil) }}
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="w3-row w3-card-4 w3-col l6">
-                    {{ subtitle(your, 'Location', home, 'fa fa-repeat',  "updateGeolocation()", 'update') }}
-                    <div id="Location" class="gg-map-small"></div>
+        {% endif %}
+        <div class="w3-row w3-padding w3-col s12">
+            <div class="w3-row w3-card-4 w3-black w3-col l6" style="overflow:auto">
+                <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('Picture')">{{ your }}Pictures</h3>
+                <div id="Picture" style="height:255px">
+                    {% if home %}
+                        {{ myImg(profil) }}
+                    {% else %}
+                        {{ otherImg(profil) }}
+                    {% endif %}
                 </div>
             </div>
-                                {% endblock %}
+            <div class="w3-row w3-card-4 w3-col l6">
+                {{ subtitle('Location', home, 'fa fa-repeat',  "updateGeolocation()", 'update') }}
+                <div id="Location" class="gg-map-small" style="height:255px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
 
-                                {# -------------- #}
-                                {# Javascript src #}
-                                {# -------------- #}
+{# -------------- #}
+{# Javascript src #}
+{# -------------- #}
 
-                                {% block script %}
-                                    {% if profil.id == me.id %}
-                                        <script src='../js/myProfile.js'></script>
-                                    {% else %}
-                                        <script src='../js/otherProfil.js'></script>
-                                    {% endif %}
-                                    <script src='../js/commonProfile.js'></script>
-                                    <script>
+{% block script %}
+<script>
 var user =  {lat: {{ profil.lattitude }}, lng: {{ profil.longitude }}, title: '{{ profil.pseudo }}'};
 var usersPos = [
 {% for user in friends %}
-    {lat: {{ user.lattitude }}, lng: {{ user.longitude }}, title: '{{ user.pseudo }}', img: '{{ user.img1 }}', id: '{{ user.id }}', kind: '{{ user.gender }}'},
+{lat: {{ user.lattitude }}, lng: {{ user.longitude }}, title: '{{ user.pseudo }}', img: '{{ user.img1 }}', id: '{{ user.id }}', kind: '{{ user.gender }}'},
 {% endfor %}
 ];
-                                    </script>
-                                    <script src="../js/geolocation.js"></script>
-                                    <script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
-        </div>
-    </div>
-                                {% endblock %}
+var myId = '{{ me.publicToken }}';
+
+</script>
+{% if profil.id == me.id %}
+    <script src='../js/myProfile.js'></script>
+{% else %}
+    <script src='../js/otherProfil.js'></script>
+{% endif %}
+<script src="../js/displayForm.js"></script>
+<script src='../js/commonProfile.js'></script>
+<script src="../js/autobahn.js"></script>
+<script src="../js/notification.js"></script>
+<script src="../js/geolocation.js"></script>
+<script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
+{% endblock %}
