@@ -20,6 +20,25 @@ function resetBadge()
     badge.innerHTML = "";
 }
 
+function highlightMate(data)
+{
+    var div;
+    var name;
+
+    for (name in data.mateStatus)
+    {
+        div = document.getElementById(name);
+        div.className += " gg-card-4";
+    }
+}
+
+function mateStatus() {
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', '/chatStatus');
+    xhr.send();
+}
+
 (function ()
 {
     var notifSocket;
@@ -34,12 +53,13 @@ function resetBadge()
                 {
                     addNotification(data);
                 }
-                else if (data.hasOwnProperty('status'))
+                else if (data.hasOwnProperty('mateStatus'))
                 {
                     highlightMate(data);
                 }
             });
             console.warn('WebSocket connection opened');
+            mateStatus();
         },
         function() {console.warn('WebSocket connection closed');},
         {'skipSubprotocolCheck': true}

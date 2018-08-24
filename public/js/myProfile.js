@@ -55,7 +55,13 @@ function deletePic(id) {
                 var parentNode = document.getElementById(id);
                 var inputElemt = document.createElement('input');
                 var inputElemt2 = document.createElement('input');
+                var div = document.createElement('div');
                 
+                div.setAttribute('class', 'w3-display-container');
+                if (id == 'img1')
+                    div.style.height = '250px';
+                else
+                    div.style.height = '125px';
                 labelElmt.setAttribute('class', 'w3-button w3-jumbo w3-display-middle fa fa-plus w3-hover-green w3-block w3-padding-large');
                 labelElmt.title = 'add picture';
                 inputElemt.id = id;
@@ -65,7 +71,8 @@ function deletePic(id) {
                 while (parentNode.hasChildNodes()) {
                     parentNode.removeChild(parentNode.firstChild);
                 }
-                parentNode.appendChild(labelElmt); 
+                parentNode.appendChild(div); 
+                div.appendChild(labelElmt); 
                 labelElmt.appendChild(inputElemt2);
                 labelElmt.appendChild(inputElemt);
                 addPicture();

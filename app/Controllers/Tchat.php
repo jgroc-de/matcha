@@ -70,13 +70,12 @@ class Tchat extends Route
         $friends = $this->friends->getFriends($_SESSION['id']);
         $msg = array(
             'category' => '"' . $_SESSION['profil']['publicToken'] . '"',
-            'status' => array()
+            'mateStatus' => array()
         );
         foreach ($friends as $friend)
         {
-            $msg['status'][$friend['id']] = '"' . $friend['publicToken'] . '"';
+            $msg['mateStatus'][$friend['id']] = '"' . $friend['publicToken'] . '"';
         }
         $this->MyZmq->send($msg);
-        return $response;
     }
 }

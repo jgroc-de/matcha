@@ -5,13 +5,6 @@ var msg = document.getElementById('tchatMsg');
 var button = document.getElementById('tchatButton');
 var websocket;
 
-(function () {
-    var xhr = new XMLHttpRequest();
-
-    xhr.open('GET', '/chatStatus');
-    xhr.send();
-})();
-
 function addMessage(text, owner, myId)
 {
     var div = document.createElement("div");
@@ -90,10 +83,6 @@ function sendMessageTo(myId, name, id, token)
 
         xhr.open('POST', '/sendMessage', true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            /*if (this.readyState == 4 && this.status == 200) {
-            }*/
-        }
         xhr.send('myId=' + myId + ',&msg=' + text + '&id=' + id + '&token=' + token);
     }
     msg.value = "";

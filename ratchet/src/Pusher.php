@@ -30,18 +30,17 @@ class Pusher implements WampServerInterface
             print_r("out\n");
             return;
         }
-        if (array_key_exists('status', $entryData))
+        if (array_key_exists('mateStatus', $entryData))
         {
             print_r("status\n");
-            foreach ($entryData['status'] as $key => $friend)
+            foreach ($entryData['mateStatus'] as $key => $friend)
             {
                 if (!array_key_exists($friend, $this->subscribedTopics))
                 {
-                    unset($entryData['status'][$key]);
+                    unset($entryData['mateStatus'][$key]);
                 }
             }
         }
-        print_r($entryData);
         $topic = $this->subscribedTopics[$entryData['category']];
         // re-send the data to all the clients subscribed to that category
         $topic->broadcast($entryData);
