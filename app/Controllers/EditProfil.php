@@ -30,6 +30,7 @@ class EditProfil extends Route
                 'characters' => $this->characters,
                 'sexualPattern' => $this->sexualPattern,
                 'flash' => $this->flash->getMessages(),
+                'notification' => $this->notif->getNotification(),
                 'year' => date('Y') - 18,
                 'editProfil' => true
             ]

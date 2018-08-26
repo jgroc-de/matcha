@@ -47,4 +47,4 @@ $app->group('', function () {
     $this->post('/sendMessage', App\Controllers\Tchat::class . ':send');
     $this->post('/startTchat', App\Controllers\Tchat::class . ':startTchat');
     $this->get('/chatStatus', App\Controllers\Tchat::class . ':status');
-})->add(new \App\Middlewares\authMiddleware());
+})->add(new \App\Middlewares\authMiddleware($container));

@@ -23,6 +23,7 @@ class MessageModel extends \App\Constructor
      */
     public function setMessage($hash)
     {
+        print_r($hash);
         $req = $this->db->prepare('INSERT INTO message VALUES (?, ?, ?, ?, ?)');
         $req->execute($hash);
     }

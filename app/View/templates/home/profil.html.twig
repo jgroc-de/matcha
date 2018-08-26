@@ -26,12 +26,8 @@
         </div>
         <h2 class='w3-theme-l1 w3-display-container'>
             {{ hi }}{{ profil.pseudo }}
-            {% if not home %}
-                {% if not friend %}
-                    <a href='#' class="w3-display-right" onclick="addFriend('/addFriend/{{ profil.id }}')" ><i class="w3-hover-green fa fa-plus w3-padding" title="add to friendlist" alt="add"></i></a>
-                {% else %}
-                    <a href='#' class="w3-display-right w3-margin-right" onclick="addFriend('/addFriend/{{ profil.id }}')"><i class="w3-hoover-green fa fa-minus w3-padding" title="remove from friendlist" alt="remove"></i></a>
-                {% endif %}
+            {% if not home and not friend %}
+                <a href='#' class="w3-display-right" onclick="addFriend('/addFriend/{{ profil.id }}')" ><i class="w3-hover-green fa fa-plus w3-padding" title="add to friendlist" alt="add"></i></a>
             {% endif %}
 
         </h2>

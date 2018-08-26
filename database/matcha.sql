@@ -20,8 +20,8 @@ CREATE TABLE `user` (
     `pseudo` VARCHAR(40),
     `password` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL DEFAULT 'jgroc2s@free.fr',
-    `token` VARCHAR(255) NOT NULL DEFAULT 'auie',
-    `publicToken` VARCHAR(255) NOT NULL DEFAULT 'auie',
+    `token` VARCHAR(255) NOT NULL DEFAULT 'token',
+    `publicToken` VARCHAR(255) NOT NULL DEFAULT 'private',
     `activ` BOOL NOT NULL DEFAULT true,
     `forname` VARCHAR(255) NOT NULL DEFAULT 'John',
     `name` VARCHAR(255) NOT NULL DEFAULT 'Doe',
@@ -32,6 +32,7 @@ CREATE TABLE `user` (
     `gender` ENUM('Rick','Morty','Summer','Beth','Jerry') NOT NULL DEFAULT 'Rick',
     `sexuality` ENUM('bi','hetero','homo') NOT NULL DEFAULT 'bi',
     `popularity` TINYINT NOT NULL DEFAULT 0,
+    `bot` BOOL DEFAULT false,
     `img1` TEXT,
     `img2` TEXT,
     `img3` TEXT,
@@ -96,4 +97,13 @@ CREATE TABLE `usertags` (
     `iduser` INT(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `notification`;
+CREATE TABLE `notification` (
+    `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
+    `iduser` INT(11) NOT NULL,
+    `link` VARCHAR(255) NOT NULL,
+    `message` TEXT NOT NULL,
+    `date` DATETIME NOT NULL,
+    `seen` BOOL DEFAULT false
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;

@@ -30,12 +30,12 @@ class FakeFactory extends Route
             $profil['password'] = 'trollB1';
             $profil['activ'] = 1;
             $profil['token'] = 'a';
+            $profil['bot'] = 'true';
             $profil['lat'] = rand(485500, 490500) / 10000;
             $profil['lng'] = rand(21000, 26000) / 10000;
             $profil['popularity'] = rand(0, 100);
             $user->setUser($profil);
             $user->updateFakeUser($profil);
-            $user->updatePopularity($profil);
             $bot = $user->getUserByEmail($profil['email']);
             $_SESSION['id'] = $bot['id'];
             for ($j = 0; $j < 5; $j++)

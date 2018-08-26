@@ -4,7 +4,7 @@ namespace App\Middlewares;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class authMiddleware
+class authMiddleware extends \App\Constructor
 {
     /**
      * middleware that redirect to '/login' if client is not login
@@ -20,6 +20,10 @@ class authMiddleware
         if (!isset($_SESSION['id']))
         {
             return $response->withRedirect('/login');
+        }
+        else
+        {
+            $_SESSION['profil'] = $this->user->getUserById($_SESSION['id']);
         }
         return $next($request, $response);
     }

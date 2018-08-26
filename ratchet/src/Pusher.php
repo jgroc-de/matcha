@@ -6,14 +6,16 @@ use Ratchet\Wamp\WampServerInterface;
 class Pusher implements WampServerInterface
 {
     protected $subscribedTopics = array();
+    protected $clients;
+
+    public function __construct() {
+        $this->clients = new \SplObjectStorage;
+    }
 
     public function onSubscribe(ConnectionInterface $conn, $topic)
     {
-        print_r("new subscription!\n");
-        print_r($topic->getId());
-        print_r("\n");
+        print_r("new subscription to " . $topic->getId() . "\n");
         $this->subscribedTopics[$topic->getId()] = $topic;
-        $conn->send(json_encode(array("msg"=>"lol")));
     }
 
     /**
@@ -32,12 +34,16 @@ class Pusher implements WampServerInterface
         }
         if (array_key_exists('mateStatus', $entryData))
         {
-            print_r("status\n");
             foreach ($entryData['mateStatus'] as $key => $friend)
             {
                 if (!array_key_exists($friend, $this->subscribedTopics))
+                    $entryData['mateStatus'][$key] = false;
+                else if ($this->subscribedTopics[$friend]->count() === 1)
+                    $entryData['mateStatus'][$key] = true;
+                else
                 {
-                    unset($entryData['mateStatus'][$key]);
+                    unset($this->subscibedTopics[$friend]);
+                    $entryData['mateStatus'][$key] = false;
                 }
             }
         }
@@ -74,5 +80,6 @@ class Pusher implements WampServerInterface
 
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
+        $conn->close();
     }
 }

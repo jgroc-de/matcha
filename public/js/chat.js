@@ -5,6 +5,34 @@ var msg = document.getElementById('tchatMsg');
 var button = document.getElementById('tchatButton');
 var websocket;
 
+setInterval(mateStatus, 60000);
+
+function highlightMate(data)
+{
+    var div;
+    var name;
+
+    console.log(data.mateStatus);
+    for (name in data.mateStatus)
+    {
+        div = document.getElementById(name);
+        if (data.mateStatus[name])
+        {
+            if (div.className.indexOf("gg-card-4") == -1)
+                div.className += " gg-card-4";
+        }
+        else if (div.className.indexOf("gg-card-4") != -1)
+            div.className = div.className.replace(" gg-card-4","");
+    }
+}
+
+function mateStatus() {
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', '/chatStatus');
+    xhr.send();
+}
+
 function addMessage(text, owner, myId)
 {
     var div = document.createElement("div");

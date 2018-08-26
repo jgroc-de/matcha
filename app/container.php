@@ -59,6 +59,13 @@ $container['msg'] = function ($container) {
 };
 
 /**
+ * @class MessageModel
+ */
+$container['notif'] = function ($container) {
+    return new \App\Model\NotificationModel($container);
+};
+
+/**
  * etc…
  */
 $container['form'] = function ($container) { 

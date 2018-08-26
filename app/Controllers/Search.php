@@ -19,6 +19,7 @@ class Search extends Route
                 'tags' => $tags,
                 'age' => ['min' => ((2018 - $age_min) >= 18? 2018 - $age_min:18), 'max' => 2018 - $age_max],
                 'distance' => ['1', '5', '10', '50', '100'],
+                'notification' => $this->notif->getNotification(),
                 'distSel' => $dist
             ]
         );

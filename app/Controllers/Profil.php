@@ -14,19 +14,31 @@ class Profil extends Route
             {
                 $msg = array(
                     "category" => '"' . $user['publicToken'] . '"',
-                    "troll" => "lol",
+                    "iduser" => $user['id'],
                     "link" => "/profil/" . $_SESSION['id'],
                     "msg" => $_SESSION['profil']['pseudo'] . ' watched your profil!'
                 );
                 $this->MyZmq->send($msg);
+                $friends = $this->friends->getFriends($_SESSION['id']);
+                $friend = false;
+                foreach ($friends as $test)
+                {
+                    if ($test['id'] === $user['id'])
+                    {
+                        $friend = true;
+                        break;
+                    }
+                }
             }
             return $this->view->render(
                 $response,
                 'templates/home/profil.html.twig',
                 [
+                    'friend' => $friend,
                     'profil' => $user,
                     'me' => $_SESSION['profil'],
-                    'tags' => $this->tag->getUserTags($user['id'])
+                    'tags' => $this->tag->getUserTags($user['id']),
+                    'notification' => $this->notif->getNotification()
                 ]
             );
         }

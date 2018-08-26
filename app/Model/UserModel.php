@@ -116,15 +116,15 @@ class UserModel extends \App\Constructor
                 $img[] = $file;
         }
         $req = $this->db->prepare('
-                INSERT INTO user (pseudo, password, email, gender, token, img1, lattitude, longitude)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                INSERT INTO user (pseudo, password, email, gender, token, publicToken, img1, lattitude, longitude)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $req->execute(array(
                 $post['pseudo'],
                 password_hash($post['password'], PASSWORD_DEFAULT),
                 $post['email'],
                 $post['gender'],
-                //$post['activ'],
                 $post['token'],
+                time() . $_SESSION['profil']['pseudo'] . bin2hex(random_bytes(4)),
                 '/img/' . $img[rand(0, 4)],
                 $post['lat'],
                 $post['lng']
@@ -179,9 +179,8 @@ class UserModel extends \App\Constructor
         return $req->fetch();
     }
     
-    public function updateFakeUser($data)
+    public function updateFakeUser($post)
     {
-        $post = $data;
         $req = $this->db->prepare(
             'UPDATE user
             SET pseudo = ?,
@@ -193,7 +192,9 @@ class UserModel extends \App\Constructor
             sexuality = ?,
             biography = ?,
             lattitude = ?,
-            longitude = ?
+            longitude = ?,
+            bot = ?,
+            popularity = ?
             where pseudo = ?');
         $req->execute(array(
             $post['pseudo'],
@@ -206,7 +207,9 @@ class UserModel extends \App\Constructor
             $post['biography'],
             $post['lat'],
             $post['lng'],
-            $_SESSION['pseudo']
+            true,
+            $post['popularity'],
+            $post['pseudo']
         ));
     }
     
@@ -270,7 +273,7 @@ class UserModel extends \App\Constructor
     
     public function updatePublicToken()
     {
-        $token = password_hash($_SESSION['id'] . $_SESSION['profil']['pseudo'], PASSWORD_DEFAULT);
+        $token = time() . $_SESSION['profil']['pseudo'] . bin2hex(random_bytes(4));
         $req = $this->db->prepare('UPDATE user SET publicToken = ? WHERE id = ?');
         $req->execute(array($token, $_SESSION['id']));
         $_SESSION['profil']['publicToken'] = $token;
@@ -282,10 +285,14 @@ class UserModel extends \App\Constructor
         $req->execute(array($token, $pseudo));
     }
 
-    public function updatePopularity(array $profil)
+    public function updatePopularity(int $add, array $profil)
     {
+        $pop = intval($profil['popularity']);
+        $pop +=  $add;
+        if($pop > 100)
+            $pop = 100;
         $req = $this->db->prepare('UPDATE user SET popularity = ? WHERE pseudo = ?');
-        $req->execute(array($profil['popularity'], $profil['pseudo']));
+        $req->execute(array($pop, $profil['pseudo']));
     }
 
     public function delPicture($nb)

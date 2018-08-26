@@ -26,6 +26,7 @@ class EditPassword extends Route
                 'sexualPattern' => $this->sexualPattern,
                 'flash' => $this->flash->getMessages(),
                 'year' => date('Y') - 18,
+                'notification' => $this->notif->getNotification(),
                 'editPass' => true
             ]
         );
