@@ -21,7 +21,7 @@ class Tchat extends Route
             );
             $this->MyZmq->send($msg);
             $this->msg->setMessage(array($tab[0], $tab[1], $_SESSION['id'], $msg['msg'], date('Y-m-d H:i:s')));
-            if ($_POST['id'] < 100)
+           if ($_POST['id'] < 500)
             {
                 $chat = array(
                     'Jeeeezz… another dumbass pervert?',

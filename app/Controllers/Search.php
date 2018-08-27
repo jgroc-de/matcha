@@ -110,6 +110,11 @@ class Search extends Route
                 break;
             default:
                 $list = $this->user->getUsersBi($age_min, $age_max);
+                foreach ($list as $key => $value)
+                {
+                    if ($value['sexuality'] === 'homo' && $value['gender'] != $_SESSION['profil']['gender'])
+                        array_splice($list, $key, 1);
+                }
         }
         return $list;
     }

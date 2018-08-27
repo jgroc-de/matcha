@@ -20,12 +20,13 @@ class UserModel extends \App\Constructor
     public function getUsersBi($age_min, $age_max, $delta_lng = 0.2, $delta_lat = 0.2)
     {
         $req = $this->db->prepare(
-            'SELECT pseudo, biography, lattitude, longitude, img1, birthdate, gender, id
+            'SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id
             FROM user
             WHERE birthdate BETWEEN ? AND ?
             AND lattitude BETWEEN ? AND ?
             AND longitude BETWEEN ? AND ?
-            ');
+            ORDER BY popularity DESC'
+            );
         $req->execute(array(
             $age_max,
             $age_min,
@@ -40,12 +41,14 @@ class UserModel extends \App\Constructor
     public function getUsersHomo($age_min, $age_max, $gender, $delta_lng = 0.2, $delta_lat = 0.2)
     {
         $req = $this->db->prepare(
-            'SELECT pseudo, biography, lattitude, longitude, img1, birthdate, gender, id
+            'SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id
             FROM user
             WHERE gender = ?
+            AND sexuality <> "hetero"
             AND birthdate BETWEEN ? AND ?
             AND lattitude BETWEEN ? AND ?
-            AND longitude BETWEEN ? AND ?'
+            AND longitude BETWEEN ? AND ?
+            ORDER BY popularity DESC'
         );
         $req->execute(array(
             $_SESSION['profil']['gender'],
@@ -62,12 +65,14 @@ class UserModel extends \App\Constructor
     public function getUsersHetero($age_min, $age_max, $gender, $delta_lng = 0.2, $delta_lat =0.2)
     {
         $req = $this->db->prepare(
-            'SELECT pseudo, biography, lattitude, longitude, img1, birthdate, gender, id
+            'SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id
             FROM user
             WHERE gender <> ?
+            AND sexuality <> "homo"
             AND birthdate BETWEEN ? AND ?
             AND lattitude BETWEEN ? AND ?
-            AND longitude BETWEEN ? AND ?'
+            AND longitude BETWEEN ? AND ?
+            ORDER BY popularity DESC'
         );
         $req->execute(array(
             $_SESSION['profil']['gender'],
@@ -125,7 +130,7 @@ class UserModel extends \App\Constructor
                 $post['gender'],
                 $post['token'],
                 time() . $_SESSION['profil']['pseudo'] . bin2hex(random_bytes(4)),
-                '/img/' . $img[rand(0, 4)],
+                'img/' . $img[rand(0, 4)],
                 $post['lat'],
                 $post['lng']
             ));

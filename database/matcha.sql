@@ -71,7 +71,7 @@ DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL,
-    `owner` BOOL,
+    `owner` INT(11) NOT NULL,
     `message` TEXT NOT NULL,
     `date` DATETIME NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

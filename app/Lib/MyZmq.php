@@ -7,7 +7,7 @@ class MyZmq extends \App\Constructor
     {
         $socket = $this->zmq;
         $socket->send(json_encode($msg));
-        if (!array_key_exists('exp', $msg))
+        if (!array_key_exists('exp', $msg) && !array_key_exists('mateStatus', $msg))
         {
             $notif = array(
                 $msg['iduser'],

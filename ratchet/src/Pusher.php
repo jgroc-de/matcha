@@ -26,10 +26,10 @@ class Pusher implements WampServerInterface
         $entryData = json_decode($entry, true);
 
         // If the lookup topic object isn't set there is no one to publish to
-        print_r($entryData);
+        //print_r($entryData);
         if (!array_key_exists($entryData['category'], $this->subscribedTopics))
         {
-            print_r("out\n");
+            //print_r("out\n");
             return;
         }
         if (array_key_exists('mateStatus', $entryData))

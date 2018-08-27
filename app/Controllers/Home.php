@@ -8,7 +8,6 @@ class Home extends Route
     public function __invoke(Request $request, Response $response, array $args)
     {
         $template = 'templates/home/profil.html.twig';
-        print_r($this->notif->getNotification());
         $twigVar = [
             'profil' => $_SESSION['profil'],
             'me' => $_SESSION['profil'],

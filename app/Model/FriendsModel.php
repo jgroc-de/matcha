@@ -104,14 +104,18 @@ class FriendsModel extends \App\Constructor
                 $this->setFriend($id1, $id2);
                 $this->user->updatePopularity(5, $user);
                 $this->user->updatePopularity(5, $_SESSION['profil']);
-                $msg = array('category' => '"' . $user['publicToken'] . '"',
+                $msg = array(
+                    'category' => '"' . $user['publicToken'] . '"',
+                    "iduser" => $user['id'],
                     'link' => "/profil/" . $id1,
                     'msg' => "It's a match! say hi to " . $_SESSION['profil']['pseudo']
                 );
                 $this->MyZmq->send($msg);
-                $msg = array('category' => '"' . $_SESSION['profil']['publicToken'] . '"',
+                $msg = array(
+                    'category' => '"' . $_SESSION['profil']['publicToken'] . '"',
+                    "iduser" => $_SESSION['id'],
                     'link' => "/profil/" . $id1,
-                    'msg' => "It's a match! say hi to " . $_SESSION['profil']['pseudo']
+                    'msg' => "It's a match! say hi to " . $user['pseudo']
                 );
                 $this->MyZmq->send($msg);
             }
@@ -120,7 +124,9 @@ class FriendsModel extends \App\Constructor
                 $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?, ?)');
                 $req->execute(array($id1, $id2, true));
                 $this->user->updatePopularity(1, $user);
-                $msg = array('category' => '"' . $user['publicToken'] . '"',
+                $msg = array(
+                    'category' => '"' . $user['publicToken'] . '"',
+                    "iduser" => $user['id'],
                     'link' => "/profil/" . $id1,
                     'msg' => $_SESSION['profil']['pseudo'] . ' sent you a friend request'
                 );

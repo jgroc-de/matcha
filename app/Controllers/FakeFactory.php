@@ -7,7 +7,7 @@ class FakeFactory extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
-        $count = 100;
+        $count = 500;
         $profil = array();
         $faker = \Faker\Factory::create();
         $user = $this->container->user;
