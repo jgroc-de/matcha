@@ -10,7 +10,6 @@ class MailSender
     const USER = 'jgroc-de';
     const EXP = 'lol@lol.com';
     const PASS = '';
-    const URL = 'http://localhost:8080';
 
     /**
      * @param string $dest    email address
@@ -55,7 +54,7 @@ class MailSender
             Welcome on match a Rick&Morty!
             To activate your account, plz click on the link bellow or paste it into your web browser.
 
-            ' . self::URL . '/validation?action=activation&login=' . urlencode($login) . '&token=' . urlencode($token) . '
+            http://' . $_SERVER['SERVER_NAME'] . '/validation?action=activation&login=' . urlencode($login) . '&token=' . urlencode($token) . '
 
             ---------------
             This is an automatic mail, thx to not reply.';
@@ -75,7 +74,7 @@ class MailSender
             A password reinitialistion request has been made on our website.
             To proceed, plz click on the link bellow or paste it into your web browser.
 
-            ' . self::URL . '/validation?action=reinit&login=' . urlencode($login) . '&token=' . urlencode($token) . '
+            http://' . $_SERVER['SERVER_NAME'] . '/validation?action=reinit&login=' . urlencode($login) . '&token=' . urlencode($token) . '
 
             ---------------
             This is an automatic mail, thx to not reply.';

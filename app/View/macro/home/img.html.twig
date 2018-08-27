@@ -46,7 +46,7 @@
 <div class="w3-display-container" id="{{ key }}">
 {% for key, url in profil %}
     {% if key starts with 'img' and url %}
-    <img class="mySlides w3-image" src="{{ url }}" title='{{ profil.pseudo }}_{{ key }}' style="max-height:250px" onclick="displayModal('{{ url }}')">
+    <img class="mySlides w3-image" src="../{{ url }}" title='{{ profil.pseudo }}_{{ key }}' style="max-height:250px" onclick="displayModal('../{{ url }}')">
     {% endif %}
 {% endfor %}
     <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>

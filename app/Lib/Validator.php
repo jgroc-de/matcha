@@ -127,7 +127,7 @@ class Validator
      *
      * @return bool
      */
-    public function forname(string $test)
+    public function surname(string $test)
     {
         return !is_null($test);
     }

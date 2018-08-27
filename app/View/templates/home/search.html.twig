@@ -22,46 +22,50 @@
                         </a>
                     </div>
                         <img src="{{ user.img1 }}" class="w3-right" style="width:50%">
-                        <p class="w3-small">{{ user.biography }}</p>
+                        <p class="w3-small" style="margin-top:0">{{ user.gender }}, {{ 2018 - user.birthdate }}: {{ user.biography }}</p>
                 </div>
             </div>
             {% endfor %}
         </div>
         <div class="w3-twothird">
-            <h3>Map</h3>
+            <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('map')">Map</h3>
             <div id="map" class="gg-map-med"></div>
         </div>
         <div class="w3-third">
-            <h3>Focus</h3>
+            <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('focus')">Focus</h3>
+            <div id="focus">
             {% for user in users %}
             <div class="hide" id="{{ user.id }}">
                 <div class="w3-theme-l4" style="height:100px;overflow:auto">
                     <div class="w3-theme-l1" style="width:100%;height:31px;position:sticky;top:0">
                         <a href="{{ path_for('profil', user) }}">
-                            <h4 class="w3-margin-left w3-left w3-theme-l1">{{ user.pseudo }}: {{ user.gender }}, {{ 2018 - user.birthdate }}</h4>
+                            <h4 class="w3-margin-left w3-left w3-theme-l1">{{ user.pseudo }}</h4>
                         </a>
                         <i class="w3-button w3-right fa fa-remove w3-hover-red" onclick="closeInfo({{ user.id }})"></i>
                     </div>
                         <img src="{{ user.img1 }}" class="w3-right" style="width:50%">
-                        <p class="w3-small">{{ user.biography }}</p>
+                        <p class="w3-small" style="margin-top:0">{{ user.gender }}, {{ 2018 - user.birthdate }}: {{ user.biography }}</p>
                 </div>
             </div>
             {% endfor %}
+            </div>
         </div>
     </div>
     <form action="{{ path_for('searchByName') }}" method="post" class="w3-col l4">
-        <fieldset class="w3-row w3-section">
+        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('sbyname')">Search By Name</h3>
+        <fieldset id="sbyname" class="w3-row w3-section w3-hide">
             <legend>Search by Name</legend>
             {{ input('text', '', {'value': '','placeholder':'pseudo', 'class':'w3-section w3-col s12 m9 l6', 'name': 'pseudo'}) }}
         {{ button('submit', 'search') }}
         </fieldset>
     </form>
     <form action="{{ path_for('searchByCriteria') }}" method="post" class="w3-col l4">
-        <fieldset class="w3-row">
+        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('sbyc')">Search by Criteria</h3>
+        <fieldset id="sbyc" class="w3-row w3-hide">
             <legend>Search by Criteria</legend>
             <div class="w3-row w3-margin-bottom">
             <div class="w3-half">
-                <h3>age</h3>
+                <h3 class="w3-theme-l1">age</h3>
                 <div class="w3-col s6">
             {{ input(
             'number',
@@ -90,7 +94,7 @@
                 </div>
             </div>
             <div class="w3-half" style="text-align:center">
-                <h3>distance</h3>
+                <h3 class="w3-theme-l1">distance</h3>
             {{ select({
             'label': 'up to … km',
             'name': 'distance',
@@ -103,7 +107,7 @@
             </div>
             <div class="w3-row">
             <div class="w3-half">
-                <h3>kind</h3>
+                <h3 class="w3-theme-l1">kind</h3>
                 <select name="gender" size="5" style="width:100%">
                     {% for char in target %}
                     <option value="{{ char }}">{{ char }}</option>
@@ -111,7 +115,7 @@
                 </select>
             </div>
             <div class="w3-half">
-                <h3>interest</h3>
+                <h3 class="w3-theme-l1">interest</h3>
                 <select name="tags" size="5" style="width:100%">
                     {% for tag in tags %}
                         <option value="{{ tag }}">{{ tag }}</option>

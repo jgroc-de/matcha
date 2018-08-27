@@ -121,15 +121,17 @@ class UserModel extends \App\Constructor
                 $img[] = $file;
         }
         $req = $this->db->prepare('
-                INSERT INTO user (pseudo, password, email, gender, token, publicToken, img1, lattitude, longitude)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+                INSERT INTO user (pseudo, password, name, surname, email, gender, token, publicToken, img1, lattitude, longitude)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $req->execute(array(
                 $post['pseudo'],
                 password_hash($post['password'], PASSWORD_DEFAULT),
+                $post['name'],
+                $post['surname'],
                 $post['email'],
                 $post['gender'],
                 $post['token'],
-                time() . $_SESSION['profil']['pseudo'] . bin2hex(random_bytes(4)),
+                time() . $post['pseudo'] . bin2hex(random_bytes(4)),
                 'img/' . $img[rand(0, 4)],
                 $post['lat'],
                 $post['lng']
@@ -149,7 +151,6 @@ class UserModel extends \App\Constructor
     
     public function getUserByCriteria($min, $max, $target = array(), $dist)
     {
-        print_r($target);
         $delta_lat = 5;
         $delta_lng = 5;
         $count = str_repeat('?,', count($target) - 1) . '?';
@@ -161,7 +162,6 @@ class UserModel extends \App\Constructor
             AND lattitude BETWEEN ? AND ?
             AND longitude BETWEEN ? AND ?"
         );
-        print_r($req);
         $array = array_merge($target, [
             $max,
             $min,
@@ -190,8 +190,8 @@ class UserModel extends \App\Constructor
             'UPDATE user
             SET pseudo = ?,
             email = ?,
-            forname = ?,
             name = ?,
+            surname = ?,
             birthdate = ?,
             gender = ?,
             sexuality = ?,
@@ -204,8 +204,8 @@ class UserModel extends \App\Constructor
         $req->execute(array(
             $post['pseudo'],
             $post['email'],
-            $post['forname'],
             $post['name'],
+            $post['surname'],
             $post['birthdate'],
             $post['gender'],
             $post['sexuality'],
@@ -226,8 +226,8 @@ class UserModel extends \App\Constructor
                 'UPDATE user
                 SET pseudo = ?,
                 email = ?,
-                forname = ?,
                 name = ?,
+                surname = ?,
                 birthdate = ?,
                 gender = ?,
                 sexuality = ?,
@@ -236,8 +236,8 @@ class UserModel extends \App\Constructor
             return $req->execute(array(
                 $post['pseudo'],
                 $post['email'],
-                $post['forname'],
                 $post['name'],
+                $post['surname'],
                 $post['birthdate'],
                 $post['gender'],
                 $post['sexuality'],
@@ -260,14 +260,14 @@ class UserModel extends \App\Constructor
         $req->execute($post);
     }
 
-    public function updateGeolocation($lat, $lon)
+    public function updateGeolocation($lat, $lon, $id)
     {
         $req = $this->db->prepare('
             UPDATE user
             SET lattitude = ?, longitude = ?
             WHERE id = ?
         ');
-        return $req->execute(array(floatval($lat), floatval($lon), $_SESSION['id']));
+        return $req->execute(array(floatval($lat), floatval($lon), $id));
     }
 
     public function activate()

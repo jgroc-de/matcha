@@ -16,9 +16,14 @@ class ft_geoIP extends \App\Constructor
             $ip = $this->geoIP->city('82.231.186.199');
             $_POST['lat'] = $ip->location->latitude;
             $_POST['lng'] = $ip->location->longitude;
-            $_SESSION['profil']['lattitude'] = floatval($_POST['lat']);
-            $_SESSION['profil']['longitude'] = floatval($_POST['lng']);
-            $this->user->updateGeolocation($_POST['lat'], $_POST['lng']);
+            if (array_key_exists('id', $_SESSION))
+            {
+                $_SESSION['profil']['lattitude'] = floatval($_POST['lat']);
+                $_SESSION['profil']['longitude'] = floatval($_POST['lng']);
+                $this->user->updateGeolocation($_POST['lat'], $_POST['lng'], $_SESSION['id']);
+            }
+            else
+                $this->user->updateGeolocation($_POST['lat'], $_POST['lng'], $_POST['id']);
         }
     }
 }

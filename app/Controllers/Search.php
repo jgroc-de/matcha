@@ -65,7 +65,10 @@ class Search extends Route
 
     public function __invoke(Request $request, Response $response, array $args)
     {
-        //$_SESSION['profil']['sexuality'] = 'hetero';
+        if (!$_SESSION['profil']['biography'])
+        {
+            return $response->withRedirect('/editProfil2', 302);
+        }
         $age_min = $_SESSION['profil']['birthdate'] + 5;
         $age_max = $_SESSION['profil']['birthdate'] - 5;
         $list = $this->listDefault($age_min, $age_max);

@@ -30,6 +30,7 @@ $app->group('', function () {
         ->setName('profil');
     $this->any('/editProfil', App\Controllers\EditProfil::class)
         ->setName('editProfil');
+    $this->any('/editProfil2', App\Controllers\EditProfil::class);
     $this->any('/editPassword', App\Controllers\EditPassword::class)
         ->setName('editPassword');
     $this->get('/logout', App\Controllers\Logout::class)

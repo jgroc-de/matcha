@@ -59,10 +59,14 @@ class FormChecker extends \App\Constructor
         {
             $post['activ'] = 0;
             $post['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
+            $post['lat'] = floatval('-75.181462');
+            $post['lng'] = 123.369780;
             if (empty($user->getUser($post['pseudo'])))
             {
                 $user->setUser($post);
                 $account = $user->getUser($post['pseudo']);
+                $_POST['id'] = $account['id'];
+                $this->ft_geoIP->setLatLng();
                 $this->mail->sendValidationMail($account['pseudo'], $account['email'], $account['token']);
                 $this->flash->addMessage('success', 'mail sent! Check yourmail box (including trash, spam, whatever…)');
             }

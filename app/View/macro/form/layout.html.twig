@@ -5,13 +5,15 @@
         </h2>
     </div>
     <form id="{{ action }}" class="w3-container w3-theme-light clearfix w3-hide {% if show %}w3-show{% endif %}" style="opacity:0.95" action="{{ path_for(action) }}" method="post">
-    {% for key, message in flash %}
-        {% if key == "success" %}
-            <div class="w3-panel w3-green">
-        {% else %}
-            <div class="w3-panel w3-red">
-        {% endif %}
-        <p>{{ message }}</p>
-            </div>
-    {% endfor %}
+    {% if show %}
+        {% for key, message in flash %}
+            {% if key == "success" %}
+                <div class="w3-panel w3-green">
+            {% else %}
+                <div class="w3-panel w3-red">
+            {% endif %}
+                    <p>{{ message }}</p>
+                </div>
+        {% endfor %}
+    {% endif %}
 {% endmacro %}

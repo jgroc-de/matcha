@@ -70,6 +70,14 @@ class FriendsModel extends \App\Constructor
     public function delFriend($id1, $id2)
     {
         $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? AND id_user2 = ?');
+        $user = $this->user->getUserById($id2);
+        $msg = array(
+            'category' => '"' . $user['publicToken'] . '"',
+            "iduser" => $user['id'],
+            'link' => "/",
+            'msg' => $_SESSION['profil']['pseudo'] . " has erased your friendship link"
+        );
+        $this->MyZmq->send($msg);
         $req->execute($this->sortId($id1, $id2));
     }
 

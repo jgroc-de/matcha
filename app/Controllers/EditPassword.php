@@ -27,7 +27,7 @@ class EditPassword extends Route
                 'flash' => $this->flash->getMessages(),
                 'year' => date('Y') - 18,
                 'notification' => $this->notif->getNotification(),
-                'editPass' => true
+                'editPwd' => true
             ]
         );
     }

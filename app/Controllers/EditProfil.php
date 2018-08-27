@@ -22,6 +22,8 @@ class EditProfil extends Route
         }
         else
             $post = $_SESSION['profil'];
+        if ($request->getUri()->getPath() == '/editProfil2')
+                $this->flash->addMessage('failure', 'Plz complete your profil before searching for targets');
         return $this->view->render(
             $response,
             'templates/home/editProfil.html.twig',

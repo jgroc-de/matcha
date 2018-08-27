@@ -9,7 +9,7 @@ function initMap() {
         marker = new google.maps.Marker({
             position: usersPos[x],
             map: map,
-            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + getColor(usersPos[x].kind),
+            icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + getColor(usersPos[x].kind),
             title: 'click me!'
         });
         attachInfo(marker, usersPos[x]);

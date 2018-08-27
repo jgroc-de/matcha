@@ -11,19 +11,19 @@ class FakeFactory extends Route
         $profil = array();
         $faker = \Faker\Factory::create();
         $user = $this->container->user;
-        $debug = $this->container->debug;
+        //$debug = $this->container->debug;
         for ($i = 0; $i < $count; $i++)
         {
             //$debug->ft_print([$count, $i]);
             $gender = rand(0, 4);
             $orientation = rand(0, 2);
-            $forname = $faker->firstName;
+            $name = $faker->firstName;
             $profil['gender'] = $this->characters[$gender];
-            $profil['pseudo'] = $profil['gender'] . $forname;
-            $_SESSION['pseudo'] = $profil['gender'] . $forname;
+            $profil['pseudo'] = $profil['gender'] . $name;
+            $_SESSION['pseudo'] = $profil['gender'] . $name;
             $profil['email'] = $faker->email();
-            $profil['forname'] = $forname;
-            $profil['name'] = $faker->lastName;
+            $profil['name'] = $name;
+            $profil['surname'] = $faker->lastName;
             $profil['birthdate'] = rand(1970, 2000);
             $profil['sexuality'] = $this->sexualPattern[$orientation];
             $profil['biography'] = $faker->text(250);

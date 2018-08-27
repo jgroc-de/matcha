@@ -39,7 +39,7 @@
                     <div id="Profil" class="w3-theme-l4 w3-padding gg-section">
                         <div class="w3-left-align">
                             {% if home %}
-                                name: {{ profil.forname}} {{profil.name}}<br>
+                                name: {{ profil.name}} {{profil.surname}}<br>
                                 email: {{ profil.email }}<br>
                             {% endif %}
                             {% if home %}you are{% else %}it's{% endif %} a {{ profil.gender }} aged of {{ 2018 - profil.birthdate }} yo and {{ profil.sexuality }}.<br>

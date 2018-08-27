@@ -8,7 +8,7 @@
 <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
 {{ form('Log In', 'login', flash, login) }}
 <div class="w3-section">
-    {{ input('text', 'pseudo', {'value': post.pseudo}) }}
+    {{ input('text', 'pseudo', {'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}
 </div>
 <div class="w3-section">
     {{ input('password', 'password') }}
@@ -20,13 +20,28 @@
 
 {{ form('Sign Up', 'signup', flash, signup) }}
 <div class="w3-section">
-    {{ input('text', 'pseudo', {'value': post.pseudo}) }}
+    {{ input('text', 'pseudo', {'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}
 </div>
 <div class="w3-section">
+    <div id="infopwd" class="w3-panel w3-green">
+        <p>Your password must contain at least:</p>
+        <ul>
+            <li>6 characters</li>
+            <li>1 upper case letter</li>
+            <li>1 lower case letter</li>
+            <li>1 number</li>
+        </ul>
+    </div>
     {{ input('password','password') }}
 </div>
 <div class="w3-section">
-    {{ input('email', 'email', {'value': post.email }) }}
+    {{ input('email', 'email', {'value': post.email|default("lol@lol.com") }) }}
+</div>
+<div class="w3-section">
+    {{ input('text', 'name', {'value': post.name|default("John") }) }}
+</div>
+<div class="w3-section">
+    {{ input('text', 'surname', {'value': post.surname|default("Doe") }) }}
 </div>
 <div class="w3-section">
     {{ select({'label': 'you are a', 'name': 'gender', 'array': characters, 'select': post.gender}) }}

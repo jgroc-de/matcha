@@ -9,13 +9,15 @@
         <h2 class="w3-hover-green w3-theme-l1" style="cursor:pointer;margin:0" onclick="toggleDisplay('Friends')">Choose your "Friend"</h2>
         <div class="w3-row w3-theme-l5" id="Friends">
             {% for user in friends %}
-            <div id="{{ user.id }}" class="w3-col s4 m2 l3 w3-margin" style="overflow:hidden;">
+            <div class="w3-col s6 m3">
+                <div id="{{ user.id }}" class="w3-margin">
                 <a href="#" class="w3-theme-d1" onclick="tchatWith('{{ user.pseudo }}', {{ user.id }}, {{ me.id }}, '{{ user.suscriber }}')">
                     <h4 class="">{{ user.pseudo }}</h4>
                     <div class="w3-black w3-display-container" style="height:112px">
                     <img src="{{ user.img1 }}" class="w3-image w3-display-middle" style="max-height:112px">
                     </div>
                 </a>
+                </div>
             </div>
             {% endfor %}
         </div>

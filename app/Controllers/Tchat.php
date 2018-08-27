@@ -26,6 +26,7 @@ class Tchat extends Route
                 $chat = array(
                     'Jeeeezz… another dumbass pervert?',
                     'U want a pic of my dick?',
+                    'Hi dickhead',
                     'Hi sweetheart',
                     'Stop stalking around, go watch TV!',
                     'You fight like a Dairy Farmer!',

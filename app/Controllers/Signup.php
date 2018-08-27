@@ -7,7 +7,6 @@ class Signup extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
-        $this->ft_geoIP->setLatLng();
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $this->form->checkSignup($request, $response);
