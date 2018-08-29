@@ -2,6 +2,7 @@
 {% from 'macro/form/label.html.twig' import Label %}
 {{ Label(label) }}
 <input class="w3-input w3-border {{ hash.class }}"
+       id="{{ label }}"
        type="{{ type }}"
        name="{{ hash.name|default(label|default(type)) }}"
        {% for key, value in hash if key != name %}

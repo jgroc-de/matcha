@@ -3,8 +3,8 @@
 {% from 'macro/form/label.html.twig' import label %}
 {% set def = 'select' %}
 
-{{ label(hash.label) }}
-<select name="{{ hash.name|default(hash.label|default(def)) }}" class="w3-select" style="{{ hash.style }}">
+{{ label(hash.label, hash.name) }}
+<select id="{{ hash.name }}" name="{{ hash.name|default(hash.label|default(def)) }}" class="w3-select {{ hash.class}}" style="{{ hash.style }}" onchange="{{ hash.change }}">
     {% for value in hash.array %}
     <option value='{{ value }}' {% if value == hash.select %}selected{% endif %}>
         {{ value }}

@@ -10,7 +10,6 @@ class Login extends Route
         $this->form->checkLogin($request, $response);
         if (isset($_SESSION['id']))
         {
-            $this->ft_geoIP->setLatLng(); 
             $this->user->updatePublicToken();
             return $response->withRedirect('/');
         }

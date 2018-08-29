@@ -17,80 +17,11 @@ class UserModel extends \App\Constructor
         return $req->fetchAll();
     }
 
-    public function getUsersBi($age_min, $age_max, $delta_lng = 0.2, $delta_lat = 0.2)
-    {
-        $req = $this->db->prepare(
-            'SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id
-            FROM user
-            WHERE birthdate BETWEEN ? AND ?
-            AND lattitude BETWEEN ? AND ?
-            AND longitude BETWEEN ? AND ?
-            ORDER BY popularity DESC'
-            );
-        $req->execute(array(
-            $age_max,
-            $age_min,
-            $_SESSION['profil']['lattitude'] - $delta_lat,
-            $_SESSION['profil']['lattitude'] + $delta_lat,
-            $_SESSION['profil']['longitude'] - $delta_lng,
-            $_SESSION['profil']['longitude'] + $delta_lng
-        ));
-        return $req->fetchAll();
-    }
-
-    public function getUsersHomo($age_min, $age_max, $gender, $delta_lng = 0.2, $delta_lat = 0.2)
-    {
-        $req = $this->db->prepare(
-            'SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id
-            FROM user
-            WHERE gender = ?
-            AND sexuality <> "hetero"
-            AND birthdate BETWEEN ? AND ?
-            AND lattitude BETWEEN ? AND ?
-            AND longitude BETWEEN ? AND ?
-            ORDER BY popularity DESC'
-        );
-        $req->execute(array(
-            $_SESSION['profil']['gender'],
-            $age_max,
-            $age_min,
-            $_SESSION['profil']['lattitude'] - $delta_lat,
-            $_SESSION['profil']['lattitude'] + $delta_lat,
-            $_SESSION['profil']['longitude'] - $delta_lng,
-            $_SESSION['profil']['longitude'] + $delta_lng
-        ));
-        return $req->fetchAll();
-    }
-
-    public function getUsersHetero($age_min, $age_max, $gender, $delta_lng = 0.2, $delta_lat =0.2)
-    {
-        $req = $this->db->prepare(
-            'SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id
-            FROM user
-            WHERE gender <> ?
-            AND sexuality <> "homo"
-            AND birthdate BETWEEN ? AND ?
-            AND lattitude BETWEEN ? AND ?
-            AND longitude BETWEEN ? AND ?
-            ORDER BY popularity DESC'
-        );
-        $req->execute(array(
-            $_SESSION['profil']['gender'],
-            $age_max,
-            $age_min,
-            $_SESSION['profil']['lattitude'] - $delta_lat,
-            $_SESSION['profil']['lattitude'] + $delta_lat,
-            $_SESSION['profil']['longitude'] - $delta_lng,
-            $_SESSION['profil']['longitude'] + $delta_lng
-        ));
-        return $req->fetchAll();
-    }
-
     /**
      * @param $pseudo string
      * @return array
      */
-    public function getUser($pseudo)
+    public function getUser(string $pseudo)
     {
         $req = $this->db->prepare('select * from user where pseudo = ?');
         $req->execute(array($pseudo));
@@ -98,12 +29,99 @@ class UserModel extends \App\Constructor
     }
 
     /**
+     * @param $id int
+     * @return array
+     */
+    public function getUserById(int $id)
+    {
+        $req = $this->db->prepare('select * from user where id = ?');
+        $req->execute(array($id));
+        return $req->fetch();
+    }
+ 
+    /**
+     * @param $email string email
+     * @return array
+     */
+    public function getUserByEmail(string $email)
+    {
+        $req = $this->db->prepare('select * from user where email = ?');
+        $req->execute(array($email));
+        return $req->fetch();
+    }
+    
+    public function getUsersBySexuality(array $age, float $delta_lng = 0.2, float $delta_lat = 0.2)
+    {
+        $reqTab = array();
+        switch ($_SESSION['profil']['sexuality'])
+        {
+            case 'homo':
+                $where = "AND gender = '" . $_SESSION['profil']['gender'] . "' AND sexuality <> 'hetero'";
+                break;
+            case 'hetero':
+                $where = "AND gender <> '" . $_SESSION['profil']['gender'] . "' AND sexuality <> 'homo'";
+                break;
+            default:
+                $where = '';
+        }
+        $req = $this->db->prepare(
+            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity
+            FROM user 
+            WHERE birthdate BETWEEN ? AND ? $where
+            AND lattitude BETWEEN ? AND ?
+            AND longitude BETWEEN ? AND ?
+            ORDER BY popularity DESC
+            LIMIT 250"
+            );
+        $req->execute(array(
+            $age['max'],
+            $age['min'],
+            $_SESSION['profil']['lattitude'] - $delta_lat,
+            $_SESSION['profil']['lattitude'] + $delta_lat,
+            $_SESSION['profil']['longitude'] - $delta_lng,
+            $_SESSION['profil']['longitude'] + $delta_lng
+        ));
+        return $req->fetchAll();
+    }
+
+    public function getUserByCriteria(array $age, array $target = array(), array $pop, int $dist)
+    {
+        $delta_lat = 5;
+        $delta_lng = 5;
+        $count = str_repeat('?,', count($target) - 1) . '?';
+        $req = $this->db->prepare(
+            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity
+            FROM user
+            WHERE gender IN ($count)
+            AND birthdate BETWEEN ? AND ?
+            AND lattitude BETWEEN ? AND ?
+            AND longitude BETWEEN ? AND ?
+            AND popularity BETWEEN ? AND ?
+            LIMIT 250"
+        );
+        $array = array_merge($target, [
+            $age['max'],
+            $age['min'],
+            $_SESSION['profil']['lattitude'] - $delta_lat,
+            $_SESSION['profil']['lattitude'] + $delta_lat,
+            $_SESSION['profil']['longitude'] - $delta_lng,
+            $_SESSION['profil']['longitude'] + $delta_lng,
+            $pop['min'],
+            $pop['max']]
+        );
+        $req->execute($array);
+        return $req->fetchAll();
+    }
+    
+    /**
      * @param $pseudo string
      * @return array
      */
     public function getUserByPseudo($pseudo)
     {
-        $req = $this->db->prepare('SELECT pseudo, biography, lattitude, longitude, img1, birthdate, gender, id FROM user WHERE pseudo LIKE ? ORDER BY pseudo LIMIT 20');
+        $req = $this->db->prepare(
+            'SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity
+            FROM user WHERE pseudo LIKE ? ORDER BY pseudo LIMIT 50');
         $req->execute(array($pseudo . '%'));
         return $req->fetchAll();
     }
@@ -138,52 +156,6 @@ class UserModel extends \App\Constructor
             ));
     }
 
-    /**
-     * @param $id int
-     * @return array
-     */
-    public function getUserById($id)
-    {
-        $req = $this->db->prepare('select * from user where id = ?');
-        $req->execute(array($id));
-        return $req->fetch();
-    }
-    
-    public function getUserByCriteria($min, $max, $target = array(), $dist)
-    {
-        $delta_lat = 5;
-        $delta_lng = 5;
-        $count = str_repeat('?,', count($target) - 1) . '?';
-        $req = $this->db->prepare(
-            "SELECT pseudo, biography, lattitude, longitude, img1, birthdate, gender, id
-            FROM user
-            WHERE gender IN ($count)
-            AND birthdate BETWEEN ? AND ?
-            AND lattitude BETWEEN ? AND ?
-            AND longitude BETWEEN ? AND ?"
-        );
-        $array = array_merge($target, [
-            $max,
-            $min,
-            $_SESSION['profil']['lattitude'] - $delta_lat,
-            $_SESSION['profil']['lattitude'] + $delta_lat,
-            $_SESSION['profil']['longitude'] - $delta_lng,
-            $_SESSION['profil']['longitude'] + $delta_lng]);
-        $req->execute($array);
-        return $req->fetchAll();
-    }
-    
-    /**
-     * @param $email string email
-     * @return array
-     */
-    public function getUserByEmail($email)
-    {
-        $req = $this->db->prepare('select * from user where email = ?');
-        $req->execute(array($email));
-        return $req->fetch();
-    }
-    
     public function updateFakeUser($post)
     {
         $req = $this->db->prepare(

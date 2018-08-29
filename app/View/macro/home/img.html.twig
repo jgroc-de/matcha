@@ -9,7 +9,6 @@
                 <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic('{{ key }}')"></i>
             {% else %}
             <label class="w3-button w3-display-middle w3-block w3-jumbo fa fa-plus w3-padding-large w3-hover-green" onchange='addPicture()' title="add picture">
-                <input type="hidden" style="MAX_FILE_SIZE" value="30000"/>
                 <input id="{{ key }}" type="file" style="display:none"/>
             </label>
             {% endif %}
@@ -27,7 +26,6 @@
                 <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic('{{ key }}')"></i>
             {% else %}
             <label class="w3-button w3-display-middle w3-block w3-jumbo fa fa-plus w3-padding-large w3-hover-green" onchange='addPicture()' title="add picture" style="vertical-align:middle">
-                <input type="hidden" style="MAX_FILE_SIZE" value="30000"/>
                 <input id="{{ key }}" type="file" style="display:none"/>
             </label>
             {% endif %}

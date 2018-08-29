@@ -54,7 +54,7 @@ class TagModel extends \App\Constructor
     public function getUserTags($userId)
     {
         $req = $this->db->prepare('
-            SELECT *
+            SELECT tag
             FROM usertags
             INNER JOIN hashtags
             ON usertags.idtag = hashtags.id

@@ -5,6 +5,12 @@ function updateGeolocation() {
         error();
 }
 
+function setLocation() {
+    user.lat = Number(document.getElementById('lat').value);
+    user.lng = Number(document.getElementById('lng').value);
+    majLocation();
+}
+
 function success(pos) {
     user = {lat: pos.coords.latitude, lng: pos.coords.longitude};
     majLocation();
@@ -20,9 +26,13 @@ function majLocation () {
         if (this.readyState == 4 && this.status == 200)
         {
             var response = JSON.parse(this.responseText);
+            var p = document.getElementById('textLocation');
 
             user.lat = response.lat;
             user.lng = response.lng;
+            p.innerHTML = 'You are currently located at ' + user.lat + '° of lattitude north and ' + user.lng +'° of longitude east.';
+            document.getElementById('lat').value = user.lat;
+            document.getElementById('lng').value = user.lng;
             initMap(); 
         }
     };
@@ -55,9 +65,6 @@ function initMap() {
 }
 
 function error(err) {
-    user.lat = 0;
-    user.lng = 0;
-    majLocation();
 }
 
 function attachInfo(marker, info)
@@ -96,4 +103,11 @@ function getColor(kind)
         default:
             return '000';
     }
+}
+
+function changeLocation()
+{
+    user.lat = Number(document.getElementById('lat').value);
+    user.lng = Number(document.getElementById('lng').value);
+    initMap();
 }

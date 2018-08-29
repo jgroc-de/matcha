@@ -44,6 +44,20 @@ function toggleDisplay(id)
         x.className = x.className.replace(" w3-hide", "");
 }
 
+function toggleDisplay2(x)
+{
+    while (x = x.nextSibling)
+    {
+        if ((x.className) || (x.innerHTML))
+        {
+            if (x.className.indexOf("w3-hide") == -1)
+                x.className += " w3-hide";
+            else
+                x.className = x.className.replace(" w3-hide", "");
+        }
+    }
+}
+
 function closeInfo(id) {
     document.getElementById('' + id).style.display = "none";
 }

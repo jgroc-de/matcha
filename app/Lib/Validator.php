@@ -19,7 +19,9 @@ class Validator
             foreach ($keys as $key)
             {
                 if (!$this->$key($array[$key]))
+                {
                     return false;
+                }
             }
             return true;
         }
@@ -159,7 +161,7 @@ class Validator
      */
     public function lat(float $test)
     {
-        return ($test != 0);
+        return ($test >= -85 && $test <= 85);
     }
 
     /**
@@ -169,6 +171,6 @@ class Validator
      */
     public function lng(float $test)
     {
-        return ($test != 0);
+        return ($test <= 180 && $test >= -180);
     }
 }

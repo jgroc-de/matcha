@@ -38,10 +38,10 @@
     {{ input('email', 'email', {'value': post.email|default("lol@lol.com") }) }}
 </div>
 <div class="w3-section">
-    {{ input('text', 'name', {'value': post.name|default("John") }) }}
+    {{ input('text', 'name', {'value': post.name|default("Ann") }) }}
 </div>
 <div class="w3-section">
-    {{ input('text', 'surname', {'value': post.surname|default("Doe") }) }}
+    {{ input('text', 'surname', {'value': post.surname|default("Onymous") }) }}
 </div>
 <div class="w3-section">
     {{ select({'label': 'you are a', 'name': 'gender', 'array': characters, 'select': post.gender}) }}

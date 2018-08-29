@@ -32,7 +32,7 @@ function attachInfo(marker, info)
         infowindow.open(map, this);
     });
     marker.addListener('click', function() {
-        var elem = document.getElementById('' + info.id);
+        var elem = document.getElementById(info.id);
         elem.style.display = "block";
     });
     marker.addListener('mouseout', function() {
