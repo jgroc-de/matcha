@@ -48,7 +48,12 @@ function initMap() {
     marker = new google.maps.Marker({
         position: user,
         map: map,
-        title: user.title
+        draggable:true,
+        title: user.title + ": drag me!"
+    });
+    google.maps.event.addListener(marker, 'dragend', function (event) {
+        document.getElementById('lat').value = this.getPosition().lat().toFixed(7);
+        document.getElementById('lng').value = this.getPosition().lng().toFixed(7);
     });
     markers.push(marker);
     for (x in usersPos)
@@ -59,26 +64,10 @@ function initMap() {
             icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + getColor(usersPos[x].kind),
             title: usersPos[x].title
         });
-        attachInfo(marker, usersPos[x]);
-        markers.push(marker);
     }
 }
 
 function error(err) {
-}
-
-function attachInfo(marker, info)
-{
-    var infowindow = new google.maps.InfoWindow({
-        content: '<div class="w3-theme-l1"><img src="../' + info.img + '" class="w3-image" style="height:100px"><h3 class="">' + info.title + '</h3></div>'
-            
-    });
-    marker.addListener('mouseover', function() {
-        infowindow.open(map, this);
-    });
-    marker.addListener('mouseout', function() {
-        infowindow.close(map, this);
-    });
 }
 
 function getColor(kind)

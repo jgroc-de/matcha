@@ -66,6 +66,7 @@ function addChildrenCard(hash, main, key)
     div3.style.position = "sticky";
     div3.style.top = "0";
     a.setAttribute('href', '/profil/' + hash.id);
+    a.setAttribute('target', '_blank');
     h4.className = "w3-margin-left w3-left w3-theme-l1";
     h4.innerHTML = hash.title;
     img.className = "w3-right";
@@ -91,7 +92,7 @@ function addChildrenCard(hash, main, key)
             div1.style.display = node.style.display;
             node.parentNode.removeChild(node);
         }
-        div1.className = "hide";
+        div1.className = " w3-hide";
         div1.id = hash.id;
         i.className = "w3-button w3-right fa fa-remove w3-hover-red";
         i.setAttribute('onclick', 'closeInfo(' + hash.id + ')');
@@ -100,6 +101,36 @@ function addChildrenCard(hash, main, key)
     else
         div1.className = "w3-col s12 m3";
     main.appendChild(div1);
+}
+
+function uncheckTags()
+{
+    var dad = document.getElementById('tags');
+    var tags = dad.childNodes;
+    var child;
+
+    for (let tag of tags)
+    {
+        if (tag.nodeType === 1)
+        {
+            tag.firstElementChild.removeAttribute("checked");
+        }
+    }
+}
+
+function checkTags()
+{
+    var dad = document.getElementById('tags');
+    var tags = dad.childNodes;
+    var child;
+
+    for (let tag of tags)
+    {
+        if (tag.nodeType === 1)
+        {
+            tag.firstElementChild.setAttribute("checked", "");
+        }
+    }
 }
 
 generateCard('focus');

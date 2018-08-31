@@ -42,13 +42,6 @@ header a {
     font-size: 1.4em;
 }
 
-main {
-    background: url('../img/search2.jpg') no-repeat center bottom;
-    background: url('../img/background.jpg') no-repeat center bottom;
-    background-size: cover;
-    min-height: 70vh;
-}
-
 footer {
     text-align: right;
 }

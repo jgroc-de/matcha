@@ -11,8 +11,9 @@ class Logout extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
+        $this->user->updateLastlog($_SESSION['id']);
         session_unset();
         session_destroy();
-        return $response->withRedirect('/login');
+        return $this->view->render($response, 'templates/logForm/logout.html.twig', ['logout' => true]);
     }
 }

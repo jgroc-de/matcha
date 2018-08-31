@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
     <head>
         <meta charset="utf-8/">
@@ -9,6 +8,25 @@
         <link rel="stylesheet" href="/css/main.css" type="text/css"/>
         <link rel="stylesheet" href="/css/theme.css" type="text/css"/>
         {% block head %}{% endblock %}
+    <style>
+{% set hour = "now"|date("G") %}
+{% set url = "" %} 
+{% if logout %}
+    {% set url = "title_screen.png" %} 
+    body, footer, header, h1, h4 {
+        background-color: black;
+    }
+{% elseif (hour > 21 or hour < 7) %}
+    {% set url = "search2.jpg" %} 
+{% else %}
+    {% set url = "background.jpg" %} 
+{% endif %}
+    main {
+        background: url('../img/{{ url }}') no-repeat center bottom;
+        background-size: cover;
+        min-height: 80vh;
+    }
+    </style>
     </head>
     <body>
         <header>

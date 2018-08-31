@@ -25,18 +25,13 @@ function initMap() {
 function attachInfo(marker, info)
 {
     var infowindow = new google.maps.InfoWindow({
-        content: '<div class="w3-theme-l1"><img src="../' + info.img + '" class="w3-image" style="height:100px"><h3 class="">' + info.title + '</h3></div>'
-            
-    });
-    marker.addListener('mouseover', function() {
-        infowindow.open(map, this);
+        content: "<div class='w3-theme-l1' onclick='toggleDisplay(\"" + info.id + "\")'><img src='../" + info.img + "' class='gg-image'><h6 class=''>" + info.title + "</h6></div>" 
     });
     marker.addListener('click', function() {
-        var elem = document.getElementById(info.id);
-        elem.style.display = "block";
+        infowindow.open(map, this);
     });
     marker.addListener('mouseout', function() {
-        infowindow.close(map, this);
+        //infowindow.close(map, this);
     });
 }
 

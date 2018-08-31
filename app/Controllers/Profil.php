@@ -30,6 +30,7 @@ class Profil extends Route
                     }
                 }
             }
+            $user['lastlog'] = date('d M Y', $user['lastlog']);
             return $this->view->render(
                 $response,
                 'templates/home/profil.html.twig',

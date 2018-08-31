@@ -33,6 +33,8 @@ $app->group('', function () {
     $this->any('/editProfil2', App\Controllers\EditProfil::class);
     $this->any('/editPassword', App\Controllers\EditPassword::class)
         ->setName('editPassword');
+    $this->any('/rgpd', App\Controllers\RGPD::class)
+        ->setName('RGPD');
     $this->get('/logout', App\Controllers\Logout::class)
         ->setName('logout');
     $this->get('/tchat', App\Controllers\Tchat::class)

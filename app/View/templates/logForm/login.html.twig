@@ -17,7 +17,14 @@
     {{ button('submit') }}
 </div>
     </form>
-
+{{ form('Reset Your Password', 'resetPassword', flash, reset) }}
+<div class="w3-section">
+    {{ input('email', 'email', {'value': post.email }) }}
+</div>
+<div class="">
+    {{ button('submit') }}
+</div>
+    </form>
 {{ form('Sign Up', 'signup', flash, signup) }}
 <div class="w3-section">
     {{ input('text', 'pseudo', {'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}
@@ -35,7 +42,7 @@
     {{ input('password','password') }}
 </div>
 <div class="w3-section">
-    {{ input('email', 'email', {'value': post.email|default("lol@lol.com") }) }}
+    {{ input('email', 'email', {'value': post.email|default("rick@morty.com") }) }}
 </div>
 <div class="w3-section">
     {{ input('text', 'name', {'value': post.name|default("Ann") }) }}
@@ -49,15 +56,6 @@
 <div class="">
     {{ button('submit') }}
     {{ button('reset') }}
-</div>
-    </form>
-
-{{ form('Reset Your Password', 'resetPassword', flash, reset) }}
-<div class="w3-section">
-    {{ input('email', 'email', {'value': post.email }) }}
-</div>
-<div class="">
-    {{ button('submit') }}
 </div>
     </form>
 </div>

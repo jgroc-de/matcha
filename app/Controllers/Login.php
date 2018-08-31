@@ -13,6 +13,10 @@ class Login extends Route
             $this->user->updatePublicToken();
             return $response->withRedirect('/');
         }
+        if (!array_key_exists('gender', $_POST))
+        {
+            $_POST['gender'] = $this->characters[random_int(0, 4)];
+        }
         return $this->view->render(
             $response,
             'templates/logForm/login.html.twig',

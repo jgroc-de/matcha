@@ -48,6 +48,13 @@ img {
     overflow: auto;
 }
 
+.gg-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height:40px;
+}
+
 h3 {
     min-height:38.5px;
 }

@@ -50,7 +50,7 @@ class UserModel extends \App\Constructor
         return $req->fetch();
     }
     
-    public function getUsersBySexuality(array $age, float $delta_lng = 0.2, float $delta_lat = 0.2)
+    public function getUsersBySexuality(array $age, array $angle)
     {
         $reqTab = array();
         switch ($_SESSION['profil']['sexuality'])
@@ -64,10 +64,12 @@ class UserModel extends \App\Constructor
             default:
                 $where = '';
         }
+        $id = $_SESSION['id'];
         $req = $this->db->prepare(
             "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity
             FROM user 
             WHERE birthdate BETWEEN ? AND ? $where
+            AND id <> $id
             AND lattitude BETWEEN ? AND ?
             AND longitude BETWEEN ? AND ?
             ORDER BY popularity DESC
@@ -76,23 +78,23 @@ class UserModel extends \App\Constructor
         $req->execute(array(
             $age['max'],
             $age['min'],
-            $_SESSION['profil']['lattitude'] - $delta_lat,
-            $_SESSION['profil']['lattitude'] + $delta_lat,
-            $_SESSION['profil']['longitude'] - $delta_lng,
-            $_SESSION['profil']['longitude'] + $delta_lng
+            $_SESSION['profil']['lattitude'] - $angle['lat'],
+            $_SESSION['profil']['lattitude'] + $angle['lat'],
+            $_SESSION['profil']['longitude'] - $angle['lng'],
+            $_SESSION['profil']['longitude'] + $angle['lng']
         ));
         return $req->fetchAll();
     }
 
-    public function getUserByCriteria(array $age, array $target = array(), array $pop, int $dist)
+    public function getUserByCriteria(array $age, array $target, array $pop, array $angle)
     {
-        $delta_lat = 5;
-        $delta_lng = 5;
+        $id = $_SESSION['id'];
         $count = str_repeat('?,', count($target) - 1) . '?';
         $req = $this->db->prepare(
             "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity
             FROM user
             WHERE gender IN ($count)
+            AND id <> $id
             AND birthdate BETWEEN ? AND ?
             AND lattitude BETWEEN ? AND ?
             AND longitude BETWEEN ? AND ?
@@ -102,10 +104,10 @@ class UserModel extends \App\Constructor
         $array = array_merge($target, [
             $age['max'],
             $age['min'],
-            $_SESSION['profil']['lattitude'] - $delta_lat,
-            $_SESSION['profil']['lattitude'] + $delta_lat,
-            $_SESSION['profil']['longitude'] - $delta_lng,
-            $_SESSION['profil']['longitude'] + $delta_lng,
+            $_SESSION['profil']['lattitude'] - $angle['lat'],
+            $_SESSION['profil']['lattitude'] + $angle['lat'],
+            $_SESSION['profil']['longitude'] - $angle['lng'],
+            $_SESSION['profil']['longitude'] + $angle['lng'],
             $pop['min'],
             $pop['max']]
         );
@@ -119,9 +121,14 @@ class UserModel extends \App\Constructor
      */
     public function getUserByPseudo($pseudo)
     {
+        $id = $_SESSION['id'];
         $req = $this->db->prepare(
-            'SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity
-            FROM user WHERE pseudo LIKE ? ORDER BY pseudo LIMIT 50');
+            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity
+            FROM user
+            WHERE pseudo LIKE ?
+            AND id <> $id
+            ORDER BY pseudo
+            LIMIT 250");
         $req->execute(array($pseudo . '%'));
         return $req->fetchAll();
     }
@@ -171,7 +178,8 @@ class UserModel extends \App\Constructor
             lattitude = ?,
             longitude = ?,
             bot = ?,
-            popularity = ?
+            popularity = ?,
+            lastlog = ?
             where pseudo = ?');
         $req->execute(array(
             $post['pseudo'],
@@ -186,6 +194,7 @@ class UserModel extends \App\Constructor
             $post['lng'],
             true,
             $post['popularity'],
+            $post['lastlog'],
             $post['pseudo']
         ));
     }
@@ -270,6 +279,12 @@ class UserModel extends \App\Constructor
             $pop = 100;
         $req = $this->db->prepare('UPDATE user SET popularity = ? WHERE pseudo = ?');
         $req->execute(array($pop, $profil['pseudo']));
+    }
+
+    public function updateLastlog($id)
+    {
+        $req = $this->db->prepare('UPDATE user SET lastlog = ? WHERE id = ?');
+        $req->execute(array(time(), $id));
     }
 
     public function delPicture($nb)

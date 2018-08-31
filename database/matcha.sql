@@ -33,6 +33,7 @@ CREATE TABLE `user` (
     `sexuality` ENUM('bi','hetero','homo') NOT NULL DEFAULT 'bi',
     `popularity` TINYINT NOT NULL DEFAULT 0,
     `bot` BOOL DEFAULT false,
+    `lastlog` INT(11) DEFAULT 0,
     `img1` TEXT,
     `img2` TEXT,
     `img3` TEXT,
@@ -96,6 +97,10 @@ CREATE TABLE `usertags` (
     `idtag` INT(11) NOT NULL,
     `iduser` INT(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `notification`
+--
 
 DROP TABLE IF EXISTS `notification`;
 CREATE TABLE `notification` (

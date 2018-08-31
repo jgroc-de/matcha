@@ -33,6 +33,7 @@ class FormChecker extends \App\Constructor
                     $this->flash->addMessage('failure', 'account need activation');
                 elseif ($this->checkPassword($account['password'], $post['password']))
                 {
+                    $this->user->updateLastlog($account['id']);
                     $_SESSION['id'] = $account['id'];
                     $_SESSION['profil'] = $account;
                     $_SESSION['profil']['lattitude'] = floatval($_SESSION['profil']['lattitude']);

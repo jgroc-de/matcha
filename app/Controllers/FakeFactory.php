@@ -11,10 +11,8 @@ class FakeFactory extends Route
         $profil = array();
         $faker = \Faker\Factory::create();
         $user = $this->container->user;
-        //$debug = $this->container->debug;
         for ($i = 0; $i < $count; $i++)
         {
-            //$debug->ft_print([$count, $i]);
             $gender = rand(0, 4);
             $orientation = rand(0, 2);
             $name = $faker->firstName;
@@ -34,6 +32,7 @@ class FakeFactory extends Route
             $profil['lat'] = rand(485500, 490500) / 10000;
             $profil['lng'] = rand(21000, 26000) / 10000;
             $profil['popularity'] = rand(0, 100);
+            $profil['lastlog'] = rand(0, time());
             $user->setUser($profil);
             $user->updateFakeUser($profil);
             $bot = $user->getUserByEmail($profil['email']);
@@ -42,6 +41,7 @@ class FakeFactory extends Route
             {
                 $this->tag->setUserTag($faker->word());
             }
+            unset($_SESSION['id']);
         }
     }
 }

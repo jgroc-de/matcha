@@ -16,7 +16,22 @@
     </div>
     {{ button('submit') }}
     </form>
-
+    {{ form('Your Account', 'RGPD', flash, rgpd) }}
+    <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-green">
+        <div class="w3-button w3-green w3-hover-green" name="aboutData">About your data</div>
+        <p>We need some of your data to authentificate you on this website. In particular, your email is requested to sign up and to let you reset your password when needed. We dont sell or communicate in any ways your information to any third party.</p>
+    </div>
+    <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-blue">
+        <button type="submit" class="w3-button w3-blue" name="getInfo">Get all your data</button>
+        <p>We will send you everything we know about you by email.</p>
+        <button type="button" class="w3-button w3-blue w3-right" name="DeleteAccount">Get data</button>
+    </div>
+    <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-red">
+        <div class="w3-button w3-red" name="DeleteAccount" onclick="confirm('Do you really want to delete this account?')">Delete your account and all your data</div>
+        <p>We will delete everything we know about you. Your account will be delete too. A confirmation mail will be sent to you. Please notice that this can't be undone.</p>
+        <button type="button" class="w3-button w3-red w3-right" name="DeleteAccount" onclick="confirm('Do you really want to delete this account?')">Delete account</button>
+    </div>
+    </form>
     {{ form('Edit your profil', 'editProfil', flash, editProfil) }}
     <div class="w3-section">
         {{ input('text', 'pseudo', {'value': me.pseudo}) }}
