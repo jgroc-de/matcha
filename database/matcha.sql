@@ -105,10 +105,23 @@ CREATE TABLE `usertags` (
 DROP TABLE IF EXISTS `notification`;
 CREATE TABLE `notification` (
     `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
-    `iduser` INT(11) NOT NULL,
+    `exp` INT(11) NOT NULL,
+    `dest` INT(11) NOT NULL,
     `link` VARCHAR(255) NOT NULL,
     `message` TEXT NOT NULL,
     `date` DATETIME NOT NULL,
     `seen` BOOL DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `blacklist`
+--
+
+DROP TABLE IF EXISTS `blacklist`;
+CREATE TABLE `blacklist` (
+    `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
+    `iduser` INT(11) NOT NULL,
+    `iduser_bl` INT(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 COMMIT;

@@ -70,4 +70,10 @@ class TagModel extends \App\Constructor
         $req = $this->db->prepare('DELETE FROM usertags WHERE idtag = ? AND iduser = ?');
         return $req->execute(array($idTag, $idUser));
     }
+
+    public function delAllUserTag($idUser)
+    {
+        $req = $this->db->prepare('DELETE FROM usertags WHERE iduser = ?');
+        return $req->execute(array($idUser));
+    }
 }

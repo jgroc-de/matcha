@@ -20,11 +20,27 @@ class MessageModel extends \App\Constructor
     
     /**
      * @param $hash array
+     * @return array
+     */
+    public function getAllMessages()
+    {
+        $req = $this->db->prepare('SELECT owner, message FROM message WHERE id_user1 = ? OR id_user2 = ? ORDER BY date ASC LIMIT 100');
+        $req->execute(array($_SESSION['id'], $_SESSION['id']));
+        return $req->fetchAll();
+    }
+    
+    /**
+     * @param $hash array
      */
     public function setMessage($hash)
     {
-        print_r($hash);
         $req = $this->db->prepare('INSERT INTO message VALUES (?, ?, ?, ?, ?)');
         $req->execute($hash);
+    }
+
+    public function delAllMessages($id)
+    {
+        $req = $this->db->prepare('DELETE FROM message WHERE id_user1 = ? OR id_user2 = ?');
+        return $req->execute(array($id, $id));
     }
 }

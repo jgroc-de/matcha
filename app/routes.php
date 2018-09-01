@@ -22,24 +22,29 @@ $app->group('', function () {
         ->setName('home');
     $this->get('/search', App\Controllers\Search::class)
         ->setName('search');
-    $this->post('/search', App\Controllers\Search::class . ':criteria')
+    $this->post('/search_criteria', App\Controllers\Search::class . ':criteria')
         ->setName('searchByCriteria');
-    $this->post('/searchN', App\Controllers\Search::class . ':name')
+    $this->post('/search_user', App\Controllers\Search::class . ':name')
         ->setName('searchByName');
     $this->get('/profil/{id}', App\Controllers\Profil::class)
         ->setName('profil');
     $this->any('/editProfil', App\Controllers\EditProfil::class)
         ->setName('editProfil');
-    $this->any('/editProfil2', App\Controllers\EditProfil::class);
+    $this->any('/completeProfil', App\Controllers\EditProfil::class)
+        ->setName('editProfil2');
     $this->any('/editPassword', App\Controllers\EditPassword::class)
         ->setName('editPassword');
     $this->any('/rgpd', App\Controllers\RGPD::class)
         ->setName('RGPD');
+    $this->get('/deleteAccount', App\Controllers\RGPD::class . ':deleteAccount')
+        ->setName('deleteAccount');
     $this->get('/logout', App\Controllers\Logout::class)
         ->setName('logout');
     $this->get('/tchat', App\Controllers\Tchat::class)
         ->setName('tchat');
     $this->get('/addFriend/{id}', App\Controllers\AddFriendRequest::class);
+    $this->get('/report/{id}', App\Controllers\Report::class);
+    $this->get('/blacklist/{id}', App\Controllers\Blacklist::class);
     $this->post('/addTag', App\Controllers\AddTag::class);
     $this->post('/addPicture/{id}', App\Controllers\AddPicture::class);
     $this->get('/delFriend/{id}', App\Controllers\DeleteFriend::class);

@@ -133,6 +133,16 @@ class UserModel extends \App\Constructor
         return $req->fetchAll();
     }
 
+    public function getAllDatas()
+    {
+        $req = $this->db->prepare(
+            "SELECT pseudo, email, name, surname, biography, birthdate, lattitude, longitude, lastlog, gender, sexuality, img1, img2, img3, img4, img5
+            FROM user
+            WHERE id = ?");
+        $req->execute(array($_SESSION['id']));
+        return $req->fetch();
+    }
+
     /**
      * @param $post array
      */
@@ -146,8 +156,8 @@ class UserModel extends \App\Constructor
                 $img[] = $file;
         }
         $req = $this->db->prepare('
-                INSERT INTO user (pseudo, password, name, surname, email, gender, token, publicToken, img1, lattitude, longitude)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+                INSERT INTO user (pseudo, password, name, surname, email, gender, token, publicToken, img1, lattitude, longitude, activ)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $req->execute(array(
                 $post['pseudo'],
                 password_hash($post['password'], PASSWORD_DEFAULT),
@@ -159,7 +169,8 @@ class UserModel extends \App\Constructor
                 time() . $post['pseudo'] . bin2hex(random_bytes(4)),
                 'img/' . $img[rand(0, 4)],
                 $post['lat'],
-                $post['lng']
+                $post['lng'],
+                0
             ));
     }
 
@@ -303,5 +314,21 @@ class UserModel extends \App\Constructor
         $nb = 'img' . $nb;
         $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = ? WHERE id = ?');
         return $req->execute(array('/user_img/' . $path, $_SESSION['id']));
+    }
+
+    public function deleteUser($id)
+    {
+        $req = $this->db->prepare('SELECT * FROM user WHERE id = ?');
+        $req->execute(array($id));
+        $url = $req->fetchAll();
+        foreach ($url as $key => $value)
+        {
+            if (!strncmp('img', $key, 3) && strncmp('/img/', $value, 5))
+            {
+                unlink($value);
+            }
+        }
+        $req = $this->db->prepare('DELETE FROM user WHERE id = ?');
+        return $req->execute(array($id));
     }
 }

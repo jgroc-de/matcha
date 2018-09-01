@@ -21,11 +21,11 @@ class Tchat extends Route
             );
             $this->MyZmq->send($msg);
             $this->msg->setMessage(array($tab[0], $tab[1], $_SESSION['id'], $msg['msg'], date('Y-m-d H:i:s')));
-           if ($_POST['id'] < 500)
+           if ($_POST['id'] < 100)
             {
                 $chat = array(
                     'Jeeeezz… another dumbass pervert?',
-                    'U want a pic of my dick?',
+                    'U wanna my dickpick?',
                     'Hi dickhead',
                     'Hi sweetheart',
                     'Stop stalking around, go watch TV!',
@@ -74,7 +74,8 @@ class Tchat extends Route
             $user = $this->user->getUserById($_POST['id']);
             $msg = array(
                 'category' => '"' . $user['publicToken'] .'"',
-                'iduser' => $_POST['id'],
+                'dest' => $_POST['id'],
+                'exp' => $_SESSION['id'],
                 'msg' => $_SESSION['profil']['pseudo'] . ' sent you a new message!',
                 'link' => '/tchat'
             );

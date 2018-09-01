@@ -16,6 +16,8 @@
     body, footer, header, h1, h4 {
         background-color: black;
     }
+{% elseif error %}
+    {% set url = "" %} 
 {% elseif (hour > 21 or hour < 7) %}
     {% set url = "search2.jpg" %} 
 {% else %}

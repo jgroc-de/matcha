@@ -11,7 +11,7 @@ footer, header{
  }
 
 header {
-    bottom: 5vh;
+    bottom: 10vh;
     height: 10vh;
     padding: 0px 20px;
 }
@@ -19,4 +19,11 @@ header {
 footer {
     bottom: 0;
     height: 5vh;
+}
+
+img {
+    display: block;
+    max-width:100%;
+    max-height: 70vh;
+    margin:auto;
 }

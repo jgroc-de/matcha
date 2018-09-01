@@ -60,8 +60,8 @@ class FormChecker extends \App\Constructor
         {
             $post['activ'] = 0;
             $post['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
-            $post['lat'] = floatval('-75.181462');
-            $post['lng'] = 123.369780;
+            $post['lat'] = 0;
+            $post['lng'] = 0;
             if (empty($user->getUser($post['pseudo'])))
             {
                 $user->setUser($post);

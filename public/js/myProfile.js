@@ -139,7 +139,7 @@ function addEvent() {
 
 function delFriend(path, id)
 {
-    if (confirm('R U SURE?'))
+    if (confirm('Seriously bro?'))
     {
         var request = new XMLHttpRequest();
 

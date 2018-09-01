@@ -19,7 +19,7 @@ class Search extends Route
     {
         if (!$_SESSION['profil']['biography'])
         {
-            return $response->withRedirect('/editProfil2', 302);
+            return $response->withRedirect('/completeProfil', 302);
         }
         $this->date = date('Y');
         $this->listDefault();

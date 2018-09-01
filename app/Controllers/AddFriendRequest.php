@@ -7,11 +7,18 @@ class AddFriendRequest extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
-        $response->getBody()->write(
+        if (!($this->friends->getFriendReq($args['id'], $_SESSION['id'])))
+        {
             $this->container->friends->setFriendsReq(
                 $_SESSION['id'],
                 $args['id']
-            ));
-        return $response;
+            );
+            $flash = 'request sent!';
+        }
+        else
+        {
+            $flash = 'already sent!';
+        }
+        return $response->getBody()->write($flash);
     }
 }

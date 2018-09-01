@@ -44,13 +44,25 @@ class FriendsModel extends \App\Constructor
 
     public function setFriend($id1, $id2)
     {
-        $this->eraseFriendReq($id1, $id2);
-        $this->eraseFriendReq($id2, $id1);
-        $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?, ?)');
-        $token = password_hash($id1 . random_bytes(4) . $id2, PASSWORD_DEFAULT);
         $tab = $this->sortId($id1, $id2);
-        $tab[] = $token;
+        $req = $this->db->prepare('
+            SELECT * FROM friends
+            WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute($tab);
+        if (empty($req->fetch()))
+        {
+            $this->eraseFriendReq($id1, $id2);
+            $this->eraseFriendReq($id2, $id1);
+            $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?, ?)');
+            $token = password_hash($id1 . random_bytes(4) . $id2, PASSWORD_DEFAULT);
+            $this->flash->addMessage('success', 'this user is now your friends');
+            $tab[] = $token;
+            $req->execute($tab);
+        }
+        else
+        {
+            $this->flash->addMessage('success', 'this user is already your friends');
+        }
     }
 
     public function delFriendReq($id1, $id2)
@@ -59,6 +71,12 @@ class FriendsModel extends \App\Constructor
         $req->execute(array($id1, $id2));
         $req = $this->db->prepare('UPDATE friendsReq set visible = false WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute(array($id2, $id1));
+    }
+
+    public function delAllFriendReq($id)
+    {
+        $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? OR id_user2 = ?');
+        $req->execute(array($id, $id));
     }
 
     public function eraseFriendReq($id1, $id2)
@@ -70,15 +88,25 @@ class FriendsModel extends \App\Constructor
     public function delFriend($id1, $id2)
     {
         $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? AND id_user2 = ?');
-        $user = $this->user->getUserById($id2);
-        $msg = array(
-            'category' => '"' . $user['publicToken'] . '"',
-            "iduser" => $user['id'],
-            'link' => "/",
-            'msg' => $_SESSION['profil']['pseudo'] . " has erased your friendship link"
-        );
-        $this->MyZmq->send($msg);
-        $req->execute($this->sortId($id1, $id2));
+        if ($req->execute($this->sortId($id1, $id2)))
+        {
+            $user = $this->user->getUserById($id2);
+            $msg = array(
+                'category' => '"' . $user['publicToken'] . '"',
+                'dest' => $user['id'],
+                'exp' => $_SESSION['id'],
+                'link' => "/",
+                'msg' => $_SESSION['profil']['pseudo'] . " has erased your friendship link"
+            );
+            $this->MyZmq->send($msg);
+        }
+    }
+
+    public function delAllFriends($id)
+    {
+        $this->delAllFriendReq($id);
+        $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? OR id_user2 = ?');
+        $req->execute(array($id, $id));
     }
 
     public function getFriendsReqs($id)
@@ -92,6 +120,17 @@ class FriendsModel extends \App\Constructor
             ORDER BY user.pseudo
         ');
         $req->execute(array($id));
+        return $req->fetchAll();
+    }
+
+    public function getAllFriendsReqs()
+    {
+        $req = $this->db->prepare('
+            SELECT id_user1, id_user2 
+            FROM friendsReq
+            WHERE id_user1 = ? OR id_user2 = ?
+        ');
+        $req->execute(array($_SESSION['id'], $_SESSION['id']));
         return $req->fetchAll();
     }
 
@@ -114,14 +153,16 @@ class FriendsModel extends \App\Constructor
                 $this->user->updatePopularity(5, $_SESSION['profil']);
                 $msg = array(
                     'category' => '"' . $user['publicToken'] . '"',
-                    "iduser" => $user['id'],
+                    'dest' => $user['id'],
+                    'exp' => $_SESSION['id'],
                     'link' => "/profil/" . $id1,
                     'msg' => "It's a match! say hi to " . $_SESSION['profil']['pseudo']
                 );
                 $this->MyZmq->send($msg);
                 $msg = array(
                     'category' => '"' . $_SESSION['profil']['publicToken'] . '"',
-                    "iduser" => $_SESSION['id'],
+                    'dest' => $_SESSION['id'],
+                    'exp' => $user['id'],
                     'link' => "/profil/" . $id1,
                     'msg' => "It's a match! say hi to " . $user['pseudo']
                 );
@@ -134,7 +175,8 @@ class FriendsModel extends \App\Constructor
                 $this->user->updatePopularity(1, $user);
                 $msg = array(
                     'category' => '"' . $user['publicToken'] . '"',
-                    "iduser" => $user['id'],
+                    'dest' => $user['id'],
+                    'exp' => $_SESSION['id'],
                     'link' => "/profil/" . $id1,
                     'msg' => $_SESSION['profil']['pseudo'] . ' sent you a friend request'
                 );

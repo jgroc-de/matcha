@@ -7,29 +7,20 @@ class Profil extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
-        $user = $this->user->getUserById($args['id']);
-        if ($user)
+        if ($args['id'] == $_SESSION['id'])
+            return $response->withRedirect('/', 302);
+        else if (!$this->container->blacklist->getBlacklistById($args['id'], $_SESSION['id'])
+            && $user = $this->user->getUserById($args['id']))
         {
-            if ($user['id'] != $_SESSION['id'])
-            {
-                $msg = array(
-                    "category" => '"' . $user['publicToken'] . '"',
-                    "iduser" => $user['id'],
-                    "link" => "/profil/" . $_SESSION['id'],
-                    "msg" => $_SESSION['profil']['pseudo'] . ' watched your profil!'
-                );
-                $this->MyZmq->send($msg);
-                $friends = $this->friends->getFriends($_SESSION['id']);
-                $friend = false;
-                foreach ($friends as $test)
-                {
-                    if ($test['id'] === $user['id'])
-                    {
-                        $friend = true;
-                        break;
-                    }
-                }
-            }
+            $msg = array(
+                "category" => '"' . $user['publicToken'] . '"',
+                "dest" => $user['id'],
+                "exp" => $_SESSION['id'],
+                "link" => "/profil/" . $_SESSION['id'],
+                "msg" => $_SESSION['profil']['pseudo'] . ' watched your profil!'
+            );
+            $this->MyZmq->send($msg);
+            $friend = empty($this->friends->getFriend($_SESSION['id'], $user['id']))? true : false;
             $user['lastlog'] = date('d M Y', $user['lastlog']);
             return $this->view->render(
                 $response,
@@ -43,5 +34,7 @@ class Profil extends Route
                 ]
             );
         }
+        else
+            ($this->container->notFoundHandler)($request, $response);
     }
 }

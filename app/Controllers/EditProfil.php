@@ -19,10 +19,11 @@ class EditProfil extends Route
                 else
                     $this->flash->addMessage('failure', 'something went wrong');
             }
+            $post['publicToken'] = $_SESSION['profil']['publicToken'];
         }
         else
             $post = $_SESSION['profil'];
-        if ($request->getUri()->getPath() == '/editProfil2')
+        if ($request->getUri()->getPath() == '/completeProfil')
                 $this->flash->addMessage('failure', 'Plz complete your profil before searching for targets');
         return $this->view->render(
             $response,

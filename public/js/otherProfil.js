@@ -27,15 +27,36 @@ function showDivs(n) {
     }
 }
 
-function addFriend(path)
+function profilAction(path)
 {
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200)
-            document.getElementById("flash").textContent = this.responseText;
+        {
+            var txt = document.getElementById("flashText");
+            
+            txt.textContent = this.responseText;
+            toggleDisplay("flash");
+            setTimeout(function() {
+                toggleDisplay("flash"); 
+            }, 3500);
+        }
     };
     xmlhttp.open("GET", path, true);
     xmlhttp.send();
 }
 
+var time;
+function displayResponse(text)
+{
+    var txt = document.getElementById("flashText");
+
+    clearTimeout(time);
+    txt.textContent = text;
+    if (flash.className.indexOf("w3-hide") == -1)
+        toggleDisplay("flash");
+    time = setTimeout(function() {
+        toggleDisplay("flash"); 
+    }, 3500);
+}

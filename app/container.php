@@ -66,6 +66,13 @@ $container['notif'] = function ($container) {
 };
 
 /**
+ * @class BlacklistModel
+ */
+$container['blacklist'] = function ($container) {
+    return new \App\Model\BlacklistModel($container);
+};
+
+/**
  * etc…
  */
 $container['form'] = function ($container) { 

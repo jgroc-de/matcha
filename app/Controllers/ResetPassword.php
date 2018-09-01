@@ -13,8 +13,6 @@ class ResetPassword extends Route
             $account = $user->getUserByEmail($_POST['email']);
             if ($account)
             {
-                $account['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
-                $user->updateToken($account['pseudo'], $account['token']);
                 if($this->mail->sendResetMail($account['pseudo'], $account['email'], $account['token']))
                     $this->flash->addMessage('success', 'Check your mail!');
                 else
