@@ -5,11 +5,15 @@ class MyZmq extends \App\Constructor
 {
     public function send($msg)
     {
-        if (empty($this->blacklist->getBlacklistById($msg['dest'], $msg['exp'])))
+        $socket = $this->zmq;
+        if (array_key_exists('mateStatus', $msg) || array_key_exists('profilStatus', $msg))
         {
-            $socket = $this->zmq;
             $socket->send(json_encode($msg));
-            if (!array_key_exists('when', $msg) && !array_key_exists('mateStatus', $msg))
+        }
+        else if (empty($this->blacklist->getBlacklistById($msg['dest'], $msg['exp'])))
+        {
+            $socket->send(json_encode($msg));
+            if (!array_key_exists('when', $msg))
             {
                 $notif = array(
                     $msg['dest'],

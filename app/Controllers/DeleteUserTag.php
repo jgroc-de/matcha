@@ -9,7 +9,6 @@ class DeleteUserTag extends Route
     {
         if ($this->container->tag->delUserTag($args['id'], $_SESSION['id']))
             return $response;
-        else
-            return $response->withStatus(400);
+        return $response->withStatus(400);
     }
 }

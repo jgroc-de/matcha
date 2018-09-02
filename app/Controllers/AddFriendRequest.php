@@ -19,6 +19,6 @@ class AddFriendRequest extends Route
         {
             $flash = 'already sent!';
         }
-        return $response->getBody()->write($flash);
+        return $response->write($flash);
     }
 }

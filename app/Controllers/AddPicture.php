@@ -9,7 +9,6 @@ function moveUploadedFile($directory, UploadedFile $uploadedFile)
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
     $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
     $filename = sprintf('%s.%0.8s', $basename, $extension);
-
     $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
 
     return $filename;
@@ -20,19 +19,21 @@ class AddPicture extends Route
     public function __invoke(Request $request, Response $response, array $args)
     {
         $data = $request->getUploadedFiles();
-        //var_dump($_FILES);
         $nb = intval($args['id']);
-        if ($data['file']->getError() === UPLOAD_ERR_OK && $nb >= 1 && $nb <= 5)
+        $type = array('image/png', 'image/jpeg', 'image/gif');
+        if ($data['file']->getError() === UPLOAD_ERR_OK
+            && $data['file']->getSize() < 200000
+            && in_array($data['file']->getClientMediaType(), $type)
+            && $nb >= 1 && $nb <= 5)
         {
-            $path = moveUploadedFile('user_img', $data['file']);
+            $nb = 'img' . intval($args['id']);
+            $path = '/user_img/' . moveUploadedFile('user_img', $data['file']);
             if ($this->user->addPicture($nb, $path))
             {
-                $_SESSION['profil']['img' . $nb] = '/user_img/' . $path;
-                $response->write('uploaded');
+                $_SESSION['profil'][$nb] = $path;
+                return $response;
             }
-            else
-                $response->write('fail');
         }
-        return $response;
+        return $response->withStatus(500);
     }
 }

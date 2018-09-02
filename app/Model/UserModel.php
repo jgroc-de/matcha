@@ -300,20 +300,14 @@ class UserModel extends \App\Constructor
 
     public function delPicture($nb)
     {
-        $nb = 'img' . $nb;
-        $req = $this->db->prepare('SELECT ? FROM user WHERE id = ?');
-        $req->execute(array($nb, $_SESSION['id']));
-        $url = $req->fetch();
         $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = NULL WHERE id = ?');
-        $req->execute(array($_SESSION['id']));
-        return $url[$nb];
+        return $req->execute(array($_SESSION['id']));
     }
 
     public function addPicture($nb, $path)
     {
-        $nb = 'img' . $nb;
         $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = ? WHERE id = ?');
-        return $req->execute(array('/user_img/' . $path, $_SESSION['id']));
+        return $req->execute(array($path, $_SESSION['id']));
     }
 
     public function deleteUser($id)

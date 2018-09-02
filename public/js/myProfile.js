@@ -94,11 +94,10 @@ function addPicture() {
 
 function addEvent() {
     var id = this.id;
-    var allowedTypes = ['png', 'jpg', 'jpeg', 'gif'];
+    var allowedTypes = ['image/png', 'image/jpeg', 'image/gif'];
     var prev = this.parentNode.parentNode;
 
-    imgType = this.files[0].name.split('.').pop().toLowerCase();
-    if (allowedTypes.indexOf(imgType) != -1) {
+    if ((allowedTypes.indexOf(this.files[0].type) != -1) && (this.files[0].size < 200000)) {
         var form = new FormData();
         var xhttp = new XMLHttpRequest();
         var reader = new FileReader();
@@ -112,29 +111,31 @@ function addEvent() {
                 var imgElement = document.createElement('img');
                 var iElement = document.createElement('i');
 
-                if (path !== 'fail')
-                {
-                    while (prev.firstChild) {
-                        prev.removeChild(prev.firstChild);
-                    }
-                    imgElement.style.maxWidth = '100%';
-                    imgElement.style.maxHeight = '100%';
-                    imgElement.title = path;
-                    imgElement.alt = path;
-                    imgElement.setAttribute('class', 'w3-image w3-display-middle');
-                    imgElement.setAttribute('onclick', 'displayModal("' + reader.result + '")');
-                    imgElement.src = reader.result;
-                    prev.appendChild(imgElement);
-                    iElement.setAttribute('class', 'w3-button w3-display-topright w3-hover-red fa fa-remove');
-                    iElement.title = 'remove picture';
-                    iElement.setAttribute('onclick', 'deletePic("' + id + '")');
-                    prev.appendChild(iElement);
+                while (prev.firstChild) {
+                    prev.removeChild(prev.firstChild);
                 }
+                imgElement.style.maxWidth = '100%';
+                imgElement.style.maxHeight = '100%';
+                imgElement.title = path;
+                imgElement.alt = path;
+                imgElement.setAttribute('class', 'w3-image w3-display-middle');
+                imgElement.setAttribute('onclick', 'displayModal("' + reader.result + '")');
+                imgElement.src = reader.result;
+                prev.appendChild(imgElement);
+                iElement.setAttribute('class', 'w3-button w3-display-topright w3-hover-red fa fa-remove');
+                iElement.title = 'remove picture';
+                iElement.setAttribute('onclick', 'deletePic("' + id + '")');
+                prev.appendChild(iElement);
+            }
+            else if (this.readyState == 4 && this.status == 500) {
+                alert('server trouble… try again later!');
             }
         };
         xhttp.send(form);
         reader.readAsDataURL(this.files[0]);
     }
+    else
+        alert('not allowed type (png, jpg/jpeg, gif) or file too large (> 200ko)');
 }
 
 function delFriend(path, id)
@@ -187,6 +188,5 @@ function delUserTag(path, id) {
     };
     xhr.send();
 }
-
 
 addPicture();

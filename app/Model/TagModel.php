@@ -4,12 +4,6 @@ namespace App\Model;
 
 class TagModel extends \App\Constructor
 {
-    public function setTag($tag)
-    {
-        $req = $this->db->prepare('INSERT INTO hashtags (tag) VALUES (?)');
-        return $req->execute(array($tag));
-    }
-
     public function getTag($tag)
     {
         $req = $this->db->prepare('SELECT * FROM hashtags WHERE tag = ?');
@@ -63,6 +57,12 @@ class TagModel extends \App\Constructor
         ');
         $req->execute(array($userId));
         return $req->fetchAll();
+    }
+
+    public function setTag($tag)
+    {
+        $req = $this->db->prepare('INSERT INTO hashtags (tag) VALUES (?)');
+        return $req->execute(array($tag));
     }
 
     public function delUserTag($idTag, $idUser)

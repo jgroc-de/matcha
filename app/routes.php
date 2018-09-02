@@ -54,5 +54,6 @@ $app->group('', function () {
     $this->post('/updateGeolocation', App\Controllers\UpdateGeolocation::class);
     $this->post('/sendMessage', App\Controllers\Tchat::class . ':send');
     $this->post('/startTchat', App\Controllers\Tchat::class . ':startTchat');
-    $this->get('/chatStatus', App\Controllers\Tchat::class . ':status');
+    $this->get('/chatStatus', App\Controllers\Tchat::class . ':mateStatus');
+    $this->get('/profilStatus/{id}', App\Controllers\Tchat::class . ':profilStatus');
 })->add(new \App\Middlewares\authMiddleware($container));

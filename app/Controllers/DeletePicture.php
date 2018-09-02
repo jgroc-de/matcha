@@ -7,13 +7,13 @@ class DeletePicture extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
-        if ($url = $this->user->delPicture($args['id']))
+        if ($this->user->delPicture($nb = 'img' . $args['id']))
         {
-            if (strncmp('/img/', $url, 5))
+            if (strncmp('/img/', $_SESSION['profil'][$nb], 5))
             {
-                unlink($url);
+                unlink(ltrim($_SESSION['profil'][$nb], '/'));
             }
-            $_SESSION['profil']['img' . $args['id']] = '';
+            $_SESSION['profil'][$nb] = '';
         }
         return $response;
     }

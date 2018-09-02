@@ -29,7 +29,7 @@ function resetBadge()
         {
             notifSocket.subscribe('"' + myId + '"', function(topic, data)
             {
-                console.log('New notification received');
+                //console.log('New notification received');
                 if (data.hasOwnProperty('msg'))
                 {
                     addNotification(data);
@@ -38,14 +38,24 @@ function resetBadge()
                 {
                     highlightMate(data);
                 }
+                else if (data.hasOwnProperty('profilStatus'))
+                {
+                    if (data['profilStatus'])
+                        onlineProfil();
+                }
             });
-            console.warn('WebSocket connection opened');
+            //console.warn('WebSocket connection opened');
             if (typeof mateStatus === "function")
             {
                 mateStatus();
             }
+            else if (typeof profilStatus === "function")
+            {
+                profilStatus();
+            }
         },
-        function() {console.warn('WebSocket connection closed');},
+        function() {//console.warn('WebSocket connection closed');
+        },
         {'skipSubprotocolCheck': true}
     );
 })();

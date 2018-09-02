@@ -10,8 +10,7 @@ class AddTag extends Route
         if ($this->container->tag->setUserTag($_POST['tag']))
         {
             $tag = $this->tag->getUserTagByName($_POST['tag'], $_SESSION['id']);
-            $response->getBody()->write($tag['id']);
-            return $response;
+            return $response->write($tag['id']);
         }
         return $response->withStatus(400);
     }

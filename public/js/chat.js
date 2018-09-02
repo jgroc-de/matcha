@@ -12,7 +12,6 @@ function highlightMate(data)
     var div;
     var name;
 
-    console.log(data.mateStatus);
     for (name in data.mateStatus)
     {
         div = document.getElementById(name);
@@ -75,14 +74,15 @@ function tchatWith(name, id, myId, token)
                 {
                     websocket.subscribe(token, function(topic, data)
                     {
-                        console.log('topic: "' + topic);
-                        console.log('New msg received from' + data.exp + ' to ' + data.dest + " . my id: " + data.myId);
+                        //console.log('topic: "' + topic);
+                        //console.log('New msg received from' + data.exp + ' to ' + data.dest + " . my id: " + data.myId);
                         addMessage(data.msg, data.exp, myId)
                     });
-                    console.log(websocket);
-                    console.warn('WebSocket connection opened');
+                    //console.log(websocket);
+                    //console.warn('WebSocket connection opened');
                 },
-                function() {console.warn('WebSocket connection closed');},
+                function() {//console.warn('WebSocket connection closed');
+                },
                 {'skipSubprotocolCheck': true}
             );
 

@@ -65,11 +65,7 @@ class Search extends Route
 
     private function searchResponse($response)
     {
-        foreach ($this->list as $key => $user)
-        {
-            $this->list[$key]['distance'] = $this->angle2distance($user);
-            $this->list[$key]['score'] = $this->score($this->list[$key]);
-        }
+        $this->filterList();
         usort($this->list, array($this, 'sortList'));
         return $this->view->render(
             $response,
@@ -89,6 +85,29 @@ class Search extends Route
                 'criteria' => $this->criteria
             ]
         );
+    }
+
+    private function filterList()
+    {
+        $bList = $this->blacklist->getAllBlacklist();
+        $blacklist = array();
+        foreach ($bList as $id)
+        {
+            if ($id['iduser'] === $_SESSION['id'])
+                $blacklist[] = $id['iduser_bl'];
+            else
+                $blacklist[] = $id['iduser'];
+        } 
+        foreach ($this->list as $key => $user)
+        {
+            if (in_array($user['id'], $blacklist))
+                unset($this->list[$key]);
+            else
+            {
+                $this->list[$key]['distance'] = $this->angle2distance($user);
+                $this->list[$key]['score'] = $this->score($this->list[$key]);
+            }
+        }
     }
 
     private function listByCriteria()

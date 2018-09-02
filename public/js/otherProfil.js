@@ -60,3 +60,19 @@ function displayResponse(text)
         toggleDisplay("flash"); 
     }, 3500);
 }
+
+function onlineProfil()
+{
+    var span = document.getElementById('online');
+
+    span.innerHTML = "(online)</br>";
+    span.className = "w3-text-green";
+}
+
+function profilStatus()
+{
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', '/profilStatus/' + user.id);
+    xhr.send();
+}

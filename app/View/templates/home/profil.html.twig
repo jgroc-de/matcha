@@ -39,7 +39,7 @@
                     {{ subtitle('Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
                     <div id="Profil" class="w3-theme-l4 w3-padding gg-section">
                         <div class="w3-left-align">
-                            {% if not home %}offline since: {{ profil.lastlog }}<br>{% endif %}
+                            <span id="online" class="w3-text-blue">{% if not home %}(offline since: {{ profil.lastlog }})<br>{% endif %}</span>
                             {% if home %}
                                 name: {{ profil.name}} {{profil.surname}}<br>
                                 email: {{ profil.email }}<br>
@@ -151,7 +151,7 @@
 
 {% block script %}
 <script>
-var user =  {lat: {{ profil.lattitude }}, lng: {{ profil.longitude }}, title: '{{ profil.pseudo }}'};
+var user =  {id: {{ profil.id }}, title: '{{ profil.pseudo }}', lat: {{ profil.lattitude }}, lng: {{ profil.longitude }} };
 var usersPos = [
 {% for user in friends %}
 {lat: {{ user.lattitude }}, lng: {{ user.longitude }}, title: '{{ user.pseudo }}', img: '{{ user.img1 }}', id: '{{ user.id }}', kind: '{{ user.gender }}'},

@@ -26,10 +26,8 @@ class Pusher implements WampServerInterface
         $entryData = json_decode($entry, true);
 
         // If the lookup topic object isn't set there is no one to publish to
-        //print_r($entryData);
         if (!array_key_exists($entryData['category'], $this->subscribedTopics))
         {
-            //print_r("out\n");
             return;
         }
         if (array_key_exists('mateStatus', $entryData))
@@ -45,6 +43,19 @@ class Pusher implements WampServerInterface
                     unset($this->subscibedTopics[$friend]);
                     $entryData['mateStatus'][$key] = false;
                 }
+            }
+        }
+        elseif (array_key_exists('profilStatus', $entryData))
+        {
+            $user = $entryData['profilStatus'];
+            if (!array_key_exists($user, $this->subscribedTopics))
+                $entryData['profilStatus'] = false;
+            else if ($this->subscribedTopics[$user]->count() >= 1)
+                $entryData['profilStatus'] = true;
+            else
+            {
+                unset($this->subscibedTopics[$friend]);
+                $entryData['profilStatus'] = false;
             }
         }
         $topic = $this->subscribedTopics[$entryData['category']];

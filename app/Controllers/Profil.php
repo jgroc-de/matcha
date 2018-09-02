@@ -20,7 +20,7 @@ class Profil extends Route
                 "msg" => $_SESSION['profil']['pseudo'] . ' watched your profil!'
             );
             $this->MyZmq->send($msg);
-            $friend = empty($this->friends->getFriend($_SESSION['id'], $user['id']))? true : false;
+            $friend = empty($this->friends->getFriend($_SESSION['id'], $user['id']))? false : true;
             $user['lastlog'] = date('d M Y', $user['lastlog']);
             return $this->view->render(
                 $response,
