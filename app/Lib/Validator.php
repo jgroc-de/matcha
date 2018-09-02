@@ -144,6 +144,10 @@ class Validator
         return true;
     }
 
+    public function text(string $test)
+    {
+        return true;
+    }
     /**
      * @param string $test
      *

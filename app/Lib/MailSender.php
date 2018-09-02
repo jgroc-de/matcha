@@ -149,4 +149,19 @@ class MailSender
             Votre dévoué, " . $_SERVER['SERVER_NAME'];
         return $this->sendMail(SELF::EXP, $subject, $message, $_SESSION['profil']['email']);
     }
+
+    public function contactMe($msg, $mail)
+    {
+        $subject = 'User contact from ' . $_SERVER['SERVER_NAME'];
+        $message = "Bonjour maître des 7 océans numériques,
+
+    On vous a laissé ce messsage:
+
+         $msg
+
+    Glorieuse journée à vous!
+
+            Votre dévoué, " . $_SERVER['SERVER_NAME'];
+        return $this->sendMail(SELF::EXP, $subject, $message, $mail);
+    }
 }

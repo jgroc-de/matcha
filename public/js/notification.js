@@ -36,12 +36,13 @@ function resetBadge()
                 }
                 else if (data.hasOwnProperty('mateStatus'))
                 {
-                    highlightMate(data);
+                    if (typeof mateStatus === "function")
+                        highlightMate(data);
                 }
                 else if (data.hasOwnProperty('profilStatus'))
                 {
-                    if (data['profilStatus'])
-                        onlineProfil();
+                    if (typeof profilStatus === "function")
+                        onlineProfil(data);
                 }
             });
             //console.warn('WebSocket connection opened');

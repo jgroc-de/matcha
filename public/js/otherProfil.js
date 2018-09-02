@@ -61,12 +61,21 @@ function displayResponse(text)
     }, 3500);
 }
 
-function onlineProfil()
+function onlineProfil(data)
 {
     var span = document.getElementById('online');
+    var spanoff = document.getElementById('offline');
 
-    span.innerHTML = "(online)</br>";
-    span.className = "w3-text-green";
+    if ((data['profilStatus']) && (span.className.indexOf("w3-hide") != -1))
+    {
+        toggleDisplay('offline');
+        toggleDisplay('online');
+    }
+    if (!(data['profilStatus']) && (spanoff.className.indexOf("w3-hide") != -1))
+    {
+        toggleDisplay('offline');
+        toggleDisplay('online');
+    }
 }
 
 function profilStatus()
@@ -76,3 +85,5 @@ function profilStatus()
     xhr.open('GET', '/profilStatus/' + user.id);
     xhr.send();
 }
+
+setInterval(profilStatus, 600000);

@@ -104,6 +104,7 @@ class Search extends Route
                 unset($this->list[$key]);
             else
             {
+                $this->list[$key]['time'] = floor((time() - intval($user['lastlog'])) / 3600);
                 $this->list[$key]['distance'] = $this->angle2distance($user);
                 $this->list[$key]['score'] = $this->score($this->list[$key]);
             }
@@ -243,7 +244,7 @@ class Search extends Route
 
     private function score($user)
     {
-        return $user['popularity'] / 5 + 5 * pow($user['tag'], $user['tag']) - floor($user['distance'] * 2)  - abs($_SESSION['profil']['birthdate'] - $user['birthdate']);
+        return floor($user['popularity'] / 5) + 5 * pow($user['tag'], $user['tag']) - $user['time'] - floor($user['distance'] * 2)  - abs($_SESSION['profil']['birthdate'] - $user['birthdate']);
     }
 
     public function sortList($a, $b)

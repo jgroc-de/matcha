@@ -59,7 +59,7 @@ h3 {
     min-height:38.5px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
     .gg-menu {
         display:none !important;
     }
@@ -83,7 +83,7 @@ h3 {
     }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width:801px) {
     .gg-burger {
         display:none !important;
     }

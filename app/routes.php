@@ -5,6 +5,9 @@ $app->get('/setup', App\Controllers\InitializeDB::class)
     ->setName('setup');
 $app->get('/seed', App\Controllers\FakeFactory::class)
     ->setName('seed');
+$app->get('/contact', App\Controllers\Contact::class)
+    ->setName('contact');
+$app->post('/contact', App\Controllers\Contact::class . ':sendMail');
 
 $app->group('', function () {
     $this->any('/login', App\Controllers\Login::class)
@@ -17,7 +20,7 @@ $app->group('', function () {
         ->setName('resetPassword');
 })->add(new \App\Middlewares\noAuthMiddleware());
 
-$app->group('', function () {
+$app->group('', function () use ($app) {
     $this->get('/', App\Controllers\Home::class)
         ->setName('home');
     $this->get('/search', App\Controllers\Search::class)
@@ -27,7 +30,8 @@ $app->group('', function () {
     $this->post('/search_user', App\Controllers\Search::class . ':name')
         ->setName('searchByName');
     $this->get('/profil/{id}', App\Controllers\Profil::class)
-        ->setName('profil');
+        ->setName('profil')
+        ->add(new \App\Middlewares\idMiddleware());
     $this->any('/editProfil', App\Controllers\EditProfil::class)
         ->setName('editProfil');
     $this->any('/completeProfil', App\Controllers\EditProfil::class)
@@ -42,6 +46,13 @@ $app->group('', function () {
         ->setName('logout');
     $this->get('/tchat', App\Controllers\Tchat::class)
         ->setName('tchat');
+    $this->post('/updateGeolocation', App\Controllers\UpdateGeolocation::class);
+    $this->post('/sendMessage', App\Controllers\Tchat::class . ':send');
+    $this->post('/startTchat', App\Controllers\Tchat::class . ':startTchat');
+    $this->get('/chatStatus', App\Controllers\Tchat::class . ':mateStatus');
+})->add(new \App\Middlewares\authMiddleware($container));
+
+$app->group('', function () {
     $this->get('/addFriend/{id}', App\Controllers\AddFriendRequest::class);
     $this->get('/report/{id}', App\Controllers\Report::class);
     $this->get('/blacklist/{id}', App\Controllers\Blacklist::class);
@@ -51,9 +62,7 @@ $app->group('', function () {
     $this->get('/delUserTag/{id}', App\Controllers\DeleteUserTag::class);
     $this->get('/delPicture/{id}', App\Controllers\DeletePicture::class);
     $this->get('/delFriendReq/{id}', App\Controllers\DeleteFriendRequest::class);
-    $this->post('/updateGeolocation', App\Controllers\UpdateGeolocation::class);
-    $this->post('/sendMessage', App\Controllers\Tchat::class . ':send');
-    $this->post('/startTchat', App\Controllers\Tchat::class . ':startTchat');
-    $this->get('/chatStatus', App\Controllers\Tchat::class . ':mateStatus');
     $this->get('/profilStatus/{id}', App\Controllers\Tchat::class . ':profilStatus');
-})->add(new \App\Middlewares\authMiddleware($container));
+})
+    ->add(new \App\Middlewares\idMiddleware($container))
+    ->add(new \App\Middlewares\authMiddleware($container));

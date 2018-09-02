@@ -66,7 +66,7 @@ class UserModel extends \App\Constructor
         }
         $id = $_SESSION['id'];
         $req = $this->db->prepare(
-            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity
+            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity, lastlog
             FROM user 
             WHERE birthdate BETWEEN ? AND ? $where
             AND id <> $id

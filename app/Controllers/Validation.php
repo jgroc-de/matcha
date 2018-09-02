@@ -15,7 +15,7 @@ class Validation extends Route
             $_SESSION['id'] = $account['id'];
             $_SESSION['profil'] = $account;
             $_SESSION['profil']['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
-            $user->updateToken($account['pseudo'], $_SESSION['profil']['token']);
+            $this->user->updateToken($account['pseudo'], $_SESSION['profil']['token']);
             if ($get['action'] === 'reinit')
                 return $response->withRedirect('/editPassword');
             elseif ($get['action'] === 'delete')

@@ -32,7 +32,7 @@ class FakeFactory extends Route
             $profil['lat'] = rand(485500, 490500) / 10000;
             $profil['lng'] = rand(21000, 26000) / 10000;
             $profil['popularity'] = rand(0, 100);
-            $profil['lastlog'] = rand(0, time());
+            $profil['lastlog'] = rand(1533224411, time());
             $user->setUser($profil);
             $user->updateFakeUser($profil);
             $bot = $user->getUserByEmail($profil['email']);

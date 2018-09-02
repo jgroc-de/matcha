@@ -39,8 +39,9 @@
                     {{ subtitle('Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
                     <div id="Profil" class="w3-theme-l4 w3-padding gg-section">
                         <div class="w3-left-align">
-                            <span id="online" class="w3-text-blue">{% if not home %}(offline since: {{ profil.lastlog }})<br>{% endif %}</span>
-                            {% if home %}
+                            {% if not home %}<span id="online" class="w3-text-green w3-hide">(online)<br></span>
+                            <span id="offline" class="w3-text-blue">(offline since: {{ profil.lastlog }})<br></span>
+                            {% else %}
                                 name: {{ profil.name}} {{profil.surname}}<br>
                                 email: {{ profil.email }}<br>
                             {% endif %}
