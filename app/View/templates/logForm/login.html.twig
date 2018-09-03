@@ -5,7 +5,7 @@
 {% from 'macro/form/layout.html.twig' import form %}
 
 {% block main %}
-<div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
+<div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="width:90vw;max-width:500px">
 {{ form('Log In', 'login', flash, login) }}
 <div class="w3-section">
     {{ input('text', 'pseudo', {'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}

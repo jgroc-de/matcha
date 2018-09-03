@@ -73,7 +73,7 @@ class UserModel extends \App\Constructor
             AND lattitude BETWEEN ? AND ?
             AND longitude BETWEEN ? AND ?
             ORDER BY popularity DESC
-            LIMIT 250"
+            LIMIT 100"
             );
         $req->execute(array(
             $age['max'],
@@ -99,7 +99,7 @@ class UserModel extends \App\Constructor
             AND lattitude BETWEEN ? AND ?
             AND longitude BETWEEN ? AND ?
             AND popularity BETWEEN ? AND ?
-            LIMIT 250"
+            LIMIT 100"
         );
         $array = array_merge($target, [
             $age['max'],
@@ -128,7 +128,7 @@ class UserModel extends \App\Constructor
             WHERE pseudo LIKE ?
             AND id <> $id
             ORDER BY pseudo
-            LIMIT 250");
+            LIMIT 50");
         $req->execute(array($pseudo . '%'));
         return $req->fetchAll();
     }

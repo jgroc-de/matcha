@@ -61,3 +61,27 @@ function toggleDisplay2(x)
 function closeInfo(id) {
     document.getElementById('' + id).style.display = "none";
 }
+
+function getColor(kind)
+{
+    switch(kind)
+    {
+        case 'Rick':
+            return '878f99';
+            break;
+        case 'Jerry':
+            return 'ff7b25';
+            break;
+        case 'Beth':
+            return '6b5b95';
+            break;
+        case 'Morty':
+            return 'feb236';
+            break;
+        case 'Summer':
+            return 'd64161';
+            break;
+        default:
+            return '000';
+    }
+}

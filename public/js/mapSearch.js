@@ -25,36 +25,9 @@ function initMap() {
 function attachInfo(marker, info)
 {
     var infowindow = new google.maps.InfoWindow({
-        content: "<div class='w3-theme-l1' onclick='toggleDisplay(\"" + info.id + "\")'><img src='../" + info.img + "' class='gg-image'><h6 class=''>" + info.title + "</h6></div>" 
+        content: "<div class='w3-button w3-theme-l5' onclick='mapView(" + info.id + ")'><h6 class='w3-container' style='background-color:#" + getColor(info.kind) + "'>" + info.title + "</h6><p class='w3-padding' style='margin:0'>" + info.kind + ", "  + info.age + "yo<br>score: " + info.score +"<br></p><div>" 
     });
     marker.addListener('click', function() {
         infowindow.open(map, this);
     });
-    marker.addListener('mouseout', function() {
-        //infowindow.close(map, this);
-    });
-}
-
-function getColor(kind)
-{
-    switch(kind)
-    {
-        case 'Rick':
-            return '878f99';
-            break;
-        case 'Jerry':
-            return 'ff7b25';
-            break;
-        case 'Beth':
-            return '6b5b95';
-            break;
-        case 'Morty':
-            return 'feb236';
-            break;
-        case 'Summer':
-            return 'd64161';
-            break;
-        default:
-            return '000';
-    }
 }

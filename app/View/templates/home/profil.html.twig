@@ -33,7 +33,7 @@
             </div>
             <div id="flash" class="w3-panel w3-green w3-hide"><p id="flashText"></p></div>
         {% endif %}
-        <div class="w3-row {% if home %}w3-col l6{% endif %}">
+        <div class="w3-row {% if home %}w3-col l6 s12{% endif %}">
             <div class="w3-half w3-padding">
                 <div class="w3-card-4">
                     {{ subtitle('Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
@@ -66,7 +66,7 @@
             </div>
         </div>
         {% if home %}
-            <div class="w3-row w3-col l6">
+            <div class="w3-row w3-col l6 s12">
                 <div class="w3-half w3-padding">
                     <div class="w3-card-4">
                         <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('FriendR')">{{ your }}Friend Request</h3>
@@ -92,7 +92,7 @@
             </div>
         {% endif %}
         <div class="w3-row w3-padding w3-col s12">
-            <div class="w3-row w3-card-4 w3-black w3-col l6" style="overflow:auto">
+            <div class="w3-row w3-card-4 w3-black w3-col l6 s12" style="overflow:auto">
                 <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('Picture')">{{ your }}Pictures</h3>
                 <div id="Picture" style="height:255px">
                     {% if home %}
@@ -102,7 +102,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="w3-row w3-card-4 w3-col l6 w3-white">
+            <div class="w3-row w3-card-4 w3-col l6 s12 w3-white">
                 <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay2(this)">{{ your }}Location</h3>
                 <div id="Location" class="gg-map-small" style="height:255px"></div>
                 {% if home %}
@@ -160,12 +160,12 @@ var usersPos = [
 ];
 var myId = '{{ me.publicToken }}';
 </script>
+<script src="../js/displayForm.js"></script>
 {% if profil.id == me.id %}
     <script src='../js/myProfile.js'></script>
 {% else %}
     <script src='../js/otherProfil.js'></script>
 {% endif %}
-<script src="../js/displayForm.js"></script>
 <script src='../js/commonProfile.js'></script>
 <script src="../js/autobahn.js"></script>
 <script src="../js/notification.js"></script>

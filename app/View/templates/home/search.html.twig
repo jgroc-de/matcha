@@ -8,40 +8,29 @@
 <div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw"> 
     <div class="w3-padding w3-row">
     <h2 class='w3-theme-l1'>Search</h2>
-    <div class="w3-row w3-col l8">
+    <div class="w3-row w3-col l6">
         <div class="w3-row w3-col s12">
-        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay2(this)">Try them</h3>
-        {{ select({
-        'label': 'sort by',
-        'name': 'sort1',
-        'array': sort,
-        'select': '',
-        'style': 'width:auto;max-width:75%',
-        'class': '',
-        'change': 'sortCard("sort1", "try")'
-        }) }}
-        <div id="try" class="w3-col s12 w3-row">
-        </div>
-        </div>
-        <div class="w3-twothird">
-            <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('map')">Map</h3>
-            <div id="map" class="gg-map-med"></div>
-        </div>
-        <div class="w3-third">
-            <div class="w3-row w3-col s12">
             <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay2(this)">Focus</h3>
+            <div id="focus" class="w3-col s12 w3-row">
+            </div>
+            <button id="prev" type="button" class="w3-col s4 w3-theme-l1 w3-button w3-hover-blue">prev</button>
+            <button id="add" type="button" class="w3-col s4 w3-theme-l2 w3-button w3-hover-green">add</button>
+            <button id="next" type="button" class="w3-col s4 w3-theme-l1 w3-button w3-hover-blue">next</button>
             {{ select({
             'label': 'sort by',
-            'name': 'sort2',
+            'name': 'sort1',
             'array': sort,
             'select': '',
             'style': 'width:auto;max-width:75%',
             'class': '',
-            'change': 'sortCard("sort2", "focus")'
+            'change': 'sortCard("sort1", "focus")'
             }) }}
-            <div id="focus" class="">
-            </div>
-            </div>
+        </div>
+    </div>
+    <div class="w3-col l6">
+        <div class="">
+            <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('map')">Map</h3>
+            <div id="map" class="gg-map-med"></div>
         </div>
     </div>
     <form action="{{ path_for('searchByName') }}" method="post" class="w3-col l4">
@@ -175,9 +164,9 @@ var usersPos = [
 var myId = '{{ me.publicToken }}';
 </script>
 <!--<script src="googleMap/markerclusterer/src/markerclusterer.js"></script>-->
+<script src="js/displayForm.js"></script>
 <script src="js/search.js"></script>
 <script src="js/autobahn.js"></script>
-<script src="js/displayForm.js"></script>
 <script src="js/notification.js"></script>
 <script src="js/mapSearch.js"></script>
 <script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>

@@ -7,12 +7,17 @@
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="/css/main.css" type="text/css"/>
         <link rel="stylesheet" href="/css/theme.css" type="text/css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block head %}{% endblock %}
     <style>
+{% set size = "cover" %}
+{% set position = "center bottom" %}
 {% set hour = "now"|date("G") %}
 {% set url = "" %} 
 {% if logout %}
     {% set url = "title_screen.png" %} 
+    {% set size = "contain" %} 
+    {% set position = "center" %}
     body, footer, header, h1, h4 {
         background-color: black;
     }
@@ -22,9 +27,9 @@
     {% set url = "background.jpg" %} 
 {% endif %}
     main {
-        background: url('../img/{{ url }}') no-repeat center bottom;
-        background-size: cover;
-        min-height: 80vh;
+        background: url('../img/{{ url }}') no-repeat {{ position }};
+        background-size: {{ size }};
+        min-height: 75vh;
     }
     </style>
     </head>

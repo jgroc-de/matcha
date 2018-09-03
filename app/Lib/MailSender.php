@@ -10,7 +10,7 @@ class MailSender
     const USER = 'jgroc-de';
     const EXP = 'jgroc2s@free.fr';
     const PASS = '';
-    const PORT = ':8080';
+    const PORT = '';
 
     /**
      * @param string $dest    email address
@@ -19,7 +19,7 @@ class MailSender
      *
      * @return string for success or failure
      */
-    public function sendMail(string $dest, string $subject, string $message, string $exp = SELF::EXP)
+    public function sendMail(string $dest, string $subject, string $message, string $exp = SELF::EXP, string $user = SELF::USER)
     {
         $mail =  new \PHPMailer\PHPMailer\PHPMailer(true);
         //$mail = $this->PHPMailer;
@@ -34,7 +34,7 @@ class MailSender
         $mail->Port = 25;
         //$mail->Username = $this->exp;
         //$mail->Password = $this->pass;
-        $mail->setFrom($exp, self::USER);
+        $mail->setFrom($exp, $user);
         $mail->addAddress($dest);
         $mail->Subject = $subject;
         $mail->Body = $message;
@@ -152,6 +152,12 @@ class MailSender
 
     public function contactMe($msg, $mail)
     {
+        if (isset($_SESSION['profil']))
+        {
+            $user = $_SESSION['profil']['pseudo'];
+        }
+        else
+            $user = 'anonymous';
         $subject = 'User contact from ' . $_SERVER['SERVER_NAME'];
         $message = "Bonjour maître des 7 océans numériques,
 
@@ -162,6 +168,6 @@ class MailSender
     Glorieuse journée à vous!
 
             Votre dévoué, " . $_SERVER['SERVER_NAME'];
-        return $this->sendMail(SELF::EXP, $subject, $message, $mail);
+        return $this->sendMail(SELF::EXP, $subject, $message, $mail, $user);
     }
 }

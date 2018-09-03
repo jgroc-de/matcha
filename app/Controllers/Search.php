@@ -244,7 +244,7 @@ class Search extends Route
 
     private function score($user)
     {
-        return floor($user['popularity'] / 5) + 5 * pow($user['tag'], $user['tag']) - $user['time'] - floor($user['distance'] * 2)  - abs($_SESSION['profil']['birthdate'] - $user['birthdate']);
+        return 1000 + floor($user['popularity'] / 5) + 5 * pow($user['tag'], $user['tag']) - $user['time'] - floor($user['distance'] * 2)  - abs($_SESSION['profil']['birthdate'] - $user['birthdate']);
     }
 
     public function sortList($a, $b)
