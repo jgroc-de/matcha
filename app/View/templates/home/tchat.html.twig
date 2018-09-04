@@ -12,7 +12,7 @@
             <div class="w3-col s6 m3">
                 <div id="{{ user.id }}" class="w3-margin">
                 <a href="#" class="w3-theme-d1" onclick="tchatWith('{{ user.pseudo }}', {{ user.id }}, {{ me.id }}, '{{ user.suscriber }}')">
-                    <h4 class="">{{ user.pseudo }}</h4>
+                    <h4 style="background-color: {{ color[user.gender] }}">{{ user.pseudo }}</h4>
                     <div class="w3-black w3-display-container" style="height:112px">
                     <img src="{{ user.img1 }}" class="w3-image w3-display-middle" style="max-height:112px">
                     </div>
@@ -31,6 +31,7 @@
             <textarea id="tchatMsg" class="w3-input" placeholder="type some insult here"></textarea>
         </div>
     </div>
+</div>
 {% endblock %}
 
 {% block script %}

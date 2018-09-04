@@ -1,4 +1,11 @@
 {% extends "layout.html.twig" %}
+{% set color = {
+'Rick': '#878f99',
+'Jerry': '#ff7b25',
+'Beth': '#6b5b95',
+'Morty': '#feb236',
+'Summer': '#d64161',
+} %}
 
 {% block head %}
 <link rel="stylesheet" href="/css/home.css" type="text/css"/>
@@ -6,7 +13,7 @@
 {% endblock %}
 
 {% block header %}
-    <a href='{{ path_for('home') }}'><h1>Match a Rick&Morty</h1></a>
+    <a href='{{ path_for('home') }}'><h1>Match a Rick&amp;Morty</h1></a>
 {% endblock %}
 
 {% block navbar %}
@@ -31,7 +38,7 @@
         <a href="{{ path_for('logout') }}" class="{{ classR }}" title="logout" alt="logout">
             <i class="fa fa-power-off" alt="logout" title="logout"></i>
         </a>
-        <a href="{{ path_for('editProfil') }}" class="{{ classR }}" title="edit profil"alt="edit">
+        <a href="{{ path_for('editProfil') }}" class="{{ classR }}" title="edit profil" alt="edit">
             <i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
         </a>
         <a href="#" class="{{ classR }} w3-display-container">

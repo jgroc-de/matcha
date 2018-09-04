@@ -50,13 +50,13 @@ $app->group('', function () use ($app) {
     $this->post('/sendMessage', App\Controllers\Tchat::class . ':send');
     $this->post('/startTchat', App\Controllers\Tchat::class . ':startTchat');
     $this->get('/chatStatus', App\Controllers\Tchat::class . ':mateStatus');
+    $this->post('/addTag', App\Controllers\AddTag::class);
 })->add(new \App\Middlewares\authMiddleware($container));
 
 $app->group('', function () {
     $this->get('/addFriend/{id}', App\Controllers\AddFriendRequest::class);
     $this->get('/report/{id}', App\Controllers\Report::class);
     $this->get('/blacklist/{id}', App\Controllers\Blacklist::class);
-    $this->post('/addTag', App\Controllers\AddTag::class);
     $this->post('/addPicture/{id}', App\Controllers\AddPicture::class);
     $this->get('/delFriend/{id}', App\Controllers\DeleteFriend::class);
     $this->get('/delUserTag/{id}', App\Controllers\DeleteUserTag::class);

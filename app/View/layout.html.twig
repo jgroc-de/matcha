@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8/">
+        <meta charset="utf-8">
         <title>Matcha</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -26,7 +26,7 @@
 {% else %}
     {% set url = "background.jpg" %} 
 {% endif %}
-    main {
+    #main {
         background: url('../img/{{ url }}') no-repeat {{ position }};
         background-size: {{ size }};
         min-height: 75vh;
@@ -38,15 +38,15 @@
             {% block header %}{% endblock %}
         </header>
         {% block navbar %}{% endblock %}
-        <main class="w3-container">
+        <div id="main" class="w3-container">
             {% block notification %}{% endblock %}
             {% block main %}{% endblock %}
-        </main>
+        </div>
         <footer>
             <hr>
             <a href="/contact">contact us</a>
             <em>© jgroc-de 2018</em>
         </footer>
-        {% block script %}{% endblock %}
+    {% block script %}{% endblock %}
     </body>
 </html>

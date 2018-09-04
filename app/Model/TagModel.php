@@ -11,19 +11,6 @@ class TagModel extends \App\Constructor
         return $req->fetch();
     }
 
-    public function setUserTag($tag)
-    {
-        if (!$this->getTag($tag))
-            $this->setTag($tag);
-        $tagInfo = $this->getTag($tag);
-        if (!$this->getUserTag($tagInfo['id'], $_SESSION['id']))
-        {
-            $req = $this->db->prepare('INSERT INTO usertags (idtag, iduser) VALUES (?,?)');
-            return $req->execute(array($tagInfo['id'], $_SESSION['id']));    
-        }
-        return false;
-    }
-
     public function getUserTag($id, $user)
     {
         $req = $this->db->prepare('SELECT * FROM usertags WHERE idtag = ? AND iduser = ?');
@@ -48,7 +35,7 @@ class TagModel extends \App\Constructor
     public function getUserTags($userId)
     {
         $req = $this->db->prepare('
-            SELECT tag
+            SELECT hashtags.id, tag
             FROM usertags
             INNER JOIN hashtags
             ON usertags.idtag = hashtags.id
@@ -63,6 +50,19 @@ class TagModel extends \App\Constructor
     {
         $req = $this->db->prepare('INSERT INTO hashtags (tag) VALUES (?)');
         return $req->execute(array($tag));
+    }
+
+    public function setUserTag($tag)
+    {
+        if (!$this->getTag($tag))
+            $this->setTag($tag);
+        $tagInfo = $this->getTag($tag);
+        if (!$this->getUserTag($tagInfo['id'], $_SESSION['id']))
+        {
+            $req = $this->db->prepare('INSERT INTO usertags (idtag, iduser) VALUES (?,?)');
+            return $req->execute(array($tagInfo['id'], $_SESSION['id']));    
+        }
+        return false;
     }
 
     public function delUserTag($idTag, $idUser)

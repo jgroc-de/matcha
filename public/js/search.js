@@ -2,7 +2,6 @@ function sortCard(id2sort, id)
 {
     var key = document.getElementById(id2sort).value;
     var father = document.getElementById(id);
-    var child;
 
     generateCard(id, key);
 }
@@ -29,76 +28,90 @@ function generateCard(idFeed, key)
     }
     for (let user of usersPos)
     {
-        addChildrenCard(user, main, key, i);
+        main.appendChild(addChildrenCard(user, key, i));
         if (i)
             i = 0;
     }
 }
 
-function addChildrenCard(hash, main, key, i)
+function createTitle(hash)
 {
-    var div1 = document.createElement("div");
-    var div2 = document.createElement("div");
-    var div3 = document.createElement("div");
-    var div4 = document.createElement("div");
-    var a = document.createElement("a");
-    var h4 = document.createElement("h4");
-    var img = document.createElement("img");
-    var p = document.createElement("p");
-
-    div2.className = "w3-theme-l4 w3-row";
-    div2.style.height = "300px";
-    div2.style.overflow = "auto";
-    div3.className = "w3-col s12";
-    div3.style.height = "31px";
-    div3.style.position = "sticky";
-    div3.style.top = "0";
-    a.setAttribute('href', '/profil/' + hash.id);
-    a.setAttribute('target', '_blank');
-    h4.className = "w3-margin-left w3-left";
+    var h4 = document.createElement("div");
+    
+    h4.className = "w3-col s12 w3-padding";
     h4.innerHTML = hash.title;
-    div3.style.backgroundColor = '#' + getColor(hash.kind);
     h4.style.backgroundColor = '#' + getColor(hash.kind);
-    div4.className = "w3-right w3-black w3-col s6 w3-display-container";
+    h4.style.height = "10%";
+    return h4;
+}
+
+function createProfil(hash, i)
+{
+    var divProfil = document.createElement("div");
+    var divImg = document.createElement("div");
+    var img = document.createElement("img");
+    var p = document.createElement("div");
+    
+    img.name = hash.img;
     img.className = "w3-image w3-display-middle";
     img.style.maxWidth = "95%";
     img.style.maxHeight = "95%";
-    div4.style.height = "89%";
-    img.setAttribute('src', hash.img);
-    p.className = "w3-small w3-col s6";
-    p.style.marginTop = 0;
-    p.innerHTML = hash.kind + ', ' + hash.age + ': ' + hash.biography;
-    a.appendChild(div1);
-    div3.appendChild(h4);
-    div2.appendChild(div3);
-    div4.appendChild(img);
-    div2.appendChild(div4);
-    div2.appendChild(p);
-    div1.appendChild(div2);
+    p.className = "w3-col s6 w3-padding";
+    p.innerHTML = hash.kind + ', ' + hash.age + 'yo, ' + hash.popularity + 'pts<br>' + hash.biography;
+    divImg.className = "w3-right w3-black w3-col s6 w3-display-container";
+    divImg.style.height = "100%";
+    divImg.appendChild(img);
+    divProfil.style.height = "90%";
+    divProfil.className = "w3-col s12 w3-row";
+    divProfil.appendChild(divImg);
+    divProfil.appendChild(p);
+    if(i === 1)
+        img.setAttribute('src', hash.img);
+    return divProfil;
+}
+
+function createSkeleton(hash, i)
+{
+    var div2 = document.createElement("div");
+    
+    div2.appendChild(createTitle(hash));
+    div2.appendChild(createProfil(hash, i));
+    div2.className = "w3-theme-l4 w3-row";
+    div2.style.height = "500px";
+    div2.style.overflow = "auto";
+    return div2;
+}
+
+function addChildrenCard(hash, key, i)
+{
+    var a = document.createElement("a");
+    var node = document.getElementById(hash.id);
+
+    a.appendChild(createSkeleton(hash, i));
     if (key)
     {
-        var node = document.getElementById(hash.id);
-
         a.style.display = node.style.display;
         node.parentNode.removeChild(node);
     }
+    a.className = 'w3-col s12';
     if (i <= 0)
-        a.className = " w3-hide";
+        a.className += " w3-hide";
     else
     {
         document.getElementById('add').setAttribute('onclick', 'addFriend(' + hash.id + ')');
         document.getElementById('next').setAttribute('onclick', 'next(' + hash.id + ')');
         a.setAttribute('name', 'visible');
     }
+    a.setAttribute('href', '/profil/' + hash.id);
+    a.setAttribute('target', '_blank');
     a.id = hash.id;
-    main.appendChild(a);
+    return a;
 }
 
 function uncheckTags()
 {
     var dad = document.getElementById('tags');
     var tags = dad.childNodes;
-    var child;
 
     for (let tag of tags)
     {
@@ -113,7 +126,6 @@ function checkTags()
 {
     var dad = document.getElementById('tags');
     var tags = dad.childNodes;
-    var child;
 
     for (let tag of tags)
     {
@@ -164,15 +176,43 @@ function prev(id1)
     }
 }
 
+function setImg(node)
+{
+    if (node.firstChild)
+    {
+        var img = node.getElementsByTagName('img')[0];
+
+        if (img)
+            img.setAttribute('src', img.name);
+    }
+}
+
+function setPrevNext(node)
+{
+    var prev = node.previousSibling;
+    var prev2 = prev.previousSibling;
+    var next = node.nextSibling;
+    var next2 = next.nextSibling;
+
+    setImg(node);
+    setImg(prev);
+    setImg(next);
+    setImg(prev2);
+    setImg(next2);
+}
+
 function view(id1, id)
 {
-        toggleDisplay(id1);
-        toggleDisplay(id);
-        document.getElementById(id).setAttribute('name', 'visible');
-        document.getElementById(id1).setAttribute('name', '');
-        document.getElementById('prev').setAttribute('onclick', 'prev(' + id + ')');
-        document.getElementById('add').setAttribute('onclick', 'addFriend(' + id + ')');
-        document.getElementById('next').setAttribute('onclick', 'next(' + id + ')');
+    var divSelected = document.getElementById(id);
+
+    setPrevNext(divSelected);
+    toggleDisplay(id1);
+    toggleDisplay(id);
+    divSelected.setAttribute('name', 'visible');
+    document.getElementById(id1).setAttribute('name', '');
+    document.getElementById('prev').setAttribute('onclick', "prev(" + id + ")");
+    document.getElementById('add').setAttribute('onclick', "addFriend(" + id + ")");
+    document.getElementById('next').setAttribute('onclick', "next(" + id + ")");
 }
 
 function mapView(id)
@@ -180,6 +220,7 @@ function mapView(id)
     var hide = document.getElementsByName('visible')[0];
 
     view(hide.id, id);
+    document.getElementsByTagName('h3')[0].scrollIntoView();
 }
 
 generateCard('focus');

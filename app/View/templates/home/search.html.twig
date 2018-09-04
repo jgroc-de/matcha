@@ -7,150 +7,152 @@
 {% block main %}
 <div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw"> 
     <div class="w3-padding w3-row">
-    <h2 class='w3-theme-l1'>Search</h2>
-    <div class="w3-row w3-col l6">
-        <div class="w3-row w3-col s12">
-            <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay2(this)">Focus</h3>
-            <div id="focus" class="w3-col s12 w3-row">
+        <h2 class='w3-theme-l1'>Search</h2>
+        <div class="w3-row w3-col l6">
+            <div class="w3-row w3-col s12">
+                <h3 class="w3-hover-green w3-col s12" style="cursor:pointer" onclick="toggleDisplay2(this)">Focus</h3>
+                <div id="focus" class="w3-col s12 w3-row">
+                </div>
+                <button id="prev" type="button" class="w3-col s4 w3-theme-l1 w3-button w3-hover-blue">prev</button>
+                <button id="add" type="button" class="w3-col s4 w3-theme-l2 w3-button w3-hover-green">add</button>
+                <button id="next" type="button" class="w3-col s4 w3-theme-l1 w3-button w3-hover-blue">next</button>
+                {{ select({
+                'label': 'sort by',
+                'name': 'sort1',
+                'array': sort,
+                'select': '',
+                'style': 'width:auto;max-width:75%',
+                'class': '',
+                'change': 'sortCard("sort1", "focus")'
+                }) }}
             </div>
-            <button id="prev" type="button" class="w3-col s4 w3-theme-l1 w3-button w3-hover-blue">prev</button>
-            <button id="add" type="button" class="w3-col s4 w3-theme-l2 w3-button w3-hover-green">add</button>
-            <button id="next" type="button" class="w3-col s4 w3-theme-l1 w3-button w3-hover-blue">next</button>
-            {{ select({
-            'label': 'sort by',
-            'name': 'sort1',
-            'array': sort,
-            'select': '',
-            'style': 'width:auto;max-width:75%',
-            'class': '',
-            'change': 'sortCard("sort1", "focus")'
-            }) }}
         </div>
-    </div>
-    <div class="w3-col l6">
-        <div class="">
-            <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('map')">Map</h3>
-            <div id="map" class="gg-map-med"></div>
+        <div class="w3-col l6">
+            <div class="">
+                <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('map')">Map</h3>
+                <div id="map" class="gg-map-med"></div>
+            </div>
         </div>
+        <h3 class="w3-hover-green w3-col s6" style="cursor:pointer" onclick="toggleDisplay('sbyname')">Search By Name</h3>
+        <h3 class="w3-hover-green w3-col s6" style="cursor:pointer" onclick="toggleDisplay('sbyc')">Search by Criteria</h3>
+        <form action="{{ path_for('searchByName') }}" method="post" class="w3-col s12">
+            <fieldset id="sbyname" class="w3-row w3-margin-bottom w3-hide">
+                <legend>Search by Name</legend>
+                {{ input('text', '', {'value': '','placeholder':'pseudo', 'class':'w3-col s12 m9 l6', 'name': 'pseudo'}) }}
+                {{ button('submit', 'search') }}
+            </fieldset>
+        </form>
+        <form action="{{ path_for('searchByCriteria') }}" method="post" class="w3-col s12">
+            <fieldset id="sbyc" class="w3-row {% if not criteria %}w3-hide{% endif %}">
+                <legend>Search by Criteria</legend>
+                <div class="w3-row w3-margin-bottom">
+                    <div class="w3-third">
+                        <h3 class="w3-theme-l1">age</h3>
+                        <div class="w3-border">
+                            <div class="w3-col s6">
+                                {{ input(
+                                'number',
+                                'min',
+                                {
+                                'value': age.min,
+                                'min': 18,
+                                'max': 118,
+                                'name': 'min',
+                                'style': 'width:90%'
+                                })
+                                }}
+                            </div>
+                            <div class="w3-col s6">
+                                {{ input(
+                                'number',
+                                'max',
+                                {
+                                'value': age.max,
+                                'min': 18,
+                                'max': 118,
+                                'name': 'max',
+                                'style': 'width:90%'
+                                })
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3-third" style="text-align:center">
+                        <h3 class="w3-theme-l1">distance</h3>
+                        <div class="w3-border">
+                            {{ select({
+                            'label': 'up to … km',
+                            'name': 'distance',
+                            'array': distance,
+                            'select': distSelect,
+                            'style': 'width:85%;'
+                            })
+                            }}
+                        </div>
+                    </div>
+                    <div class="w3-third" style="text-align:center">
+                        <h3 class="w3-theme-l1">popularity</h3>
+                        <div class="w3-border">
+                            <div class="w3-col s6">
+                                {{ input(
+                                'number',
+                                'min',
+                                {
+                                'value': popularity.min,
+                                'min': 0,
+                                'max': 100,
+                                'name': 'Pmin',
+                                'style': 'width:90%'
+                                })
+                                }}
+                            </div>
+                            <div class="w3-col s6">
+                                {{ input(
+                                'number',
+                                'max',
+                                {
+                                'value': popularity.max,
+                                'min': 0,
+                                'max': 100,
+                                'name': 'Pmax',
+                                'style': 'width:90%'
+                                })
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-half">
+                        <h3 class="w3-theme-l1">kind</h3>
+                        <div class="w3-border" style="height:122px">
+                            {% for char in gender %}
+                            <div>
+                                <input name="{{ char }}" type="checkbox" value="" {% if char in target %}checked{% endif %}>
+                                <label>{{ char }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="w3-half">
+                        <h3 class="w3-theme-l1">interest</h3>
+                        <div id="tags" class="w3-border" style="max-height:122px;overflow:auto">
+                            {% for tag in tags %}
+                            <div>
+                                <input name="{{ tag }}" value="{{ tag }}" type="checkbox" checked>
+                                <label>{{ tag }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button type="button" onclick="uncheckTags()">Uncheck all</button>
+                        <button type="button" onclick="checkTags()">Check all</button>
+                    </div>
+                </div>
+                {{ button('submit', 'search') }}
+            </fieldset>
+        </form>
     </div>
-    <form action="{{ path_for('searchByName') }}" method="post" class="w3-col l4">
-        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('sbyname')">Search By Name</h3>
-        <fieldset id="sbyname" class="w3-row w3-margin-bottom w3-hide">
-            <legend>Search by Name</legend>
-            {{ input('text', '', {'value': '','placeholder':'pseudo', 'class':'w3-col s12 m9 l6', 'name': 'pseudo'}) }}
-        {{ button('submit', 'search') }}
-        </fieldset>
-    </form>
-    <form action="{{ path_for('searchByCriteria') }}" method="post" class="w3-col l4">
-        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('sbyc')">Search by Criteria</h3>
-        <fieldset id="sbyc" class="w3-row {% if not criteria %}w3-hide{% endif %}">
-            <legend>Search by Criteria</legend>
-            <div class="w3-row w3-margin-bottom">
-            <div class="w3-third">
-                <h3 class="w3-theme-l1">age</h3>
-                <div class="w3-border">
-                <div class="w3-col s6">
-            {{ input(
-            'number',
-            'min',
-            {
-            'value': age.min,
-            'min': 18,
-            'max': 118,
-            'name': 'min',
-            'style': 'width:90%'
-            })
-            }}
-                </div>
-                <div class="w3-col s6">
-            {{ input(
-            'number',
-            'max',
-            {
-            'value': age.max,
-            'min': 18,
-            'max': 118,
-            'name': 'max',
-            'style': 'width:90%'
-            })
-            }}
-                </div>
-                </div>
-            </div>
-            <div class="w3-third" style="text-align:center">
-                <h3 class="w3-theme-l1">distance</h3>
-                <div class="w3-border">
-            {{ select({
-            'label': 'up to … km',
-            'name': 'distance',
-            'array': distance,
-            'select': distSelect,
-            'style': 'width:85%;'
-            })
-            }}
-            </div>
-            </div>
-            <div class="w3-third" style="text-align:center">
-                <h3 class="w3-theme-l1">popularity</h3>
-                <div class="w3-border">
-                <div class="w3-col s6">
-            {{ input(
-            'number',
-            'min',
-            {
-            'value': popularity.min,
-            'min': 0,
-            'max': 100,
-            'name': 'Pmin',
-            'style': 'width:90%'
-            })
-            }}
-                </div>
-                <div class="w3-col s6">
-            {{ input(
-            'number',
-            'max',
-            {
-            'value': popularity.max,
-            'min': 0,
-            'max': 100,
-            'name': 'Pmax',
-            'style': 'width:90%'
-            })
-            }}
-                </div>
-                </div>
-            </div>
-            </div>
-            <div class="w3-row">
-            <div class="w3-half">
-                <h3 class="w3-theme-l1">kind</h3>
-                <div class="w3-border" style="height:122px">
-                {% for char in gender %}
-                <div>
-                    <input name="{{ char }}" type="checkbox" value="" {% if char in target %}checked{% endif %}>
-                    <label>{{ char }}</label>
-                </div>
-                {% endfor %}
-                </div>
-            </div>
-            <div class="w3-half">
-                <h3 class="w3-theme-l1">interest</h3>
-                <div id="tags" class="w3-border" style="max-height:122px;overflow:auto">
-                {% for tag in tags %}
-                <div>
-                    <input name="{{ tag }}" value="{{ tag }}" type="checkbox" checked>
-                    <label>{{ tag }}</label>
-                </div>
-                {% endfor %}
-                </div>
-                <button type="button" onclick="uncheckTags()">Uncheck all</button>
-                <button type="button" onclick="checkTags()">Check all</button>
-            </div>
-            </div>
-        {{ button('submit', 'search') }}
-        </fieldset>
-    </form>
+</div>
 {% endblock %}
 
 {% block script %}
@@ -170,6 +172,4 @@ var myId = '{{ me.publicToken }}';
 <script src="js/notification.js"></script>
 <script src="js/mapSearch.js"></script>
 <script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX5TOwSdL7R_-0S6h8-vQ7qz_tiebuwPg&callback=initMap"></script>
-    </div>
-</div>
 {% endblock %} 

@@ -72,8 +72,8 @@ class UserModel extends \App\Constructor
             AND id <> $id
             AND lattitude BETWEEN ? AND ?
             AND longitude BETWEEN ? AND ?
-            ORDER BY popularity DESC
-            LIMIT 100"
+            ORDER BY lastlog DESC
+            LIMIT 200"
             );
         $req->execute(array(
             $age['max'],
@@ -99,7 +99,8 @@ class UserModel extends \App\Constructor
             AND lattitude BETWEEN ? AND ?
             AND longitude BETWEEN ? AND ?
             AND popularity BETWEEN ? AND ?
-            LIMIT 100"
+            ORDER BY lastlog DESC
+            LIMIT 200"
         );
         $array = array_merge($target, [
             $age['max'],

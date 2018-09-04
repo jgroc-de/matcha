@@ -98,6 +98,10 @@ class Search extends Route
             else
                 $blacklist[] = $id['iduser'];
         } 
+        $friends = $this->friends->getfriends($_SESSION['id']);
+        $this->list = array_udiff($this->list, $friends, array($this, 'listCmp'));
+        $friendsReq = $this->friends->getFriendReqs($_SESSION['id']);
+        $this->list = array_udiff($this->list, $friendsReq, array($this, 'listCmp'));
         foreach ($this->list as $key => $user)
         {
             if (in_array($user['id'], $blacklist))
@@ -109,6 +113,11 @@ class Search extends Route
                 $this->list[$key]['score'] = $this->score($this->list[$key]);
             }
         }
+    }
+
+    private function listCmp($a, $b)
+    {
+        return $a['id'] - $b['id'];
     }
 
     private function listByCriteria()

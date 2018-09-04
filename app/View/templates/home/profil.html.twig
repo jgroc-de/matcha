@@ -20,11 +20,11 @@
         <div id="Modal" class="w3-modal" style="cursor:pointer" onclick="document.getElementById('Modal').style.display='none'"> 
             <div class="w3-modal-content w3-card-4" style="width:90vw;background-color:black;">
                 <div class="w3-display-container" style="height:80vh">
-                    <img class="w3-display-middle" src="" style="max-height:80vh;max-width:100%"></img>
+                    <img class="w3-display-middle" src="" style="max-height:80vh;max-width:100%">
                 </div>
             </div>
         </div>
-        <h2 class='w3-theme-l1' style="margin-bottom:0">{{ hi }}{{ profil.pseudo }}</h2>
+        <h2 class='' style="margin-bottom:0;background-color: {{ color[profil.gender] }}">{{ hi }}{{ profil.pseudo }}</h2>
         {% if not home and not friend %}
             <div class="w3-row">
                 <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/addFriend/{{ profil.id }}')" >add to friends</button>
@@ -59,7 +59,7 @@
                     {{ subtitle('Interest', home, 'fa fa-plus',  "addTag('/addTag')", 'add tag') }}
                     <div id="Interest" class="w3-theme-l4 gg-section w3-padding" id="userTag">
                         {% for tag in tags %}
-                            {{ profilButton(tag.id, tag.tag, "delUserTag('/delUserTag/', #{ tag.id })", home, NULL, 'tag') }}
+                        {{ profilButton(color, tag, "delUserTag('/delUserTag/', #{ tag.id })", home, NULL, 'tag') }}
                         {% endfor %}
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                         <div id="FriendR" class="w3-theme-l4 w3-padding gg-section">
                             {% for req in friendReq %}
                                 {% if req.visible %}
-                                    {{ profilButton(req.id, req.pseudo, "delFriendReq('/delFriendReq/', #{ req.id })", home, path_for('profil', req), 'req') }}
+                                    {{ profilButton(color, req, "delFriendReq('/delFriendReq/', #{ req.id })", home, path_for('profil', req), 'req') }}
                                 {% endif %}
                             {% endfor %}
                         </div>
@@ -84,7 +84,7 @@
                         <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('Friend')">{{ your }}Friends</h3>
                         <div id="Friend" class="w3-theme-l4 w3-padding gg-section">
                             {% for friend in friends %}
-                                {{ profilButton(friend.id, friend.pseudo, "delFriend('/delFriend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}
+                                {{ profilButton(color, friend, "delFriend('/delFriend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}
                             {% endfor %}
                         </div>
                     </div>

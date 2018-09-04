@@ -58,10 +58,6 @@ function toggleDisplay2(x)
     }
 }
 
-function closeInfo(id) {
-    document.getElementById('' + id).style.display = "none";
-}
-
 function getColor(kind)
 {
     switch(kind)

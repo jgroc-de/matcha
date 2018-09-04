@@ -51,6 +51,20 @@ class FriendsModel extends \App\Constructor
         return $req->fetchAll();
     }
 
+    public function getFriendReqs($id)
+    {
+        $req = $this->db->prepare('
+            SELECT *
+            FROM friendsReq
+            INNER JOIN user
+            ON friendsReq.id_user1 = user.id
+            WHERE id_user2 = ? OR id_user1 = ?
+            ORDER BY user.id
+        ');
+        $req->execute(array($id, $id));
+        return $req->fetchAll();
+    }
+
     public function getAllFriendsReqs()
     {
         $req = $this->db->prepare('

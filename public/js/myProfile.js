@@ -11,9 +11,9 @@ function dropdown(target) {
 }
 
 function addTag(path) {
-    var tag;
-        
-    if (tag = prompt("add a tag (without the '#'):"))
+    var tag = prompt("add a tag (without the '#'):");
+
+    if (tag)
     {
         var xhr = new XMLHttpRequest();
        
@@ -26,58 +26,20 @@ function addTag(path) {
                 var span = document.createElement('span');
                 var button = document.createElement('i');
                 
-                div.id = 'tag' + id;
-                div.setAttribute('class', 'w3-bar w3-theme-d1 w3-round-xxlarge w3-half w3-row');
-                span.setAttribute('class', 'w3-padding  w3-theme-l1 w3-hover-green w3-col s8');
+                span.className = 'w3-padding  w3-theme-l1 w3-hover-green w3-col s8';
                 span.textContent = '#' + tag;
                 span.style.height = '40px';
-                button.setAttribute('class', 'w3-button w3-right w3-theme-d1 w3-hover-red w3-col s4 fa fa-remove');
+                button.className = 'w3-button w3-right w3-theme-d1 w3-hover-red w3-col s4 fa fa-remove';
                 button.setAttribute('onclick', 'delUserTag("/delUserTag/", ' + id + ')');
                 button.style.height = '40px';
+                div.id = 'tag' + id;
+                div.className = 'w3-bar w3-theme-d1 w3-round-xxlarge w3-half w3-row';
+                div.appendChild(span);
+                div.appendChild(button);
                 document.getElementById('Interest').appendChild(div);
-                document.getElementById(div.id).appendChild(span);
-                document.getElementById(div.id).appendChild(button);
             }
         };
         xhr.send('tag=' + tag);
-    }
-}
-
-function deletePic(id) {
-    var xhttp = new XMLHttpRequest();
-
-    if (confirm('Delete?')) {
-        xhttp.open('GET', 'delPicture/' + id.charAt(3), true);
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var labelElmt = document.createElement('label');
-                var parentNode = document.getElementById(id);
-                var inputElemt = document.createElement('input');
-                var inputElemt2 = document.createElement('input');
-                var div = document.createElement('div');
-                
-                div.setAttribute('class', 'w3-display-container');
-                if (id == 'img1')
-                    div.style.height = '250px';
-                else
-                    div.style.height = '125px';
-                labelElmt.setAttribute('class', 'w3-button w3-jumbo w3-display-middle fa fa-plus w3-hover-green w3-block w3-padding-large');
-                labelElmt.title = 'add picture';
-                inputElemt.id = id;
-                inputElemt.type = 'file';
-                inputElemt2.type = 'hidden';
-                inputElemt.style.display = 'none';
-                while (parentNode.hasChildNodes()) {
-                    parentNode.removeChild(parentNode.firstChild);
-                }
-                parentNode.appendChild(div); 
-                div.appendChild(labelElmt); 
-                labelElmt.appendChild(inputElemt2);
-                labelElmt.appendChild(inputElemt);
-                addPicture();
-            }
-        };
-        xhttp.send();
     }
 }
 
@@ -118,7 +80,7 @@ function addEvent() {
                 imgElement.style.maxHeight = '100%';
                 imgElement.title = path;
                 imgElement.alt = path;
-                imgElement.setAttribute('class', 'w3-image w3-display-middle');
+                imgEl.className = 'w3-image w3-display-middle';
                 imgElement.setAttribute('onclick', 'displayModal("' + reader.result + '")');
                 imgElement.src = reader.result;
                 prev.appendChild(imgElement);
@@ -136,6 +98,44 @@ function addEvent() {
     }
     else
         alert('not allowed type (png, jpg/jpeg, gif) or file too large (> 200ko)');
+}
+
+function deletePic(id) {
+    var xhttp = new XMLHttpRequest();
+
+    if (confirm('Delete?')) {
+        xhttp.open('GET', 'delPicture/' + id.charAt(3), true);
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var labelElmt = document.createElement('label');
+                var parentNode = document.getElementById(id);
+                var inputElemt = document.createElement('input');
+                var inputElemt2 = document.createElement('input');
+                var div = document.createElement('div');
+                
+                div.className = 'w3-display-container';
+                if (id == 'img1')
+                    div.style.height = '250px';
+                else
+                    div.style.height = '125px';
+                labelElmt.className = 'w3-button w3-jumbo w3-display-middle fa fa-plus w3-hover-green w3-block w3-padding-large';
+                labelElmt.title = 'add picture';
+                inputElemt.id = id;
+                inputElemt.type = 'file';
+                inputElemt2.type = 'hidden';
+                inputElemt.style.display = 'none';
+                while (parentNode.hasChildNodes()) {
+                    parentNode.removeChild(parentNode.firstChild);
+                }
+                parentNode.appendChild(div); 
+                div.appendChild(labelElmt); 
+                labelElmt.appendChild(inputElemt2);
+                labelElmt.appendChild(inputElemt);
+                addPicture();
+            }
+        };
+        xhttp.send();
+    }
 }
 
 function delFriend(path, id)
