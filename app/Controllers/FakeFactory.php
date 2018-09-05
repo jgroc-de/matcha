@@ -11,6 +11,7 @@ class FakeFactory extends Route
         $profil = array();
         $faker = \Faker\Factory::create();
         $user = $this->container->user;
+        $password = password_hash('trollB1B1', PASSWORD_DEFAULT);
         for ($i = 0; $i < $count; $i++)
         {
             $gender = rand(0, 4);
@@ -25,7 +26,7 @@ class FakeFactory extends Route
             $profil['birthdate'] = rand(1970, 2000);
             $profil['sexuality'] = $this->sexualPattern[$orientation];
             $profil['biography'] = $faker->text(250);
-            $profil['password'] = 'trollB1';
+            $profil['password'] = $password;
             $profil['activ'] = 1;
             $profil['token'] = 'a';
             $profil['bot'] = 'true';

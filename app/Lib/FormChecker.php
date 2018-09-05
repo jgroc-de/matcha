@@ -64,6 +64,7 @@ class FormChecker extends \App\Constructor
             $post['lng'] = 0;
             if (empty($user->getUser($post['pseudo'])))
             {
+                $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
                 $user->setUser($post);
                 $account = $user->getUser($post['pseudo']);
                 $_POST['id'] = $account['id'];

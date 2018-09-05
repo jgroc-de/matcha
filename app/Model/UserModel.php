@@ -161,7 +161,7 @@ class UserModel extends \App\Constructor
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $req->execute(array(
                 $post['pseudo'],
-                password_hash($post['password'], PASSWORD_DEFAULT),
+                $post['password'],
                 $post['name'],
                 $post['surname'],
                 $post['email'],
@@ -171,7 +171,7 @@ class UserModel extends \App\Constructor
                 'img/' . $img[rand(0, 4)],
                 $post['lat'],
                 $post['lng'],
-                0
+                $post['activ']
             ));
     }
 

@@ -9,7 +9,7 @@
            {{ key }}="{{ value }}"
        {% endfor %}
        {% if type == 'password' %}
-           pattern="{{ hash.pattern|default('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}') }}"
+           pattern="{{ hash.pattern|default('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}') }}"
        {% endif %}
        required>
 {% endmacro %}

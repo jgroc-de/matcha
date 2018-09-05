@@ -61,7 +61,7 @@ class Validator
      */
     public function password(string $test)
     {
-        return (preg_match('#(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}#', $test));
+        return (preg_match('#(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}#', $test));
     }
 
     /**
@@ -71,7 +71,7 @@ class Validator
      */
     public function password1(string $test)
     {
-        return (preg_match('#(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}#', $test));
+        return (preg_match('#(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}#', $test));
     }
 
     /**
