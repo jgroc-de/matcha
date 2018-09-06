@@ -24,6 +24,13 @@ class authMiddleware extends \App\Constructor
         else
         {
             $_SESSION['profil'] = $this->user->getUserById($_SESSION['id']);
+            if (empty($_SESSION['profil']))
+            {
+                session_unset();
+                session_destroy();
+                return $response->withRedirect('/login');
+            }
+            
         }
         return $next($request, $response);
     }

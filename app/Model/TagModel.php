@@ -46,23 +46,30 @@ class TagModel extends \App\Constructor
         return $req->fetchAll();
     }
 
+    public function getAllUserTags($userId)
+    {
+        $req = $this->db->prepare('
+            SELECt tag
+            FROM usertags
+            INNER JOIN hashtags
+            ON usertags.idtag = hashtags.id
+            WHERE iduser = ?
+            ORDER BY hashtags.tag
+        ');
+        $req->execute(array($userId));
+        return $req->fetchAll();
+    }
+
     public function setTag($tag)
     {
         $req = $this->db->prepare('INSERT INTO hashtags (tag) VALUES (?)');
         return $req->execute(array($tag));
     }
 
-    public function setUserTag($tag)
+    public function setUserTag($idtag)
     {
-        if (!$this->getTag($tag))
-            $this->setTag($tag);
-        $tagInfo = $this->getTag($tag);
-        if (!$this->getUserTag($tagInfo['id'], $_SESSION['id']))
-        {
-            $req = $this->db->prepare('INSERT INTO usertags (idtag, iduser) VALUES (?,?)');
-            return $req->execute(array($tagInfo['id'], $_SESSION['id']));    
-        }
-        return false;
+        $req = $this->db->prepare('INSERT INTO usertags (idtag, iduser) VALUES (?,?)');
+        return $req->execute(array($idtag, $_SESSION['id']));    
     }
 
     public function delUserTag($idTag, $idUser)

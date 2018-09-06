@@ -22,11 +22,11 @@ class AddPicture extends Route
         $nb = intval($args['id']);
         $type = array('image/png', 'image/jpeg', 'image/gif');
         if ($data['file']->getError() === UPLOAD_ERR_OK
-            && $data['file']->getSize() < 200000
+            && $data['file']->getSize() < 400000
             && in_array($data['file']->getClientMediaType(), $type)
             && $nb >= 1 && $nb <= 5)
         {
-            $nb = 'img' . intval($args['id']);
+            $nb = 'img' . $nb;
             $path = '/user_img/' . moveUploadedFile('user_img', $data['file']);
             if ($this->user->addPicture($nb, $path))
             {

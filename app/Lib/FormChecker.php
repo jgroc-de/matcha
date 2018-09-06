@@ -9,36 +9,27 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 class FormChecker extends \App\Constructor
 {
     /**
-     * à transformer en middleware
+     * @param $post array
      *
-     * @param $request requestInterface
+     * @return bool
      */
-    public function check(request $request)
+    public function checkLogin($post)
     {
-        if ($this->validator->validate($_POST, array_keys($_POST)))
-            return $_POST;
-        $this->flash->addMessage('failure', 'burp!');
-    }
-
-    /**
-     * @param $request requestInterface
-     */
-    public function checkLogin(request $request)
-    {
-        if (($post = $this->check($request)))
+        if ($this->validator->validate($post, ['pseudo', 'password']))
         {
             if (!empty($account = $this->user->getUser($post['pseudo'])))
             {
                 if ($account['activ'] == 0)
                     $this->flash->addMessage('failure', 'account need activation');
-                elseif ($this->checkPassword($account['password'], $post['password']))
+                elseif ($this->testPassword($account['password'], $post['password']))
                 {
                     $this->user->updateLastlog($account['id']);
                     $_SESSION['id'] = $account['id'];
                     $_SESSION['profil'] = $account;
                     $_SESSION['profil']['lattitude'] = floatval($_SESSION['profil']['lattitude']);
                     $_SESSION['profil']['longitude'] = floatval($_SESSION['profil']['longitude']);
-                    //$_SESSION['notification'] = $_SESSION['id'] . time() . random_bytes(4);
+                    $this->user->updatePublicToken();
+                    return true;
                 }
                 else
                     $this->flash->addMessage('failure', 'wrong password');
@@ -46,54 +37,85 @@ class FormChecker extends \App\Constructor
             else
                 $this->flash->addMessage('failure', 'wrong login');
         }
+        return false;
     }
 
-    /**
-     * @param $request requestInterface
-     *
-     * @return string error if any
-     */
-    public function checkSignup(request $request)
+    public function checkResetEmail($post)
+    {
+        if ($this->validator->validate($post, ['email']))
+        {
+            $account = $this->user->getUserByEmail($post['email']);
+            if (!empty($account))
+            {
+                if($this->mail->sendResetMail($account))
+                    $this->flash->addMessage('success', 'Check your mail!');
+                else
+                    $this->flash->addMessage('failure', 'Mail not sent');
+            }
+            else
+                $this->flash->addMessage('failure', 'unknown mail address…');
+        }
+    }
+
+    public function checkSignup($post)
     {
         $user = $this->container->user;
-        if (($post = $this->check($request)))
+        $keys = ['pseudo', 'password', 'email', 'name', 'surname', 'gender'];
+        if ($this->validator->validate($post, $keys))
         {
-            $post['activ'] = 0;
-            $post['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
-            $post['lat'] = 0;
-            $post['lng'] = 0;
-            if (empty($user->getUser($post['pseudo'])))
+            if (!empty($user->getUser($post['pseudo'])))
+                $this->flash->addMessage('failure', 'pseudo already taken');
+            else if (!empty($user->getUserByEmail($post['email'])))
+                $this->flash->addMessage('failure', 'email already taken');
+            else
             {
+                $post['activ'] = 0;
+                $post['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
+                $post['lat'] = 0;
+                $post['lng'] = 0;
                 $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
                 $user->setUser($post);
-                $account = $user->getUser($post['pseudo']);
-                $_POST['id'] = $account['id'];
-                $this->ft_geoIP->setLatLng();
-                $this->mail->sendValidationMail($account['pseudo'], $account['email'], $account['token']);
+                $post = $user->getUser($post['pseudo']);
+                $this->ft_geoIP->setLatLng($post);
+                $this->mail->sendValidationMail($post);
                 $this->flash->addMessage('success', 'mail sent! Check yourmail box (including trash, spam, whatever…)');
             }
-            else
-                $this->flash->addMessage('failure', 'pseudo already taken');
+        }
+        return ($post);
+    }
+
+    public function checkContact($post)
+    {
+        if ($this->validator->validate($post, ['email', 'text']))
+        {
+            $this->mail->contactMe($post['text'], $post['email']);
+            $this->flash->addMessage('success', 'Thank you!');
         }
     }
 
-    /**
-     * @param $request requestInterface
-     *
-     * @return string error if any
-     */
-    public function checkProfil(request $request)
+    public function checkPwd($post)
     {
-        $user = $this->container->user;
-        if (($post = $this->check($request)))
-        {
-            if (empty($user->getUser($post['pseudo'])) || $post['pseudo'] === $_SESSION['profil']['pseudo'])
+        if ($this->validator->validate($post, ['password', 'password1']))
+            if ($post['password'] === $post['password1'])
             {
-                return $post;
+                $this->user->updatePassUser(password_hash($post['password'], PASSWORD_DEFAULT));
+                $this->flash->addMessage('success', 'password updated!');
             }
+            else
+                $this->flash->addMessage('fail', 'passwords doesnt match');
+    }
+
+    public function checkProfil($post)
+    {
+        $keys = array('pseudo', 'email', 'name', 'surname', 'birthdate', 'gender', 'biography', 'sexuality');
+        if ($this->validator->validate($post, $keys))
+        {
+            if (empty($this->user->getUser($post['pseudo'])) || $post['pseudo'] === $_SESSION['profil']['pseudo'])
+                return true;
             else
                 $this->flash->addMessage('failure', 'pseudo already taken');
         }
+        return false;
     }
 
     /**
@@ -102,7 +124,7 @@ class FormChecker extends \App\Constructor
      *
      * @return bool
      */
-    public function checkPassword($real, $test)
+    private function testPassword($real, $test)
     {
         return (password_verify($test, $real));
     }

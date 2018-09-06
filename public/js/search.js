@@ -158,21 +158,21 @@ function addFriend(id)
 
 function next(id1)
 {
-    var id = document.getElementById(id1).nextSibling.id;
+    var nextNode = document.getElementById(id1);
 
-    if (id)
+    if (nextNode.nextSibling)
     {
-        view(id1, id);
+        view(id1, nextNode.nextSibling.id);
     }
 }
 
 function prev(id1)
 {
-    var id = document.getElementById(id1).previousSibling.id;
+    var prevNode = document.getElementById(id1);
 
-    if (id)
+    if (prevNode.previousSibling.id)
     {
-        view(id1, id);
+        view(id1, prevNode.previousSibling.id);
     }
 }
 

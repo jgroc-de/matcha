@@ -18,7 +18,7 @@ class Validator
         {
             foreach ($keys as $key)
             {
-                if (!$this->$key($array[$key]))
+                if (is_callable(array($this, $key)) && !$this->$key($array[$key]))
                 {
                     return false;
                 }
@@ -111,7 +111,7 @@ class Validator
      */
     public function birthdate(int $test)
     {
-        return (is_numeric($test) && $test <= date('Y') && $test >= 1850);
+        return (is_numeric($test) && $test <= (date('Y') - 18) && $test >= 1850);
     }
     
     /**
@@ -121,7 +121,8 @@ class Validator
      */
     public function name(string $test)
     {
-        return !is_null($test);
+        $len = strlen($test);
+        return ($len > 0 && $len < 250);
     }
     
     /**
@@ -131,7 +132,8 @@ class Validator
      */
     public function surname(string $test)
     {
-        return !is_null($test);
+        $len = strlen($test);
+        return ($len > 0 && $len < 250);
     }
     
     /**
@@ -141,12 +143,14 @@ class Validator
      */
     public function biography(string $test)
     {
-        return true;
+        $len = strlen($test);
+        return ($len > 0);
     }
 
     public function text(string $test)
     {
-        return true;
+        $len = strlen($test);
+        return ($len > 0);
     }
     /**
      * @param string $test

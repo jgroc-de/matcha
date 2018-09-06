@@ -7,7 +7,7 @@ class AddFriendRequest extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
-        if (!($this->friends->getFriendReq($args['id'], $_SESSION['id'])))
+        if (!($this->friends->getFriendReq($_SESSION['id'], $args['id'])))
         {
             $this->container->friends->setFriendsReq(
                 $_SESSION['id'],

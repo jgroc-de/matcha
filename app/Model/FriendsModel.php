@@ -37,6 +37,29 @@ class FriendsModel extends \App\Constructor
         return array_merge($req1->fetchAll(), $req2->fetchAll());
     }
 
+    public function getAllFriends($id)
+    {
+        $req1 = $this->db->prepare('
+            SELECT id, pseudo
+            FROM friends
+            INNER JOIN user
+            ON friends.id_user2 = user.id
+            WHERE id_user1 = ?
+            ORDER BY user.pseudo
+        ');
+        $req2 = $this->db->prepare('
+            SELECT id, pseudo
+            FROM user
+            INNER JOIN friends
+            ON friends.id_user1 = user.id
+            WHERE id_user2 = ?
+            ORDER BY user.pseudo
+        ');
+        $req1->execute(array($id));
+        $req2->execute(array($id));
+        return array_merge($req1->fetchAll(), $req2->fetchAll());
+    }
+
     public function getFriendsReqs($id)
     {
         $req = $this->db->prepare('

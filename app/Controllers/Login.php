@@ -5,27 +5,33 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class Login extends Route
 {
+    private $post = array();
+
     public function __invoke(Request $request, Response $response, array $args)
     {
-        $this->form->checkLogin($request, $response);
-        if (isset($_SESSION['id']))
+        if (!isset($post['gender']))
         {
-            $this->user->updatePublicToken();
-            return $response->withRedirect('/');
-        }
-        if (!array_key_exists('gender', $_POST))
-        {
-            $_POST['gender'] = $this->characters[random_int(0, 4)];
+            $post['gender'] = $this->characters[random_int(0, 4)];
         }
         return $this->view->render(
             $response,
             'templates/logForm/login.html.twig',
             [
                 'flash' => $this->flash->getMessages(),
-                'post' => $_POST,
+                'post' => $post,
                 'login' => true,
                 'characters' => $this->characters
             ]
         );
+    }
+    
+    public function check(Request $request, Response $response, array $args)
+    {
+        $this->post = $request->getParsedBody();
+        if($this->form->checkLogin($this->post))
+        {
+            return $response->withRedirect('/');
+        }
+        $this($request, $response, $args);
     }
 }

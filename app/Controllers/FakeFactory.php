@@ -11,6 +11,7 @@ class FakeFactory extends Route
         $profil = array();
         $faker = \Faker\Factory::create();
         $user = $this->container->user;
+        $tag = $this->container->tag;
         $password = password_hash('trollB1B1', PASSWORD_DEFAULT);
         for ($i = 0; $i < $count; $i++)
         {
@@ -40,7 +41,11 @@ class FakeFactory extends Route
             $_SESSION['id'] = $bot['id'];
             for ($j = 0; $j < 5; $j++)
             {
-                $this->tag->setUserTag($faker->word());
+                $word = $faker->word();
+                if (empty($tag->getTag($word)))
+                    $tag->setTag($word);
+                $tagInfo = $tag->getTag($word);
+                $this->tag->setUserTag($tagInfo['id']);
             }
             unset($_SESSION['id']);
         }

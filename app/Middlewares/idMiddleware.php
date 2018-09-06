@@ -7,7 +7,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 class idMiddleware
 {
     /**
-     * middleware that redirect to '/login' if client is not login
+     * middleware that block process if id is not integer
      *
      * @param  \Psr\Http\Message\ServerRequestInterface $request  PSR7 request
      * @param  \Psr\Http\Message\ResponseInterface      $response PSR7 response

@@ -8,13 +8,14 @@ class UpdateGeolocation extends Route
     public function __invoke(Request $request, Response $response, array $args)
     {
         $keys = ['lat', 'lng'];
-        if ($this->validator->validate($_POST, $keys))
+        $post = $request->getParsedBody();
+        if ($this->validator->validate($post, $keys))
         {
-            if ($this->user->updateGeolocation($_POST['lat'], $_POST['lng'], $_SESSION['id']))
+            if ($this->user->updateGeolocation($post['lat'], $post['lng'], $_SESSION['id']))
             {
-                $_SESSION['profil']['lattitude'] = floatval($_POST['lat']);
-                $_SESSION['profil']['longitude'] = floatval($_POST['lng']);
-                $response->write(json_encode($_POST, JSON_NUMERIC_CHECK));
+                $_SESSION['profil']['lattitude'] = floatval($post['lat']);
+                $_SESSION['profil']['longitude'] = floatval($post['lng']);
+                $response->write(json_encode($post, JSON_NUMERIC_CHECK));
                 return $response;
             }
             return $response->withStatus(500);

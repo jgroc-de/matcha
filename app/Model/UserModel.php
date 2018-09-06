@@ -72,6 +72,7 @@ class UserModel extends \App\Constructor
             AND id <> $id
             AND lattitude BETWEEN ? AND ?
             AND longitude BETWEEN ? AND ?
+            AND ACTIV = 1
             ORDER BY lastlog DESC
             LIMIT 200"
             );
@@ -91,7 +92,7 @@ class UserModel extends \App\Constructor
         $id = $_SESSION['id'];
         $count = str_repeat('?,', count($target) - 1) . '?';
         $req = $this->db->prepare(
-            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity
+            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity, lastlog
             FROM user
             WHERE gender IN ($count)
             AND id <> $id
@@ -99,6 +100,7 @@ class UserModel extends \App\Constructor
             AND lattitude BETWEEN ? AND ?
             AND longitude BETWEEN ? AND ?
             AND popularity BETWEEN ? AND ?
+            AND ACTIV = 1
             ORDER BY lastlog DESC
             LIMIT 200"
         );
@@ -124,10 +126,11 @@ class UserModel extends \App\Constructor
     {
         $id = $_SESSION['id'];
         $req = $this->db->prepare(
-            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity
+            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity, lastlog
             FROM user
             WHERE pseudo LIKE ?
             AND id <> $id
+            AND ACTIV = 1
             ORDER BY pseudo
             LIMIT 50");
         $req->execute(array($pseudo . '%'));
@@ -241,16 +244,13 @@ class UserModel extends \App\Constructor
         return false;
     }
     
-    public function updatePassUser()
+    public function updatePassUser($pwd)
     {
-        $post = array();
-        $post[] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $post[] = $_SESSION['id'];
         $req = $this->db->prepare('
             UPDATE user
             SET password = ?
             where id = ?');
-        $req->execute($post);
+        $req->execute(array($pwd, $_SESSION['id']));
     }
 
     public function updateGeolocation($lat, $lon, $id)

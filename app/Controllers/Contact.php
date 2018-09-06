@@ -7,25 +7,20 @@ class Contact extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
+        $user = array();
+        if (isset($_SESSION['profil']))
+            $user = $_SESSION['profil'];
         $template = 'templates/logForm/contact.html.twig';
         return $this->view->render($response, $template, [
-            'user' => $_SESSION['profil']
+            'user' => $user,
+            'flash' => $this->flash->getMessages()
         ]);
     }
 
     public function sendMail(Request $request, Response $response, array $args)
     {
         $post = $request->getParsedBody();
-        if ($this->validator->validate($post, ['email', 'text']))
-        {
-            $this->mail->contactMe($post['text'], $post['email']);
-            $this->flash->addMessage('success', 'Thank you!');
-        }
-        else
-            $this->flash->addMessage('fail', 'Thank you for the spam!');
-        $template = 'templates/logForm/contact.html.twig';
-        return $this->view->render($response, $template, [
-                'flash' => $this->flash->getMessages()
-        ]);
+        $this->form->checkContact($post);
+        $this($request, $response, $args);
     }
 }

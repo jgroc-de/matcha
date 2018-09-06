@@ -87,12 +87,12 @@ $container['debug'] = function ($container) {
     return new \App\Lib\Debug();
 };
 
-$container['mail'] = function () {
-    return new \App\Lib\MailSender();
-};
-
 $container['flash'] = function () {
     return new \App\Lib\FlashMessage();
+};
+
+$container['mail'] = function () {
+    return new \App\Lib\MailSender();
 };
 
 $container['notFoundHandler'] = function ($container) {

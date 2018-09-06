@@ -63,7 +63,7 @@ function tchatWith(name, id, myId, token)
     messages.innerHTML = "";
     title.innerHTML = "flame " + name;
     button.setAttribute("onclick", "sendMessageTo(" + myId + ", '" + name + "'," + id + ", '" + token + "')");
-    xhr.open('POST', '/startTchat', true);
+    xhr.open('GET', '/startChat/' + id, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200)
@@ -98,7 +98,7 @@ function tchatWith(name, id, myId, token)
             msg.focus();
         }
     }
-    xhr.send('myid=' +myId + '&id=' + id);
+    xhr.send();
 }
 
 function sendMessageTo(myId, name, id, token)

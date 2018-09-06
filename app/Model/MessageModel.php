@@ -24,7 +24,7 @@ class MessageModel extends \App\Constructor
      */
     public function getAllMessages()
     {
-        $req = $this->db->prepare('SELECT owner, message FROM message WHERE id_user1 = ? OR id_user2 = ? ORDER BY date ASC LIMIT 100');
+        $req = $this->db->prepare('SELECT * FROM message WHERE id_user1 = ? OR id_user2 = ? ORDER BY date ASC');
         $req->execute(array($_SESSION['id'], $_SESSION['id']));
         return $req->fetchAll();
     }

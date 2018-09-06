@@ -7,10 +7,6 @@ class RGPD extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            $this->getAllDatas();
-        }
         return $this->view->render(
             $response,
             'templates/home/editProfil.html.twig',
@@ -32,40 +28,59 @@ class RGPD extends Route
             $this->flash->addMessage('success', 'Check your mailbox!');
         else
             $this->flash->addMessage('fail', 'there is a bug… plz contact us, we will anszer asap!');
-        return $this->view->render(
-            $response,
-            'templates/home/editProfil.html.twig',
-            [
-                'me' => $_SESSION['profil'],
-                'characters' => $this->characters,
-                'sexualPattern' => $this->sexualPattern,
-                'flash' => $this->flash->getMessages(),
-                'year' => date('Y') - 18,
-                'notification' => $this->notif->getNotification(),
-                'rgpd' => true
-            ]
-        );
+        $this($request, $response, $args);
     }
 
-    public function getAllDatas()
+    public function getAllDatas(Request $request, Response $response, array $args)
     {
-        $user = $this->user->getAllDatas();
-        if (empty($tag = $this->tag->getUserTags($_SESSION['id'])))
-            $tag = array('You did not record any tags.');
-        if (empty($message = $this->msg->getAllMessages()))
-            $message = array('You did not send any message and no one message you.');
-        if (empty($notif = $this->notif->getAllNotification()))
-            $notif = array('We dont have any notification concerning your activity or your profil.');
-        if (empty($friends = $this->friends->getFriends($_SESSION['id'])))
-            $friends = array("You do not have friends. This can change!");
-        if (empty($friendsReq = $this->friends->getAllFriendsReqs()))
-            $friendsReq = array("You do not have friendsReq… for the moment.'");
-        if (empty($blacklist = $this->blacklist->getAllBlacklist()))
-            $blacklist = array("No one is on your blacklist and you are not on any blacklist. Congrats!");
-        $data = array_merge($user, $tag, $message, $notif, $friends, $friendsReq, $blacklist);
+        $data = array();
+        $data['tag'] = $this->tag->getAllUserTags($_SESSION['id']);
+        $data['message'] = $this->msg->getAllMessages();
+        $data['notif'] = $this->notif->getAllNotification();
+        $data['friends'] = $this->friends->getAllFriends($_SESSION['id']);
+        $data['friendsReq'] = $this->friends->getAllFriendsReqs();
+        $data['blacklist'] = $this->blacklist->getAllBlacklist();
+        foreach ($data as $key => $value)
+        {
+            if (!empty($value))
+                $data[$key] = $this->implodeData($value);
+            else
+                $data[$key] = array('empty');
+        }
+        $data = array_merge($data, $this->splitImg($this->user->getAllDatas()));
         if ($this->mail->sendDataMail($data))
             $this->flash->addMessage('success', 'Check your mailbox!');
         else
             $this->flash->addMessage('fail', 'there is a bug… plz contact us!');
+        $this($request, $response, $args);
+    }
+
+    private function implodeData($data)
+    {
+        $str = array();
+        foreach ($data as $value)
+        {
+            $str[] = implode(' - ', $value);
+        }
+        return $str;
+    }
+
+    private function splitImg($data)
+    {
+        $tab = array();
+        $img =array();
+        foreach ($data as $key => $value)
+        {
+            if (!strncmp($value, '/user_img', 9))
+            {
+                $img[] = $value;
+                unset($data[$key]);
+            }
+            else if (!strncmp($key, 'img', 3))
+                unset($data[$key]);
+        }
+        $tab['user'] = $data;
+        $tab['img'] = $img;
+        return $tab;
     }
 }

@@ -5,31 +5,26 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class ResetPassword extends Route
 {
+    private $post = array();
+
     public function __invoke(Request $request, Response $response, array $args)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']))
-        {
-            $user = $this->container->user;
-            $account = $user->getUserByEmail($_POST['email']);
-            if ($account)
-            {
-                if($this->mail->sendResetMail($account['pseudo'], $account['email'], $account['token']))
-                    $this->flash->addMessage('success', 'Check your mail!');
-                else
-                    $this->flash->addMessage('failure', 'Mail not sent');
-            }
-            else
-                $this->flash->addMessage('failure', 'unknown mail address…');
-        }
         return $this->view->render(
             $response,
             'templates/logForm/login.html.twig',
             [
                 'characters' => $this->characters,
                 'flash' => $this->flash->getMessages(),
-                'post' => $_POST,
+                'post' => $this->post,
                 'reset' => true,
             ]
         );
+    }
+    
+    public function check(Request $request, Response $response, array $args)
+    {
+        $this->post = $request->getParsedBody();
+        $this->form->checkResetEmail($this->post);
+        $this($request, $response, $args);
     }
 }

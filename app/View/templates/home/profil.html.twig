@@ -10,6 +10,7 @@
 
 {% block main %}
 <div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw"> 
+    <div id="flash" class="w3-panel w3-green w3-hide" style="position:fixed;bottom:10px;right:10px;z-index:20"><p id="flashText"></p></div>
     <div class="w3-padding w3-row">
         {% if profil.id == me.id %}
             {% set hi = 'Hi ' %}
@@ -31,7 +32,6 @@
                 <button class="w3-button w3-theme-l1 w3-third" onclick="profilAction('/report/{{ profil.id }}')">report as fake user</button>
                 <button class="w3-button w3-theme-d1 w3-third" onclick="profilAction('/blacklist/{{ profil.id }}')">blacklist this user</button>
             </div>
-            <div id="flash" class="w3-panel w3-green w3-hide"><p id="flashText"></p></div>
         {% endif %}
         <div class="w3-row {% if home %}w3-col l6 s12{% endif %}">
             <div class="w3-half w3-padding">

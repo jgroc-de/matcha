@@ -26,43 +26,6 @@ class Search extends Route
         return $this->searchResponse($response);
     }
 
-    public function criteria(Request $request, Response $response, array $args)
-    {
-        $this->criteria = true;
-        $this->date = date('Y');
-        $post = $request->getParsedBody();
-        $this->age['min'] = $this->date - $post['min'];
-        $this->age['max'] = $this->date - $post['max'];
-        $this->popularity['min'] = $post['Pmin'];
-        $this->popularity['max'] = $post['Pmax'];
-        $this->dist = $post['distance'];
-        $this->getTarget($post);
-        $this->listByCriteria();
-        foreach ($post as $key => $value)
-        {
-            if ($key === $value)
-            {
-                $this->tags[] = $key;
-            }
-        }
-        $this->getTags($post);
-        return $this->searchResponse($response);
-    }
-
-    public function name(Request $request, Response $response, array $args)
-    {
-        $date = date('Y');
-        if (!$this->validator->validate($_POST, ['pseudo']))
-        {
-            return $response->withRedirect('/search');
-        }
-        else
-        {
-            $this->listByName($_POST['pseudo']);    
-            return $this->searchResponse($response);
-        }
-    }
-
     private function searchResponse($response)
     {
         $this->filterList();
@@ -85,6 +48,45 @@ class Search extends Route
                 'criteria' => $this->criteria
             ]
         );
+    }
+
+    public function criteria(Request $request, Response $response, array $args)
+    {
+        $post = $request->getParsedBody();
+        $keys = array('min', 'max', 'Pmin', 'Pmax', 'distance');
+        if ($this->validator->validate($post, ['pseudo']))
+        {
+            $this->criteria = true;
+            $this->date = date('Y');
+            $this->age['min'] = $this->date - $post['min'];
+            $this->age['max'] = $this->date - $post['max'];
+            $this->popularity['min'] = $post['Pmin'];
+            $this->popularity['max'] = $post['Pmax'];
+            $this->dist = $post['distance'];
+            $this->getTarget($post);
+            $this->listByCriteria();
+            foreach ($post as $key => $value)
+            {
+                if ($key === $value)
+                {
+                    $this->tags[] = $key;
+                }
+            }
+            $this->getTags($post);
+            return $this->searchResponse($response);
+        }
+        return $response->withStatus(400);
+    }
+
+    public function name(Request $request, Response $response, array $args)
+    {
+        $post = $request->getParsedBody();
+        if ($this->validator->validate($post, ['pseudo']))
+        {
+            $this->listByName($post['pseudo']);
+            return $this->searchResponse($response);
+        }
+        return $response->withStatus(400);
     }
 
     private function filterList()

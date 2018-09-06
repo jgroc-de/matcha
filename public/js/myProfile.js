@@ -59,7 +59,7 @@ function addEvent() {
     var allowedTypes = ['image/png', 'image/jpeg', 'image/gif'];
     var prev = this.parentNode.parentNode;
 
-    if ((allowedTypes.indexOf(this.files[0].type) != -1) && (this.files[0].size < 200000)) {
+    if ((allowedTypes.indexOf(this.files[0].type) != -1) && (this.files[0].size < 400000)) {
         var form = new FormData();
         var xhttp = new XMLHttpRequest();
         var reader = new FileReader();
@@ -80,7 +80,7 @@ function addEvent() {
                 imgElement.style.maxHeight = '100%';
                 imgElement.title = path;
                 imgElement.alt = path;
-                imgEl.className = 'w3-image w3-display-middle';
+                imgElement.className = 'w3-image w3-display-middle';
                 imgElement.setAttribute('onclick', 'displayModal("' + reader.result + '")');
                 imgElement.src = reader.result;
                 prev.appendChild(imgElement);
@@ -97,7 +97,7 @@ function addEvent() {
         reader.readAsDataURL(this.files[0]);
     }
     else
-        alert('not allowed type (png, jpg/jpeg, gif) or file too large (> 200ko)');
+        alert('not allowed type (png, jpg/jpeg, gif) or file too large (> 400ko)');
 }
 
 function deletePic(id) {
