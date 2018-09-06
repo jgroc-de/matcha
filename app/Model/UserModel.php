@@ -313,14 +313,14 @@ class UserModel extends \App\Constructor
 
     public function deleteUser($id)
     {
-        $req = $this->db->prepare('SELECT * FROM user WHERE id = ?');
+        $req = $this->db->prepare('SELECT img1, img2, img3, img4, img5 FROM user WHERE id = ?');
         $req->execute(array($id));
         $url = $req->fetchAll();
-        foreach ($url as $key => $value)
+        foreach ($url[0] as $key => $value)
         {
-            if (!strncmp('img', $key, 3) && strncmp('/img/', $value, 5))
+            if (!strncmp('/user_img/', $value, 10))
             {
-                unlink($value);
+                unlink(__DIR__ . '/../../public' . $value);
             }
         }
         $req = $this->db->prepare('DELETE FROM user WHERE id = ?');

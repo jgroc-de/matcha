@@ -110,10 +110,12 @@ class FormChecker extends \App\Constructor
         $keys = array('pseudo', 'email', 'name', 'surname', 'birthdate', 'gender', 'biography', 'sexuality');
         if ($this->validator->validate($post, $keys))
         {
-            if (empty($this->user->getUser($post['pseudo'])) || $post['pseudo'] === $_SESSION['profil']['pseudo'])
-                return true;
-            else
+            if (!empty($this->user->getUser($post['pseudo'])) && $post['pseudo'] !== $_SESSION['profil']['pseudo'])
                 $this->flash->addMessage('failure', 'pseudo already taken');
+            else if (!empty($this->user->getUserByEmail($post['email'])) && $post['email'] !== $_SESSION['profil']['email'])
+                $this->flash->addMessage('failure', 'email already taken');
+            else
+                return true;
         }
         return false;
     }

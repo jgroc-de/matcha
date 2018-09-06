@@ -9,7 +9,7 @@ class DeletePicture extends Route
     {
         if ($this->user->delPicture($nb = 'img' . $args['id']))
         {
-            if (strncmp('/img/', $_SESSION['profil'][$nb], 5))
+            if (!strncmp('/user_img/', $_SESSION['profil'][$nb], 5))
             {
                 unlink(ltrim($_SESSION['profil'][$nb], '/'));
             }

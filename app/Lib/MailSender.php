@@ -36,7 +36,6 @@ class MailSender
         $mail->Username = SELF::EXP;
         $mail->Password = SELF::PASS;
         $mail->CharSet = 'UTF-8';
-        //$mail->Port = 25;
         if (!empty($this->files))
         {
             foreach ($this->files as $file)
@@ -48,16 +47,6 @@ class MailSender
         $mail->Subject = $this->subject;
         $mail->Body = $this->message;
         return $mail->send();
-        if (!$mail->send())
-        {
-            echo "Mailer Error: " . $mail->ErrorInfo;
-            return false;
-        }
-        else
-        {
-            echo "Message sent!";
-            return true;
-        }
     }
 
     /**
@@ -106,11 +95,11 @@ class MailSender
     {
         $this->dest = $_SESSION['profil']['email'];
         $this->subject = 'Delete Request for your account on ' . $_SERVER['SERVER_NAME'];
-        $this->message = 'Hi ' . $_SESSION['profil']['pseudo'] . ',
+        $this->message = 'Hi ' . $_SESSION['profil']['pseudo'] . ",
 
-            If you really really want to delete your profil, please, click on the link below:
+            It's sad but if you really really want to delete your profil, please, click on this last link:
     
-' . $this->linkGen($_SESSION['profil'], 'del') . '
+" . $this->linkGen($_SESSION['profil'], 'del') . '
 
             We hope you had some good time on our website and wish you all the best!
 
