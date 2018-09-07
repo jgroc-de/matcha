@@ -42,7 +42,7 @@
     {{ input('password','password') }}
 </div>
 <div class="w3-section">
-    {{ input('email', 'email', {'value': post.email|default("rick@morty.com") }) }}
+    {{ input('email', 'email', {'value': post.email }) }}
 </div>
 <div class="w3-section">
     {{ input('text', 'name', {'value': post.name|default("Ann") }) }}

@@ -143,13 +143,19 @@ function addFriend(id)
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200)
         {
-            var txt = document.getElementById("flashText");
+            var p = document.createElement('p');
+            var div = document.createElement('div');
+            var notif = document.getElementById('notif');
             
-            txt.textContent = this.responseText;
-            toggleDisplay("flash");
+            p.textContent = this.responseText;
+            div.appendChild(p);
+            div.className = "w3-panel w3-green w3-round w3-opacity-min";
+            div.style.margin = "0";
+            notif.appendChild(div);
+
             setTimeout(function() {
-                toggleDisplay("flash"); 
-            }, 3500);
+                notif.removeChild(div);
+            }, 3500, notif, div);
         }
     };
     xmlhttp.open('GET', '/addFriend/' + id, true);
