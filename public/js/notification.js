@@ -4,7 +4,7 @@ function addNotification(data)
     var notif = document.getElementById("notification");
     var badge = document.getElementById("badge");
 
-    badge.className = badge.className.replace("w3-hide", "");
+    badge.classList.remove("w3-hide");
     badge.innerHTML = Number(badge.innerHTML) + 1;
     link.innerHTML = data.msg;
     link.className = "w3-bar-item w3-button w3-theme-l4 w3-border w3-leftbar w3-hover-border-green";
@@ -16,7 +16,7 @@ function resetBadge()
 {
     var badge = document.getElementById("badge");
 
-    badge.className += "w3-hide";
+    badge.classList.add("w3-hide");
     badge.innerHTML = "";
 }
 

@@ -10,7 +10,7 @@ class Chat extends Route
         $friends = $this->friends->getFriends($_SESSION['id']);
         return $this->view->render(
             $response,
-            'templates/home/tchat.html.twig',
+            'templates/home/chat.html.twig',
             [
                 'me' => $_SESSION['profil'],
                 'notification' => $this->notif->getNotification(),

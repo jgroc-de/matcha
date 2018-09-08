@@ -95,7 +95,7 @@ function addChildrenCard(hash, key, i)
     }
     a.className = 'w3-col s12';
     if (i <= 0)
-        a.className += " w3-hide";
+        a.classList.add("w3-hide");
     else
     {
         document.getElementById('add').setAttribute('onclick', 'addFriend(' + hash.id + ')');
@@ -138,28 +138,7 @@ function checkTags()
 
 function addFriend(id)
 {
-    var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200)
-        {
-            var p = document.createElement('p');
-            var div = document.createElement('div');
-            var notif = document.getElementById('notif');
-            
-            p.textContent = this.responseText;
-            div.appendChild(p);
-            div.className = "w3-panel w3-green w3-round w3-opacity-min";
-            div.style.margin = "0";
-            notif.appendChild(div);
-
-            setTimeout(function() {
-                notif.removeChild(div);
-            }, 3500, notif, div);
-        }
-    };
-    xmlhttp.open('GET', '/addFriend/' + id, true);
-    xmlhttp.send();
+    ggAjaxGet('/addFriend/' + id, printNotif, ['response', true]);
 }
 
 function next(id1)
@@ -212,8 +191,8 @@ function view(id1, id)
     var divSelected = document.getElementById(id);
 
     setPrevNext(divSelected);
-    toggleDisplay(id1);
-    toggleDisplay(id);
+    toggleById(id1);
+    toggleById(id);
     divSelected.setAttribute('name', 'visible');
     document.getElementById(id1).setAttribute('name', '');
     document.getElementById('prev').setAttribute('onclick', "prev(" + id + ")");

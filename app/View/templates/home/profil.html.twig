@@ -18,7 +18,7 @@
             {% set home = true %}
         {% endif %}
         <!-- The Modal -->
-        <div id="Modal" class="w3-modal" style="cursor:pointer" onclick="document.getElementById('Modal').style.display='none'"> 
+        <div id="Modal" class="w3-modal" style="cursor:pointer" onclick="this.style.display='none'"> 
             <div class="w3-modal-content w3-card-4" style="width:90vw;background-color:black;">
                 <div class="w3-display-container" style="height:80vh">
                     <img class="w3-display-middle" src="" style="max-height:80vh;max-width:100%">
@@ -69,8 +69,7 @@
             <div class="w3-row w3-col l6 s12">
                 <div class="w3-half w3-padding">
                     <div class="w3-card-4">
-                        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('FriendR')">{{ your }}Friend Request</h3>
-                        <div id="FriendR" class="w3-theme-l4 w3-padding gg-section">
+                        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleSibling(this)">{{ your }}Friend Request</h3><div id="FriendR" class="w3-theme-l4 w3-padding gg-section">
                             {% for req in friendReq %}
                                 {% if req.visible %}
                                     {{ profilButton(color, req, "delFriendReq('/delFriendReq/', #{ req.id })", home, path_for('profil', req), 'req') }}
@@ -81,8 +80,7 @@
                 </div>
                 <div class="w3-half w3-padding">
                     <div class="w3-card-4">
-                        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('Friend')">{{ your }}Friends</h3>
-                        <div id="Friend" class="w3-theme-l4 w3-padding gg-section">
+                        <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">{{ your }}Friends</h3><div id="Friend" class="w3-theme-l4 w3-padding gg-section">
                             {% for friend in friends %}
                                 {{ profilButton(color, friend, "delFriend('/delFriend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}
                             {% endfor %}
@@ -93,8 +91,7 @@
         {% endif %}
         <div class="w3-row w3-padding w3-col s12">
             <div class="w3-row w3-card-4 w3-black w3-col l6 s12" style="overflow:auto">
-                <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('Picture')">{{ your }}Pictures</h3>
-                <div id="Picture" style="height:255px">
+                <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">{{ your }}Pictures</h3><div id="Picture" style="height:255px">
                     {% if home %}
                         {{ myImg(profil) }}
                     {% else %}
@@ -160,13 +157,11 @@ var usersPos = [
 ];
 var myId = '{{ me.publicToken }}';
 </script>
-<script src="../js/displayForm.js"></script>
 {% if profil.id == me.id %}
     <script src='../js/myProfile.js'></script>
 {% else %}
     <script src='../js/otherProfil.js'></script>
 {% endif %}
-<script src='../js/commonProfile.js'></script>
 <script src="../js/autobahn.js"></script>
 <script src="../js/notification.js"></script>
 <script src="../js/geolocation.js"></script>

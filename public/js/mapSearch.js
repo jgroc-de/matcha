@@ -15,11 +15,6 @@ function initMap() {
         attachInfo(marker, usersPos[x]);
         markers.push(marker);
     }
-    /*var markerCluster = new MarkerClusterer(map, markers, {
-        maxZoom: 13,
-        minimumClusterSize: 8,
-        imagePath: 'googleMap/markerclusterer/images/m'
-    });*/
 }
 
 function attachInfo(marker, info)

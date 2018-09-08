@@ -6,59 +6,23 @@ function plusDivs(n) {
 }
 
 function showDivs(n) {
-    var i;
     var x = document.getElementsByClassName("mySlides");
 
     if (x.length > 0)
     {
         if (n > x.length)
-        {
-            slideIndex = 1
-        };
+            slideIndex = 1;
         if (n < 1)
-        {
-            slideIndex = x.length
-        };
-        for (i = 0; i < x.length; i++)
-        {
+            slideIndex = x.length;
+        for (var i = 0; i < x.length; i++)
             x[i].style.display = "none";
-        }
         x[slideIndex - 1].style.display = "block";
     }
 }
 
 function profilAction(path)
 {
-    var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200)
-        {
-            var txt = document.getElementById("flashText");
-            
-            txt.textContent = this.responseText;
-            toggleDisplay("flash");
-            setTimeout(function() {
-                toggleDisplay("flash"); 
-            }, 3500);
-        }
-    };
-    xmlhttp.open("GET", path, true);
-    xmlhttp.send();
-}
-
-var time;
-function displayResponse(text)
-{
-    var txt = document.getElementById("flashText");
-
-    clearTimeout(time);
-    txt.textContent = text;
-    if (flash.className.indexOf("w3-hide") == -1)
-        toggleDisplay("flash");
-    time = setTimeout(function() {
-        toggleDisplay("flash"); 
-    }, 3500);
+    ggAjaxGet(path, printNotif, ['response', true]);
 }
 
 function onlineProfil(data)
@@ -66,24 +30,21 @@ function onlineProfil(data)
     var span = document.getElementById('online');
     var spanoff = document.getElementById('offline');
 
-    if ((data['profilStatus']) && (span.className.indexOf("w3-hide") != -1))
+    if ((data['profilStatus']) && (span.classList.contains("w3-hide")))
     {
-        toggleDisplay('offline');
-        toggleDisplay('online');
+        spanoff.classList.toggle("w3-hide");
+        span.classList.toggle("w3-hide");
     }
-    if (!(data['profilStatus']) && (spanoff.className.indexOf("w3-hide") != -1))
+    else if (!(data['profilStatus']) && (spanoff.classList.contains("w3-hide")))
     {
-        toggleDisplay('offline');
-        toggleDisplay('online');
+        spanoff.classList.toggle("w3-hide");
+        span.classList.toggle("w3-hide");
     }
 }
 
 function profilStatus()
 {
-    var xhr = new XMLHttpRequest();
-
-    xhr.open('GET', '/profilStatus/' + user.id);
-    xhr.send();
+    ggAjaxGet('/profilStatus/' + user.id, function(){}, 0);
 }
 
-setInterval(profilStatus, 600000);
+setInterval(profilStatus, 5000); 

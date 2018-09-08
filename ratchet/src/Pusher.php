@@ -54,7 +54,7 @@ class Pusher implements WampServerInterface
                 $entryData['profilStatus'] = true;
             else
             {
-                unset($this->subscibedTopics[$friend]);
+                unset($this->subscibedTopics[$user]);
                 $entryData['profilStatus'] = false;
             }
         }

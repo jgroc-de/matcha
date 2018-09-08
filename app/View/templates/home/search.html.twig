@@ -5,7 +5,6 @@
 
 
 {% block main %}
-<div id="notif" style="position:fixed;bottom:10px;right:10px;z-index:20"></div>
 <div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw"> 
     <div class="w3-padding w3-row">
         <h2 class='w3-theme-l1'>Search</h2>
@@ -30,12 +29,11 @@
         </div>
         <div class="w3-col l6">
             <div class="">
-                <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay('map')">Map</h3>
-                <div id="map" class="gg-map-med"></div>
+                <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleSibling(this);">Map</h3><div id="map" class="gg-map-med"></div>
             </div>
         </div>
-        <h3 class="w3-hover-green w3-col s6" style="cursor:pointer" onclick="toggleDisplay('sbyname')">Search By Name</h3>
-        <h3 class="w3-hover-green w3-col s6" style="cursor:pointer" onclick="toggleDisplay('sbyc')">Search by Criteria</h3>
+        <h3 class="w3-hover-green w3-col s6" style="cursor:pointer" onclick="toggleById('sbyname')">Search By Name</h3>
+        <h3 class="w3-hover-green w3-col s6" style="cursor:pointer" onclick="toggleById('sbyc')">Search by Criteria</h3>
         <form action="{{ path_for('searchByName') }}" method="post" class="w3-col s12">
             <fieldset id="sbyname" class="w3-row w3-margin-bottom w3-hide">
                 <legend>Search by Name</legend>
@@ -166,8 +164,6 @@ var usersPos = [
 ];
 var myId = '{{ me.publicToken }}';
 </script>
-<!--<script src="googleMap/markerclusterer/src/markerclusterer.js"></script>-->
-<script src="js/displayForm.js"></script>
 <script src="js/search.js"></script>
 <script src="js/autobahn.js"></script>
 <script src="js/notification.js"></script>

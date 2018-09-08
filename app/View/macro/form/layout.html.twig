@@ -1,6 +1,6 @@
 {% macro form(h2, action, flash, show) %}
 <div>
-    <h2 class="{% if show %}w3-theme-l1{% else %}w3-theme-d1{% endif %} w3-hover-green" onclick="display('{{ action }}');this.className = this.className.replace('w3-theme-d1', 'w3-theme-l1')" style="margin:0;cursor:pointer">
+    <h2 class="{% if show %}w3-theme-l1{% else %}w3-theme-d1{% endif %} w3-hover-green" onclick="display('{{ action }}');" style="margin:0;cursor:pointer">
             {{ h2 }}
         </h2>
     </div>

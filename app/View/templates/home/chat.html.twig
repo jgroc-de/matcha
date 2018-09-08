@@ -6,8 +6,7 @@
 {% block main %}
 <div class="w3-row">
     <div class="w3-col l6 w3-card-4 w3-margin-top">
-        <h2 class="w3-hover-green w3-theme-l1" style="cursor:pointer;margin:0" onclick="toggleDisplay('Friends')">Choose your "Friend"</h2>
-        <div class="w3-row w3-theme-l5" id="Friends">
+        <h2 class="w3-hover-green w3-theme-l1" style="cursor:pointer;margin:0" onclick="toggleSibling(this)">Choose your "Friend"</h2><div class="w3-row w3-theme-l5" id="Friends">
             {% for user in friends %}
             <div class="w3-col s6 m3">
                 <div id="{{ user.id }}" class="w3-margin">
@@ -38,7 +37,6 @@
 <script>
 var myId = '{{ me.publicToken }}';
 </script>
-<script src="js/displayForm.js"></script>
 <script src="js/autobahn.js"></script>
 <script src="js/notification.js"></script>
 <script src="js/chat.js"></script>

@@ -5,8 +5,6 @@ var msg = document.getElementById('tchatMsg');
 var button = document.getElementById('tchatButton');
 var websocket;
 
-setInterval(mateStatus, 60000);
-
 function highlightMate(data)
 {
     var div;
@@ -16,12 +14,9 @@ function highlightMate(data)
     {
         div = document.getElementById(name);
         if (data.mateStatus[name])
-        {
-            if (div.className.indexOf("gg-card-4") == -1)
-                div.className += " gg-card-4";
-        }
-        else if (div.className.indexOf("gg-card-4") != -1)
-            div.className = div.className.replace(" gg-card-4","");
+            div.classList.add("gg-card-4");
+        else
+            div.classList.remove("gg-card-4");
     }
 }
 
@@ -86,10 +81,7 @@ function tchatWith(name, id, myId, token)
                 {'skipSubprotocolCheck': true}
             );
 
-            if (TWindow.className.indexOf('w3-hide') != -1)
-            {
-                TWindow.className = TWindow.className.replace('w3-hide', '');
-            }
+            TWindow.classList.remove('w3-hide');
             history.forEach(function(value, index, array)
             {
                 addMessage(value.message, value.owner, myId)
@@ -116,3 +108,5 @@ function sendMessageTo(myId, name, id, token)
     msg.value = "";
     msg.focus();
 }
+
+setInterval(mateStatus, 60000);

@@ -23,7 +23,7 @@
         {% set classDD = "w3-bar-item w3-button w3-theme-l5" %}
         {% set classR = "w3-bar-item w3-button w3-right w3-large" %}
         <div class="w3-dropdown-click">
-            <a href="#" class="{{ class2 }}" onclick="displayMenu('demo1')">
+            <a href="#" class="{{ class2 }}" onclick="this.nextSibling.nextSibling.classList.toggle('w3-show')">
                 <i class="fa fa-bars" alt="menu" title="menu"></i>
             </a>
             <div id="demo1" class="w3-dropdown-content w3-bar-block" style="top:43px">
@@ -42,7 +42,7 @@
             <i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
         </a>
         <a href="#" class="{{ classR }} w3-display-container">
-            <i class="fa fa-bell" alt="like" title="new likes" onclick="toggleDisplay('notification');resetBadge()"></i>
+            <i class="fa fa-bell" alt="like" title="new likes" onclick="toggleById('notification');resetBadge()"></i>
                 <span id="badge" class="w3-badge w3-display-topright w3-green w3-tiny w3-hide"></span>
         </a>
         <div class="w3-right w3-theme-l5 w3-border w3-round gg-pop" title="popularity: {{ me.popularity }}/100">

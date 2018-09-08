@@ -1,15 +1,5 @@
 window.URL = window.URL || window.webkitURL;
 
-function dropdown(target) {
-    var x = document.getElementById(target);
-
-    if (x.className.indexOf("w3-show") == -1) { 
-        x.className += " w3-show";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
-
 function addTag(path) {
     var tag = prompt("add a tag (without the '#'):");
 
@@ -46,12 +36,9 @@ function addTag(path) {
 function addPicture() {
     var files = document.querySelectorAll('input[type=file]');
     var len = files.length;
-    var i;
 
-    for (i = 0; i < len; i++)
-    {
+    for (var i = 0; i < len; i++)
         files[i].addEventListener('change', addEvent);
-    }
 }
 
 function addEvent() {
@@ -59,7 +46,14 @@ function addEvent() {
     var allowedTypes = ['image/png', 'image/jpeg', 'image/gif'];
     var prev = this.parentNode.parentNode;
 
-    if ((allowedTypes.indexOf(this.files[0].type) != -1) && (this.files[0].size < 400000)) {
+    if (allowedTypes.indexOf(this.files[0].type) == -1) 
+    {
+        printNotif('not allowed type (png, jpg/jpeg, gif)', false);
+    }
+    else if (this.files[0].size > 400000)
+        printNotif('file too large (> 400ko)', false);
+    else
+    {
         var form = new FormData();
         var xhttp = new XMLHttpRequest();
         var reader = new FileReader();
@@ -68,14 +62,14 @@ function addEvent() {
         xhttp.open('POST', '/addPicture/' + id.charAt(3), true);
         xhttp.setRequestHeader('enctype', 'multipart/form-data');
         xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState == 4 && this.status == 200)
+            {
                 var path = this.responseText;
                 var imgElement = document.createElement('img');
                 var iElement = document.createElement('i');
 
-                while (prev.firstChild) {
+                while (prev.firstChild)
                     prev.removeChild(prev.firstChild);
-                }
                 imgElement.style.maxWidth = '100%';
                 imgElement.style.maxHeight = '100%';
                 imgElement.title = path;
@@ -84,109 +78,74 @@ function addEvent() {
                 imgElement.setAttribute('onclick', 'displayModal("' + reader.result + '")');
                 imgElement.src = reader.result;
                 prev.appendChild(imgElement);
-                iElement.setAttribute('class', 'w3-button w3-display-topright w3-hover-red fa fa-remove');
+                iElement.className = 'w3-button w3-display-topright w3-hover-red fa fa-remove';
                 iElement.title = 'remove picture';
                 iElement.setAttribute('onclick', 'deletePic("' + id + '")');
                 prev.appendChild(iElement);
             }
-            else if (this.readyState == 4 && this.status == 500) {
-                alert('server trouble… try again later!');
-            }
+            else if (this.readyState == 4 && this.status == 500)
+                printNotif('server trouble… try again later!', false);
         };
         xhttp.send(form);
         reader.readAsDataURL(this.files[0]);
     }
-    else
-        alert('not allowed type (png, jpg/jpeg, gif) or file too large (> 400ko)');
 }
 
-function deletePic(id) {
-    var xhttp = new XMLHttpRequest();
+function deletePic(id)
+{
+    if (confirm('Delete?'))
+    {
+        ggAjaxGet('delPicture/' + id.charAt(3), function (id) {
+            var labelElmt = document.createElement('label');
+            var parentNode = document.getElementById(id);
+            var inputElemt = document.createElement('input');
+            var inputElemt2 = document.createElement('input');
+            var div = document.createElement('div');
 
-    if (confirm('Delete?')) {
-        xhttp.open('GET', 'delPicture/' + id.charAt(3), true);
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var labelElmt = document.createElement('label');
-                var parentNode = document.getElementById(id);
-                var inputElemt = document.createElement('input');
-                var inputElemt2 = document.createElement('input');
-                var div = document.createElement('div');
-                
-                div.className = 'w3-display-container';
-                if (id == 'img1')
-                    div.style.height = '250px';
-                else
-                    div.style.height = '125px';
-                labelElmt.className = 'w3-button w3-jumbo w3-display-middle fa fa-plus w3-hover-green w3-block w3-padding-large';
-                labelElmt.title = 'add picture';
-                inputElemt.id = id;
-                inputElemt.type = 'file';
-                inputElemt2.type = 'hidden';
-                inputElemt.style.display = 'none';
-                while (parentNode.hasChildNodes()) {
-                    parentNode.removeChild(parentNode.firstChild);
-                }
-                parentNode.appendChild(div); 
-                div.appendChild(labelElmt); 
-                labelElmt.appendChild(inputElemt2);
-                labelElmt.appendChild(inputElemt);
-                addPicture();
-            }
-        };
-        xhttp.send();
+            div.className = 'w3-display-container';
+            if (id == 'img1')
+                div.style.height = '250px';
+            else
+                div.style.height = '125px';
+            labelElmt.className = 'w3-button w3-jumbo w3-display-middle fa fa-plus w3-hover-green w3-block w3-padding-large';
+            labelElmt.title = 'add picture';
+            inputElemt.id = id;
+            inputElemt.type = 'file';
+            inputElemt2.type = 'hidden';
+            inputElemt.style.display = 'none';
+            while (parentNode.hasChildNodes())
+                parentNode.removeChild(parentNode.firstChild);
+            parentNode.appendChild(div); 
+            div.appendChild(labelElmt); 
+            labelElmt.appendChild(inputElemt2);
+            labelElmt.appendChild(inputElemt);
+            addPicture();
+        }, id);
     }
+}
+
+function ggRemoveChild(id)
+{
+    var child = document.getElementById(id);
+
+    child.parentNode.removeChild(child);
 }
 
 function delFriend(path, id)
 {
     if (confirm('Seriously bro?'))
-    {
-        var request = new XMLHttpRequest();
-
-        request.open('GET', path + id, true);
-        request.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200)
-            {
-                var child = document.getElementById('friend' + id);
-                child.parentNode.removeChild(child);
-            }
-        };
-        request.send();
-    }
+        ggAjaxGet(path + id, ggRemoveChild, 'friend' + id);
 }
 
 function delFriendReq(path, id)
 {
     if (confirm('R U SURE?'))
-    {
-        var request = new XMLHttpRequest();
-
-        request.open('GET', path + id, true);
-        request.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200)
-            {
-                var child = document.getElementById('req' + id);
-
-                child.parentNode.removeChild(child);
-            }
-        };
-        request.send();
-    }
+        ggAjaxGet(path + id, ggRemoveChild, 'req' + id);
 }
 
-function delUserTag(path, id) {
-    var xhr = new XMLHttpRequest();
-
-    xhr.open('GET', path + id, true);
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var child = document.getElementById('tag' + id);
-
-            child.parentNode.removeChild(child);
-        }
-    };
-    xhr.send();
+function delUserTag(path, id)
+{
+    ggAjaxGet(path + id, ggRemoveChild, 'tag' + id);
 }
 
 addPicture();
