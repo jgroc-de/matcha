@@ -20,11 +20,9 @@ function highlightMate(data)
     }
 }
 
-function mateStatus() {
-    var xhr = new XMLHttpRequest();
-
-    xhr.open('GET', '/chatStatus');
-    xhr.send();
+function mateStatus()
+{
+    ggAjaxGet('/chatStatus/', function(){}, 0);
 }
 
 function addMessage(text, owner, myId)

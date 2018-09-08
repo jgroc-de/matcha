@@ -54,7 +54,7 @@ class Search extends Route
     {
         $post = $request->getParsedBody();
         $keys = array('min', 'max', 'Pmin', 'Pmax', 'distance');
-        if ($this->validator->validate($post, ['pseudo']))
+        if ($this->validator->validate($post, $keys))
         {
             $this->criteria = true;
             $this->date = date('Y');

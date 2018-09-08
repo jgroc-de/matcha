@@ -47,4 +47,4 @@ function profilStatus()
     ggAjaxGet('/profilStatus/' + user.id, function(){}, 0);
 }
 
-setInterval(profilStatus, 5000); 
+setInterval(profilStatus, 30000); 

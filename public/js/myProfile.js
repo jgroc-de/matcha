@@ -48,10 +48,10 @@ function addEvent() {
 
     if (allowedTypes.indexOf(this.files[0].type) == -1) 
     {
-        printNotif('not allowed type (png, jpg/jpeg, gif)', false);
+        printNotif(['not allowed type (png, jpg/jpeg, gif)', false]);
     }
     else if (this.files[0].size > 400000)
-        printNotif('file too large (> 400ko)', false);
+        printNotif(['file too large (> 400ko)', false]);
     else
     {
         var form = new FormData();
@@ -84,7 +84,7 @@ function addEvent() {
                 prev.appendChild(iElement);
             }
             else if (this.readyState == 4 && this.status == 500)
-                printNotif('server trouble… try again later!', false);
+                printNotif(['server trouble… try again later!', false]);
         };
         xhttp.send(form);
         reader.readAsDataURL(this.files[0]);
