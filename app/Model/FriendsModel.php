@@ -108,45 +108,42 @@ class FriendsModel extends \App\Constructor
 
     public function setFriendsReq($id1, $id2)
     {
-        if (!($this->getFriendReq($id1, $id2)))
+        $user = $this->user->getUserById($id2);
+        if ($this->getFriendReq($id2, $id1) or $user['bot'])
         {
-            $user = $this->user->getUserById($id2);
-            if ($this->getFriendReq($id2, $id1) or $user['bot'])
-            {
-                $this->setFriend($id1, $id2);
-                $this->user->updatePopularity(5, $user);
-                $this->user->updatePopularity(5, $_SESSION['profil']);
-                $msg = array(
-                    'category' => '"' . $user['publicToken'] . '"',
-                    'dest' => $user['id'],
-                    'exp' => $_SESSION['id'],
-                    'link' => "/profil/" . $id1,
-                    'msg' => "It's a match! say hi to " . $_SESSION['profil']['pseudo']
-                );
-                $this->MyZmq->send($msg);
-                $msg = array(
-                    'category' => '"' . $_SESSION['profil']['publicToken'] . '"',
-                    'dest' => $_SESSION['id'],
-                    'exp' => $user['id'],
-                    'link' => "/profil/" . $id1,
-                    'msg' => "It's a match! say hi to " . $user['pseudo']
-                );
-                $this->MyZmq->send($msg);
-            }
-            else
-            {
-                $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?, ?)');
-                $req->execute(array($id1, $id2, true));
-                $this->user->updatePopularity(1, $user);
-                $msg = array(
-                    'category' => '"' . $user['publicToken'] . '"',
-                    'dest' => $user['id'],
-                    'exp' => $_SESSION['id'],
-                    'link' => "/profil/" . $id1,
-                    'msg' => $_SESSION['profil']['pseudo'] . ' sent you a friend request'
-                );
-                $this->MyZmq->send($msg);
-            }
+            $this->setFriend($id1, $id2);
+            $this->user->updatePopularity(5, $user);
+            $this->user->updatePopularity(5, $_SESSION['profil']);
+            $msg = array(
+                'category' => '"' . $user['publicToken'] . '"',
+                'dest' => $user['id'],
+                'exp' => $_SESSION['id'],
+                'link' => "/profil/" . $id1,
+                'msg' => "It's a match! say hi to " . $_SESSION['profil']['pseudo']
+            );
+            $this->MyZmq->send($msg);
+            $msg = array(
+                'category' => '"' . $_SESSION['profil']['publicToken'] . '"',
+                'dest' => $_SESSION['id'],
+                'exp' => $user['id'],
+                'link' => "/profil/" . $id1,
+                'msg' => "It's a match! say hi to " . $user['pseudo']
+            );
+            $this->MyZmq->send($msg);
+        }
+        else
+        {
+            $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?, ?)');
+            $req->execute(array($id1, $id2, true));
+            $this->user->updatePopularity(1, $user);
+            $msg = array(
+                'category' => '"' . $user['publicToken'] . '"',
+                'dest' => $user['id'],
+                'exp' => $_SESSION['id'],
+                'link' => "/profil/" . $id1,
+                'msg' => $_SESSION['profil']['pseudo'] . ' sent you a friend request'
+            );
+            $this->MyZmq->send($msg);
         }
     }
 
