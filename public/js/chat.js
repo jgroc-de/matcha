@@ -22,7 +22,7 @@ function highlightMate(data)
 
 function mateStatus()
 {
-    ggAjaxGet('/chatStatus/', function(){}, 0);
+    ggAjaxGet('/chatStatus', function(){}, 0);
 }
 
 function addMessage(text, owner, myId)
@@ -62,7 +62,7 @@ function tchatWith(name, id, myId, token)
         if (this.readyState == 4 && this.status == 200)
         {
             var history = JSON.parse(this.response);
-            websocket = new ab.Session('ws://localhost:8100',
+            websocket = new ab.Session('ws://localhost:8080',
                 function()
                 {
                     websocket.subscribe(token, function(topic, data)

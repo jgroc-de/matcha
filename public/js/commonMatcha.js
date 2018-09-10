@@ -54,7 +54,6 @@ function printNotif(args)
     var div = document.createElement('div');
     var notif = document.getElementById('notif');
 
-    console.log(args);
     p.textContent = args[0];
     div.appendChild(p);
         div.className = "w3-panel w3-round";
@@ -67,7 +66,7 @@ function printNotif(args)
 
     setTimeout(function() {
         notif.removeChild(div);
-    }, 3500, notif, div);
+    }, 4500, notif, div);
 }
 
 function ggAjaxGet(path, callback, args)

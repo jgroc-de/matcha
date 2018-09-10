@@ -42,7 +42,7 @@ $app->group('', function () use ($app) {
     $this->post('/editPassword', App\Controllers\EditPassword::class.':check');
     $this->get('/rgpd', App\Controllers\RGPD::class)
         ->setName('RGPD');
-    $this->post('/rgpd', App\Controllers\RGPD::class.':getAllDatas');
+    $this->get('/getAllDatas', App\Controllers\RGPD::class.':getAllDatas');
     $this->get('/deleteAccount', App\Controllers\RGPD::class . ':deleteAccount')
         ->setName('deleteAccount');
     $this->get('/logout', App\Controllers\Logout::class)

@@ -24,7 +24,7 @@ function resetBadge()
 {
     var notifSocket;
 
-    notifSocket = new ab.Session('ws://localhost:8100',
+    notifSocket = new ab.Session('ws://localhost:8080',
         function()
         {
             notifSocket.subscribe('"' + myId + '"', function(topic, data)

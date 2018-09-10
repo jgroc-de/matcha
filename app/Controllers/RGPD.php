@@ -24,11 +24,11 @@ class RGPD extends Route
 
     public function deleteAccount(Request $request, Response $response, array $args)
     {
-        if ($this->mail->sendDeleteMail())
-            $this->flash->addMessage('success', 'Check your mailbox!');
+        //if ($this->mail->sendDeleteMail())
+        if(true)
+            return $response->getBody()->write('Check your mailbox!');
         else
-            $this->flash->addMessage('fail', 'there is a bug… plz contact us, we will anszer asap!');
-        $this($request, $response, $args);
+            return $response->getBody()->write('there is a bug… plz contact us, we ill answer asap!');
     }
 
     public function getAllDatas(Request $request, Response $response, array $args)
@@ -49,10 +49,9 @@ class RGPD extends Route
         }
         $data = array_merge($data, $this->splitImg($this->user->getAllDatas()));
         if ($this->mail->sendDataMail($data))
-            $this->flash->addMessage('success', 'Check your mailbox!');
+            return $response->getBody()->write('Check your mailbox!');
         else
-            $this->flash->addMessage('fail', 'there is a bug… plz contact us!');
-        $this($request, $response, $args);
+            return $response->getBody()->write('there is a bug… plz contact us!');
     }
 
     private function implodeData($data)
