@@ -1,11 +1,3 @@
----
-layout: post
-title:  "Second Projet: Matcha!"
-date:   2018-06-07 20:7:20 +0200
-categories: website
-excerpt_separator: <!--more-->
-img: /assets/matcha1.png
----
 ## Description
 
 Basé sur le micro-framework slim3, ceci est un site de rencontres sur le theme rick&morty. Les interactions entre utilisateurs sont au coeur du projet !
