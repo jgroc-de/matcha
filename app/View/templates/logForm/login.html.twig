@@ -8,10 +8,10 @@
 <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="width:90vw;max-width:500px">
 {{ form('Log In', 'login', flash, login) }}
 <div class="w3-section">
-    {{ input('text', 'pseudo', {'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}
+    {{ input('text', 'pseudo', {'id': 'pseudo1', 'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}
 </div>
 <div class="w3-section">
-    {{ input('password', 'password') }}
+    {{ input('password', 'password', {'id': 'password1'}) }}
 </div>
 <div class="">
     {{ button('submit') }}
@@ -19,7 +19,7 @@
     </form>
 {{ form('Reset Your Password', 'resetPassword', flash, reset) }}
 <div class="w3-section">
-    {{ input('email', 'email', {'value': post.email }) }}
+    {{ input('email', 'email', {'id': 'email1', 'value': post.email }) }}
 </div>
 <div class="">
     {{ button('submit') }}
