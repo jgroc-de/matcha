@@ -10,7 +10,10 @@ use App\Constructor;
  */
 class FriendsModel extends Constructor
 {
-    public function getFriend(int $id1, int $id2): array
+    /**
+     * @return bool|array
+     */
+    public function getFriend(int $id1, int $id2)
     {
         $req = $this->db->prepare('SELECT * FROM friends WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute($this->sortId($id1, $id2));
@@ -108,7 +111,10 @@ class FriendsModel extends Constructor
         return $req->fetchAll();
     }
 
-    public function getFriendReq(int $id1, int $id2): array
+    /**
+     * @return bool|array
+     */
+    public function getFriendReq(int $id1, int $id2)
     {
         $req = $this->db->prepare('SELECT * FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute([$id1, $id2]);
@@ -217,6 +223,9 @@ class FriendsModel extends Constructor
         }
     }
 
+    /**
+     * @return bool|array
+     */
     public function isFriend(array $id)
     {
         $req = $this->db->prepare('select * from friends where id_user1 = ? and id_user2 = ?');
@@ -225,7 +234,7 @@ class FriendsModel extends Constructor
         return $req->fetch();
     }
 
-    private function sortId(int $id1, int $id2)
+    private function sortId(int $id1, int $id2): array
     {
         return ($id1 < $id2) ? [$id1, $id2] : [$id2, $id1];
     }

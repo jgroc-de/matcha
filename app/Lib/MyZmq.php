@@ -3,11 +3,13 @@
 namespace App\Lib;
 
 use App\Constructor;
+use ZMQSocket;
 
 class MyZmq extends Constructor
 {
     public function send(array $msg)
     {
+        /** @var ZMQSocket $socket */
         $socket = $this->zmq;
         if (array_key_exists('mateStatus', $msg) || array_key_exists('profilStatus', $msg)) {
             $socket->send(json_encode($msg));

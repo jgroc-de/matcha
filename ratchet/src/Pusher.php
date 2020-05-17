@@ -6,7 +6,7 @@ use Ratchet\Wamp\WampServerInterface;
 
 class Pusher implements WampServerInterface
 {
-    protected $subscribedTopics = array();
+    protected $subscribedTopics = [];
     protected $clients;
 
     public function __construct() {
@@ -41,7 +41,7 @@ class Pusher implements WampServerInterface
                     $entryData['mateStatus'][$key] = true;
                 else
                 {
-                    unset($this->subscibedTopics[$friend]);
+                    unset($this->subscribedTopics[$friend]);
                     $entryData['mateStatus'][$key] = false;
                 }
             }
@@ -55,7 +55,7 @@ class Pusher implements WampServerInterface
                 $entryData['profilStatus'] = true;
             else
             {
-                unset($this->subscibedTopics[$user]);
+                unset($this->subscribedTopics[$user]);
                 $entryData['profilStatus'] = false;
             }
         }

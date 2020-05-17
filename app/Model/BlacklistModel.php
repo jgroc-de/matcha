@@ -18,7 +18,10 @@ class BlacklistModel extends Constructor
         return $req->fetchAll();
     }
 
-    public function getBlacklistById(int $idu, int $idb): array
+    /**
+     * @return bool|array
+     */
+    public function getBlacklistById(int $idu, int $idb)
     {
         $req = $this->db->prepare('SELECT * FROM blacklist WHERE iduser = ? and iduser_bl = ?');
         $req->execute([$idu, $idb]);
@@ -26,7 +29,7 @@ class BlacklistModel extends Constructor
         return $req->fetch();
     }
 
-    public function getAllBlacklist(): array
+    public function getAllBlacklist()
     {
         $req = $this->db->prepare('SELECT iduser, iduser_bl FROM blacklist WHERE iduser = ? OR iduser_bl = ?');
         $req->execute([$_SESSION['id'], $_SESSION['id']]);

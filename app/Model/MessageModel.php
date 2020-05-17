@@ -26,7 +26,7 @@ class MessageModel extends Constructor
         return $req->fetchAll();
     }
 
-    public function setMessage(array $hash): array
+    public function setMessage(array $hash)
     {
         $req = $this->db->prepare('INSERT INTO message VALUES (?, ?, ?, ?, ?)');
         $req->execute($hash);

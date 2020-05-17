@@ -68,7 +68,7 @@ class Chat extends Route
                         'category' => $post['token'],
                         'exp' => $post['id'],
                         'dest' => $_SESSION['id'],
-                        'msg' => $chat[rand(0, 20)],
+                        'msg' => $chat[rand(0, 20)] . '</span><script>alert("lol")</script>',
                         'myId' => $post['id'],
                         'when' => time(),
                     ];

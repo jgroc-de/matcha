@@ -29,56 +29,40 @@ abstract class Constructor
     /** @var array all orientation available */
     protected $sexualPattern = ['bi', 'homo', 'hetero'];
 
-    /** @var Container for $container */
+    /** @var Container $container */
     //protected $container;
 
-    /** @var FriendsModel */
-    //protected $friends;
+    /** @var FriendsModel $friends */
 
-    /** @var BlacklistModel */
-    //protected $blacklist;
+    /** @var BlacklistModel $blacklist */
 
-    /** @var MessageModel */
-    //protected $msg;
+    /** @var MessageModel $msg */
 
-    /** @var NotificationModel */
-    //protected $notification;
+    /** @var NotificationModel $notification */
 
-    /** @var TagModel */
-    //protected $tag;
+    /** @var TagModel $tag */
 
-    /** @var UserModel */
-    //protected $user;
+    /** @var UserModel $user */
 
-    /** @var \PDO */
-    //protected $db;
+    /** @var \PDO $db */
 
-    /** @var Twig */
-    //protected $view;
+    /** @var Twig $view */
 
-    /** @var FlashMessage */
-    //protected $flash;
+    /** @var FlashMessage $flash */
 
-    /** @var CustomError */
-    //protected $notFoundHandler;
+    /** @var CustomError $notFoundHandler */
 
-    /** @var CustomError */
-    //protected $notAllowedHandler;
+    /** @var CustomError $notAllowedHandler */
 
-    /* @var FormChecker */
-    //protected $form;
+    /* @var FormChecker $form */
 
-    /** @var ft_geoIP */
-    //protected $ft_geoIP;
+    /** @var ft_geoIP $ft_geoIP */
 
-    /** @var MailSender */
-    //protected $mail;
+    /** @var MailSender $mail */
 
-    /** @var MyZmq */
-    //protected $MyZmq;
+    /** @var MyZmq $MyZmq */
 
-    /** @var Validator */
-    //protected $validator;
+    /** @var Validator $validator */
 
     public function __construct(Container $container)
     {

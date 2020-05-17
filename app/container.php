@@ -113,7 +113,7 @@ $container['MyZmq'] = function ($container) {
     return new MyZmq($container);
 };
 
-$container['zmq'] = function ($container) {
+$container['zmq'] = function ($container): ZMQSocket {
     $context = new ZMQContext();
     $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my pusher');
     $socket->connect('tcp://localhost:5555');
