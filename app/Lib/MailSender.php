@@ -27,11 +27,11 @@ class MailSender
     {
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
-        #$mail->isSendmail();
+        $mail->isSendmail();
         #$mail->IsSMTP();
         #$mail->SMTPDebug = 1;
-        $mail->Host = 'smtp.example.com';
-        $mail->Port = 2025;
+        #$mail->Host = 'smtp.example.com';
+        #$mail->Port = 2025;
         #$mail->SMTPSecure = 'tls';
         #$mail->SMTPAuth = true;
         $mail->Username = self::EXP;

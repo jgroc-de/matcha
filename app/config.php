@@ -8,8 +8,8 @@ return [
     // database settings
     'db' => [
         'host' => 'localhost',
-        'user' => 'root',
-        'pass' => 'root00',
+        'user' => 'matcha',
+        'pass' => 'matcha',
         'dbname' => 'matcha',
     ],
 ];
