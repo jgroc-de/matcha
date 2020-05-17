@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Lib;
 
 /**
@@ -14,25 +15,23 @@ class FlashMessage
 
     public function __construct()
     {
-        $this->storage = array();
+        $this->storage = [];
         $id = 1;
     }
-    
+
     /**
-     * @param string $key     key = fail or success
-     * @param string $message message
+     * @param string $key key = fail or success
      */
     public function addMessage(string $key, string $message)
     {
-        if ($key === 'success')
+        if ($key === 'success') {
             $this->storage[$key] = $message;
-        else
-        {
+        } else {
             $this->storage[$this->id] = $message;
-            $this->id += 1;
+            ++$this->id;
         }
     }
-    
+
     /**
      * @return array all stored message
      */

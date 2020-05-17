@@ -1,33 +1,36 @@
 <?php
+
 namespace App\Controllers;
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Validation extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
         $get = $request->getParams();
-        if ($this->validator->validate($get, ['id', 'token', 'action']))
-        {
+        if ($this->validator->validate($get, ['id', 'token', 'action'])) {
             $account = $this->user->getUserById($get['id']);
-            if (!empty($account) && ($get['token'] === $account['token']))
-            {
+            if (!empty($account) && ($get['token'] === $account['token'])) {
                 $_SESSION['id'] = $account['id'];
                 $_SESSION['profil'] = $account;
                 $_SESSION['profil']['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
                 $this->user->updateToken($account['pseudo'], $_SESSION['profil']['token']);
-                if ($get['action'] === 'ini')
+                if ($get['action'] === 'ini') {
                     return $response->withRedirect('/editPassword');
-                elseif ($get['action'] === 'del')
-                {
+                }
+                if ($get['action'] === 'del') {
                     $this->deleteAccount();
+
                     return $response->withRedirect('/logout');
                 }
                 $this->user->activate();
             }
+
             return $response->withRedirect('/');
         }
+
         return $response->withStatus(400);
     }
 

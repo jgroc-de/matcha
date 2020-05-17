@@ -1,4 +1,5 @@
 <?php
+
 return [
     // Slim settings
     'displayErrorDetails' => true,
@@ -9,6 +10,6 @@ return [
         'host' => 'localhost',
         'user' => 'root',
         'pass' => 'root00',
-        'dbname' => 'matcha'
-    ]
+        'dbname' => 'matcha',
+    ],
 ];

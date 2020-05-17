@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Controllers;
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * class PagesController
@@ -14,6 +16,7 @@ class Logout extends Route
         $this->user->updateLastlog($_SESSION['id']);
         session_unset();
         session_destroy();
+
         return $this->view->render($response, 'templates/logForm/logout.html.twig', ['logout' => true]);
     }
 }

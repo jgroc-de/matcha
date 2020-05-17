@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Controllers;
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class EditPassword extends Route
 {
@@ -17,7 +19,7 @@ class EditPassword extends Route
                 'flash' => $this->flash->getMessages(),
                 'year' => date('Y') - 18,
                 'notification' => $this->notif->getNotification(),
-                'editPwd' => true
+                'editPwd' => true,
             ]
         );
     }
@@ -28,5 +30,4 @@ class EditPassword extends Route
         $this->form->checkPwd($post);
         $this($request, $response, $args);
     }
-    
 }

@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Controllers;
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Home extends Route
 {
@@ -14,8 +16,9 @@ class Home extends Route
             'friendReq' => $this->friends->getFriendsReqs($_SESSION['id']),
             'friends' => $this->friends->getFriends($_SESSION['id']),
             'tags' => $this->tag->getUserTags($_SESSION['id']),
-            'notification' => $this->notif->getNotification()
+            'notification' => $this->notif->getNotification(),
         ];
+
         return $this->view->render($response, $template, $twigVar);
     }
 }

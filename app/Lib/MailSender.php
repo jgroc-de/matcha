@@ -14,44 +14,45 @@ class MailSender
     private $dest = 'jgroc2s@free.fr';
     private $subject = '';
     private $message = '';
-    private $files = array();
+    private $files = [];
 
     /**
-     * @param string $this->dest    email address
-     * @param string $this->subject 
-     * @param string $this->message 
+     * @param string $this->dest email address
+     * @param string $this->subject
+     * @param string $this->message
      *
      * @return string for success or failure
      */
-    public function sendMail(string $replyTo = SELF::EXP, string $user = SELF::USER)
+    public function sendMail(string $replyTo = self::EXP, string $user = self::USER)
     {
-        $mail =  new \PHPMailer\PHPMailer\PHPMailer(true);
+        $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
         $mail->IsSMTP();
         $mail->SMTPDebug = 0;
-        $mail->Host = "smtp.free.fr";
+        $mail->Host = 'smtp.free.fr';
         $mail->Port = 587;
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;
-        $mail->Username = SELF::EXP;
-        $mail->Password = SELF::PASS;
+        $mail->Username = self::EXP;
+        $mail->Password = self::PASS;
         $mail->CharSet = 'UTF-8';
-        if (!empty($this->files))
-        {
-            foreach ($this->files as $file)
-                $mail->addAttachment(__DIR__ . '/../../public' . $file);    // Optional name
+        if (!empty($this->files)) {
+            foreach ($this->files as $file) {
+                $mail->addAttachment(__DIR__ . '/../../public' . $file);
+            }    // Optional name
         }
         $mail->addReplyTo($replyTo, 'First Last');
-        $mail->setFrom(SELF::EXP, $user);
+        $mail->setFrom(self::EXP, $user);
         $mail->addAddress($this->dest);
         $mail->Subject = $this->subject;
         $mail->Body = $this->message;
+
         return $mail->send();
     }
 
     /**
      * @param string $login name
-     * @param string $this->dest  email address
+     * @param string $this->dest email address
      * @param string $token hashed key
      */
     public function sendValidationMail(array $user)
@@ -67,19 +68,20 @@ class MailSender
 
             ---------------
             This is an automatic mail, thx to not reply.';
+
         return $this->sendMail();
     }
 
     /**
      * @param string $login name
-     * @param string $this->dest  email address
+     * @param string $this->dest email address
      * @param string $token hashed key
      */
     public function sendResetMail(array $user)
     {
         $this->dest = $user['email'];
         $this->subject = 'Matcha Reinitialisation link';
-        $this->message = 'Hi ' .$user['pseudo'] . ',
+        $this->message = 'Hi ' . $user['pseudo'] . ',
 
             A password reinitialistion request has been made on our website.
             To proceed, plz click on the link bellow or paste it into your web browser.
@@ -88,6 +90,7 @@ class MailSender
 
             ---------------
             This is an automatic mail, thx to not reply.';
+
         return $this->sendMail();
     }
 
@@ -107,24 +110,22 @@ class MailSender
 
             ---------------
             This is an automatic mail, thx to not reply.';
+
         return $this->sendMail();
     }
 
-    /**
-     * @param array $data
-     */
     public function sendDataMail(array $data)
     {
         $this->files = $data['img'];
         unset($data['img']);
         $this->subject = 'Your Datas on ' . $_SERVER['SERVER_NAME'];
         $this->dest = $_SESSION['profil']['email'];
-        $str = "";
-        foreach ($data as $key => $value)
-        {
+        $str = '';
+        foreach ($data as $key => $value) {
             $str = $str . "\n$key :\n";
-            foreach ($value as $key2 => $info)
+            foreach ($value as $key2 => $info) {
                 $str = $str . "    $key2 : $info\n";
+            }
         }
         $this->message = 'Hi ' . $_SESSION['profil']['pseudo'] . ",
 
@@ -134,9 +135,10 @@ class MailSender
 
             ---------------
             This is an automatic mail, thx to not reply.";
+
         return $this->sendMail();
     }
-    
+
     public function sendDeleteMail2($pseudo, $mail)
     {
         $this->dest = $mail;
@@ -151,9 +153,10 @@ class MailSender
 
             ---------------
             This is an automatic mail, thx to not reply.";
+
         return $this->sendMail();
     }
-    
+
     public function reportMail($id)
     {
         $this->subject = 'User report on ' . $_SERVER['SERVER_NAME'];
@@ -164,17 +167,17 @@ class MailSender
     Glorieuse journée à vous!
 
             Votre dévoué, " . $_SERVER['SERVER_NAME'];
+
         return $this->sendMail($_SESSION['profil']['email']);
     }
 
     public function contactMe($msg, $mail)
     {
-        if (isset($_SESSION['profil']))
-        {
+        if (isset($_SESSION['profil'])) {
             $user = $_SESSION['profil']['pseudo'];
-        }
-        else
+        } else {
             $user = 'anonymous';
+        }
         $this->subject = 'User contact from ' . $_SERVER['SERVER_NAME'];
         $this->message = "Bonjour maître des 7 océans numériques,
 
@@ -185,12 +188,12 @@ class MailSender
     Glorieuse journée à vous!
 
             Votre dévoué, " . $_SERVER['SERVER_NAME'];
+
         return $this->sendMail($mail, $user);
     }
-    
+
     private function linkGen($user, $action)
     {
         return 'http://' . $_SERVER['SERVER_NAME'] . self::PORT . "/validation?action=$action&token=" . rawurlencode($user['token']) . '&id=' . $user['id'];
     }
-
 }

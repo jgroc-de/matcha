@@ -7,14 +7,16 @@ class TagModel extends \App\Constructor
     public function getTag($tag)
     {
         $req = $this->db->prepare('SELECT * FROM hashtags WHERE tag = ?');
-        $req->execute(array($tag));
+        $req->execute([$tag]);
+
         return $req->fetch();
     }
 
     public function getUserTag($id, $user)
     {
         $req = $this->db->prepare('SELECT * FROM usertags WHERE idtag = ? AND iduser = ?');
-        $req->execute(array($id, $user));
+        $req->execute([$id, $user]);
+
         return $req->fetch();
     }
 
@@ -28,7 +30,8 @@ class TagModel extends \App\Constructor
             WHERE hashtags.tag = ?
             AND iduser = ?
         ');
-        $req->execute(array($tag, $user));
+        $req->execute([$tag, $user]);
+
         return $req->fetch();
     }
 
@@ -42,7 +45,8 @@ class TagModel extends \App\Constructor
             WHERE iduser = ?
             ORDER BY hashtags.tag
         ');
-        $req->execute(array($userId));
+        $req->execute([$userId]);
+
         return $req->fetchAll();
     }
 
@@ -56,31 +60,36 @@ class TagModel extends \App\Constructor
             WHERE iduser = ?
             ORDER BY hashtags.tag
         ');
-        $req->execute(array($userId));
+        $req->execute([$userId]);
+
         return $req->fetchAll();
     }
 
     public function setTag($tag)
     {
         $req = $this->db->prepare('INSERT INTO hashtags (tag) VALUES (?)');
-        return $req->execute(array($tag));
+
+        return $req->execute([$tag]);
     }
 
     public function setUserTag($idtag)
     {
         $req = $this->db->prepare('INSERT INTO usertags (idtag, iduser) VALUES (?,?)');
-        return $req->execute(array($idtag, $_SESSION['id']));    
+
+        return $req->execute([$idtag, $_SESSION['id']]);
     }
 
     public function delUserTag($idTag, $idUser)
     {
         $req = $this->db->prepare('DELETE FROM usertags WHERE idtag = ? AND iduser = ?');
-        return $req->execute(array($idTag, $idUser));
+
+        return $req->execute([$idTag, $idUser]);
     }
 
     public function delAllUserTag($idUser)
     {
         $req = $this->db->prepare('DELETE FROM usertags WHERE iduser = ?');
-        return $req->execute(array($idUser));
+
+        return $req->execute([$idUser]);
     }
 }

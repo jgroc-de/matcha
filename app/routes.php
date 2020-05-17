@@ -1,4 +1,5 @@
 <?php
+
 // Routes
 
 $app->get('/setup', App\Controllers\InitializeDB::class)
@@ -18,9 +19,9 @@ $app->group('', function () {
         ->setName('signup');
     $this->get('/resetPassword', App\Controllers\ResetPassword::class)
         ->setName('resetPassword');
-    $this->post('/login', App\Controllers\Login::class.':check');
-    $this->post('/signup', App\Controllers\Signup::class.':check');
-    $this->post('/resetPassword', App\Controllers\ResetPassword::class.':check');
+    $this->post('/login', App\Controllers\Login::class . ':check');
+    $this->post('/signup', App\Controllers\Signup::class . ':check');
+    $this->post('/resetPassword', App\Controllers\ResetPassword::class . ':check');
 })->add(new \App\Middlewares\noAuthMiddleware());
 
 $app->group('', function () use ($app) {
@@ -34,15 +35,15 @@ $app->group('', function () use ($app) {
         ->setName('searchByName');
     $this->get('/editProfil', App\Controllers\EditProfil::class)
         ->setName('editProfil');
-    $this->post('/editProfil', App\Controllers\EditProfil::class.':check');
-    $this->get('/completeProfil', App\Controllers\EditProfil::class.':complete')
+    $this->post('/editProfil', App\Controllers\EditProfil::class . ':check');
+    $this->get('/completeProfil', App\Controllers\EditProfil::class . ':complete')
         ->setName('editProfil2');
     $this->get('/editPassword', App\Controllers\EditPassword::class)
         ->setName('editPassword');
-    $this->post('/editPassword', App\Controllers\EditPassword::class.':check');
+    $this->post('/editPassword', App\Controllers\EditPassword::class . ':check');
     $this->get('/rgpd', App\Controllers\RGPD::class)
         ->setName('RGPD');
-    $this->get('/getAllDatas', App\Controllers\RGPD::class.':getAllDatas');
+    $this->get('/getAllDatas', App\Controllers\RGPD::class . ':getAllDatas');
     $this->get('/deleteAccount', App\Controllers\RGPD::class . ':deleteAccount')
         ->setName('deleteAccount');
     $this->get('/logout', App\Controllers\Logout::class)

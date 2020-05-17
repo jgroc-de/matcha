@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model;
 
 /**
@@ -9,26 +10,30 @@ class NotificationModel extends \App\Constructor
 {
     /**
      * @param $hash array
+     *
      * @return array
      */
     public function getNotification()
     {
         $req = $this->db->prepare('SELECT * FROM notification WHERE dest = ? ORDER BY date DESC LIMIT 10');
-        $req->execute(array($_SESSION['id']));
+        $req->execute([$_SESSION['id']]);
+
         return $req->fetchAll();
     }
-    
+
     /**
      * @param $hash array
+     *
      * @return array
      */
     public function getAllNotification()
     {
         $req = $this->db->prepare('SELECT message, date FROM notification WHERE dest = ? OR exp = ? ORDER BY date DESC');
-        $req->execute(array($_SESSION['id'], $_SESSION['id']));
+        $req->execute([$_SESSION['id'], $_SESSION['id']]);
+
         return $req->fetchAll();
     }
-    
+
     /**
      * @param $hash array
      */
@@ -41,6 +46,7 @@ class NotificationModel extends \App\Constructor
     public function deleteNotifications($id)
     {
         $req = $this->db->prepare('DELETE FROM notification WHERE dest = ? OR exp = ?');
-        return $req->execute(array($id, $id));
+
+        return $req->execute([$id, $id]);
     }
 }

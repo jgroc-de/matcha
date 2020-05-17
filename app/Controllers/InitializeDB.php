@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Controllers;
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class InitializeDB extends Route
 {
@@ -16,6 +18,5 @@ class InitializeDB extends Route
         $pdo->exec('USE ' . $db['dbname']);
         $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
         $this->db->exec($file);
-    } 
+    }
 }
-

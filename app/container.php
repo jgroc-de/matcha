@@ -1,4 +1,5 @@
 <?php
+
 $container = $app->getContainer();
 
 /**
@@ -7,15 +8,18 @@ $container = $app->getContainer();
 $container['view'] = function ($container) {
     $view = new Slim\Views\Twig('../app/View', [
         'cache' => false, //'../tmp/cache',
-        'debug' => true
+        'debug' => true,
     ]);
-    $basePath = rtrim(str_ireplace(
+    $basePath = rtrim(
+        str_ireplace(
         'index.php',
         '',
-        $container['request']->getUri()->getBasePath()),
+        $container['request']->getUri()->getBasePath()
+    ),
         '/'
     );
     $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
+
     return $view;
 };
 
@@ -27,20 +31,21 @@ $container['db'] = function ($container) {
     $pdo = new PDO('mysql:host=' . $db['host'] . ';dbname=' . $db['dbname'], $db['user'], $db['pass']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
     return $pdo;
 };
 
 /**
  * @class UserModel
  */
-$container['user'] = function ($container) { 
+$container['user'] = function ($container) {
     return new \App\Model\UserModel($container);
 };
 
 /**
  * @class FriendsModel
  */
-$container['friends'] = function ($container) { 
+$container['friends'] = function ($container) {
     return new \App\Model\FriendsModel($container);
 };
 
@@ -75,7 +80,7 @@ $container['blacklist'] = function ($container) {
 /**
  * etc…
  */
-$container['form'] = function ($container) { 
+$container['form'] = function ($container) {
     return new \App\Lib\FormChecker($container);
 };
 
@@ -118,6 +123,7 @@ $container['MyZmq'] = function ($container) {
 $container['zmq'] = function ($container) {
     $context = new ZMQContext();
     $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my pusher');
-    $socket->connect("tcp://localhost:5555");
+    $socket->connect('tcp://localhost:5555');
+
     return $socket;
 };

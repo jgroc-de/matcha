@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model;
 
 /**
@@ -11,6 +12,7 @@ class FriendsModel extends \App\Constructor
     {
         $req = $this->db->prepare('SELECT * FROM friends WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute($this->sortId($id1, $id2));
+
         return $req->fetch();
     }
 
@@ -32,8 +34,9 @@ class FriendsModel extends \App\Constructor
             WHERE id_user2 = ?
             ORDER BY user.pseudo
         ');
-        $req1->execute(array($id));
-        $req2->execute(array($id));
+        $req1->execute([$id]);
+        $req2->execute([$id]);
+
         return array_merge($req1->fetchAll(), $req2->fetchAll());
     }
 
@@ -55,8 +58,9 @@ class FriendsModel extends \App\Constructor
             WHERE id_user2 = ?
             ORDER BY user.pseudo
         ');
-        $req1->execute(array($id));
-        $req2->execute(array($id));
+        $req1->execute([$id]);
+        $req2->execute([$id]);
+
         return array_merge($req1->fetchAll(), $req2->fetchAll());
     }
 
@@ -70,7 +74,8 @@ class FriendsModel extends \App\Constructor
             WHERE id_user2 = ?
             ORDER BY user.pseudo
         ');
-        $req->execute(array($id));
+        $req->execute([$id]);
+
         return $req->fetchAll();
     }
 
@@ -84,7 +89,8 @@ class FriendsModel extends \App\Constructor
             WHERE id_user2 = ? OR id_user1 = ?
             ORDER BY user.id
         ');
-        $req->execute(array($id, $id));
+        $req->execute([$id, $id]);
+
         return $req->fetchAll();
     }
 
@@ -95,54 +101,53 @@ class FriendsModel extends \App\Constructor
             FROM friendsReq
             WHERE id_user1 = ? OR id_user2 = ?
         ');
-        $req->execute(array($_SESSION['id'], $_SESSION['id']));
+        $req->execute([$_SESSION['id'], $_SESSION['id']]);
+
         return $req->fetchAll();
     }
 
     public function getFriendReq($id1, $id2)
     {
         $req = $this->db->prepare('SELECT * FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
-        $req->execute(array($id1, $id2));
+        $req->execute([$id1, $id2]);
+
         return $req->fetch();
     }
 
     public function setFriendsReq($id1, $id2)
     {
         $user = $this->user->getUserById($id2);
-        if ($this->getFriendReq($id2, $id1) or $user['bot'])
-        {
+        if ($this->getFriendReq($id2, $id1) or $user['bot']) {
             $this->setFriend($id1, $id2);
             $this->user->updatePopularity(5, $user);
             $this->user->updatePopularity(5, $_SESSION['profil']);
-            $msg = array(
+            $msg = [
                 'category' => '"' . $user['publicToken'] . '"',
                 'dest' => $user['id'],
                 'exp' => $_SESSION['id'],
-                'link' => "/profil/" . $id1,
-                'msg' => "It's a match! say hi to " . $_SESSION['profil']['pseudo']
-            );
+                'link' => '/profil/' . $id1,
+                'msg' => "It's a match! say hi to " . $_SESSION['profil']['pseudo'],
+            ];
             $this->MyZmq->send($msg);
-            $msg = array(
+            $msg = [
                 'category' => '"' . $_SESSION['profil']['publicToken'] . '"',
                 'dest' => $_SESSION['id'],
                 'exp' => $user['id'],
-                'link' => "/profil/" . $id1,
-                'msg' => "It's a match! say hi to " . $user['pseudo']
-            );
+                'link' => '/profil/' . $id1,
+                'msg' => "It's a match! say hi to " . $user['pseudo'],
+            ];
             $this->MyZmq->send($msg);
-        }
-        else
-        {
+        } else {
             $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?, ?)');
-            $req->execute(array($id1, $id2, true));
+            $req->execute([$id1, $id2, true]);
             $this->user->updatePopularity(1, $user);
-            $msg = array(
+            $msg = [
                 'category' => '"' . $user['publicToken'] . '"',
                 'dest' => $user['id'],
                 'exp' => $_SESSION['id'],
-                'link' => "/profil/" . $id1,
-                'msg' => $_SESSION['profil']['pseudo'] . ' sent you a friend request'
-            );
+                'link' => '/profil/' . $id1,
+                'msg' => $_SESSION['profil']['pseudo'] . ' sent you a friend request',
+            ];
             $this->MyZmq->send($msg);
         }
     }
@@ -154,8 +159,7 @@ class FriendsModel extends \App\Constructor
             SELECT * FROM friends
             WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute($tab);
-        if (empty($req->fetch()))
-        {
+        if (empty($req->fetch())) {
             $this->eraseFriendReq($id1, $id2);
             $this->eraseFriendReq($id2, $id1);
             $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?, ?)');
@@ -163,9 +167,7 @@ class FriendsModel extends \App\Constructor
             $this->flash->addMessage('success', 'this user is now your friends');
             $tab[] = $token;
             $req->execute($tab);
-        }
-        else
-        {
+        } else {
             $this->flash->addMessage('success', 'this user is already your friends');
         }
     }
@@ -174,42 +176,41 @@ class FriendsModel extends \App\Constructor
     {
         $this->delAllFriendReq($id);
         $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? OR id_user2 = ?');
-        $req->execute(array($id, $id));
+        $req->execute([$id, $id]);
     }
 
     public function delFriendReq($id1, $id2)
     {
         $req = $this->db->prepare('UPDATE friendsReq set visible = false WHERE id_user1 = ? AND id_user2 = ?');
-        $req->execute(array($id1, $id2));
+        $req->execute([$id1, $id2]);
         $req = $this->db->prepare('UPDATE friendsReq set visible = false WHERE id_user1 = ? AND id_user2 = ?');
-        $req->execute(array($id2, $id1));
+        $req->execute([$id2, $id1]);
     }
 
     public function delAllFriendReq($id)
     {
         $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? OR id_user2 = ?');
-        $req->execute(array($id, $id));
+        $req->execute([$id, $id]);
     }
 
     public function eraseFriendReq($id1, $id2)
     {
         $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
-        $req->execute(array($id1, $id2));
+        $req->execute([$id1, $id2]);
     }
 
     public function delFriend($id1, $id2)
     {
         $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? AND id_user2 = ?');
-        if ($req->execute($this->sortId($id1, $id2)))
-        {
+        if ($req->execute($this->sortId($id1, $id2))) {
             $user = $this->user->getUserById($id2);
-            $msg = array(
+            $msg = [
                 'category' => '"' . $user['publicToken'] . '"',
                 'dest' => $user['id'],
                 'exp' => $_SESSION['id'],
-                'link' => "/",
-                'msg' => $_SESSION['profil']['pseudo'] . " has erased your friendship link"
-            );
+                'link' => '/',
+                'msg' => $_SESSION['profil']['pseudo'] . ' has erased your friendship link',
+            ];
             $this->MyZmq->send($msg);
         }
     }
@@ -218,11 +219,12 @@ class FriendsModel extends \App\Constructor
     {
         $req = $this->db->prepare('select * from friends where id_user1 = ? and id_user2 = ?');
         $req->execute($id);
+
         return $req->fetch();
     }
-    
+
     private function sortId($id1, $id2)
     {
-        return (($id1 < $id2) ? [$id1, $id2] : [$id2, $id1]);
+        return ($id1 < $id2) ? [$id1, $id2] : [$id2, $id1];
     }
 }

@@ -1,35 +1,38 @@
 <?php
+
 namespace App\Controllers;
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Search extends Route
 {
     private $kind = ['Rick', 'Morty', 'Beth', 'Summer', 'Jerry'];
-    private $list = array();
-    private $age = array('min' => 2000, 'max' => 0);
+    private $list = [];
+    private $age = ['min' => 2000, 'max' => 0];
     private $targets = ['Rick', 'Morty', 'Beth', 'Summer', 'Jerry'];
-    private $tags = array();
-    private $popularity = array('min' => 0, 'max' => 100);
+    private $tags = [];
+    private $popularity = ['min' => 0, 'max' => 100];
     private $dist = 30;
     private $date = 0;
     private $criteria = false;
 
     public function __invoke(Request $request, Response $response, array $args)
     {
-        if (!$_SESSION['profil']['biography'])
-        {
+        if (!$_SESSION['profil']['biography']) {
             return $response->withRedirect('/completeProfil', 302);
         }
         $this->date = date('Y');
         $this->listDefault();
+
         return $this->searchResponse($response);
     }
 
     private function searchResponse($response)
     {
         $this->filterList();
-        usort($this->list, array($this, 'sortList'));
+        usort($this->list, [$this, 'sortList']);
+
         return $this->view->render(
             $response,
             'templates/home/search.html.twig',
@@ -39,13 +42,13 @@ class Search extends Route
                 'target' => $this->targets,
                 'users' => $this->list,
                 'tags' => $this->tags,
-                'age' => ['min' => (($this->date - $this->age['min']) >= 18? $this->date - $this->age['min']:18), 'max' => $this->date - $this->age['max']],
+                'age' => ['min' => (($this->date - $this->age['min']) >= 18 ? $this->date - $this->age['min'] : 18), 'max' => $this->date - $this->age['max']],
                 'distSelect' => $this->dist,
                 'distance' => ['1', '5', '10', '20', '30', '50', '100', '500', '1000', '10000'],
                 'popularity' => $this->popularity,
                 'sort' => ['score', 'popularity', 'age desc.', 'age asc.', 'distance', 'tag'],
                 'notification' => $this->notif->getNotification(),
-                'criteria' => $this->criteria
+                'criteria' => $this->criteria,
             ]
         );
     }
@@ -53,9 +56,8 @@ class Search extends Route
     public function criteria(Request $request, Response $response, array $args)
     {
         $post = $request->getParsedBody();
-        $keys = array('min', 'max', 'Pmin', 'Pmax', 'distance');
-        if ($this->validator->validate($post, $keys))
-        {
+        $keys = ['min', 'max', 'Pmin', 'Pmax', 'distance'];
+        if ($this->validator->validate($post, $keys)) {
             $this->criteria = true;
             $this->date = date('Y');
             $this->age['min'] = $this->date - $post['min'];
@@ -65,51 +67,50 @@ class Search extends Route
             $this->dist = $post['distance'];
             $this->getTarget($post);
             $this->listByCriteria();
-            foreach ($post as $key => $value)
-            {
-                if ($key === $value)
-                {
+            foreach ($post as $key => $value) {
+                if ($key === $value) {
                     $this->tags[] = $key;
                 }
             }
             $this->getTags($post);
+
             return $this->searchResponse($response);
         }
+
         return $response->withStatus(400);
     }
 
     public function name(Request $request, Response $response, array $args)
     {
         $post = $request->getParsedBody();
-        if ($this->validator->validate($post, ['pseudo']))
-        {
+        if ($this->validator->validate($post, ['pseudo'])) {
             $this->listByName($post['pseudo']);
+
             return $this->searchResponse($response);
         }
+
         return $response->withStatus(400);
     }
 
     private function filterList()
     {
         $bList = $this->blacklist->getAllBlacklist();
-        $blacklist = array();
-        foreach ($bList as $id)
-        {
-            if ($id['iduser'] === $_SESSION['id'])
+        $blacklist = [];
+        foreach ($bList as $id) {
+            if ($id['iduser'] === $_SESSION['id']) {
                 $blacklist[] = $id['iduser_bl'];
-            else
+            } else {
                 $blacklist[] = $id['iduser'];
-        } 
+            }
+        }
         $friends = $this->friends->getfriends($_SESSION['id']);
-        $this->list = array_udiff($this->list, $friends, array($this, 'listCmp'));
+        $this->list = array_udiff($this->list, $friends, [$this, 'listCmp']);
         $friendsReq = $this->friends->getFriendReqs($_SESSION['id']);
-        $this->list = array_udiff($this->list, $friendsReq, array($this, 'listCmp'));
-        foreach ($this->list as $key => $user)
-        {
-            if (in_array($user['id'], $blacklist))
+        $this->list = array_udiff($this->list, $friendsReq, [$this, 'listCmp']);
+        foreach ($this->list as $key => $user) {
+            if (in_array($user['id'], $blacklist)) {
                 unset($this->list[$key]);
-            else
-            {
+            } else {
                 $this->list[$key]['time'] = floor((time() - intval($user['lastlog'])) / 3600);
                 $this->list[$key]['distance'] = $this->angle2distance($user);
                 $this->list[$key]['score'] = $this->score($this->list[$key]);
@@ -139,22 +140,19 @@ class Search extends Route
         $this->list = $this->user->getUsersBySexuality($this->age, $this->distance2angle());
         $this->getTarget();
         $this->getTags();
-        if ($_SESSION['profil']['sexuality'] === 'bi')
-        {
-            foreach ($this->list as $key => $value)
-            {
-                if ($value['sexuality'] === 'homo' && $value['gender'] != $_SESSION['profil']['gender'])
+        if ($_SESSION['profil']['sexuality'] === 'bi') {
+            foreach ($this->list as $key => $value) {
+                if ($value['sexuality'] === 'homo' && $value['gender'] != $_SESSION['profil']['gender']) {
                     array_splice($this->list, $key, 1);
+                }
             }
         }
     }
 
-    private function getTarget($post = array())
+    private function getTarget($post = [])
     {
-        if (empty($post))
-        {
-            switch ($_SESSION['profil']['sexuality'])
-            {
+        if (empty($post)) {
+            switch ($_SESSION['profil']['sexuality']) {
             case 'hetero':
                 $this->targets = array_diff($this->kind, [$_SESSION['profil']['gender']]);
                 break;
@@ -162,48 +160,45 @@ class Search extends Route
                 $this->targets = [$_SESSION['profil']['gender']];
                 break;
             }
-        }
-        else
-        {
-            $targets = array();
-            foreach($this->kind as $key)
-            {
-                if (array_key_exists($key, $post))
+        } else {
+            $targets = [];
+            foreach ($this->kind as $key) {
+                if (array_key_exists($key, $post)) {
                     $targets[] = $key;
+                }
             }
-            if (empty($targets))
+            if (empty($targets)) {
                 $this->getTarget();
-            else
+            } else {
                 $this->targets = $targets;
+            }
         }
     }
 
-    private function getTags($post = array())
+    private function getTags($post = [])
     {
         $listTag = $this->tags;
         $myTag = $this->tag->getUserTags($_SESSION['id']);
-        foreach ($this->list as $key => $value)
-        {
+        foreach ($this->list as $key => $value) {
             $list = $this->tag->getUserTags($value['id']);
             $this->list[$key]['tag'] = count($result = $this->intersect($list, $myTag));
-            if (!empty($post))
-            {
+            if (!empty($post)) {
                 $void = true;
-                foreach ($list as $tag)
-                {
-                    if (!empty($tag = array_intersect($tag, $post)))
-                    {
+                foreach ($list as $tag) {
+                    if (!empty($tag = array_intersect($tag, $post))) {
                         $listTag[] = $tag['tag'];
                         $void = false;
                         break;
                     }
                 }
-                if ($void)
+                if ($void) {
                     unset($this->list[$key]);
-            }
-            else
-                foreach ($list as $tag)
+                }
+            } else {
+                foreach ($list as $tag) {
                     $listTag[] = $tag['tag'];
+                }
+            }
         }
         sort($listTag);
         $this->tags = array_unique($listTag);
@@ -211,32 +206,32 @@ class Search extends Route
 
     private function intersect($a, $b)
     {
-        $result = array();
-        while ($tmp = array_shift($a))
-        {
+        $result = [];
+        while ($tmp = array_shift($a)) {
             $test = false;
-            foreach($b as $value)
-            {
-                if (!($c = strcmp($tmp['tag'], $value['tag'])))
-                {
+            foreach ($b as $value) {
+                if (!($c = strcmp($tmp['tag'], $value['tag']))) {
                     $test = true;
                     break;
                 }
             }
-            if ($test)
+            if ($test) {
                 $result[] = $tmp;
+            }
         }
+
         return $result;
     }
-    
+
     private function distance2angle()
     {
         $rayon = 6400;
-        $angle = array();
+        $angle = [];
 
         $rayonlng = $rayon * cos(deg2rad($_SESSION['profil']['lattitude']));
         $angle['lat'] = rad2deg($this->dist / $rayon);
         $angle['lng'] = rad2deg($this->dist / $rayonlng);
+
         return $angle;
     }
 
@@ -250,17 +245,17 @@ class Search extends Route
         $lngrad = deg2rad($user['longitude'] - $_SESSION['profil']['longitude']);
         $a = $rayon * sin($latrad);
         $b = $rayonlng * sin($lngrad);
+
         return sqrt($a * $a + $b * $b);
     }
 
     private function score($user)
     {
-        return 1000 + floor($user['popularity'] / 5) + 5 * pow($user['tag'], $user['tag']) - $user['time'] - floor($user['distance'] * 2)  - abs($_SESSION['profil']['birthdate'] - $user['birthdate']);
+        return 1000 + floor($user['popularity'] / 5) + 5 * pow($user['tag'], $user['tag']) - $user['time'] - floor($user['distance'] * 2) - abs($_SESSION['profil']['birthdate'] - $user['birthdate']);
     }
 
     public function sortList($a, $b)
     {
         return $b['score'] - $a['score'];
     }
-
 }

@@ -1,20 +1,21 @@
 <?php
+
 namespace App\Controllers;
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class FakeFactory extends Route
 {
     public function __invoke(Request $request, Response $response, array $args)
     {
         $count = 500;
-        $profil = array();
+        $profil = [];
         $faker = \Faker\Factory::create();
         $user = $this->container->user;
         $tag = $this->container->tag;
         $password = password_hash('trollB1B1', PASSWORD_DEFAULT);
-        for ($i = 0; $i < $count; $i++)
-        {
+        for ($i = 0; $i < $count; ++$i) {
             $gender = rand(0, 4);
             $orientation = rand(0, 2);
             $name = $faker->firstName;
@@ -39,11 +40,11 @@ class FakeFactory extends Route
             $user->updateFakeUser($profil);
             $bot = $user->getUserByEmail($profil['email']);
             $_SESSION['id'] = $bot['id'];
-            for ($j = 0; $j < 5; $j++)
-            {
+            for ($j = 0; $j < 5; ++$j) {
                 $word = $faker->word();
-                if (empty($tag->getTag($word)))
+                if (empty($tag->getTag($word))) {
                     $tag->setTag($word);
+                }
                 $tagInfo = $tag->getTag($word);
                 $this->tag->setUserTag($tagInfo['id']);
             }

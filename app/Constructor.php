@@ -1,8 +1,6 @@
 <?php
 
 namespace App;
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * constructor for each route.
@@ -34,11 +32,13 @@ abstract class Constructor
 
     /**
      * @param string $name shortcut to access dependencies in $container
+     *
      * @return $container['$name'] : matching class from container if any
      */
-    public function __get($name)
+    public function __get(string $name)
     {
-        if (isset($this->container[$name]))
+        if (isset($this->container[$name])) {
             return $this->container->get($name);
+        }
     }
 }
