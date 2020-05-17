@@ -30,59 +30,55 @@ abstract class Constructor
     protected $sexualPattern = ['bi', 'homo', 'hetero'];
 
     /** @var Container for $container */
-    protected $container;
+    //protected $container;
 
     /** @var FriendsModel */
-    protected $friends;
+    //protected $friends;
 
     /** @var BlacklistModel */
-    protected $blacklist;
+    //protected $blacklist;
 
     /** @var MessageModel */
-    protected $msg;
+    //protected $msg;
 
     /** @var NotificationModel */
-    protected $notification;
+    //protected $notification;
 
     /** @var TagModel */
-    protected $tag;
+    //protected $tag;
 
     /** @var UserModel */
-    protected $user;
+    //protected $user;
 
     /** @var \PDO */
-    protected $db;
+    //protected $db;
 
     /** @var Twig */
-    protected $view;
+    //protected $view;
 
     /** @var FlashMessage */
-    protected $flash;
+    //protected $flash;
 
     /** @var CustomError */
-    protected $notFoundHandler;
+    //protected $notFoundHandler;
 
     /** @var CustomError */
-    protected $notAllowedHandler;
+    //protected $notAllowedHandler;
 
     /* @var FormChecker */
-    protected $form;
+    //protected $form;
 
     /** @var ft_geoIP */
-    protected $ft_geoIP;
+    //protected $ft_geoIP;
 
     /** @var MailSender */
-    protected $mail;
+    //protected $mail;
 
     /** @var MyZmq */
-    protected $MyZmq;
+    //protected $MyZmq;
 
     /** @var Validator */
-    protected $validator;
-
-
-
-
+    //protected $validator;
 
     public function __construct(Container $container)
     {
