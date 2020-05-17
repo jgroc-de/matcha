@@ -17,7 +17,11 @@ class UserModel extends Constructor
         return $req->fetchAll();
     }
 
-    public function getUser(string $pseudo): array
+
+    /**
+     * @return bool|array
+     */
+    public function getUser(string $pseudo)
     {
         $req = $this->db->prepare('select * from user where pseudo = ?');
         $req->execute([$pseudo]);
@@ -25,7 +29,10 @@ class UserModel extends Constructor
         return $req->fetch();
     }
 
-    public function getUserById(int $id): array
+    /**
+     * @return bool|array
+     */
+    public function getUserById(int $id)
     {
         $req = $this->db->prepare('select * from user where id = ?');
         $req->execute([$id]);
@@ -33,7 +40,10 @@ class UserModel extends Constructor
         return $req->fetch();
     }
 
-    public function getUserByEmail(string $email): array
+    /**
+     * @return bool|array
+     */
+    public function getUserByEmail(string $email)
     {
         $req = $this->db->prepare('select * from user where email = ?');
         $req->execute([$email]);
@@ -129,7 +139,10 @@ class UserModel extends Constructor
         return $req->fetchAll();
     }
 
-    public function getAllDatas(): array
+    /**
+     * @return bool|array
+     */
+    public function getAllDatas()
     {
         $req = $this->db->prepare(
             'SELECT pseudo, email, name, surname, biography, birthdate, lattitude, longitude, lastlog, gender, sexuality, img1, img2, img3, img4, img5
