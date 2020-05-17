@@ -1,0 +1,45 @@
+<?php
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('vendor')
+    ->in([
+        __DIR__ . '/app',
+    ])
+;
+
+/**
+ * rules for @PhpCsFixer ar available in:
+ * /vendor/friendsofphp/php-cs-fixer/src/RuleSet.php
+ * @Psr1, @Psr2, @Symfony included
+ */
+$rules = [
+    '@PhpCsFixer' => true,
+    'no_short_echo_tag' => false,
+    'yoda_style' => false,
+    'ordered_class_elements' => [
+        'order' => [
+            'use_trait',
+        ],
+        'sortAlgorithm' => 'none'
+    ],
+    'concat_space' => [
+        'spacing' => 'one'
+    ],
+    'phpdoc_align' => ['align'=>'left'],
+    'no_multiline_whitespace_before_semicolons' => true,
+    'no_singleline_whitespace_before_semicolons' => true,
+    'multiline_whitespace_before_semicolons' => ['strategy'=>'no_multi_line'],
+    'phpdoc_summary' => false,
+    'single_line_comment_style' => false,
+    'phpdoc_var_annotation_correct_order' => false,
+    'phpdoc_var_without_name' => false,
+    'multiline_comment_opening_closing' => false,
+    'phpdoc_to_comment' => false,
+    'explicit_string_variable' => false,
+    'return_type_declaration' => ['space_before'=> 'none'],
+    'blank_line_before_statement' => ["statements" => ['continue', 'declare', 'return', 'throw', 'try']],
+];
+$config = PhpCsFixer\Config::create()
+    ->setRules($rules)
+    ->setFinder($finder);
+
+return $config;

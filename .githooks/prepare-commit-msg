@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+
+<?php
+
+# How to install this hook ?
+# > chmod +x ./githooks/prepare-commit-msg
+# > git config core.hooksPath .githooks
+
+//cs-fixer
+$error = exec("php vendor/friendsofphp/php-cs-fixer/php-cs-fixer -vvv fix", $status);
+
+$pos = strpos($error, "Fixed all files");
+if ($pos === false) {
+    echo "\e[0;32;33m[info]: You should make a new 'git add -p etc…' to take into account changes made by cs-fixer if any.\e[0m\n";
+    echo "\e[0;31;42mphp-cs-fixer error: $error - $pos\e[0m\n";
+    exit(1);
+}
+echo "\e[0;32;32m[php-cs-fixer]: $error\e[0m\n";
+exec("git status", $output);
+foreach ($output as $msg) {
+    if (strpos($msg, "git add") !== false) {
+        echo "\e[0;32;31m[info] some changes are not commited !! Plz take a look at it with a git status\e[0m\n";
+        break;
+    }
+}
+//end cs-fixer
