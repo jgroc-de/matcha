@@ -8,10 +8,10 @@ namespace App\Lib;
 class MailSender
 {
     const USER = 'webmestre';
-    const EXP = 'jgroc2s@free.fr';
-    const PASS = '';
+    const EXP = 'lol@example.com';
+    const PASS = 'lol';
     const PORT = ':8080';
-    private $dest = 'jgroc2s@free.fr';
+    private $dest = 'lol@example.com';
     private $subject = '';
     private $message = '';
     private $files = [];
@@ -27,12 +27,13 @@ class MailSender
     {
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
-        $mail->IsSMTP();
-        $mail->SMTPDebug = 0;
-        $mail->Host = 'smtp.free.fr';
-        $mail->Port = 587;
-        $mail->SMTPSecure = 'tls';
-        $mail->SMTPAuth = true;
+        #$mail->isSendmail();
+        #$mail->IsSMTP();
+        #$mail->SMTPDebug = 1;
+        $mail->Host = 'smtp.example.com';
+        $mail->Port = 2025;
+        #$mail->SMTPSecure = 'tls';
+        #$mail->SMTPAuth = true;
         $mail->Username = self::EXP;
         $mail->Password = self::PASS;
         $mail->CharSet = 'UTF-8';
