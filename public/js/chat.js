@@ -62,7 +62,7 @@ function tchatWith(name, id, myId, token)
         if (this.readyState == 4 && this.status == 200)
         {
             var history = JSON.parse(this.response);
-            websocket = new ab.Session('ws://localhost:8080',
+            websocket = new ab.Session('ws://localhost:3001',
                 function()
                 {
                     websocket.subscribe(token, function(topic, data)
