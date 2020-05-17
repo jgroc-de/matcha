@@ -2,18 +2,15 @@
 
 namespace App\Model;
 
+use App\Constructor;
+
 /**
  * class MessageModel
  * request to database about messages
  */
-class MessageModel extends \App\Constructor
+class MessageModel extends Constructor
 {
-    /**
-     * @param $hash array
-     *
-     * @return array
-     */
-    public function getMessages($hash)
+    public function getMessages(array $hash): array
     {
         $req = $this->db->prepare('SELECT owner, message FROM message WHERE id_user1 = ? AND id_user2 = ? ORDER BY date ASC LIMIT 100');
         $req->execute($hash);
@@ -21,12 +18,7 @@ class MessageModel extends \App\Constructor
         return $req->fetchAll();
     }
 
-    /**
-     * @param $hash array
-     *
-     * @return array
-     */
-    public function getAllMessages()
+    public function getAllMessages(): array
     {
         $req = $this->db->prepare('SELECT * FROM message WHERE id_user1 = ? OR id_user2 = ? ORDER BY date ASC');
         $req->execute([$_SESSION['id'], $_SESSION['id']]);
@@ -34,16 +26,13 @@ class MessageModel extends \App\Constructor
         return $req->fetchAll();
     }
 
-    /**
-     * @param $hash array
-     */
-    public function setMessage($hash)
+    public function setMessage(array $hash): array
     {
         $req = $this->db->prepare('INSERT INTO message VALUES (?, ?, ?, ?, ?)');
         $req->execute($hash);
     }
 
-    public function delAllMessages($id)
+    public function delAllMessages(int $id): bool
     {
         $req = $this->db->prepare('DELETE FROM message WHERE id_user1 = ? OR id_user2 = ?');
 

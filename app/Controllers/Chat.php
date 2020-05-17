@@ -7,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Chat extends Route
 {
-    public function __invoke(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         $friends = $this->friends->getFriends($_SESSION['id']);
 
@@ -22,7 +22,7 @@ class Chat extends Route
         );
     }
 
-    public function send(Request $request, Response $response, array $args)
+    public function send(Request $request, Response $response, array $args): Response
     {
         $post = $request->getParsedBody();
         $keys = ['id', 'token', 'msg'];
@@ -85,7 +85,7 @@ class Chat extends Route
         return $response->withstatus(400);
     }
 
-    public function startChat(Request $request, Response $response, array $args)
+    public function startChat(Request $request, Response $response, array $args): Response
     {
         $post = $request->getParsedBody();
         $id = intval($args['id']);
@@ -112,7 +112,7 @@ class Chat extends Route
 
     public function profilStatus($request, $response, $args)
     {
-        if (empty($this->container->blacklist->getBlacklistById($args['id'], $_SESSION['id']))) {
+        if (empty($this->blacklist->getBlacklistById($args['id'], $_SESSION['id']))) {
             $user = $this->user->getUserById($args['id']);
             $msg = [
                 'category' => '"' . $_SESSION['profil']['publicToken'] . '"',
@@ -126,7 +126,7 @@ class Chat extends Route
         return $response->withStatus(404);
     }
 
-    public function mateStatus($request, $response, $args)
+    public function mateStatus(Request $request, Response $response, array $args)
     {
         $friends = $this->friends->getFriends($_SESSION['id']);
         $msg = [

@@ -2,14 +2,14 @@
 
 namespace App\Lib;
 
-class ft_geoIP extends \App\Constructor
+use App\Constructor;
+
+class ft_geoIP extends Constructor
 {
     /**
      * set geolocation by IP
-     *
-     * @param mixed $post
      */
-    public function setLatLng($post)
+    public function setLatLng(array $post)
     {
         $keys = ['lat', 'lng'];
         if (!$this->validator->validate($post, $keys)) {

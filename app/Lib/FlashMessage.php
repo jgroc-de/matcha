@@ -8,16 +8,10 @@ namespace App\Lib;
 class FlashMessage
 {
     /** @var int $id */
-    private $id;
+    private $id = 1;
 
     /** @var array $storage */
-    private $storage;
-
-    public function __construct()
-    {
-        $this->storage = [];
-        $id = 1;
-    }
+    private $storage = [];
 
     /**
      * @param string $key key = fail or success
@@ -35,7 +29,7 @@ class FlashMessage
     /**
      * @return array all stored message
      */
-    public function getMessages()
+    public function getMessages(): array
     {
         return $this->storage;
     }

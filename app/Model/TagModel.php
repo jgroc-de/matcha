@@ -2,7 +2,9 @@
 
 namespace App\Model;
 
-class TagModel extends \App\Constructor
+use App\Constructor;
+
+class TagModel extends Constructor
 {
     public function getTag($tag)
     {

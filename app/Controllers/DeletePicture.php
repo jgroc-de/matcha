@@ -7,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class DeletePicture extends Route
 {
-    public function __invoke(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         if ($this->user->delPicture($nb = 'img' . $args['id'])) {
             if (!strncmp('/user_img/', $_SESSION['profil'][$nb], 5)) {

@@ -11,31 +11,32 @@ class FormChecker extends Constructor
 {
     public function checkLogin(array $post): bool
     {
-        if ($this->validator->validate($post, ['pseudo', 'password'])) {
-            if (!empty($account = $this->user->getUser($post['pseudo']))) {
-                if ($account['activ'] == 0) {
-                    $this->flash->addMessage('failure', 'account need activation');
-                } elseif ($this->testPassword($account['password'], $post['password'])) {
-                    $this->user->updateLastlog($account['id']);
-                    $_SESSION['id'] = $account['id'];
-                    $_SESSION['profil'] = $account;
-                    $_SESSION['profil']['lattitude'] = floatval($_SESSION['profil']['lattitude']);
-                    $_SESSION['profil']['longitude'] = floatval($_SESSION['profil']['longitude']);
-                    $this->user->updatePublicToken();
-
-                    return true;
-                } else {
-                    $this->flash->addMessage('failure', 'wrong password');
-                }
-            } else {
-                $this->flash->addMessage('failure', 'wrong login');
-            }
+        if (!$this->validator->validate($post, ['pseudo', 'password'])) {
+            return false;
         }
+        if (empty($account = $this->user->getUser($post['pseudo']))) {
+            $this->flash->addMessage('failure', 'wrong login');
+            return false;
+        }
+        if ($account['activ'] == 0) {
+            $this->flash->addMessage('failure', 'account need activation');
+            return false;
+        }
+        if (!$this->testPassword($account['password'], $post['password'])) {
+            $this->flash->addMessage('failure', 'wrong password');
+            return false;
+        }
+        $this->user->updateLastlog($account['id']);
+        $_SESSION['id'] = $account['id'];
+        $_SESSION['profil'] = $account;
+        $_SESSION['profil']['lattitude'] = floatval($_SESSION['profil']['lattitude']);
+        $_SESSION['profil']['longitude'] = floatval($_SESSION['profil']['longitude']);
+        $this->user->updatePublicToken();
 
-        return false;
+        return true;
     }
 
-    public function checkResetEmail($post)
+    public function checkResetEmail(array $post)
     {
         if ($this->validator->validate($post, ['email'])) {
             $account = $this->user->getUserByEmail($post['email']);
@@ -51,9 +52,9 @@ class FormChecker extends Constructor
         }
     }
 
-    public function checkSignup($post)
+    public function checkSignup(array $post): array
     {
-        $user = $this->container->user;
+        $user = $this->user;
         $keys = ['pseudo', 'password', 'email', 'name', 'surname', 'gender'];
         if ($this->validator->validate($post, $keys)) {
             if (!empty($user->getUser($post['pseudo']))) {
@@ -97,20 +98,21 @@ class FormChecker extends Constructor
         }
     }
 
-    public function checkProfil(array $post)
+    public function checkProfil(array $post): bool
     {
         $keys = ['pseudo', 'email', 'name', 'surname', 'birthdate', 'gender', 'biography', 'sexuality'];
-        if ($this->validator->validate($post, $keys)) {
-            if (!empty($this->user->getUser($post['pseudo'])) && $post['pseudo'] !== $_SESSION['profil']['pseudo']) {
-                $this->flash->addMessage('failure', 'pseudo already taken');
-            } elseif (!empty($this->user->getUserByEmail($post['email'])) && $post['email'] !== $_SESSION['profil']['email']) {
-                $this->flash->addMessage('failure', 'email already taken');
-            } else {
-                return true;
-            }
+        if (!$this->validator->validate($post, $keys)) {
+            return false;
         }
-
-        return false;
+        if (!empty($this->user->getUser($post['pseudo'])) && $post['pseudo'] !== $_SESSION['profil']['pseudo']) {
+            $this->flash->addMessage('failure', 'pseudo already taken');
+            return false;
+        }
+        if (!empty($this->user->getUserByEmail($post['email'])) && $post['email'] !== $_SESSION['profil']['email']) {
+            $this->flash->addMessage('failure', 'email already taken');
+            return false;
+        }
+        return true;
     }
 
     private function testPassword(string $real, string $test): bool

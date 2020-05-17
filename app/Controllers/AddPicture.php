@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Http\UploadedFile;
 
-function moveUploadedFile(string $directory, UploadedFile $uploadedFile)
+function moveUploadedFile(string $directory, UploadedFile $uploadedFile): string
 {
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
     $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
@@ -18,7 +18,7 @@ function moveUploadedFile(string $directory, UploadedFile $uploadedFile)
 
 class AddPicture extends Route
 {
-    public function __invoke(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         $data = $request->getUploadedFiles();
         $nb = intval($args['id']);

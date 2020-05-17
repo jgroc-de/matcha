@@ -1,74 +1,101 @@
 <?php
 
-// Routes
+use App\Controllers\AddFriendRequest;
+use App\Controllers\AddPicture;
+use App\Controllers\AddTag;
+use App\Controllers\Blacklist;
+use App\Controllers\Chat;
+use App\Controllers\Contact;
+use App\Controllers\DeleteFriend;
+use App\Controllers\DeleteFriendRequest;
+use App\Controllers\DeletePicture;
+use App\Controllers\DeleteUserTag;
+use App\Controllers\EditPassword;
+use App\Controllers\EditProfil;
+use App\Controllers\FakeFactory;
+use App\Controllers\Home;
+use App\Controllers\InitializeDB;
+use App\Controllers\Login;
+use App\Controllers\Logout;
+use App\Controllers\Profil;
+use App\Controllers\Report;
+use App\Controllers\ResetPassword;
+use App\Controllers\RGPD;
+use App\Controllers\Search;
+use App\Controllers\Signup;
+use App\Controllers\UpdateGeolocation;
+use App\Controllers\Validation;
+use App\Middlewares\authMiddleware;
+use App\Middlewares\idMiddleware;
+use App\Middlewares\noAuthMiddleware;
 
-$app->get('/setup', App\Controllers\InitializeDB::class)
+$app->get('/setup', InitializeDB::class)
     ->setName('setup');
-$app->get('/seed', App\Controllers\FakeFactory::class)
+$app->get('/seed', FakeFactory::class)
     ->setName('seed');
-$app->get('/contact', App\Controllers\Contact::class)
+$app->get('/contact', Contact::class)
     ->setName('contact');
-$app->post('/contact', App\Controllers\Contact::class . ':sendMail');
-$app->get('/validation', App\Controllers\Validation::class)
+$app->post('/contact', Contact::class . ':sendMail');
+$app->get('/validation', Validation::class)
     ->setName('validation');
 
 $app->group('', function () {
-    $this->get('/login', App\Controllers\Login::class)
+    $this->get('/login', Login::class)
         ->setName('login');
-    $this->get('/signup', App\Controllers\Signup::class)
+    $this->get('/signup', Signup::class)
         ->setName('signup');
-    $this->get('/resetPassword', App\Controllers\ResetPassword::class)
+    $this->get('/resetPassword', ResetPassword::class)
         ->setName('resetPassword');
-    $this->post('/login', App\Controllers\Login::class . ':check');
-    $this->post('/signup', App\Controllers\Signup::class . ':check');
-    $this->post('/resetPassword', App\Controllers\ResetPassword::class . ':check');
-})->add(new \App\Middlewares\noAuthMiddleware());
+    $this->post('/login', Login::class . ':check');
+    $this->post('/signup', Signup::class . ':check');
+    $this->post('/resetPassword', ResetPassword::class . ':check');
+})->add(new noAuthMiddleware());
 
 $app->group('', function () use ($app) {
-    $this->get('/', App\Controllers\Home::class)
+    $this->get('/', Home::class)
         ->setName('home');
-    $this->get('/search', App\Controllers\Search::class)
+    $this->get('/search', Search::class)
         ->setName('search');
-    $this->post('/search_criteria', App\Controllers\Search::class . ':criteria')
+    $this->post('/search_criteria', Search::class . ':criteria')
         ->setName('searchByCriteria');
-    $this->post('/search_user', App\Controllers\Search::class . ':name')
+    $this->post('/search_user', Search::class . ':name')
         ->setName('searchByName');
-    $this->get('/editProfil', App\Controllers\EditProfil::class)
+    $this->get('/editProfil', EditProfil::class)
         ->setName('editProfil');
-    $this->post('/editProfil', App\Controllers\EditProfil::class . ':check');
-    $this->get('/completeProfil', App\Controllers\EditProfil::class . ':complete')
+    $this->post('/editProfil', EditProfil::class . ':check');
+    $this->get('/completeProfil', EditProfil::class . ':complete')
         ->setName('editProfil2');
-    $this->get('/editPassword', App\Controllers\EditPassword::class)
+    $this->get('/editPassword', EditPassword::class)
         ->setName('editPassword');
-    $this->post('/editPassword', App\Controllers\EditPassword::class . ':check');
-    $this->get('/rgpd', App\Controllers\RGPD::class)
+    $this->post('/editPassword', EditPassword::class . ':check');
+    $this->get('/rgpd', RGPD::class)
         ->setName('RGPD');
-    $this->get('/getAllDatas', App\Controllers\RGPD::class . ':getAllDatas');
-    $this->get('/deleteAccount', App\Controllers\RGPD::class . ':deleteAccount')
+    $this->get('/getAllDatas', RGPD::class . ':getAllDatas');
+    $this->get('/deleteAccount', RGPD::class . ':deleteAccount')
         ->setName('deleteAccount');
-    $this->get('/logout', App\Controllers\Logout::class)
+    $this->get('/logout', Logout::class)
         ->setName('logout');
-    $this->get('/tchat', App\Controllers\Chat::class)
+    $this->get('/tchat', Chat::class)
         ->setName('tchat');
-    $this->get('/chatStatus', App\Controllers\Chat::class . ':mateStatus');
-    $this->post('/updateGeolocation', App\Controllers\UpdateGeolocation::class);
-    $this->post('/sendMessage', App\Controllers\Chat::class . ':send');
-    $this->post('/addTag', App\Controllers\AddTag::class);
-})->add(new \App\Middlewares\authMiddleware($container));
+    $this->get('/chatStatus', Chat::class . ':mateStatus');
+    $this->post('/updateGeolocation', UpdateGeolocation::class);
+    $this->post('/sendMessage', Chat::class . ':send');
+    $this->post('/addTag', AddTag::class);
+})->add(new authMiddleware($container));
 
 $app->group('', function () {
-    $this->get('/profil/{id}', App\Controllers\Profil::class)
+    $this->get('/profil/{id}', Profil::class)
         ->setName('profil');
-    $this->get('/addFriend/{id}', App\Controllers\AddFriendRequest::class);
-    $this->get('/report/{id}', App\Controllers\Report::class);
-    $this->get('/blacklist/{id}', App\Controllers\Blacklist::class);
-    $this->post('/addPicture/{id}', App\Controllers\AddPicture::class);
-    $this->get('/delFriend/{id}', App\Controllers\DeleteFriend::class);
-    $this->get('/delUserTag/{id}', App\Controllers\DeleteUserTag::class);
-    $this->get('/delPicture/{id}', App\Controllers\DeletePicture::class);
-    $this->get('/delFriendReq/{id}', App\Controllers\DeleteFriendRequest::class);
-    $this->get('/startChat/{id}', App\Controllers\Chat::class . ':startChat');
-    $this->get('/profilStatus/{id}', App\Controllers\Chat::class . ':profilStatus');
+    $this->get('/addFriend/{id}', AddFriendRequest::class);
+    $this->get('/report/{id}', Report::class);
+    $this->get('/blacklist/{id}', Blacklist::class);
+    $this->post('/addPicture/{id}', AddPicture::class);
+    $this->get('/delFriend/{id}', DeleteFriend::class);
+    $this->get('/delUserTag/{id}', DeleteUserTag::class);
+    $this->get('/delPicture/{id}', DeletePicture::class);
+    $this->get('/delFriendReq/{id}', DeleteFriendRequest::class);
+    $this->get('/startChat/{id}', Chat::class . ':startChat');
+    $this->get('/profilStatus/{id}', Chat::class . ':profilStatus');
 })
-    ->add(new \App\Middlewares\idMiddleware($container))
-    ->add(new \App\Middlewares\authMiddleware($container));
+    ->add(new idMiddleware())
+    ->add(new authMiddleware($container));

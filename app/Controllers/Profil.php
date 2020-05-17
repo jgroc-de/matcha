@@ -12,7 +12,7 @@ class Profil extends Route
         if ($args['id'] == $_SESSION['id']) {
             return $response->withRedirect('/', 302);
         }
-        if (!$this->container->blacklist->getBlacklistById($args['id'], $_SESSION['id'])
+        if (!$this->blacklist->getBlacklistById($args['id'], $_SESSION['id'])
             && $user = $this->user->getUserById($args['id'])) {
             $msg = [
                 'category' => '"' . $user['publicToken'] . '"',
@@ -38,6 +38,6 @@ class Profil extends Route
             );
         }
 
-            ($this->container->notFoundHandler)($request, $response);
+        return ($this->notFoundHandler)($request, $response);
     }
 }

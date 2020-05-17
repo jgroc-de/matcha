@@ -7,12 +7,7 @@ namespace App\Lib;
  */
 class Validator
 {
-    /**
-     * @param $array array
-     * @param $keys ... string can be multiple string
-     * return bool
-     */
-    public function validate(array $array, array $keys)
+    public function validate(array $array, array $keys): bool
     {
         if ($this->ft_isset($array, $keys)) {
             foreach ($keys as $key) {
@@ -27,12 +22,7 @@ class Validator
         return false;
     }
 
-    /**
-     * @param $array array
-     * @param $keys array
-     * return bool
-     */
-    public function ft_isset(array $array, array $keys)
+    private function ft_isset(array $array, array $keys): bool
     {
         foreach ($keys as $key) {
             if (!isset($array[$key])) {
@@ -44,120 +34,84 @@ class Validator
     }
 
     /**
-     * @return bool
+     * magic call by validate method
      */
-    public function pseudo(string $test)
+    private function pseudo(string $test): bool
     {
         $len = strlen($test);
 
         return ($len > 0 && $len < 41) ? true : false;
     }
 
-    /**
-     * @return bool
-     */
-    public function password(string $test)
+    private function password(string $test): bool
     {
         return preg_match('#(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}#', $test);
     }
 
-    /**
-     * @return bool
-     */
-    public function password1(string $test)
+    public function password1(string $test): bool
     {
-        return preg_match('#(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}#', $test);
+        return $this->password($test);
     }
 
-    /**
-     * @return bool
-     */
-    public function email(string $test)
+    public function email(string $test): bool
     {
         return preg_match('#^[a-z0-9-_\.]+@[a-z0-9-_\.]{2,}\.[a-z]{2,4}$#', $test);
     }
 
-    /**
-     * @return bool
-     */
-    public function gender(string $test)
+    public function gender(string $test): bool
     {
         return in_array($test, ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer']);
     }
 
-    /**
-     * @return bool
-     */
-    public function sexuality(string $test)
+    public function sexuality(string $test): bool
     {
         return in_array($test, ['bi', 'homo', 'hetero']);
     }
 
-    /**
-     * @return bool
-     */
-    public function birthdate(int $test)
+    public function birthdate(int $test): bool
     {
         return is_numeric($test) && $test <= (date('Y') - 18) && $test >= 1850;
     }
 
-    /**
-     * @return bool
-     */
-    public function name(string $test)
+    public function name(string $test): bool
     {
         $len = strlen($test);
 
         return $len > 0 && $len < 250;
     }
 
-    /**
-     * @return bool
-     */
-    public function surname(string $test)
+    public function surname(string $test): bool
     {
         $len = strlen($test);
 
         return $len > 0 && $len < 250;
     }
 
-    /**
-     * @return bool
-     */
-    public function biography(string $test)
+    public function biography(string $test): bool
     {
         $len = strlen($test);
 
         return $len > 0;
     }
 
-    public function text(string $test)
+    public function text(string $test): bool
     {
         $len = strlen($test);
 
         return $len > 0;
     }
 
-    /**
-     * @return bool
-     */
-    public function submit(string $test)
+    public function submit(string $test): bool
     {
         return $test === 'Envoyer';
     }
 
-    /**
-     * @return bool
-     */
-    public function lat(float $test)
+    public function lat(float $test): bool
     {
         return $test >= -85 && $test <= 85;
     }
 
-    /**
-     * @return bool
-     */
-    public function lng(float $test)
+    public function lng(float $test): bool
     {
         return $test <= 180 && $test >= -180;
     }

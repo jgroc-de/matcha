@@ -28,7 +28,7 @@ class Search extends Route
         return $this->searchResponse($response);
     }
 
-    private function searchResponse($response)
+    private function searchResponse(Response $response)
     {
         $this->filterList();
         usort($this->list, [$this, 'sortList']);

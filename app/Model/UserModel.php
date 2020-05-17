@@ -2,30 +2,22 @@
 
 namespace App\Model;
 
+use App\Constructor;
+
 /**
  * class UserModel
  * request to database about user
  */
-class UserModel extends \App\Constructor
+class UserModel extends Constructor
 {
-    /**
-     * @param $pseudo string
-     *
-     * @return array
-     */
-    public function getUsers()
+    public function getUsers(): array
     {
         $req = $this->db->query('SELECT * FROM user LIMIT 500');
 
         return $req->fetchAll();
     }
 
-    /**
-     * @param $pseudo string
-     *
-     * @return array
-     */
-    public function getUser(string $pseudo)
+    public function getUser(string $pseudo): array
     {
         $req = $this->db->prepare('select * from user where pseudo = ?');
         $req->execute([$pseudo]);
@@ -33,12 +25,7 @@ class UserModel extends \App\Constructor
         return $req->fetch();
     }
 
-    /**
-     * @param $id int
-     *
-     * @return array
-     */
-    public function getUserById(int $id)
+    public function getUserById(int $id): array
     {
         $req = $this->db->prepare('select * from user where id = ?');
         $req->execute([$id]);
@@ -46,12 +33,7 @@ class UserModel extends \App\Constructor
         return $req->fetch();
     }
 
-    /**
-     * @param $email string email
-     *
-     * @return array
-     */
-    public function getUserByEmail(string $email)
+    public function getUserByEmail(string $email): array
     {
         $req = $this->db->prepare('select * from user where email = ?');
         $req->execute([$email]);
@@ -59,7 +41,7 @@ class UserModel extends \App\Constructor
         return $req->fetch();
     }
 
-    public function getUsersBySexuality(array $age, array $angle)
+    public function getUsersBySexuality(array $age, array $angle): array
     {
         $reqTab = [];
         switch ($_SESSION['profil']['sexuality']) {
@@ -96,7 +78,7 @@ class UserModel extends \App\Constructor
         return $req->fetchAll();
     }
 
-    public function getUserByCriteria(array $age, array $target, array $pop, array $angle)
+    public function getUserByCriteria(array $age, array $target, array $pop, array $angle): array
     {
         $id = $_SESSION['id'];
         $count = str_repeat('?,', count($target) - 1) . '?';
@@ -130,12 +112,7 @@ class UserModel extends \App\Constructor
         return $req->fetchAll();
     }
 
-    /**
-     * @param $pseudo string
-     *
-     * @return array
-     */
-    public function getUserByPseudo($pseudo)
+    public function getUserByPseudo(string $pseudo): array
     {
         $id = $_SESSION['id'];
         $req = $this->db->prepare(
@@ -152,7 +129,7 @@ class UserModel extends \App\Constructor
         return $req->fetchAll();
     }
 
-    public function getAllDatas()
+    public function getAllDatas(): array
     {
         $req = $this->db->prepare(
             'SELECT pseudo, email, name, surname, biography, birthdate, lattitude, longitude, lastlog, gender, sexuality, img1, img2, img3, img4, img5
@@ -164,9 +141,6 @@ class UserModel extends \App\Constructor
         return $req->fetch();
     }
 
-    /**
-     * @param $post array
-     */
     public function setUser(array $post)
     {
         $files = scandir('img');
@@ -195,7 +169,7 @@ class UserModel extends \App\Constructor
         ]);
     }
 
-    public function updateFakeUser($post)
+    public function updateFakeUser(array $post)
     {
         $req = $this->db->prepare(
             'UPDATE user
@@ -232,39 +206,38 @@ class UserModel extends \App\Constructor
         ]);
     }
 
-    public function updateUser($post)
+    public function updateUser(array $post): bool
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $req = $this->db->prepare(
-                'UPDATE user
-                SET pseudo = ?,
-                email = ?,
-                name = ?,
-                surname = ?,
-                birthdate = ?,
-                gender = ?,
-                sexuality = ?,
-                biography = ?
-                where pseudo = ?'
-            );
-
-            return $req->execute([
-                $post['pseudo'],
-                $post['email'],
-                $post['name'],
-                $post['surname'],
-                $post['birthdate'],
-                $post['gender'],
-                $post['sexuality'],
-                $post['biography'],
-                $_SESSION['profil']['pseudo'],
-            ]);
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            return false;
         }
+        $req = $this->db->prepare(
+            'UPDATE user
+            SET pseudo = ?,
+            email = ?,
+            name = ?,
+            surname = ?,
+            birthdate = ?,
+            gender = ?,
+            sexuality = ?,
+            biography = ?
+            where pseudo = ?'
+        );
 
-        return false;
+        return $req->execute([
+            $post['pseudo'],
+            $post['email'],
+            $post['name'],
+            $post['surname'],
+            $post['birthdate'],
+            $post['gender'],
+            $post['sexuality'],
+            $post['biography'],
+            $_SESSION['profil']['pseudo'],
+        ]);
     }
 
-    public function updatePassUser($pwd)
+    public function updatePassUser(string $pwd)
     {
         $req = $this->db->prepare('
             UPDATE user
@@ -273,7 +246,7 @@ class UserModel extends \App\Constructor
         $req->execute([$pwd, $_SESSION['id']]);
     }
 
-    public function updateGeolocation($lat, $lon, $id)
+    public function updateGeolocation($lat, $lon, $id): bool
     {
         $req = $this->db->prepare('
             UPDATE user
@@ -298,7 +271,7 @@ class UserModel extends \App\Constructor
         $_SESSION['profil']['publicToken'] = $token;
     }
 
-    public function updateToken($pseudo, $token)
+    public function updateToken(string $pseudo, string $token)
     {
         $req = $this->db->prepare('UPDATE user SET token = ? WHERE pseudo = ?');
         $req->execute([$token, $pseudo]);
@@ -315,27 +288,27 @@ class UserModel extends \App\Constructor
         $req->execute([$pop, $profil['pseudo']]);
     }
 
-    public function updateLastlog($id)
+    public function updateLastlog(int $id)
     {
         $req = $this->db->prepare('UPDATE user SET lastlog = ? WHERE id = ?');
         $req->execute([time(), $id]);
     }
 
-    public function delPicture($nb)
+    public function delPicture(string $nb): bool
     {
         $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = NULL WHERE id = ?');
 
         return $req->execute([$_SESSION['id']]);
     }
 
-    public function addPicture($nb, $path)
+    public function addPicture(string $nb, string $path): bool
     {
         $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = ? WHERE id = ?');
 
         return $req->execute([$path, $_SESSION['id']]);
     }
 
-    public function deleteUser($id)
+    public function deleteUser(int $id): bool
     {
         $req = $this->db->prepare('SELECT img1, img2, img3, img4, img5 FROM user WHERE id = ?');
         $req->execute([$id]);

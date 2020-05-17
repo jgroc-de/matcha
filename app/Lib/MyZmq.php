@@ -2,9 +2,11 @@
 
 namespace App\Lib;
 
-class MyZmq extends \App\Constructor
+use App\Constructor;
+
+class MyZmq extends Constructor
 {
-    public function send($msg)
+    public function send(array $msg)
     {
         $socket = $this->zmq;
         if (array_key_exists('mateStatus', $msg) || array_key_exists('profilStatus', $msg)) {

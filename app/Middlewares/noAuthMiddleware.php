@@ -9,12 +9,8 @@ class noAuthMiddleware
 {
     /**
      * middleware that redirect to '/' if client is login
-     *
-     * @param callable $next Next middleware
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function __invoke(Request $request, Response $response, $next): Response
+    public function __invoke(Request $request, Response $response, callable $next): Response
     {
         if (isset($_SESSION['id'])) {
             return $response->withRedirect('/');

@@ -7,9 +7,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class DeleteUserTag extends Route
 {
-    public function __invoke(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
-        if ($this->container->tag->delUserTag($args['id'], $_SESSION['id'])) {
+        if ($this->tag->delUserTag($args['id'], $_SESSION['id'])) {
             return $response;
         }
 

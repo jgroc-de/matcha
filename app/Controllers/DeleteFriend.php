@@ -7,9 +7,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class DeleteFriend extends Route
 {
-    public function __invoke(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $this->container->friends->delFriend(
+        $this->friends->delFriend(
             $_SESSION['id'],
             $args['id']
         );

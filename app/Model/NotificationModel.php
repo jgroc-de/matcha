@@ -2,11 +2,13 @@
 
 namespace App\Model;
 
+use App\Constructor;
+
 /**
  * class NotificationModel
  * request to database about notifications
  */
-class NotificationModel extends \App\Constructor
+class NotificationModel extends Constructor
 {
     /**
      * @param $hash array

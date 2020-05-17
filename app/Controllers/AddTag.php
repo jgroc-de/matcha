@@ -7,10 +7,10 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class AddTag extends Route
 {
-    public function __invoke(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         $post = $request->getParsedBody();
-        $tag = $this->container->tag;
+        $tag = $this->tag;
         if ($this->validator->validate($post, ['tag'])) {
             if (empty($tag->getTag($post['tag']))) {
                 $tag->setTag($post['tag']);

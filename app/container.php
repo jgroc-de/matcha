@@ -1,12 +1,25 @@
 <?php
 
+use App\Lib\CustomError;
+use App\Lib\Debug;
+use App\Lib\FormChecker;
+use App\Lib\ft_geoIP;
+use App\Lib\MailSender;
+use App\Lib\MyZmq;
+use App\Lib\Validator;
+use App\Model\BlacklistModel;
+use App\Model\FriendsModel;
+use App\Model\MessageModel;
+use App\Model\NotificationModel;
+use App\Model\TagModel;
+use App\Model\UserModel;
+use Slim\Views\Twig;
+use Slim\Views\TwigExtension;
+
 $container = $app->getContainer();
 
-/**
- * twig container
- */
 $container['view'] = function ($container) {
-    $view = new Slim\Views\Twig('../app/View', [
+    $view = new Twig('../app/View', [
         'cache' => false, //'../tmp/cache',
         'debug' => true,
     ]);
@@ -18,7 +31,7 @@ $container['view'] = function ($container) {
     ),
         '/'
     );
-    $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
+    $view->addExtension(new TwigExtension($container['router'], $basePath));
 
     return $view;
 };
@@ -28,68 +41,48 @@ $container['view'] = function ($container) {
  */
 $container['db'] = function ($container) {
     $db = $container['settings']['db'];
-    $pdo = new PDO('mysql:host=' . $db['host'] . ';dbname=' . $db['dbname'], $db['user'], $db['pass']);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $pdo = new \PDO('mysql:host=' . $db['host'] . ';dbname=' . $db['dbname'], $db['user'], $db['pass']);
+    $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
 
     return $pdo;
 };
 
-/**
- * @class UserModel
- */
 $container['user'] = function ($container) {
-    return new \App\Model\UserModel($container);
+    return new UserModel($container);
 };
 
-/**
- * @class FriendsModel
- */
 $container['friends'] = function ($container) {
-    return new \App\Model\FriendsModel($container);
+    return new FriendsModel($container);
 };
 
-/**
- * @class TagModel
- */
 $container['tag'] = function ($container) {
-    return new \App\Model\TagModel($container);
+    return new TagModel($container);
 };
 
-/**
- * @class MessageModel
- */
 $container['msg'] = function ($container) {
-    return new \App\Model\MessageModel($container);
+    return new MessageModel($container);
 };
 
-/**
- * @class MessageModel
- */
 $container['notif'] = function ($container) {
-    return new \App\Model\NotificationModel($container);
+    return new NotificationModel($container);
 };
 
-/**
- * @class BlacklistModel
- */
 $container['blacklist'] = function ($container) {
-    return new \App\Model\BlacklistModel($container);
+    return new BlacklistModel($container);
 };
 
-/**
- * etc…
- */
+
 $container['form'] = function ($container) {
-    return new \App\Lib\FormChecker($container);
+    return new FormChecker($container);
 };
 
 $container['validator'] = function ($container) {
-    return new \App\Lib\Validator();
+    return new Validator();
 };
 
 $container['debug'] = function ($container) {
-    return new \App\Lib\Debug();
+    return new Debug();
 };
 
 $container['flash'] = function () {
@@ -97,15 +90,15 @@ $container['flash'] = function () {
 };
 
 $container['mail'] = function () {
-    return new \App\Lib\MailSender();
+    return new MailSender();
 };
 
 $container['notFoundHandler'] = function ($container) {
-    return new \App\Lib\CustomError($container);
+    return new CustomError($container);
 };
 
 $container['notAllowedHandler'] = function ($container) {
-    return new \App\Lib\CustomError($container);
+    return new CustomError($container);
 };
 
 $container['geoIP'] = function () {
@@ -113,11 +106,11 @@ $container['geoIP'] = function () {
 };
 
 $container['ft_geoIP'] = function ($container) {
-    return new \App\Lib\ft_geoIP($container);
+    return new ft_geoIP($container);
 };
 
 $container['MyZmq'] = function ($container) {
-    return new \App\Lib\MyZmq($container);
+    return new MyZmq($container);
 };
 
 $container['zmq'] = function ($container) {

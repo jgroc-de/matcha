@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Faker\Factory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -11,9 +12,9 @@ class FakeFactory extends Route
     {
         $count = 500;
         $profil = [];
-        $faker = \Faker\Factory::create();
-        $user = $this->container->user;
-        $tag = $this->container->tag;
+        $faker = Factory::create();
+        $user = $this->user;
+        $tag = $this->tag;
         $password = password_hash('trollB1B1', PASSWORD_DEFAULT);
         for ($i = 0; $i < $count; ++$i) {
             $gender = rand(0, 4);

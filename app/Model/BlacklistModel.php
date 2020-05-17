@@ -2,18 +2,15 @@
 
 namespace App\Model;
 
+use App\Constructor;
+
 /**
  * class NotificationModel
  * request to database about notifications
  */
-class BlacklistModel extends \App\Constructor
+class BlacklistModel extends Constructor
 {
-    /**
-     * @param $hash array
-     *
-     * @return array
-     */
-    public function getBlacklist()
+    public function getBlacklist(): array
     {
         $req = $this->db->prepare('SELECT * FROM blacklist WHERE iduser = ?');
         $req->execute([$_SESSION['id']]);
@@ -21,14 +18,7 @@ class BlacklistModel extends \App\Constructor
         return $req->fetchAll();
     }
 
-    /**
-     * @param $hash array
-     * @param mixed $idu
-     * @param mixed $idb
-     *
-     * @return array
-     */
-    public function getBlacklistById($idu, $idb)
+    public function getBlacklistById(int $idu, int $idb): array
     {
         $req = $this->db->prepare('SELECT * FROM blacklist WHERE iduser = ? and iduser_bl = ?');
         $req->execute([$idu, $idb]);
@@ -36,12 +26,7 @@ class BlacklistModel extends \App\Constructor
         return $req->fetch();
     }
 
-    /**
-     * @param $hash array
-     *
-     * @return array
-     */
-    public function getAllBlacklist()
+    public function getAllBlacklist(): array
     {
         $req = $this->db->prepare('SELECT iduser, iduser_bl FROM blacklist WHERE iduser = ? OR iduser_bl = ?');
         $req->execute([$_SESSION['id'], $_SESSION['id']]);
@@ -49,17 +34,13 @@ class BlacklistModel extends \App\Constructor
         return $req->fetchAll();
     }
 
-    /**
-     * @param $hash array
-     * @param mixed $id
-     */
-    public function setBlacklist($id)
+    public function setBlacklist(int $id)
     {
         $req = $this->db->prepare('INSERT INTO blacklist (iduser, iduser_bl) VALUES (?, ?)');
         $req->execute([$_SESSION['id'], $id]);
     }
 
-    public function deleteBlacklist($id)
+    public function deleteBlacklist(int $id): bool
     {
         $req = $this->db->prepare('DELETE FROM blacklist WHERE iduser = ? OR iduser_bl = ?');
 

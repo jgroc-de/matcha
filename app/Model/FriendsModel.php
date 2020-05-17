@@ -2,13 +2,15 @@
 
 namespace App\Model;
 
+use App\Constructor;
+
 /**
  * class UserModel
  * request to database about user
  */
-class FriendsModel extends \App\Constructor
+class FriendsModel extends Constructor
 {
-    public function getFriend($id1, $id2)
+    public function getFriend(int $id1, int $id2): array
     {
         $req = $this->db->prepare('SELECT * FROM friends WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute($this->sortId($id1, $id2));
@@ -16,7 +18,7 @@ class FriendsModel extends \App\Constructor
         return $req->fetch();
     }
 
-    public function getFriends($id)
+    public function getFriends(int $id): array
     {
         $req1 = $this->db->prepare('
             SELECT *
@@ -40,7 +42,7 @@ class FriendsModel extends \App\Constructor
         return array_merge($req1->fetchAll(), $req2->fetchAll());
     }
 
-    public function getAllFriends($id)
+    public function getAllFriends(int $id): array
     {
         $req1 = $this->db->prepare('
             SELECT id, pseudo
@@ -64,7 +66,7 @@ class FriendsModel extends \App\Constructor
         return array_merge($req1->fetchAll(), $req2->fetchAll());
     }
 
-    public function getFriendsReqs($id)
+    public function getFriendsReqs(int $id): array
     {
         $req = $this->db->prepare('
             SELECT *
@@ -79,7 +81,7 @@ class FriendsModel extends \App\Constructor
         return $req->fetchAll();
     }
 
-    public function getFriendReqs($id)
+    public function getFriendReqs(int $id): array
     {
         $req = $this->db->prepare('
             SELECT *
@@ -94,7 +96,7 @@ class FriendsModel extends \App\Constructor
         return $req->fetchAll();
     }
 
-    public function getAllFriendsReqs()
+    public function getAllFriendsReqs(): array
     {
         $req = $this->db->prepare('
             SELECT id_user1, id_user2 
@@ -106,7 +108,7 @@ class FriendsModel extends \App\Constructor
         return $req->fetchAll();
     }
 
-    public function getFriendReq($id1, $id2)
+    public function getFriendReq(int $id1, int $id2): array
     {
         $req = $this->db->prepare('SELECT * FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute([$id1, $id2]);
@@ -114,7 +116,7 @@ class FriendsModel extends \App\Constructor
         return $req->fetch();
     }
 
-    public function setFriendsReq($id1, $id2)
+    public function setFriendsReq(int $id1, int $id2)
     {
         $user = $this->user->getUserById($id2);
         if ($this->getFriendReq($id2, $id1) or $user['bot']) {
@@ -152,7 +154,7 @@ class FriendsModel extends \App\Constructor
         }
     }
 
-    public function setFriend($id1, $id2)
+    public function setFriend(int $id1, int $id2)
     {
         $tab = $this->sortId($id1, $id2);
         $req = $this->db->prepare('
@@ -172,14 +174,14 @@ class FriendsModel extends \App\Constructor
         }
     }
 
-    public function delAllFriends($id)
+    public function delAllFriends(int $id)
     {
         $this->delAllFriendReq($id);
         $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? OR id_user2 = ?');
         $req->execute([$id, $id]);
     }
 
-    public function delFriendReq($id1, $id2)
+    public function delFriendReq(int $id1, int $id2)
     {
         $req = $this->db->prepare('UPDATE friendsReq set visible = false WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute([$id1, $id2]);
@@ -187,19 +189,19 @@ class FriendsModel extends \App\Constructor
         $req->execute([$id2, $id1]);
     }
 
-    public function delAllFriendReq($id)
+    public function delAllFriendReq(int $id)
     {
         $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? OR id_user2 = ?');
         $req->execute([$id, $id]);
     }
 
-    public function eraseFriendReq($id1, $id2)
+    public function eraseFriendReq(int $id1, int $id2)
     {
         $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute([$id1, $id2]);
     }
 
-    public function delFriend($id1, $id2)
+    public function delFriend(int $id1, int $id2)
     {
         $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? AND id_user2 = ?');
         if ($req->execute($this->sortId($id1, $id2))) {
@@ -223,7 +225,7 @@ class FriendsModel extends \App\Constructor
         return $req->fetch();
     }
 
-    private function sortId($id1, $id2)
+    private function sortId(int $id1, int $id2)
     {
         return ($id1 < $id2) ? [$id1, $id2] : [$id2, $id1];
     }

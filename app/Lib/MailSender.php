@@ -23,7 +23,7 @@ class MailSender
      *
      * @return string for success or failure
      */
-    public function sendMail(string $replyTo = self::EXP, string $user = self::USER)
+    private function sendMail(string $replyTo = self::EXP, string $user = self::USER): bool
     {
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
@@ -55,7 +55,7 @@ class MailSender
      * @param string $this->dest email address
      * @param string $token hashed key
      */
-    public function sendValidationMail(array $user)
+    public function sendValidationMail(array $user): bool
     {
         $this->dest = $user['email'];
         $this->subject = 'Matcha Activation link';
@@ -77,7 +77,7 @@ class MailSender
      * @param string $this->dest email address
      * @param string $token hashed key
      */
-    public function sendResetMail(array $user)
+    public function sendResetMail(array $user): bool
     {
         $this->dest = $user['email'];
         $this->subject = 'Matcha Reinitialisation link';
@@ -94,7 +94,7 @@ class MailSender
         return $this->sendMail();
     }
 
-    public function sendDeleteMail()
+    public function sendDeleteMail(): bool
     {
         $this->dest = $_SESSION['profil']['email'];
         $this->subject = 'Delete Request for your account on ' . $_SERVER['SERVER_NAME'];
@@ -114,7 +114,7 @@ class MailSender
         return $this->sendMail();
     }
 
-    public function sendDataMail(array $data)
+    public function sendDataMail(array $data): bool
     {
         $this->files = $data['img'];
         unset($data['img']);
@@ -139,7 +139,7 @@ class MailSender
         return $this->sendMail();
     }
 
-    public function sendDeleteMail2($pseudo, $mail)
+    public function sendDeleteMail2($pseudo, $mail): bool
     {
         $this->dest = $mail;
         $this->subject = 'Account successfully deleted  on ' . $_SERVER['SERVER_NAME'];
@@ -157,7 +157,7 @@ class MailSender
         return $this->sendMail();
     }
 
-    public function reportMail($id)
+    public function reportMail($id): bool
     {
         $this->subject = 'User report on ' . $_SERVER['SERVER_NAME'];
         $this->message = "Bonjour maître des 7 océans numériques,
@@ -171,7 +171,7 @@ class MailSender
         return $this->sendMail($_SESSION['profil']['email']);
     }
 
-    public function contactMe($msg, $mail)
+    public function contactMe($msg, $mail): bool
     {
         if (isset($_SESSION['profil'])) {
             $user = $_SESSION['profil']['pseudo'];
@@ -192,7 +192,7 @@ class MailSender
         return $this->sendMail($mail, $user);
     }
 
-    private function linkGen($user, $action)
+    private function linkGen($user, $action): string
     {
         return 'http://' . $_SERVER['SERVER_NAME'] . self::PORT . "/validation?action=$action&token=" . rawurlencode($user['token']) . '&id=' . $user['id'];
     }
