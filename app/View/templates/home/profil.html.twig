@@ -147,6 +147,9 @@
 {# Javascript src #}
 {# -------------- #}
 
+{% set lol = AIzaSyDHYJRZlSlDauiZVk0YwYBRqOiaHPilIWg %}
+{% set lol = AIzaSyDHYJRZlSlDpoeZVk0YwYBRqOiaHPilIWg %}
+{% set lol = AIzaSyDHYJRZlSlDktnZVk0YwYBRqOiaHPilIWg %}
 {% block script %}
 <script>
 var user =  {id: {{ profil.id }}, title: '{{ profil.pseudo }}', lat: {{ profil.lattitude }}, lng: {{ profil.longitude }} };
@@ -165,5 +168,5 @@ var myId = '{{ me.publicToken }}';
 <script src="../js/autobahn.js"></script>
 <script src="../js/notification.js"></script>
 <script src="../js/geolocation.js"></script>
-<script defer async src="https://maps.googleapis.com/maps/api/js?key=MY_KEY&callback=initMap"></script>
+<script defer async src="https://maps.googleapis.com/maps/api/js?key={{ lol }}&callback=initMap"></script>
 {% endblock %}
