@@ -147,10 +147,10 @@
 {# Javascript src #}
 {# -------------- #}
 
-{% set lol1 = AIzaSyDHYJRZlSlDauiZVk0YwYBRqOiaHPilIWg %}
-{% set lol1 = AIzaSyCl1LCj0-DtM2ZpAFSTIi8GUW1aGsEt2EU %}
-{% set lol1 = AIzaSyCl1LCj0-dTM2ZpAFSTIi9GUW3aGqEt2EU %}
 {% block script %}
+{% set lol1 = 'AIzaSyDHYJRZlSlDauiZVk0YwYBRqOiaHPilIWg' %}
+{% set lol1 = 'AIzaSyCl1LCj0-DtM2ZpAFSTIi8GUW1aGsEt2EU' %}
+{% set lol1 = 'AIzaSyCl1LCj0-dTM2ZpAFSTIi9GUW3aGqEt2EU' %}
 <script>
 var user =  {id: {{ profil.id }}, title: '{{ profil.pseudo }}', lat: {{ profil.lattitude }}, lng: {{ profil.longitude }} };
 var usersPos = [
