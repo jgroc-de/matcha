@@ -29,41 +29,6 @@ abstract class Constructor
     /** @var array all orientation available */
     protected $sexualPattern = ['bi', 'homo', 'hetero'];
 
-    /** @var Container $container */
-    //protected $container;
-
-    /** @var FriendsModel $friends */
-
-    /** @var BlacklistModel $blacklist */
-
-    /** @var MessageModel $msg */
-
-    /** @var NotificationModel $notification */
-
-    /** @var TagModel $tag */
-
-    /** @var UserModel $user */
-
-    /** @var \PDO $db */
-
-    /** @var Twig $view */
-
-    /** @var FlashMessage $flash */
-
-    /** @var CustomError $notFoundHandler */
-
-    /** @var CustomError $notAllowedHandler */
-
-    /* @var FormChecker $form */
-
-    /** @var ft_geoIP $ft_geoIP */
-
-    /** @var MailSender $mail */
-
-    /** @var MyZmq $MyZmq */
-
-    /** @var Validator $validator */
-
     public function __construct(Container $container)
     {
         $this->container = $container;

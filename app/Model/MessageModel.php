@@ -2,14 +2,20 @@
 
 namespace App\Model;
 
-use App\Constructor;
-
 /**
  * class MessageModel
  * request to database about messages
  */
-class MessageModel extends Constructor
+class MessageModel
 {
+    /** @var \PDO */
+    private $db;
+
+    public function __construct(\PDO $db)
+    {
+        $this->db = $db;
+    }
+
     public function getMessages(array $hash): array
     {
         $req = $this->db->prepare('SELECT owner, message FROM message WHERE id_user1 = ? AND id_user2 = ? ORDER BY date ASC LIMIT 100');

@@ -2,10 +2,26 @@
 
 namespace App\Lib;
 
-use App\Constructor;
+use App\Model\UserModel;
+use GeoIp2\Database\Reader;
+use Slim\Container;
 
-class ft_geoIP extends Constructor
+class ft_geoIP
 {
+    /** @var Validator */
+    private $validator;
+    /** @var Reader */
+    private $geoIP;
+    /** @var UserModel */
+    private $user;
+
+    public function __construct(Validator $validator, Reader $geoIP, UserModel $user)
+    {
+        $this->validator = $validator;
+        $this->geoIP = $geoIP;
+        $this->user = $user;
+    }
+
     /**
      * set geolocation by IP
      */
@@ -13,9 +29,9 @@ class ft_geoIP extends Constructor
     {
         $keys = ['lat', 'lng'];
         if (!$this->validator->validate($post, $keys)) {
-            //$ip = $this->geoIP->city($_SERVER['REMOTE_ADDR']);
+            $ip = $this->geoIP->city($_SERVER['REMOTE_ADDR']);
             //$ip = $this->geoIP->city('163.172.250.11');
-            $ip = $this->geoIP->city('82.231.186.199');
+            //$ip = $this->geoIP->city('82.231.186.199');
             $post['lat'] = $ip->location->latitude;
             $post['lng'] = $ip->location->longitude;
             if (array_key_exists('id', $_SESSION)) {

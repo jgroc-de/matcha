@@ -2,14 +2,32 @@
 
 namespace App\Model;
 
-use App\Constructor;
+use App\Lib\FlashMessage;
+use App\Lib\MyZmq;
 
 /**
  * class UserModel
  * request to database about user
  */
-class FriendsModel extends Constructor
+class FriendsModel
 {
+    /** @var \PDO */
+    private $db;
+    /** @var MyZmq */
+    private $MyZMQ;
+    /** @var FlashMessage */
+    private $flashMessage;
+    /** @var UserModel */
+    private $userModel;
+
+    public function __construct(\PDO $db, MyZmq $MyZMQ, FlashMessage $flashMessage, UserModel $userModel)
+    {
+        $this->db = $db;
+        $this->MyZMQ = $MyZMQ;
+        $this->flashMessage = $flashMessage;
+        $this->userModel = $userModel;
+    }
+
     /**
      * @return bool|array
      */
@@ -124,11 +142,11 @@ class FriendsModel extends Constructor
 
     public function setFriendsReq(int $id1, int $id2)
     {
-        $user = $this->user->getUserById($id2);
+        $user = $this->userModel->getUserById($id2);
         if ($this->getFriendReq($id2, $id1) or $user['bot']) {
             $this->setFriend($id1, $id2);
-            $this->user->updatePopularity(5, $user);
-            $this->user->updatePopularity(5, $_SESSION['profil']);
+            $this->userModel->updatePopularity(5, $user);
+            $this->userModel->updatePopularity(5, $_SESSION['profil']);
             $msg = [
                 'category' => '"' . $user['publicToken'] . '"',
                 'dest' => $user['id'],
@@ -148,7 +166,7 @@ class FriendsModel extends Constructor
         } else {
             $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?, ?)');
             $req->execute([$id1, $id2, true]);
-            $this->user->updatePopularity(1, $user);
+            $this->userModel->updatePopularity(1, $user);
             $msg = [
                 'category' => '"' . $user['publicToken'] . '"',
                 'dest' => $user['id'],
@@ -172,11 +190,11 @@ class FriendsModel extends Constructor
             $this->eraseFriendReq($id2, $id1);
             $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?, ?)');
             $token = password_hash($id1 . random_bytes(4) . $id2, PASSWORD_DEFAULT);
-            $this->flash->addMessage('success', 'this user is now your friends');
+            $this->flashMessage->addMessage('success', 'this user is now your friends');
             $tab[] = $token;
             $req->execute($tab);
         } else {
-            $this->flash->addMessage('success', 'this user is already your friends');
+            $this->flashMessage->addMessage('success', 'this user is already your friends');
         }
     }
 
@@ -211,7 +229,7 @@ class FriendsModel extends Constructor
     {
         $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? AND id_user2 = ?');
         if ($req->execute($this->sortId($id1, $id2))) {
-            $user = $this->user->getUserById($id2);
+            $user = $this->userModel->getUserById($id2);
             $msg = [
                 'category' => '"' . $user['publicToken'] . '"',
                 'dest' => $user['id'],

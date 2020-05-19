@@ -26,7 +26,6 @@ use App\Controllers\Signup;
 use App\Controllers\UpdateGeolocation;
 use App\Controllers\Validation;
 use App\Middlewares\authMiddleware;
-use App\Middlewares\idMiddleware;
 use App\Middlewares\noAuthMiddleware;
 
 $app->get('/setup', InitializeDB::class)
@@ -81,21 +80,26 @@ $app->group('', function () use ($app) {
     $this->post('/updateGeolocation', UpdateGeolocation::class);
     $this->post('/sendMessage', Chat::class . ':send');
     $this->post('/addTag', AddTag::class);
+    $this->get('/profil/{id:[0-9]+}', Profil::class)
+        ->setName('profil');
+    $this->get('/addFriend/{id:[0-9]+}', AddFriendRequest::class);
+    $this->get('/report/{id:[0-9]+}', Report::class);
+    $this->get('/blacklist/{id:[0-9]+}', Blacklist::class);
+    $this->post('/addPicture/{id:[0-9]+}', AddPicture::class);
+    $this->get('/delFriend/{id:[0-9]+}', DeleteFriend::class);
+    $this->get('/delUserTag/{id:[0-9]+}', DeleteUserTag::class);
+    $this->get('/delPicture/{id:[0-9]+}', DeletePicture::class);
+    $this->get('/delFriendReq/{id:[0-9]+}', DeleteFriendRequest::class);
+    $this->get('/startChat/{id:[0-9]+}', Chat::class . ':startChat');
+    $this->get('/profilStatus/{id:[0-9]+}', Chat::class . ':profilStatus');
 })->add(new authMiddleware($container));
 
-$app->group('', function () {
-    $this->get('/profil/{id}', Profil::class)
-        ->setName('profil');
-    $this->get('/addFriend/{id}', AddFriendRequest::class);
-    $this->get('/report/{id}', Report::class);
-    $this->get('/blacklist/{id}', Blacklist::class);
-    $this->post('/addPicture/{id}', AddPicture::class);
-    $this->get('/delFriend/{id}', DeleteFriend::class);
-    $this->get('/delUserTag/{id}', DeleteUserTag::class);
-    $this->get('/delPicture/{id}', DeletePicture::class);
-    $this->get('/delFriendReq/{id}', DeleteFriendRequest::class);
-    $this->get('/startChat/{id}', Chat::class . ':startChat');
-    $this->get('/profilStatus/{id}', Chat::class . ':profilStatus');
-})
-    ->add(new idMiddleware())
-    ->add(new authMiddleware($container));
+/**
+ * for cors
+ * Catch-all route to serve a 404 Not Found page if none of the routes match
+ * NOTE: make sure this route is defined last
+ */
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function($req, $res) {
+    $handler = $this->notFoundHandler; // handle using the default Slim page not found handler
+    return $handler($req, $res);
+});

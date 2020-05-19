@@ -2,19 +2,32 @@
 
 namespace App\Lib;
 
-use App\Constructor;
+use App\Model\BlacklistModel;
+use App\Model\NotificationModel;
 use ZMQSocket;
 
-class MyZmq extends Constructor
+class MyZmq
 {
+    /** @var ZMQSocket */
+    private $zmq;
+    /** @var BlacklistModel */
+    private $blacklist;
+    /** @var NotificationModel */
+    private $notif;
+
+    public function __construct(\ZMQSocket $zmq, BlacklistModel $blacklist, NotificationModel $notif)
+    {
+        $this->zmq = $zmq;
+        $this->blacklist = $blacklist;
+        $this->notif = $notif;
+    }
+
     public function send(array $msg)
     {
-        /** @var ZMQSocket $socket */
-        $socket = $this->zmq;
         if (array_key_exists('mateStatus', $msg) || array_key_exists('profilStatus', $msg)) {
-            $socket->send(json_encode($msg));
+            $this->zmq->send(json_encode($msg));
         } elseif (empty($this->blacklist->getBlacklistById($msg['dest'], $msg['exp']))) {
-            $socket->send(json_encode($msg));
+            $this->zmq->send(json_encode($msg));
             if (!array_key_exists('when', $msg)) {
                 $notif = [
                     $msg['dest'],

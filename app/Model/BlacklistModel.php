@@ -2,14 +2,21 @@
 
 namespace App\Model;
 
-use App\Constructor;
 
 /**
  * class NotificationModel
  * request to database about notifications
  */
-class BlacklistModel extends Constructor
+class BlacklistModel
 {
+    /** @var \PDO */
+    private $db;
+
+    public function __construct(\PDO $db)
+    {
+        $this->db = $db;
+    }
+
     public function getBlacklist(): array
     {
         $req = $this->db->prepare('SELECT * FROM blacklist WHERE iduser = ?');

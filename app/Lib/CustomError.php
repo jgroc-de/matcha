@@ -2,7 +2,6 @@
 
 namespace App\Lib;
 
-use App\Constructor;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
@@ -10,8 +9,16 @@ use Slim\Views\Twig;
 /**
  * Custom Error handler
  */
-class CustomError extends Constructor
+class CustomError
 {
+    /** @var Twig */
+    private $view;
+
+    public function __construct(Twig $view)
+    {
+        $this->view = $view;
+    }
+
     public function __invoke(Request $request, Response $response, string $exception = ''): Response
     {
         if (!$exception) {

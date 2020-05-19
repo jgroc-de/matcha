@@ -8,8 +8,16 @@ use App\Constructor;
  * class UserModel
  * request to database about user
  */
-class UserModel extends Constructor
+class UserModel
 {
+    /** @var \PDO */
+    private $db;
+
+    public function __construct(\PDO $db)
+    {
+        $this->db = $db;
+    }
+
     public function getUsers(): array
     {
         $req = $this->db->query('SELECT * FROM user LIMIT 500');

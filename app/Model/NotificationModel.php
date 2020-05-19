@@ -8,8 +8,16 @@ use App\Constructor;
  * class NotificationModel
  * request to database about notifications
  */
-class NotificationModel extends Constructor
+class NotificationModel
 {
+    /** @var \PDO */
+    private $db;
+
+    public function __construct(\PDO $db)
+    {
+        $this->db = $db;
+    }
+
     public function getNotification(): array
     {
         $req = $this->db->prepare('SELECT * FROM notification WHERE dest = ? ORDER BY date DESC LIMIT 10');

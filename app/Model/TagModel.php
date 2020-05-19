@@ -4,8 +4,16 @@ namespace App\Model;
 
 use App\Constructor;
 
-class TagModel extends Constructor
+class TagModel
 {
+    /** @var \PDO */
+    private $db;
+
+    public function __construct(\PDO $db)
+    {
+        $this->db = $db;
+    }
+
     /**
      * @return bool|array
      */

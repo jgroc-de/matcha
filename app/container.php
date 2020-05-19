@@ -2,6 +2,7 @@
 
 use App\Lib\CustomError;
 use App\Lib\Debug;
+use App\Lib\FlashMessage;
 use App\Lib\FormChecker;
 use App\Lib\ft_geoIP;
 use App\Lib\MailSender;
@@ -25,13 +26,13 @@ $container['view'] = function ($container) {
     ]);
     $basePath = rtrim(
         str_ireplace(
-        'index.php',
-        '',
-        $container['request']->getUri()->getBasePath()
-    ),
+            'index.php',
+            '',
+            $container->get('request')->getUri()->getBasePath()
+        ),
         '/'
     );
-    $view->addExtension(new TwigExtension($container['router'], $basePath));
+    $view->addExtension(new TwigExtension($container->get('router'), $basePath));
 
     return $view;
 };
@@ -40,7 +41,7 @@ $container['view'] = function ($container) {
  * database container
  */
 $container['db'] = function ($container) {
-    $db = $container['settings']['db'];
+    $db = $container->get('settings')['db'];
     $pdo = new \PDO('mysql:host=' . $db['host'] . ';dbname=' . $db['dbname'], $db['user'], $db['pass']);
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
@@ -49,32 +50,43 @@ $container['db'] = function ($container) {
 };
 
 $container['user'] = function ($container) {
-    return new UserModel($container);
+    return new UserModel($container->get('db'));
 };
 
 $container['friends'] = function ($container) {
-    return new FriendsModel($container);
+    return new FriendsModel(
+        $container->get('db'),
+        $container->get('MyZMQ'),
+        $container->get('Flash'),
+        $container->get('user')
+    );
 };
 
 $container['tag'] = function ($container) {
-    return new TagModel($container);
+    return new TagModel($container->get('db'));
 };
 
 $container['msg'] = function ($container) {
-    return new MessageModel($container);
+    return new MessageModel($container->get('db'));
 };
 
 $container['notif'] = function ($container) {
-    return new NotificationModel($container);
+    return new NotificationModel($container->get('db'));
 };
 
 $container['blacklist'] = function ($container) {
-    return new BlacklistModel($container);
+    return new BlacklistModel($container->get('db'));
 };
 
 
 $container['form'] = function ($container) {
-    return new FormChecker($container);
+    return new FormChecker(
+        $container->get('validator'),
+        $container->get('flash'),
+        $container->get('user'),
+        $container->get('mail'),
+        $container->get('ft_geoIP')
+    );
 };
 
 $container['validator'] = function ($container) {
@@ -86,7 +98,7 @@ $container['debug'] = function ($container) {
 };
 
 $container['flash'] = function () {
-    return new \App\Lib\FlashMessage();
+    return new FlashMessage();
 };
 
 $container['mail'] = function () {
@@ -94,11 +106,11 @@ $container['mail'] = function () {
 };
 
 $container['notFoundHandler'] = function ($container) {
-    return new CustomError($container);
+    return new CustomError($container->get('view'));
 };
 
 $container['notAllowedHandler'] = function ($container) {
-    return new CustomError($container);
+    return new CustomError($container->get('view'));
 };
 
 $container['geoIP'] = function () {
@@ -106,11 +118,11 @@ $container['geoIP'] = function () {
 };
 
 $container['ft_geoIP'] = function ($container) {
-    return new ft_geoIP($container);
+    return new ft_geoIP($container->get('validator'), $container->get('geoIP'), $container->get('user'));
 };
 
 $container['MyZmq'] = function ($container) {
-    return new MyZmq($container);
+    return new MyZmq($container->get('zmq'), $container->get('blacklist'), $container->get('notif'));
 };
 
 $container['zmq'] = function ($container): ZMQSocket {
