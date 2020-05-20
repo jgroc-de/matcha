@@ -24,7 +24,7 @@ $config = [
 ];
 $app = new App(['settings' => $config]);
 // CSRF
-$app->add(new Guard);
+//$app->add(new Guard);
 
 // enabling lazy cors
 $app->options('/{routes:.+}', function ($request, $response, $args) {
@@ -33,7 +33,7 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
 $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);
     return $response
-        ->withHeader('Access-Control-Allow-Origin', $config['siteUrl'])
+        ->withHeader('Access-Control-Allow-Origin', $this->get('settings')['siteUrl'])
         ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
 });

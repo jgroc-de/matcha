@@ -14,7 +14,7 @@ class FriendsModel
     /** @var \PDO */
     private $db;
     /** @var MyZmq */
-    private $MyZMQ;
+    private $MyZmq;
     /** @var FlashMessage */
     private $flashMessage;
     /** @var UserModel */
@@ -23,7 +23,7 @@ class FriendsModel
     public function __construct(\PDO $db, MyZmq $MyZMQ, FlashMessage $flashMessage, UserModel $userModel)
     {
         $this->db = $db;
-        $this->MyZMQ = $MyZMQ;
+        $this->MyZmq = $MyZMQ;
         $this->flashMessage = $flashMessage;
         $this->userModel = $userModel;
     }

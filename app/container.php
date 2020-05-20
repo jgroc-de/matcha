@@ -56,8 +56,8 @@ $container['user'] = function ($container) {
 $container['friends'] = function ($container) {
     return new FriendsModel(
         $container->get('db'),
-        $container->get('MyZMQ'),
-        $container->get('Flash'),
+        $container->get('MyZmq'),
+        $container->get('flash'),
         $container->get('user')
     );
 };
