@@ -66,6 +66,7 @@ class Profil
                 'friends' => $this->friends->getFriends($_SESSION['id']),
                 'tags' => $this->tag->getUserTags($_SESSION['id']),
                 'notification' => $this->notif->getNotification(),
+                'mapKey' => $_ENV['GMAP_KEY'],
             ]
         );
     }
@@ -96,6 +97,7 @@ class Profil
                     'me' => $_SESSION['profil'],
                     'tags' => $this->tag->getUserTags($user['id']),
                     'notification' => $this->notif->getNotification(),
+                    'mapKey' => $_ENV['GMAP_KEY'],
                 ]
             );
         }

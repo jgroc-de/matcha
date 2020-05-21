@@ -54,6 +54,17 @@ class Authentication
         return $this->login($request, $response, $post);
     }
 
+    public function apiLogin(Request $request, Response $response, array $args): Response
+    {
+        $post = $request->getParsedBody();
+        var_dump($post);exit();
+        if (true) {
+            return $response->withRedirect('/');
+        }
+
+        return $this->login($request, $response, $post);
+    }
+
     public function logout(Request $request, Response $response, array $args): Response
     {
         $this->userModel->updateLastlog($_SESSION['id']);

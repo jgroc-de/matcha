@@ -2,10 +2,14 @@
 
 use Slim\App;
 use Slim\Csrf\Guard;
+use Symfony\Component\Dotenv\Dotenv;
 
 session_start();
 
 require '../vendor/autoload.php';
+
+$dotenv = new Dotenv();
+$dotenv->load(__DIR__.'/../.env');
 
 // Instatiate the app
 $config = [

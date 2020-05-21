@@ -64,6 +64,7 @@ class Search
                 'sort' => ['score', 'popularity', 'age desc.', 'age asc.', 'distance', 'tag'],
                 'notification' => $this->notif->getNotification(),
                 'criteria' => $this->criteria,
+                'mapKey' => $_ENV['GMAP_KEY'],
             ]
         );
     }
