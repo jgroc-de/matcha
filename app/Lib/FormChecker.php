@@ -36,7 +36,7 @@ class FormChecker
 
     public function checkLogin(array $post): bool
     {
-        if (!$this->validator->validate($post, ['pseudo', 'password'])) {
+        if ($this->validator->validate($post, ['pseudo', 'password']) != "ok") {
             return false;
         }
         if (empty($account = $this->userModel->getUser($post['pseudo']))) {
@@ -66,7 +66,7 @@ class FormChecker
 
     public function checkResetEmail(array $post)
     {
-        if ($this->validator->validate($post, ['email'])) {
+        if ($this->validator->validate($post, ['email']) == "ok") {
             $account = $this->userModel->getUserByEmail($post['email']);
             if (!empty($account)) {
                 if ($this->mail->sendResetMail($account)) {
@@ -85,7 +85,7 @@ class FormChecker
         $user = $this->userModel;
 
         $keys = ['pseudo', 'password', 'email', 'name', 'surname', 'gender'];
-        if ($this->validator->validate($post, $keys)) {
+        if (($valid = $this->validator->validate($post, $keys)) == "ok") {
             if ($post['g-recaptcha-response']) {
                 $api_url = "https://www.google.com/recaptcha/api/siteverify?secret="
                 . $_ENV['SECRET_CAPTCHA_KEY'] . "&response="
@@ -117,7 +117,7 @@ class FormChecker
             }
         }
         else
-            $this->flashMessage->addMessage('failure', 'Something\'s wrong');
+            $this->flashMessage->addMessage('failure', $valid.' is incorrect');
 
 
         return $post;
@@ -125,7 +125,7 @@ class FormChecker
 
     public function checkContact(array $post)
     {
-        if ($this->validator->validate($post, ['email', 'text'])) {
+        if ($this->validator->validate($post, ['email', 'text']) == "ok") {
             $this->mail->contactMe($post['text'], $post['email']);
             $this->flashMessage->addMessage('success', 'Thank you!');
         }
@@ -133,7 +133,7 @@ class FormChecker
 
     public function checkPwd(array $post)
     {
-        if ($this->validator->validate($post, ['password', 'password1'])) {
+        if ($this->validator->validate($post, ['password', 'password1']) == "ok") {
             if ($post['password'] === $post['password1']) {
                 $this->userModel->updatePassUser(password_hash($post['password'], PASSWORD_DEFAULT));
                 $this->flashMessage->addMessage('success', 'password updated!');
@@ -146,7 +146,7 @@ class FormChecker
     public function checkProfil(array $post): bool
     {
         $keys = ['pseudo', 'email', 'name', 'surname', 'birthdate', 'gender', 'biography', 'sexuality'];
-        if (!$this->validator->validate($post, $keys)) {
+        if ($this->validator->validate($post, $keys) != "ok") {
             return false;
         }
         if (!empty($this->userModel->getUser($post['pseudo'])) && $post['pseudo'] !== $_SESSION['profil']['pseudo']) {

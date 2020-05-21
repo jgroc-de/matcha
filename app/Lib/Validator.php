@@ -7,19 +7,19 @@ namespace App\Lib;
  */
 class Validator
 {
-    public function validate(array $array, array $keys): bool
+    public function validate(array $array, array $keys)
     {
         if ($this->ft_isset($array, $keys)) {
             foreach ($keys as $key) {
                 if (is_callable([$this, $key]) && !$this->{$key}($array[$key])) {
-                    return false;
+                    return $key;
                 }
             }
 
-            return true;
+            return "ok";
         }
 
-        return false;
+        return "";
     }
 
     private function ft_isset(array $array, array $keys): bool

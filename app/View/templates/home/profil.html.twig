@@ -9,7 +9,7 @@
 {# ------------ #}
 
 {% block main %}
-<div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw"> 
+<div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw">
     <div id="flash" class="w3-panel w3-green w3-hide" style="position:fixed;bottom:10px;right:10px;z-index:20"><p id="flashText"></p></div>
     <div class="w3-padding w3-row">
         {% if profil.id == me.id %}
@@ -18,7 +18,7 @@
             {% set home = true %}
         {% endif %}
         <!-- The Modal -->
-        <div id="Modal" class="w3-modal" style="cursor:pointer" onclick="this.style.display='none'"> 
+        <div id="Modal" class="w3-modal" style="cursor:pointer" onclick="this.style.display='none'">
             <div class="w3-modal-content w3-card-4" style="width:90vw;background-color:black;">
                 <div class="w3-display-container" style="height:80vh">
                     <img class="w3-display-middle" src="" style="max-height:80vh;max-width:100%">
@@ -28,7 +28,7 @@
         <h2 class='' style="margin-bottom:0;background-color: {{ color[profil.gender] }}">{{ hi }}{{ profil.pseudo }}</h2>
         {% if not home and not friend %}
             <div class="w3-row">
-                <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/addFriend/{{ profil.id }}')" >add to friends</button>
+                <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/friend/{{ profil.id }}')" >add to friends</button>
                 <button class="w3-button w3-theme-l1 w3-third" onclick="profilAction('/report/{{ profil.id }}')">report as fake user</button>
                 <button class="w3-button w3-theme-d1 w3-third" onclick="profilAction('/blacklist/{{ profil.id }}')">blacklist this user</button>
             </div>
@@ -107,7 +107,7 @@
                     <p id="textLocation">You are currently located at {{ profil.lattitude }}° of lattitude north and {{ profil.longitude }}° of longitude east.</p>
                     <div class="w3-half">
                         <label for="lat">lattitude</label>
-                        <input 
+                        <input
                                id="lat"
                                class="w3-input w3-border"
                                type="number"
@@ -120,7 +120,7 @@
                     </div>
                     <div class="w3-half">
                         <label for="lng">longitude</label>
-                        <input 
+                        <input
                                id="lng"
                                class="w3-input w3-border"
                                type="number"
