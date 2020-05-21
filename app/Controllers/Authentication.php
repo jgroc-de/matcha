@@ -6,6 +6,8 @@ use App\Lib\FlashMessage;
 use App\Lib\FormChecker;
 use App\Matcha;
 use App\Model\UserModel;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
@@ -14,6 +16,8 @@ class Authentication
 {
     const template = 'templates/logForm/login.html.twig';
 
+    /** @var Client */
+    private $curl;
     /** @var FormChecker */
     private $form;
     /** @var FlashMessage */
@@ -26,11 +30,13 @@ class Authentication
     public function __construct(
         FlashMessage $flashMessage,
         FormChecker $formChecker,
+        Client $curl,
         UserModel $userModel,
         Twig $view
     ) {
         $this->flashMessage = $flashMessage;
         $this->form = $formChecker;
+        $this->curl = $curl;
         $this->userModel = $userModel;
         $this->view = $view;
     }
@@ -56,13 +62,28 @@ class Authentication
 
     public function apiLogin(Request $request, Response $response, array $args): Response
     {
-        $post = $request->getParsedBody();
-        var_dump($post);exit();
-        if (true) {
+        $code = $request->getQueryParam('code');
+        if (!empty($code)) {
+            try {
+                $test = $this->curl->post(
+                    'https://api.intra.42.fr/oauth/token', [
+                    'form_params' => [
+                            'grant_type' => 'authorization_code',
+                            'client_id' => $_ENV['PUB_42_KEY'],
+                            'client_secret' => $_ENV['SECRET_42_KEY'],
+                            'code' => $code,
+                            'redirect_uri' => 'http://localhost:8080/apiLogin',
+                        ],
+                    ]
+                );
+                var_dump($test);
+            } catch (ClientException $error) {
+                print($error->getMessage());
+            }
             return $response->withRedirect('/');
         }
 
-        return $this->login($request, $response, $post);
+        return $this->login($request, $response, $code);
     }
 
     public function logout(Request $request, Response $response, array $args): Response
@@ -106,6 +127,7 @@ class Authentication
             'flash' => $this->flashMessage->getMessages(),
             'post' => $post,
             'characters' => Matcha::GENDER,
+            'PUB_42_KEY' => $_ENV['PUB_42_KEY'],
         ], $viewOption);
 
         return $this->view->render(

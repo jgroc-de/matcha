@@ -20,6 +20,7 @@ $container['App\Controllers\Authentication'] = function ($container) {
     return new Authentication(
         $container->get('flash'),
         $container->get('form'),
+        $container->get('curl'),
         $container->get('user'),
         $container->get('view')
     );
