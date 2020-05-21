@@ -4,6 +4,23 @@ var messages = document.getElementById('tchatMessages');
 var msg = document.getElementById('tchatMsg');
 var button = document.getElementById('tchatButton');
 var websocket;
+var shiftDown = 0;
+
+msg.addEventListener("keydown", function(event) {
+    if (event.keyCode === 16)
+        shiftDown = 1;
+});
+
+msg.addEventListener("keyup", function(event) {
+    if (event.keyCode === 16)
+        shiftDown = 0;
+
+    if (event.keyCode === 13 && shiftDown == 0) {
+        event.preventDefault();
+        button.click();
+    }
+});
+
 
 function highlightMate(data)
 {
@@ -93,9 +110,10 @@ function tchatWith(name, id, myId, token)
 
 function sendMessageTo(myId, name, id, token)
 {
-    var text = msg.value;
+    var text = msg.value.replace(/(?:\r\n|\r|\n)/g, "<br>");
+    console.log(text == "<br>")
 
-    if (text)
+    if (text && text != "<br>")
     {
         var xhr = new XMLHttpRequest();
 
