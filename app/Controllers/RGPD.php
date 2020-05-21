@@ -52,6 +52,6 @@ class RGPD
         }
         $this->user->activate();
 
-        return $response;
+        return $response->withRedirect('/');
     }
 }
