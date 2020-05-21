@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use App\Constructor;
-
 /**
  * class UserModel
  * request to database about user
@@ -25,9 +23,8 @@ class UserModel
         return $req->fetchAll();
     }
 
-
     /**
-     * @return bool|array
+     * @return array|bool
      */
     public function getUser(string $pseudo)
     {
@@ -38,7 +35,7 @@ class UserModel
     }
 
     /**
-     * @return bool|array
+     * @return array|bool
      */
     public function getUserById(int $id)
     {
@@ -49,7 +46,7 @@ class UserModel
     }
 
     /**
-     * @return bool|array
+     * @return array|bool
      */
     public function getUserByEmail(string $email)
     {
@@ -148,7 +145,7 @@ class UserModel
     }
 
     /**
-     * @return bool|array
+     * @return array|bool
      */
     public function getAllDatas()
     {

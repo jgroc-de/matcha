@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-
 /**
  * class NotificationModel
  * request to database about notifications
@@ -26,7 +25,7 @@ class BlacklistModel
     }
 
     /**
-     * @return bool|array
+     * @return array|bool
      */
     public function getBlacklistById(int $idu, int $idb)
     {

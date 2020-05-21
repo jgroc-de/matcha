@@ -22,7 +22,7 @@ function showDivs(n) {
 
 function profilAction(path)
 {
-    ggAjaxGet(path, printNotif, ['response', true]);
+    ggAjax('POST', path, printNotif, ['response', true]);
 }
 
 function onlineProfil(data)

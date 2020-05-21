@@ -5,8 +5,21 @@ namespace App\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class Chat extends Route
+class Chat
 {
+    private $container;
+
+    public function __construct(
+        $container
+    ) {
+        $this->container = $container;
+    }
+
+    public function __get($name)
+    {
+        return $this->container->get($name);
+    }
+
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $friends = $this->friends->getFriends($_SESSION['id']);

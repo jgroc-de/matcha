@@ -5,84 +5,53 @@ namespace App\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class RGPD extends Route
+class RGPD
 {
-    public function __invoke(Request $request, Response $response, array $args)
-    {
-        return $this->view->render(
-            $response,
-            'templates/home/editProfil.html.twig',
-            [
-                'me' => $_SESSION['profil'],
-                'characters' => $this->characters,
-                'sexualPattern' => $this->sexualPattern,
-                'flash' => $this->flash->getMessages(),
-                'year' => date('Y') - 18,
-                'notification' => $this->notif->getNotification(),
-                'rgpd' => true,
-            ]
-        );
+    private $container;
+
+    public function __construct(
+        $container
+    ) {
+        $this->container = $container;
     }
 
-    public function deleteAccount(Request $request, Response $response, array $args)
+    public function __get($name)
     {
-        //if ($this->mail->sendDeleteMail())
-        if (true) {
-            return $response->getBody()->write('Check your mailbox!');
-        }
-
-        return $response->getBody()->write('there is a bug… plz contact us, we ill answer asap!');
+        return $this->container->get($name);
     }
 
-    public function getAllDatas(Request $request, Response $response, array $args)
+    public function getAllDatas(Request $request, Response $response, array $args): Response
     {
-        $data = [];
-        $data['tag'] = $this->tag->getAllUserTags($_SESSION['id']);
-        $data['message'] = $this->msg->getAllMessages();
-        $data['notif'] = $this->notif->getAllNotification();
-        $data['friends'] = $this->friends->getAllFriends($_SESSION['id']);
-        $data['friendsReq'] = $this->friends->getAllFriendsReqs();
-        $data['blacklist'] = $this->blacklist->getAllBlacklist();
-        foreach ($data as $key => $value) {
-            if (!empty($value)) {
-                $data[$key] = $this->implodeData($value);
-            } else {
-                $data[$key] = ['empty'];
-            }
-        }
-        $data = array_merge($data, $this->splitImg($this->user->getAllDatas()));
-        if ($this->mail->sendDataMail($data)) {
-            return $response->getBody()->write('Check your mailbox!');
-        }
+        $this->common->sendAllDatas();
+        $response->getBody()->write('Check your mailbox!');
 
-        return $response->getBody()->write('there is a bug… plz contact us!');
+        return $response;
     }
 
-    private function implodeData($data)
+    public function validationDeletion(Request $request, Response $response, array $args): Response
     {
-        $str = [];
-        foreach ($data as $value) {
-            $str[] = implode(' - ', $value);
+        $get = $request->getParams();
+        if (!$this->validator->validate($get, ['id', 'token', 'action'])) {
+            return $response->withStatus(400);
         }
-
-        return $str;
-    }
-
-    private function splitImg($data)
-    {
-        $tab = [];
-        $img = [];
-        foreach ($data as $key => $value) {
-            if (!strncmp($value, '/user_img', 9)) {
-                $img[] = $value;
-                unset($data[$key]);
-            } elseif (!strncmp($key, 'img', 3)) {
-                unset($data[$key]);
-            }
+        $account = $this->user->getUserById($get['id']);
+        if (empty($account) || ($get['token'] !== $account['token'])) {
+            return $response->withRedirect('/');
         }
-        $tab['user'] = $data;
-        $tab['img'] = $img;
+        $_SESSION['id'] = $account['id'];
+        $_SESSION['profil'] = $account;
+        $_SESSION['profil']['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
+        $this->user->updateToken($account['pseudo'], $_SESSION['profil']['token']);
+        if ($get['action'] === 'ini') {
+            return $response->withRedirect('/editPassword');
+        }
+        if ($get['action'] === 'del') {
+            $this->common->deleteAccountExecute();
 
-        return $tab;
+            return $response->withRedirect('/logout');
+        }
+        $this->user->activate();
+
+        return $response;
     }
 }

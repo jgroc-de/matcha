@@ -5,7 +5,6 @@ namespace App\Lib;
 use App\Model\UserModel;
 use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
-use Slim\Container;
 
 class ft_geoIP
 {
@@ -32,7 +31,7 @@ class ft_geoIP
         if (!$this->validator->validate($post, $keys)) {
             try {
                 $ip = $this->geoIP->city($_SERVER['REMOTE_ADDR']);
-            } catch(AddressNotFoundException $error) {
+            } catch (AddressNotFoundException $error) {
                 $ip = $this->geoIP->city('163.172.250.11');
             }
             //$ip = $this->geoIP->city('82.231.186.199');

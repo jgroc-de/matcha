@@ -138,7 +138,7 @@ function checkTags()
 
 function addFriend(id)
 {
-    ggAjaxGet('/addFriend/' + id, printNotif, ['response', true]);
+    ggAjax('POST', '/friend/' + id, printNotif, ['response', true]);
 }
 
 function next(id1)

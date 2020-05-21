@@ -1,97 +1,93 @@
 <?php
 
-use App\Controllers\AddFriendRequest;
-use App\Controllers\AddPicture;
-use App\Controllers\AddTag;
+use App\Controllers\Authentication;
 use App\Controllers\Blacklist;
 use App\Controllers\Chat;
 use App\Controllers\Contact;
-use App\Controllers\DeleteFriend;
-use App\Controllers\DeleteFriendRequest;
-use App\Controllers\DeletePicture;
-use App\Controllers\DeleteUserTag;
-use App\Controllers\EditPassword;
-use App\Controllers\EditProfil;
-use App\Controllers\FakeFactory;
-use App\Controllers\Home;
-use App\Controllers\InitializeDB;
-use App\Controllers\Login;
-use App\Controllers\Logout;
+use App\Controllers\FriendRequest;
+use App\Controllers\Geolocation;
+use App\Controllers\Picture;
 use App\Controllers\Profil;
-use App\Controllers\Report;
-use App\Controllers\ResetPassword;
 use App\Controllers\RGPD;
 use App\Controllers\Search;
-use App\Controllers\Signup;
-use App\Controllers\UpdateGeolocation;
-use App\Controllers\Validation;
+use App\Controllers\Settings;
+use App\Controllers\Setup;
+use App\Controllers\Tag;
 use App\Middlewares\authMiddleware;
 use App\Middlewares\noAuthMiddleware;
 
-$app->get('/setup', InitializeDB::class)
+/** @var $app Slim\App */
+$app->get('/setup', Setup::class . ':initDB')
     ->setName('setup');
-$app->get('/seed', FakeFactory::class)
+$app->get('/seed', setup::class . ':seed')
     ->setName('seed');
-$app->get('/contact', Contact::class)
+$app->get('/contact', Contact::class . ':page')
     ->setName('contact');
-$app->post('/contact', Contact::class . ':sendMail');
-$app->get('/validation', Validation::class)
+$app->post('/contact', Contact::class . ':mail');
+$app->get('/validation', Settings::class . ':validationDeletion')
     ->setName('validation');
 
 $app->group('', function () {
-    $this->get('/login', Login::class)
+    $this->get('/login', Authentication::class . ':login')
         ->setName('login');
-    $this->get('/signup', Signup::class)
+    $this->post('/login', Authentication::class . ':postLogin');
+    $this->get('/signup', Authentication::class . ':signup')
         ->setName('signup');
-    $this->get('/resetPassword', ResetPassword::class)
+    $this->post('/signup', Authentication::class . ':postSignup');
+    $this->get('/resetPassword', Authentication::class . ':resetPassword')
         ->setName('resetPassword');
-    $this->post('/login', Login::class . ':check');
-    $this->post('/signup', Signup::class . ':check');
-    $this->post('/resetPassword', ResetPassword::class . ':check');
+    $this->post('/resetPassword', Authentication::class . ':postPassword');
 })->add(new noAuthMiddleware());
 
 $app->group('', function () use ($app) {
-    $this->get('/', Home::class)
+    $this->get('/', Profil::class . ':page')
         ->setName('home');
+    $this->get('/profil/{id:[0-9]+}', Profil::class . ':profil')
+        ->setName('profil');
+    $this->post('/updateGeolocation', Geolocation::class);
+
     $this->get('/search', Search::class)
         ->setName('search');
     $this->post('/search_criteria', Search::class . ':criteria')
         ->setName('searchByCriteria');
     $this->post('/search_user', Search::class . ':name')
         ->setName('searchByName');
-    $this->get('/editProfil', EditProfil::class)
+
+    $this->get('/editProfil', Settings::class . ':editProfil')
         ->setName('editProfil');
-    $this->post('/editProfil', EditProfil::class . ':check');
-    $this->get('/completeProfil', EditProfil::class . ':complete')
-        ->setName('editProfil2');
-    $this->get('/editPassword', EditPassword::class)
+    $this->post('/editProfil', Settings::class . ':postEditProfil');
+    $this->get('/editPassword', Settings::class . ':editPassword')
         ->setName('editPassword');
-    $this->post('/editPassword', EditPassword::class . ':check');
-    $this->get('/rgpd', RGPD::class)
+    $this->post('/editPassword', Settings::class . ':postEditPassword');
+    $this->get('/rgpd', Settings::class . ':rgpd')
         ->setName('RGPD');
-    $this->get('/getAllDatas', RGPD::class . ':getAllDatas');
+
+    $this->post('/getAllDatas', RGPD::class . ':getAllDatas');
     $this->get('/deleteAccount', RGPD::class . ':deleteAccount')
         ->setName('deleteAccount');
-    $this->get('/logout', Logout::class)
+
+    $this->get('/logout', Authentication::class . ':logout')
         ->setName('logout');
+
     $this->get('/tchat', Chat::class)
         ->setName('tchat');
     $this->get('/chatStatus', Chat::class . ':mateStatus');
-    $this->post('/updateGeolocation', UpdateGeolocation::class);
     $this->post('/sendMessage', Chat::class . ':send');
-    $this->post('/addTag', AddTag::class);
-    $this->get('/profil/{id:[0-9]+}', Profil::class)
-        ->setName('profil');
-    $this->get('/addFriend/{id:[0-9]+}', AddFriendRequest::class);
-    $this->get('/report/{id:[0-9]+}', Report::class);
-    $this->get('/blacklist/{id:[0-9]+}', Blacklist::class);
-    $this->post('/addPicture/{id:[0-9]+}', AddPicture::class);
-    $this->get('/delFriend/{id:[0-9]+}', DeleteFriend::class);
-    $this->get('/delUserTag/{id:[0-9]+}', DeleteUserTag::class);
-    $this->get('/delPicture/{id:[0-9]+}', DeletePicture::class);
-    $this->get('/delFriendReq/{id:[0-9]+}', DeleteFriendRequest::class);
     $this->get('/startChat/{id:[0-9]+}', Chat::class . ':startChat');
     $this->get('/profilStatus/{id:[0-9]+}', Chat::class . ':profilStatus');
+
+    $this->post('/tag', Tag::class . ':add');
+    $this->delete('/tag/{id:[0-9]+}', Tag::class . ':delete');
+
+    $this->post('/friend/{id:[0-9]+}', FriendRequest::class . ':add');
+    $this->delete('/friend/{id:[0-9]+}', FriendRequest::class . ':delete');
+    $this->delete('/friendReq/{id:[0-9]+}', FriendRequest::class . ':deleteRequest');
+
+    $this->post('/report/{id:[0-9]+}', Blacklist::class . ':report');
+    $this->post('/blacklist/{id:[0-9]+}', Blacklist::class . ':blacklist');
+
+    $this->post('/picture/{id:[0-9]+}', Picture::class . ':add');
+    $this->delete('/picture/{id:[0-9]+}', Picture::class . ':delete');
 })->add(new authMiddleware($container));
 
 /**
@@ -99,7 +95,7 @@ $app->group('', function () use ($app) {
  * Catch-all route to serve a 404 Not Found page if none of the routes match
  * NOTE: make sure this route is defined last
  */
-$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function($req, $res) {
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($req, $res) {
     $handler = $this->notFoundHandler; // handle using the default Slim page not found handler
     return $handler($req, $res);
 });

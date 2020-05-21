@@ -15,7 +15,7 @@ class MyZmq
     /** @var NotificationModel */
     private $notif;
 
-    public function __construct(\ZMQSocket $zmq, BlacklistModel $blacklist, NotificationModel $notif)
+    public function __construct(ZMQSocket $zmq, BlacklistModel $blacklist, NotificationModel $notif)
     {
         $this->zmq = $zmq;
         $this->blacklist = $blacklist;
@@ -26,7 +26,7 @@ class MyZmq
     {
         if (array_key_exists('mateStatus', $msg) || array_key_exists('profilStatus', $msg)) {
             $this->zmq->send(json_encode($msg));
-        } elseif (empty($this->blacklist->getBlacklistById($msg['dest'], $msg['exp']))) {
+        } elseif (empty($this->blacklist->getBlacklistById($msg['exp'], $msg['dest']))) {
             $this->zmq->send(json_encode($msg));
             if (!array_key_exists('when', $msg)) {
                 $notif = [

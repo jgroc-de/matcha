@@ -29,7 +29,7 @@ class FriendsModel
     }
 
     /**
-     * @return bool|array
+     * @return array|bool
      */
     public function getFriend(int $id1, int $id2)
     {
@@ -130,7 +130,7 @@ class FriendsModel
     }
 
     /**
-     * @return bool|array
+     * @return array|bool
      */
     public function getFriendReq(int $id1, int $id2)
     {
@@ -242,7 +242,7 @@ class FriendsModel
     }
 
     /**
-     * @return bool|array
+     * @return array|bool
      */
     public function isFriend(array $id)
     {

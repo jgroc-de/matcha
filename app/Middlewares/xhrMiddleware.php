@@ -2,11 +2,11 @@
 
 namespace App\Middlewares;
 
-use App\Constructor;
+use App\Matcha;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class xhrMiddleware extends Constructor
+class xhrMiddleware extends Matcha
 {
     /**
      * middleware that return 418 if not xhr

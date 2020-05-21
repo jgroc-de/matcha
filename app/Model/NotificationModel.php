@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use App\Constructor;
-
 /**
  * class NotificationModel
  * request to database about notifications

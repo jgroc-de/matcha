@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use App\Constructor;
-
 class TagModel
 {
     /** @var \PDO */
@@ -15,9 +13,9 @@ class TagModel
     }
 
     /**
-     * @return bool|array
+     * @return array|bool
      */
-    public function getTag($tag)
+    public function getTag(string $tag)
     {
         $req = $this->db->prepare('SELECT * FROM hashtags WHERE tag = ?');
         $req->execute([$tag]);
@@ -26,9 +24,9 @@ class TagModel
     }
 
     /**
-     * @return bool|array
+     * @return array|bool
      */
-    public function getUserTag($id, $user)
+    public function getUserTag(int $id, string $user)
     {
         $req = $this->db->prepare('SELECT * FROM usertags WHERE idtag = ? AND iduser = ?');
         $req->execute([$id, $user]);
@@ -37,9 +35,9 @@ class TagModel
     }
 
     /**
-     * @return bool|array
+     * @return array|bool
      */
-    public function getUserTagByName($tag, $user)
+    public function getUserTagByName(string $tag, int $user)
     {
         $req = $this->db->prepare('
             SELECT *
@@ -54,7 +52,7 @@ class TagModel
         return $req->fetch();
     }
 
-    public function getUserTags($userId): array
+    public function getUserTags(int $userId): array
     {
         $req = $this->db->prepare('
             SELECT hashtags.id, tag
@@ -69,7 +67,7 @@ class TagModel
         return $req->fetchAll();
     }
 
-    public function getAllUserTags($userId): array
+    public function getAllUserTags(int $userId): array
     {
         $req = $this->db->prepare('
             SELECt tag
@@ -84,28 +82,28 @@ class TagModel
         return $req->fetchAll();
     }
 
-    public function setTag($tag): bool
+    public function setTag(string $tag): bool
     {
         $req = $this->db->prepare('INSERT INTO hashtags (tag) VALUES (?)');
 
         return $req->execute([$tag]);
     }
 
-    public function setUserTag($idtag): bool
+    public function setUserTag(int $idtag): bool
     {
         $req = $this->db->prepare('INSERT INTO usertags (idtag, iduser) VALUES (?,?)');
 
         return $req->execute([$idtag, $_SESSION['id']]);
     }
 
-    public function delUserTag($idTag, $idUser): bool
+    public function delUserTag(int $idTag, int $idUser): bool
     {
         $req = $this->db->prepare('DELETE FROM usertags WHERE idtag = ? AND iduser = ?');
 
         return $req->execute([$idTag, $idUser]);
     }
 
-    public function delAllUserTag($idUser): bool
+    public function delAllUserTag(int $idUser): bool
     {
         $req = $this->db->prepare('DELETE FROM usertags WHERE iduser = ?');
 

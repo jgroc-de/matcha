@@ -85,6 +85,22 @@ function ggAjaxGet(path, callback, args)
     request.send();
 }
 
+function ggAjax(method, path, callback, args)
+{
+    var request = new XMLHttpRequest();
+
+    request.open(method, path, true);
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200)
+        {
+            if (args[0] === 'response')
+                args[0] = this.responseText;
+            callback(args);
+        }
+    };
+    request.send();
+}
+
 function getColor(kind)
 {
     switch(kind)

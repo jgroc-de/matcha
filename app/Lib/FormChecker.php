@@ -41,14 +41,17 @@ class FormChecker
         }
         if (empty($account = $this->userModel->getUser($post['pseudo']))) {
             $this->flashMessage->addMessage('failure', 'wrong login');
+
             return false;
         }
         if ($account['activ'] == 0) {
             $this->flashMessage->addMessage('failure', 'account need activation');
+
             return false;
         }
         if (!$this->testPassword($account['password'], $post['password'])) {
             $this->flashMessage->addMessage('failure', 'wrong password');
+
             return false;
         }
         $this->userModel->updateLastlog($account['id']);
@@ -131,12 +134,15 @@ class FormChecker
         }
         if (!empty($this->userModel->getUser($post['pseudo'])) && $post['pseudo'] !== $_SESSION['profil']['pseudo']) {
             $this->flashMessage->addMessage('failure', 'pseudo already taken');
+
             return false;
         }
         if (!empty($this->userModel->getUserByEmail($post['email'])) && $post['email'] !== $_SESSION['profil']['email']) {
             $this->flashMessage->addMessage('failure', 'email already taken');
+
             return false;
         }
+
         return true;
     }
 

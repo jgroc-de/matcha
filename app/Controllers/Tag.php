@@ -2,12 +2,25 @@
 
 namespace App\Controllers;
 
+use App\Lib\Validator;
+use App\Model\TagModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class AddTag extends Route
+class Tag
 {
-    public function __invoke(Request $request, Response $response, array $args): Response
+    /** @var TagModel */
+    private $tag;
+    /** @var Validator */
+    private $validator;
+
+    public function __construct(TagModel $tagModel, Validator $validator)
+    {
+        $this->tag = $tagModel;
+        $this->validator = $validator;
+    }
+
+    public function add(Request $request, Response $response, array $args): Response
     {
         $post = $request->getParsedBody();
         $tag = $this->tag;
@@ -22,6 +35,15 @@ class AddTag extends Route
 
                 return $response->write($post['id']);
             }
+        }
+
+        return $response->withStatus(400);
+    }
+
+    public function delete(Request $request, Response $response, array $args): Response
+    {
+        if ($this->tag->delUserTag($args['id'], $_SESSION['id'])) {
+            return $response;
         }
 
         return $response->withStatus(400);

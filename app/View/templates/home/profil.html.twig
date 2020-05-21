@@ -56,10 +56,10 @@
             </div>
             <div class="w3-half w3-padding">
                 <div class="w3-card-4">
-                    {{ subtitle('Interest', home, 'fa fa-plus',  "addTag('/addTag')", 'add tag') }}
+                    {{ subtitle('Interest', home, 'fa fa-plus',  "addTag('/tag')", 'add tag') }}
                     <div id="Interest" class="w3-theme-l4 gg-section w3-padding" id="userTag">
                         {% for tag in tags %}
-                        {{ profilButton(color, tag, "delUserTag('/delUserTag/', #{ tag.id })", home, NULL, 'tag') }}
+                        {{ profilButton(color, tag, "delUserTag('/tag/', #{ tag.id })", home, NULL, 'tag') }}
                         {% endfor %}
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                         <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleSibling(this)">{{ your }}Friend Request</h3><div id="FriendR" class="w3-theme-l4 w3-padding gg-section">
                             {% for req in friendReq %}
                                 {% if req.visible %}
-                                    {{ profilButton(color, req, "delFriendReq('/delFriendReq/', #{ req.id })", home, path_for('profil', req), 'req') }}
+                                    {{ profilButton(color, req, "delFriendReq('/friendReq/', #{ req.id })", home, path_for('profil', req), 'req') }}
                                 {% endif %}
                             {% endfor %}
                         </div>
@@ -82,7 +82,7 @@
                     <div class="w3-card-4">
                         <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">{{ your }}Friends</h3><div id="Friend" class="w3-theme-l4 w3-padding gg-section">
                             {% for friend in friends %}
-                                {{ profilButton(color, friend, "delFriend('/delFriend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}
+                                {{ profilButton(color, friend, "delFriend('/friend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}
                             {% endfor %}
                         </div>
                     </div>

@@ -20,7 +20,7 @@ function addTag(path) {
                 span.textContent = '#' + tag;
                 span.style.height = '40px';
                 button.className = 'w3-button w3-right w3-theme-d1 w3-hover-red w3-col s4 fa fa-remove';
-                button.setAttribute('onclick', 'delUserTag("/delUserTag/", ' + id + ')');
+                button.setAttribute('onclick', 'delUserTag("/tag/", ' + id + ')');
                 button.style.height = '40px';
                 div.id = 'tag' + id;
                 div.className = 'w3-bar w3-theme-d1 w3-round-xxlarge w3-half w3-row';
@@ -59,7 +59,7 @@ function addEvent() {
         var reader = new FileReader();
         
         form.append('file', this.files[0]);
-        xhttp.open('POST', '/addPicture/' + id.charAt(3), true);
+        xhttp.open('POST', '/picture/' + id.charAt(3), true);
         xhttp.setRequestHeader('enctype', 'multipart/form-data');
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200)
@@ -95,7 +95,7 @@ function deletePic(id)
 {
     if (confirm('Delete?'))
     {
-        ggAjaxGet('delPicture/' + id.charAt(3), function (id) {
+        ggAjax('DELETE', 'picture/' + id.charAt(3), function (id) {
             var labelElmt = document.createElement('label');
             var parentNode = document.getElementById(id);
             var inputElemt = document.createElement('input');
@@ -134,18 +134,18 @@ function ggRemoveChild(id)
 function delFriend(path, id)
 {
     if (confirm('Seriously bro?'))
-        ggAjaxGet(path + id, ggRemoveChild, 'friend' + id);
+        ggAjax('DELETE', path + id, ggRemoveChild, 'friend' + id);
 }
 
 function delFriendReq(path, id)
 {
     if (confirm('R U SURE?'))
-        ggAjaxGet(path + id, ggRemoveChild, 'req' + id);
+        ggAjax('DELETE', path + id, ggRemoveChild, 'req' + id);
 }
 
 function delUserTag(path, id)
 {
-    ggAjaxGet(path + id, ggRemoveChild, 'tag' + id);
+    ggAjax('DELETE', path + id, ggRemoveChild, 'tag' + id);
 }
 
 addPicture();

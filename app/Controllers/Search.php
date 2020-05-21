@@ -5,7 +5,7 @@ namespace App\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class Search extends Route
+class Search
 {
     private $kind = ['Rick', 'Morty', 'Beth', 'Summer', 'Jerry'];
     private $list = [];
@@ -17,10 +17,25 @@ class Search extends Route
     private $date = 0;
     private $criteria = false;
 
+    private $container;
+
+    public function __construct(
+        $container
+    ) {
+        $this->container = $container;
+    }
+
+    public function __get($name)
+    {
+        return $this->container->get($name);
+    }
+
     public function __invoke(Request $request, Response $response, array $args)
     {
         if (!$_SESSION['profil']['biography']) {
-            return $response->withRedirect('/completeProfil', 302);
+            $this->flash->addMessage('failure', 'Plz complete your profil before searching for targets');
+
+            return $response->withRedirect('/editProfil', 302);
         }
         $this->date = date('Y');
         $this->listDefault();

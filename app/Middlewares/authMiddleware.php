@@ -2,12 +2,21 @@
 
 namespace App\Middlewares;
 
-use App\Constructor;
+use App\Model\UserModel;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class authMiddleware extends Constructor
+class authMiddleware
 {
+    /** @var UserModel */
+    private $user;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->user = $container->get('user');
+    }
+
     /**
      * middleware that redirect to '/login' if client is not login
      */
