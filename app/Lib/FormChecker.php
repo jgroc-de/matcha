@@ -125,10 +125,25 @@ class FormChecker
 
     public function checkContact(array $post)
     {
-        if ($this->validator->validate($post, ['email', 'text']) == "ok") {
-            $this->mail->contactMe($post['text'], $post['email']);
-            $this->flashMessage->addMessage('success', 'Thank you!');
+        if (($valid = $this->validator->validate($post, ['email', 'text'])) == "ok") {
+            if ($post['g-recaptcha-response']) {
+                $api_url = "https://www.google.com/recaptcha/api/siteverify?secret="
+                . $_ENV['SECRET_CAPTCHA_KEY'] . "&response="
+                . $post['g-recaptcha-response']
+                . "&remoteip=" . $_SERVER['REMOTE_ADDR'] ;
+
+                $decode = json_decode(file_get_contents($api_url), true);
+            }
+
+            if (empty($decode) || $decode['success'] != true)
+                $this->flashMessage->addMessage('failure', 'you\'re a robot, don\'t lie');
+            else {
+                $this->mail->contactMe($post['text'], $post['email']);
+                $this->flashMessage->addMessage('success', 'Thank you!');
+            }
         }
+        else
+            $this->flashMessage->addMessage('failure', $valid.' is incorrect');
     }
 
     public function checkPwd(array $post)
