@@ -8,10 +8,10 @@ namespace App\Lib;
 class MailSender
 {
     const USER = 'webmestre';
-    const EXP = 'lol@example.com';
+    const EXP = 'webmestre@matcha.fr';
     const PASS = 'lol';
     const PORT = ':8080';
-    private $dest = 'lol@example.com';
+    private $dest = 'webmestre@matcha.fr';
     private $subject = '';
     private $message = '';
     private $files = [];
