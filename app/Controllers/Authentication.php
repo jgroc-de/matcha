@@ -128,6 +128,7 @@ class Authentication
             'post' => $post,
             'characters' => Matcha::GENDER,
             'PUB_42_KEY' => $_ENV['PUB_42_KEY'],
+            'PUB_CAPTCHA_KEY' => $_ENV['PUB_CAPTCHA_KEY']
         ], $viewOption);
 
         return $this->view->render(

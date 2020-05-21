@@ -83,9 +83,23 @@ class FormChecker
     public function checkSignup(array $post): array
     {
         $user = $this->userModel;
+
         $keys = ['pseudo', 'password', 'email', 'name', 'surname', 'gender'];
         if ($this->validator->validate($post, $keys)) {
-            if (!empty($user->getUser($post['pseudo']))) {
+            if ($post['g-recaptcha-response']) {
+                $api_url = "https://www.google.com/recaptcha/api/siteverify?secret="
+                . $_ENV['SECRET_CAPTCHA_KEY'] . "&response="
+                . $post['g-recaptcha-response']
+                . "&remoteip=" . $_SERVER['REMOTE_ADDR'] ;
+
+        	    $decode = json_decode(file_get_contents($api_url), true);
+            }
+            else
+                $decode['success'] == false;
+
+            if ($decode['success'] != true)
+                $this->flashMessage->addMessage('failure', 'you\'re a robot, don\'t lie');
+            elseif (!empty($user->getUser($post['pseudo']))) {
                 $this->flashMessage->addMessage('failure', 'pseudo already taken');
             } elseif (!empty($user->getUserByEmail($post['email']))) {
                 $this->flashMessage->addMessage('failure', 'email already taken');
@@ -102,6 +116,9 @@ class FormChecker
                 $this->flashMessage->addMessage('success', 'mail sent! Check yourmail box (including trash, spam, whatever…)');
             }
         }
+        else
+            $this->flashMessage->addMessage('failure', 'Something\'s wrong');
+
 
         return $post;
     }
