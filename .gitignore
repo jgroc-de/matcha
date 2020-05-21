@@ -1,3 +1,4 @@
 vendor
 /ratchet/vendor
-/public/user/img/*.png
+/public/user/img/*.[png|jpg]
+.idea
