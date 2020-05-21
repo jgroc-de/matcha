@@ -65,7 +65,7 @@ class Authentication
         $code = $request->getQueryParam('code');
         if (!empty($code)) {
             try {
-                $test = $this->curl->post(
+                $curlResponse = $this->curl->post(
                     'https://api.intra.42.fr/oauth/token', [
                     'form_params' => [
                             'grant_type' => 'authorization_code',
@@ -76,10 +76,19 @@ class Authentication
                         ],
                     ]
                 );
-                var_dump($test);
+                $json = json_decode($curlResponse->getBody());
+                var_dump($json);
+                $curlRequest = new \GuzzleHttp\Psr7\Request('GET', 'https://api.intra.42.fr/v2/me', [
+                    "Authorization: Bearer " . $json->access_token,
+                ]);
+                $curlResponse = $this->curl->send($curlRequest);
+                $json = json_decode($curlResponse->getBody());
+                var_dump($json);
+                exit();
             } catch (ClientException $error) {
                 print($error->getMessage());
             }
+            exit();
             return $response->withRedirect('/');
         }
 
