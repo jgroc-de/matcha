@@ -24,7 +24,7 @@ $app->get('/seed', setup::class . ':seed')
 $app->get('/contact', Contact::class . ':page')
     ->setName('contact');
 $app->post('/contact', Contact::class . ':mail');
-$app->get('/validation', Settings::class . ':validationDeletion')
+$app->get('/validation', RGPD::class . ':validationDeletion')
     ->setName('validation');
 
 $app->group('', function () {
