@@ -6,57 +6,63 @@
 
 {% block main %}
 <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="width:90vw;max-width:500px">
-{{ form('Log In', 'login', flash, login) }}
-<div class="w3-section">
-    {{ input('text', 'pseudo', {'id': 'pseudo1', 'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}
-</div>
-<div class="w3-section">
-    {{ input('password', 'password', {'id': 'password1'}) }}
-</div>
-<div class="">
-    {{ button('submit') }}
-</div>
+    {{ form('Log In', 'login', flash, login) }}
+        <div class="w3-section">
+            {{ input('text', 'pseudo', {'id': 'pseudo1', 'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}
+        </div>
+        <div class="w3-section">
+            {{ input('password', 'password', {'id': 'password1'}) }}
+        </div>
+        <div class="">
+            {{ button('submit') }}
+        </div>
     </form>
-{{ form('Reset Your Password', 'resetPassword', flash, reset) }}
-<div class="w3-section">
-    {{ input('email', 'email', {'id': 'email1', 'value': post.email }) }}
-</div>
-<div class="">
-    {{ button('submit') }}
-</div>
+    {{ form('Reset Your Password', 'resetPassword', flash, reset) }}
+        <div class="g-recaptcha" data-sitekey="6LcPd_oUAAAAAHyqd9EakWh0ZiLKPZEffPq8uEiP"></div>
+        <div class="w3-section">
+            {{ input('email', 'email', {'id': 'email1', 'value': post.email }) }}
+        </div>
+        <div class="">
+            {{ button('submit') }}
+        </div>
     </form>
-{{ form('Sign Up', 'signup', flash, signup) }}
-<div class="w3-section">
-    {{ input('text', 'pseudo', {'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}
-</div>
-<div class="w3-section">
-    <div id="infopwd" class="w3-panel w3-green">
-        <p>Your password must contain at least:</p>
-        <ul>
-            <li>8 characters</li>
-            <li>1 upper case letter</li>
-            <li>1 lower case letter</li>
-            <li>1 number</li>
-        </ul>
-    </div>
-    {{ input('password','password') }}
-</div>
-<div class="w3-section">
-    {{ input('email', 'email', {'value': post.email }) }}
-</div>
-<div class="w3-section">
-    {{ input('text', 'name', {'value': post.name|default("Ann") }) }}
-</div>
-<div class="w3-section">
-    {{ input('text', 'surname', {'value': post.surname|default("Onymous") }) }}
-</div>
-<div class="w3-section">
-    {{ select({'label': 'you are a', 'name': 'gender', 'array': characters, 'select': post.gender}) }}
-</div>
-<div class="">
-    {{ button('submit') }}
-    {{ button('reset') }}
-</div>
+    {{ form('Sign Up', 'signup', flash, signup) }}
+        <div class="w3-section">
+            {{ input('text', 'pseudo', {'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}
+        </div>
+        <div class="w3-section">
+            <div id="infopwd" class="w3-panel w3-green">
+                <p>Your password must contain at least:</p>
+                <ul>
+                    <li>8 characters</li>
+                    <li>1 upper case letter</li>
+                    <li>1 lower case letter</li>
+                    <li>1 number</li>
+                </ul>
+            </div>
+            {{ input('password','password') }}
+        </div>
+        <div class="w3-section">
+            {{ input('email', 'email', {'value': post.email }) }}
+        </div>
+        <div class="w3-section">
+            {{ input('text', 'name', {'value': post.name|default("Ann") }) }}
+        </div>
+        <div class="w3-section">
+            {{ input('text', 'surname', {'value': post.surname|default("Onymous") }) }}
+        </div>
+        <div class="w3-section">
+            {{ select({'label': 'you are a', 'name': 'gender', 'array': characters, 'select': post.gender}) }}
+        </div>
+        <div class="w3-section g-recaptcha" data-sitekey="6LcPd_oUAAAAAHyqd9EakWh0ZiLKPZEffPq8uEiP"></div>
+        <div class="">
+            {{ button('submit') }}
+            {{ button('reset') }}
+        </div>
     </form>
 </div>
+{% endblock %}
+
+{% block script %}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}

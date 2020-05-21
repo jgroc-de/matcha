@@ -70,7 +70,7 @@ class Settings
         return $this->renderSettings($response, ['editPwd' => true]);
     }
 
-    public function postPassword(Request $request, Response $response, array $args): Response
+    public function updatePassword(Request $request, Response $response, array $args): Response
     {
         $post = $request->getParsedBody();
         $this->form->checkPwd($post);
@@ -83,7 +83,7 @@ class Settings
         return $this->renderSettings($response, ['editProfil' => true]);
     }
 
-    public function postEditProfil(Request $request, Response $response, array $args): Response
+    public function updateProfil(Request $request, Response $response, array $args): Response
     {
         $post = $request->getParsedBody();
         if ($this->form->checkProfil($post) && $this->user->updateUser($post)) {

@@ -28,7 +28,7 @@ class Geolocation
             return $response->withStatus(400);
         }
         if (!$this->user->updateGeolocation($post['lat'], $post['lng'], $_SESSION['id'])) {
-            return $response->withStatus(500);
+            return $response->withStatus(404);
         }
         $_SESSION['profil']['lattitude'] = floatval($post['lat']);
         $_SESSION['profil']['longitude'] = floatval($post['lng']);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Lib\Common;
 use App\Lib\CustomError;
 use App\Lib\Debug;
 use App\Lib\FlashMessage;

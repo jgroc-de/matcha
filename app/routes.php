@@ -44,7 +44,7 @@ $app->group('', function () use ($app) {
         ->setName('home');
     $this->get('/profil/{id:[0-9]+}', Profil::class . ':profil')
         ->setName('profil');
-    $this->post('/updateGeolocation', Geolocation::class);
+    $this->put('/updateGeolocation', Geolocation::class);
 
     $this->get('/search', Search::class)
         ->setName('search');
@@ -55,10 +55,10 @@ $app->group('', function () use ($app) {
 
     $this->get('/editProfil', Settings::class . ':editProfil')
         ->setName('editProfil');
-    $this->post('/editProfil', Settings::class . ':postEditProfil');
+    $this->post('/editProfil', Settings::class . ':updateProfil');
     $this->get('/editPassword', Settings::class . ':editPassword')
         ->setName('editPassword');
-    $this->post('/editPassword', Settings::class . ':postEditPassword');
+    $this->post('/editPassword', Settings::class . ':updatePassword');
     $this->get('/rgpd', Settings::class . ':rgpd')
         ->setName('RGPD');
 

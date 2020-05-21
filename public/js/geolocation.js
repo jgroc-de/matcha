@@ -37,7 +37,7 @@ function majLocation () {
     var request = new XMLHttpRequest();
     var params = 'lat=' + user.lat + '&lng=' + user.lng;
 
-    request.open('POST', '/updateGeolocation', true);
+    request.open('PUT', '/updateGeolocation', true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200)

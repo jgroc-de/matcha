@@ -32,6 +32,8 @@
         <button type="button" class="w3-button w3-red w3-right" onclick="deleteAccount()">Delete account</button>
     </div>
     </form>
+
+
     {{ form('Edit your profil', 'editProfil', flash, editProfil) }}
     <div class="w3-section">
         {{ input('text', 'pseudo', {'value': me.pseudo}) }}

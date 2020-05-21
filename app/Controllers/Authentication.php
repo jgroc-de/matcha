@@ -94,7 +94,6 @@ class Authentication
         $data = array_merge([
             'flash' => $this->flashMessage->getMessages(),
             'post' => $post,
-            'login' => true,
             'characters' => Matcha::GENDER,
         ], $viewOption);
 

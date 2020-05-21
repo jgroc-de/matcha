@@ -35,7 +35,7 @@ class Picture
             }
         }
 
-        return $response->withStatus(500);
+        return $response->withStatus(404);
     }
 
     public function delete(Request $request, Response $response, array $args): Response
