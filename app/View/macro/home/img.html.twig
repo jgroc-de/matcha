@@ -46,7 +46,7 @@
 {% for key, url in profil %}
     {% if key starts with 'img' and url %}
     {% set i = i + 1 %}
-    <img class="mySlides w3-image w3-display-middle" src="../{{ url }}" title='{{ profil.pseudo }}_{{ key }}' style="max-height:250px" onclick="displayModal('../{{ url }}')">
+    <img class="mySlides w3-image w3-display-middle" alt="{{ url }}" src="../{{ url }}" title='{{ profil.pseudo }}_{{ key }}' style="max-height:250px" onclick="displayModal('../{{ url }}')">
     {% endif %}
 {% endfor %}
 {% if i > 1 %}
