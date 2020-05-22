@@ -2,12 +2,16 @@
 
 namespace App\Controllers;
 
+use App\Lib\_42API;
+use App\Lib\APIinterface;
 use App\Lib\FlashMessage;
 use App\Lib\FormChecker;
+use App\Lib\googleAPI;
 use App\Matcha;
 use App\Model\UserModel;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
@@ -16,6 +20,8 @@ class Authentication
 {
     const template = 'templates/logForm/login.html.twig';
 
+    /** @var ContainerInterface */
+    private $container;
     /** @var Client */
     private $curl;
     /** @var FormChecker */
@@ -28,12 +34,14 @@ class Authentication
     private $view;
 
     public function __construct(
+        ContainerInterface $container,
         FlashMessage $flashMessage,
         FormChecker $formChecker,
         Client $curl,
         UserModel $userModel,
         Twig $view
     ) {
+        $this->container = $container;
         $this->flashMessage = $flashMessage;
         $this->form = $formChecker;
         $this->curl = $curl;
@@ -62,37 +70,23 @@ class Authentication
 
     public function apiLogin(Request $request, Response $response, array $args): Response
     {
-        $code = $request->getQueryParam('code');
-        if (!empty($code)) {
-            try {
-                $curlResponse = $this->curl->post(
-                    'https://api.intra.42.fr/oauth/token', [
-                    'form_params' => [
-                            'grant_type' => 'authorization_code',
-                            'client_id' => $_ENV['PUB_42_KEY'],
-                            'client_secret' => $_ENV['SECRET_42_KEY'],
-                            'code' => $code,
-                            'redirect_uri' => 'http://localhost:8080/apiLogin',
-                        ],
-                    ]
-                );
-                $json = json_decode($curlResponse->getBody());
-                var_dump($json);
-                $curlRequest = new \GuzzleHttp\Psr7\Request('GET', 'https://api.intra.42.fr/v2/me', [
-                    "Authorization: Bearer " . $json->access_token,
-                ]);
-                $curlResponse = $this->curl->send($curlRequest);
-                $json = json_decode($curlResponse->getBody());
-                var_dump($json);
-                exit();
-            } catch (ClientException $error) {
-                print($error->getMessage());
-            }
-            exit();
+        switch ($args['name']) {
+            case '42':
+                $client = new _42API($this->container);
+                $token = $request->getQueryParam('code');
+                break;
+            case 'google':
+                $client = new googleAPI($this->container);
+                $token = $request->getParsedBody()['idToken'];
+                break;
+        }
+        if (!$token) {
             return $response->withRedirect('/');
         }
+        /** @var APIinterface $client */
+        $url = $client->login($token);
 
-        return $this->login($request, $response, $code);
+        return $response->withRedirect($url);
     }
 
     public function logout(Request $request, Response $response, array $args): Response
@@ -137,7 +131,7 @@ class Authentication
             'post' => $post,
             'characters' => Matcha::GENDER,
             'PUB_42_KEY' => $_ENV['PUB_42_KEY'],
-            'PUB_CAPTCHA_KEY' => $_ENV['PUB_CAPTCHA_KEY']
+            'PUB_CAPTCHA_KEY' => $_ENV['PUB_CAPTCHA_KEY'],
         ], $viewOption);
 
         return $this->view->render(

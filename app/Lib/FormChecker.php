@@ -39,7 +39,8 @@ class FormChecker
         if ($this->validator->validate($post, ['pseudo', 'password']) != "ok") {
             return false;
         }
-        if (empty($account = $this->userModel->getUser($post['pseudo']))) {
+        $account = $this->userModel->getUser($post['pseudo']);
+        if (empty($account)) {
             $this->flashMessage->addMessage('failure', 'wrong login');
 
             return false;
@@ -54,14 +55,38 @@ class FormChecker
 
             return false;
         }
-        $this->userModel->updateLastlog($account['id']);
-        $_SESSION['id'] = $account['id'];
-        $_SESSION['profil'] = $account;
+        $this->setSession($account);
+
+        return true;
+    }
+
+    public function setSession(array $user)
+    {
+        $this->userModel->updateLastlog($user['id']);
+        $_SESSION['id'] = $user['id'];
+        $_SESSION['profil'] = $user;
         $_SESSION['profil']['lattitude'] = floatval($_SESSION['profil']['lattitude']);
         $_SESSION['profil']['longitude'] = floatval($_SESSION['profil']['longitude']);
         $this->userModel->updatePublicToken();
+    }
 
-        return true;
+    public function getImgs(string $gender): string
+    {
+        $files = scandir('img');
+        $imgs = [];
+        $gender = strtolower($gender);
+        foreach ($files as $file) {
+            if (strpos($file, $gender) !== false) {
+                $imgs[] = $file;
+            }
+        }
+
+        return 'img/' . $imgs[rand(0, 4)];
+    }
+
+    public function genPublicToken(string $pseudo): string
+    {
+        return time() . $pseudo . bin2hex(random_bytes(4));
     }
 
     public function checkResetEmail(array $post)
@@ -95,7 +120,7 @@ class FormChecker
         	    $decode = json_decode(file_get_contents($api_url), true);
             }
             else
-                $decode['success'] == false;
+                $decode = ['success' => false];
 
             if ($decode['success'] != true)
                 $this->flashMessage->addMessage('failure', 'you\'re a robot, don\'t lie');
@@ -109,6 +134,8 @@ class FormChecker
                 $post['lat'] = 0;
                 $post['lng'] = 0;
                 $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
+                $post['publicToken'] = $this->genPublicToken($post['pseudo']);
+                $post['img'] = $this->getImgs($post['gender']);
                 $user->setUser($post);
                 $post = $user->getUser($post['pseudo']);
                 $this->ft_geoIP->setLatLng($post);

@@ -50,7 +50,18 @@ class UserModel
      */
     public function getUserByEmail(string $email)
     {
-        $req = $this->db->prepare('select * from user where email = ?');
+        $req = $this->db->prepare('select * from user where email = ? and oauth = 0');
+        $req->execute([$email]);
+
+        return $req->fetch();
+    }
+
+    /**
+     * @return array|bool
+     */
+    public function getAuthUserByEmail(string $email)
+    {
+        $req = $this->db->prepare('select * from user where email = ? and oauth = 1');
         $req->execute([$email]);
 
         return $req->fetch();
@@ -161,13 +172,6 @@ class UserModel
 
     public function setUser(array $post)
     {
-        $files = scandir('img');
-        $img = [];
-        foreach ($files as $file) {
-            if (strpos($file, strtolower($post['gender'])) !== false) {
-                $img[] = $file;
-            }
-        }
         $req = $this->db->prepare('
                 INSERT INTO user (pseudo, password, name, surname, email, gender, token, publicToken, img1, lattitude, longitude, activ)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
@@ -179,12 +183,21 @@ class UserModel
             $post['email'],
             $post['gender'],
             $post['token'],
-            time() . $post['pseudo'] . bin2hex(random_bytes(4)),
-            'img/' . $img[rand(0, 4)],
+            $post['publicToken'],
+            $post['img'],
             $post['lat'],
             $post['lng'],
             $post['activ'],
         ]);
+    }
+
+    public function setOauth(int $id, bool $isOauth)
+    {
+        $req = $this->db->prepare('
+            UPDATE user
+            SET oauth = ?
+            where id = ?');
+        $req->execute([$isOauth, $id]);
     }
 
     public function updateFakeUser(array $post)

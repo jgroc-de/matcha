@@ -3,7 +3,7 @@ function initMap() {
             document.getElementById('map'),
             {center: myPos, zoom: 11}
     );
-    var marker, markers = [];
+    var marker = [];
     for (x in usersPos)
     {
         marker = new google.maps.Marker({
@@ -13,7 +13,6 @@ function initMap() {
             title: 'click me!'
         });
         attachInfo(marker, usersPos[x]);
-        markers.push(marker);
     }
 }
 

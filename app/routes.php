@@ -30,7 +30,8 @@ $app->get('/validation', RGPD::class . ':validationDeletion')
 $app->group('', function () {
     $this->get('/login', Authentication::class . ':login')
         ->setName('login');
-    $this->get('/apiLogin', Authentication::class . ':apiLogin');
+    $this->map(['GET', 'POST'], '/apiLogin/{name:42|google}', Authentication::class . ':apiLogin')
+        ->setName('apiLogin');
     $this->post('/login', Authentication::class . ':postLogin');
     $this->get('/signup', Authentication::class . ':signup')
         ->setName('signup');

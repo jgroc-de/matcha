@@ -18,6 +18,7 @@ use Psr\Container\ContainerInterface;
 // ok
 $container['App\Controllers\Authentication'] = function ($container) {
     return new Authentication(
+        $container,
         $container->get('flash'),
         $container->get('form'),
         $container->get('curl'),
@@ -120,10 +121,11 @@ $container['App\Controllers\Settings'] = function ($container) {
 
 $container['App\Controllers\Setup'] = function ($container) {
     return new Setup(
+        $container->get('form'),
         $container->get('tag'),
         $container->get('user'),
-        $container->get('settings')['db'],
-        $container->get('db')
+        $container->get('db'),
+        $container->get('settings')['db']
     );
 };
 

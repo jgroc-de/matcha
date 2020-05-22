@@ -3,3 +3,4 @@ vendor
 /public/user/img/*.[png|jpg]
 .idea
 .env
+.ggApi.json

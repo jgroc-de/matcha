@@ -7,6 +7,9 @@ SET time_zone = "+00:00";
 -- Databatse: `matcha`
 --
 
+DROP DATABASE IF EXISTS `matcha`;
+CREATE DATABASE matcha;
+USE matcha;
 -- --------------------------------------------------------
 
 --
@@ -19,9 +22,10 @@ CREATE TABLE `user` (
     `id` INT(11) AUTO_INCREMENT,
     `pseudo` VARCHAR(40),
     `password` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255) NOT NULL DEFAULT 'jgroc2s@free.fr',
-    `token` VARCHAR(255) NOT NULL DEFAULT 'token',
+    `email` VARCHAR(255) NOT NULL DEFAULT 'lol@matcha.fr',
+    `token` TEXT NOT NULL,
     `publicToken` VARCHAR(255) NOT NULL DEFAULT 'private',
+    `oauth` BOOL NOT NULL DEFAULT false,
     `activ` BOOL NOT NULL DEFAULT true,
     `name` VARCHAR(255) NOT NULL DEFAULT 'John',
     `surname` VARCHAR(255) NOT NULL DEFAULT 'Doe',

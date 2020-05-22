@@ -35,7 +35,7 @@
         <a href={{ path_for('home') }} class="{{ class }}">Home</a>
         <a href="{{ path_for('search') }}" class="{{ class }}">Search</a>
         <a href="{{ path_for('tchat') }}" class="{{ class }}">Chat</a>
-        <a href="{{ path_for('logout') }}" class="{{ classR }}" title="logout" alt="logout">
+        <a href="#" class="{{ classR }}" title="logout" alt="logout" onclick="revokeAllScopes('{{ path_for('logout') }}')">
             <i class="fa fa-power-off" alt="logout" title="logout"></i>
         </a>
         <a href="{{ path_for('editProfil') }}" class="{{ classR }}" title="edit profil" alt="edit">
@@ -45,6 +45,7 @@
             <i class="fa fa-bell" alt="like" title="new likes" onclick="toggleById('notification');resetBadge()"></i>
                 <span id="badge" class="w3-badge w3-display-topright w3-green w3-tiny w3-hide"></span>
         </a>
+        <div class="g-signin2" hidden></div>
         <div class="w3-right w3-theme-l5 w3-border w3-round gg-pop" title="popularity: {{ me.popularity }}/100">
             <div class="w3-round w3-green w3-border" style="width:{{ me.popularity }}%;height:16px"></div>
         </div>

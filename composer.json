@@ -21,7 +21,8 @@
       "ext-zmq": "*",
         "slim/csrf": "^1.0",
         "symfony/dotenv": "^5.0",
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "google/apiclient": "^2.4"
     },
     "autoload": {
         "psr-4": {

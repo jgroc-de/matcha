@@ -45,7 +45,7 @@
                                 name: {{ profil.name}} {{profil.surname}}<br>
                                 email: {{ profil.email }}<br>
                             {% endif %}
-                            {% if home %}you are{% else %}it's{% endif %} a {{ profil.gender }} aged of {{ 2018 - profil.birthdate }} yo and {{ profil.sexuality }}.<br>
+                            {% if home %}you are{% else %}it's{% endif %} a {{ profil.gender }} aged of {{ "now"|date("Y") - profil.birthdate }} yo and {{ profil.sexuality }}.<br>
                                 popularity : <div class="w3-theme-l5 w3-border w3-round w3-margin-right" style="width:100px;" title="popularity: {{ profil.popularity }}/100">
                                     <div class="w3-round w3-green w3-border" style="width:{{ profil.popularity }}%;height:16px"></div>
                                 </div>

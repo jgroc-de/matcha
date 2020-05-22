@@ -16,8 +16,9 @@
         <div class="">
             {{ button('submit') }}
             <a class="w3-button w3-right w3-ripple w3-theme-l2 w3-hover-green w3-margin-left w3-margin-bottom"
-                   href="https://api.intra.42.fr/oauth/authorize?client_id={{ PUB_42_KEY }}&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2FapiLogin&response_type=code"
+                   href="https://api.intra.42.fr/oauth/authorize?client_id={{ PUB_42_KEY }}&redirect_uri={{ BASE_URL }}{{ path_for('apiLogin', {'name': '42'}) }}&response_type=code"
             >login with 42</a>
+            <div class="w3-right g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
         </div>
     </form>
     {{ form('Reset Your Password', 'resetPassword', flash, reset) }}
@@ -67,4 +68,17 @@
 
 {% block script %}
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+		function onSignIn(googleUser) {
+			var id_token = googleUser.getAuthResponse().id_token
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '{{ path_for('apiLogin', {'name': 'google'}) }}')
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+			xhr.onload = function() {
+				console.log(xhr.responseText)
+				//window.location.replace(xhr.responseText);
+			}
+			xhr.send('idtoken=' + id_token)
+		}
+    </script>
 {% endblock %}

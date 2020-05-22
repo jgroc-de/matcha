@@ -35,7 +35,7 @@ class MailSender
         #$mail->SMTPSecure = 'tls';
         #$mail->SMTPAuth = true;
         $mail->Username = self::EXP;
-        $mail->Password = self::PASS;
+        #$mail->Password = self::PASS;
         $mail->CharSet = 'UTF-8';
         if (!empty($this->files)) {
             foreach ($this->files as $file) {

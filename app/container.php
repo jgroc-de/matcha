@@ -25,6 +25,8 @@ $container['view'] = function($container): Twig {
         ),
         '/'
     );
+    $view->getEnvironment()->addGlobal('PUB_GG_KEY', $_ENV['PUB_GG_KEY']);
+    $view->getEnvironment()->addGlobal('BASE_URL', $container['settings']['siteUrl']);
     $view->addExtension(new TwigExtension($container->get('router'), $basePath));
 
     return $view;

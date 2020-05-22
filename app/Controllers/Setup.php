@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Lib\FormChecker;
 use App\Matcha;
 use App\Model\TagModel;
 use App\Model\UserModel;
@@ -11,6 +12,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Setup
 {
+    /** @var FormChecker */
+    private $form;
     /** @var TagModel */
     private $tag;
     /** @var UserModel */
@@ -20,28 +23,33 @@ class Setup
     /** @var \PDO */
     private $db;
 
-    public function __construct(TagModel $tagModel, UserModel $userModel, \PDO $db, array $dbSettings)
-    {
+    public function __construct(
+        FormChecker $form,
+        TagModel $tagModel,
+        UserModel $userModel,
+        \PDO $db,
+        array $dbSettings
+    ) {
         $this->tag = $tagModel;
         $this->user = $userModel;
         $this->settings = $dbSettings;
         $this->db = $db;
+        $this->form = $form;
     }
 
-    public function initDB(Request $request, Response $response, array $args)
+    public function initDB(Request $request, Response $response, array $args): Response
     {
         $db = $this->settings;
         $pdo = new \PDO('mysql:host=' . $db['host'], $db['user'], $db['pass']);
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
-        $pdo->exec('DROP DATABASE IF EXISTS ' . $db['dbname']);
-        $pdo->exec('CREATE DATABASE ' . $db['dbname']);
-        $pdo->exec('USE ' . $db['dbname']);
         $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
         $this->db->exec($file);
+
+        return $response->withRedirect('/');
     }
 
-    public function seed(Request $request, Response $response, array $args)
+    public function seed(Request $request, Response $response, array $args): Response
     {
         $count = 500;
         $faker = Factory::create();
@@ -49,9 +57,10 @@ class Setup
         for ($i = 0; $i < $count; ++$i) {
             $name = $faker->firstName;
             $gender = Matcha::GENDER[rand(0, 4)];
+            $pseudo = $gender . $name;
             $profil = [
                 'gender' => $gender,
-                'pseudo' => $gender . $name,
+                'pseudo' => $pseudo,
                 'email' => $faker->email(),
                 'name' => $name,
                 'surname' => $faker->lastName,
@@ -62,10 +71,12 @@ class Setup
                 'activ' => 1,
                 'token' => 'a',
                 'bot' => 'true',
-                'lat' => rand(485500, 490500) / 10000,
-                'lng' => rand(21000, 26000) / 10000,
+                'lat' => 0,
+                'lng' => 0,
                 'popularity' => rand(0, 100),
                 'lastlog' => rand(1533224411, time()),
+                'publicToken' => $this->form->genPublicToken($pseudo),
+                'img' => $this->form->getImgs($gender),
             ];
             $_SESSION['pseudo'] = $profil['pseudo'];
             $this->user->setUser($profil);
@@ -82,5 +93,7 @@ class Setup
             }
             unset($_SESSION['id']);
         }
+
+        return $response->withRedirect('/');
     }
 }
