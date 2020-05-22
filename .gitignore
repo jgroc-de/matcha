@@ -4,3 +4,4 @@ vendor
 .idea
 .env
 .ggApi.json
+.php_cs.cache
