@@ -7,19 +7,34 @@ namespace App\Lib;
  */
 class Validator
 {
+    /** @var array */
+    private $post;
+    /** @var FlashMessage */
+    private $flashMessage;
+
+    public function __construct(FlashMessage $flashMessage)
+    {
+        $this->flashMessage = $flashMessage;
+    }
+
     public function validate(array $array, array $keys)
     {
-        if ($this->ft_isset($array, $keys)) {
-            foreach ($keys as $key) {
-                if (is_callable([$this, $key]) && !$this->{$key}($array[$key])) {
-                    return $key;
+        if (!$this->ft_isset($array, $keys)) {
+            return false;
+        }
+        $this->post = $array;
+        foreach ($keys as $key) {
+            $function = str_replace('-', '_', $key);
+            if (is_callable([$this, $function]) && !$this->{$function}($array[$key])) {
+                if (empty($this->flashMessage->getMessages())) {
+                    $this->flashMessage->addMessage('failure', $key . ' is incorrect');
                 }
-            }
 
-            return 'ok';
+                return false;
+            }
         }
 
-        return '';
+        return true;
     }
 
     private function ft_isset(array $array, array $keys): bool
@@ -51,6 +66,16 @@ class Validator
     public function password1(string $test): bool
     {
         return $this->password($test);
+    }
+
+    public function password_confirmation(string $confirmation): bool
+    {
+        if ($this->post['password'] !== $confirmation) {
+            $this->flashMessage->addMessage('failure', 'Confirm password doesn\'t match');
+            return false;
+        }
+
+        return true;
     }
 
     public function email(string $test): bool
@@ -114,5 +139,22 @@ class Validator
     public function lng(float $test): bool
     {
         return $test <= 180 && $test >= -180;
+    }
+
+    public function g_recaptcha_response(string $token): bool
+    {
+        $api_url = 'https://www.google.com/recaptcha/api/siteverify?secret='
+            . $_ENV['SECRET_CAPTCHA_KEY'] . '&response='
+            . $token
+            . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
+
+        $decode = json_decode(file_get_contents($api_url), true);
+
+        if (empty($decode) || $decode['success'] != true) {
+            $this->flashMessage->addMessage('failure', 'you\'re a robot, don\'t lie');
+            return false;
+        }
+
+        return true;
     }
 }

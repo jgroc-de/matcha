@@ -93,15 +93,12 @@ class FormChecker
     {
         if ($this->validator->validate($post, ['email']) == 'ok') {
             $account = $this->userModel->getUserByEmail($post['email']);
-            if (!empty($account)) {
-                if ($this->mail->sendResetMail($account)) {
-                    $this->flashMessage->addMessage('success', 'Check your mail!');
-                } else {
-                    $this->flashMessage->addMessage('failure', 'Mail not sent');
-                }
-            } else {
-                $this->flashMessage->addMessage('failure', 'unknown mail address…');
+            if ($account) {
+                $this->mail->sendResetMail($account);
             }
+            $this->flashMessage->addMessage('success', 'Check your mail!');
+        } else {
+            $this->flashMessage->addMessage('failure', 'Bad mail format…');
         }
     }
 
@@ -109,28 +106,15 @@ class FormChecker
     {
         $user = $this->userModel;
 
-        $keys = ['pseudo', 'password', 'email', 'name', 'surname', 'gender'];
-        if (($valid = $this->validator->validate($post, $keys)) == 'ok') {
-            if ($post['g-recaptcha-response']) {
-                $api_url = 'https://www.google.com/recaptcha/api/siteverify?secret='
-                . $_ENV['SECRET_CAPTCHA_KEY'] . '&response='
-                . $post['g-recaptcha-response']
-                . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
-
-                $decode = json_decode(file_get_contents($api_url), true);
-            }
-
-            if (empty($decode) || $decode['success'] != true) {
-                $this->flashMessage->addMessage('failure', 'you\'re a robot, don\'t lie');
-            }
-            if ($post['password'] !== $post['password_confirmation']) {
-                $this->flashMessage->addMessage('failure', 'Confirm password doesn\'t match');
-            } elseif (!empty($user->getUser($post['pseudo']))) {
+        $keys = ['pseudo', 'password', 'password_confirmation', 'email', 'name', 'surname', 'gender', 'g-recaptcha-response'];
+        $isValid = $this->validator->validate($post, $keys);
+        if ($isValid) {
+             if (!empty($user->getUser($post['pseudo']))) {
                 $this->flashMessage->addMessage('failure', 'pseudo already taken');
             } elseif (!empty($user->getUserByEmail($post['email']))) {
                 $this->flashMessage->addMessage('failure', 'email already taken');
             } else {
-                $post['activ'] = 1;
+                $post['activ'] = 0;
                 $post['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
                 $post['lat'] = 0;
                 $post['lng'] = 0;
@@ -143,8 +127,6 @@ class FormChecker
                 $this->mail->sendValidationMail($post);
                 $this->flashMessage->addMessage('success', 'mail sent! Check yourmail box (including trash, spam, whatever…)');
             }
-        } else {
-            $this->flashMessage->addMessage('failure', $valid . ' is incorrect');
         }
 
         return $post;
@@ -152,25 +134,10 @@ class FormChecker
 
     public function checkContact(array $post)
     {
-        if (($valid = $this->validator->validate($post, ['email', 'text'])) == 'ok') {
-            if ($post['g-recaptcha-response']) {
-                $api_url = 'https://www.google.com/recaptcha/api/siteverify?secret='
-                . $_ENV['SECRET_CAPTCHA_KEY'] . '&response='
-                . $post['g-recaptcha-response']
-                . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
-
-                $decode = json_decode(file_get_contents($api_url), true);
-            }
-
-            if (empty($decode) || $decode['success'] != true) {
-                $this->flashMessage->addMessage('failure', 'you\'re a robot, don\'t lie');
-            } else {
-                $this->mail->contactMe($post['text'], $post['email']);
-                $this->flashMessage->addMessage('success', 'Thank you!');
-            }
-        } else {
-            $this->flashMessage->addMessage('failure', $valid . ' is incorrect');
+        if ($valid = $this->validator->validate($post, ['email', 'text', 'g-recaptcha-response'])) {
+            $this->mail->contactMe($post['text'], $post['email']);
         }
+        $this->flashMessage->addMessage('success', 'Thank you!');
     }
 
     public function checkPwd(array $post)

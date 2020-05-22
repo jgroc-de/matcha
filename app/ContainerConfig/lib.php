@@ -22,8 +22,8 @@ $container['form'] = function ($container) {
     );
 };
 
-$container['validator'] = function () {
-    return new Validator();
+$container['validator'] = function ($container) {
+    return new Validator($container->get('flash'));
 };
 
 $container['common'] = function ($container) {
