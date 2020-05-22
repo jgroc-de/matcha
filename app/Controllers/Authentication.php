@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Lib\_42API;
-use App\Lib\APIinterface;
 use App\Lib\FlashMessage;
 use App\Lib\FormChecker;
 use App\Lib\googleAPI;
@@ -74,9 +73,10 @@ class Authentication
                 $client = new _42API($this->container);
                 $token = $request->getQueryParam('code');
                 if (!$token) {
-                    return $response->withRedirect("/");
+                    return $response->withRedirect('/');
                 }
                 $url = $client->loginToApi($token);
+
                 return $response->withRedirect($url);
             case 'google':
                 $client = new googleAPI($this->container);

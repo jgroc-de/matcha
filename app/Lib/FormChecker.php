@@ -109,10 +109,12 @@ class FormChecker
         }
         if (!empty($user->getUser($post['pseudo']))) {
             $this->flashMessage->addMessage('failure', 'pseudo already taken');
+
             return $post;
         }
         if (!empty($user->getUserByEmail($post['email']))) {
             $this->flashMessage->addMessage('failure', 'email already taken');
+
             return $post;
         }
         $post['activ'] = 0;
