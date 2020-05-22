@@ -123,7 +123,7 @@ class FormChecker
             if (empty($decode) || $decode['success'] != true) {
                 $this->flashMessage->addMessage('failure', 'you\'re a robot, don\'t lie');
             }
-            if ($post['password'] != $post['password confirmation']) {
+            if ($post['password'] !== $post['password_confirmation']) {
                 $this->flashMessage->addMessage('failure', 'Confirm password doesn\'t match');
             } elseif (!empty($user->getUser($post['pseudo']))) {
                 $this->flashMessage->addMessage('failure', 'pseudo already taken');

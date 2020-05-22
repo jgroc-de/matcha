@@ -78,8 +78,7 @@ class Authentication
                 }
                 /** @var APIinterface $client */
                 $url = $client->login($token);
-                $response->withRedirect($url);
-                break;
+                return $response->withRedirect($url);
             case 'google':
                 $client = new googleAPI($this->container);
                 $token = $request->getParsedBody()['idToken'];
