@@ -22,7 +22,7 @@ abstract class APIinterface
         $this->ft_geoIP = $container->get('ft_geoIP');
     }
 
-    abstract public function login($token): string;
+    abstract public function loginToApi($token): string;
 
     protected function loginOrRegisterUser($payload, $id_token): string
     {

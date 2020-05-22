@@ -20,7 +20,7 @@ class _42API extends APIinterface
         $this->client = $container->get('curl');
     }
 
-    public function login($token): string
+    public function loginToApi($token): string
     {
         try {
             $curlResponse = $this->client->post(

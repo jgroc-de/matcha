@@ -15,7 +15,7 @@
         </div>
         <div class="">
             {{ button('submit', 'login') }}
-            <a class="w3-button w3-right w3-ripple w3-theme-l2 w3-hover-green w3-margin-left w3-margin-bottom"
+            <a class="w3-button w3-right w3-ripple w3-black w3-hover-green w3-margin-left w3-margin-bottom"
                    href="https://api.intra.42.fr/oauth/authorize?client_id={{ PUB_42_KEY }}&redirect_uri={{ BASE_URL }}{{ path_for('apiLogin', {'name': '42'}) }}&response_type=code"
             >
                 <img src="https://meta.intra.42.fr/assets/42_logo-7dfc9110a5319a308863b96bda33cea995046d1731cebb735e41b16255106c12.svg">

@@ -76,17 +76,16 @@ class Authentication
                 if (!$token) {
                     return $response->withRedirect("/");
                 }
-                /** @var APIinterface $client */
-                $url = $client->login($token);
+                $url = $client->loginToApi($token);
                 return $response->withRedirect($url);
             case 'google':
                 $client = new googleAPI($this->container);
-                $token = $request->getParsedBody()['idToken'];
+                $body = $request->getParsedBody();
+                $token = $body['idtoken'];
                 if (!$token) {
                     return $response->withStatus(404);
                 }
-                /** @var APIinterface $client */
-                $url = $client->login($token);
+                $url = $client->loginToApi($token);
                 $response->write($url);
         }
 

@@ -16,7 +16,7 @@ class googleAPI extends APIinterface
         $this->client->setAuthConfig(__DIR__ . '/../../ggApi.json');
     }
 
-    public function login($token): string
+    public function loginToApi($token): string
     {
         $payload = $this->client->verifyIdToken($token);
         if (empty($payload)) {
