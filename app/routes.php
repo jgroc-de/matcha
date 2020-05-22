@@ -19,7 +19,7 @@ use App\Middlewares\noAuthMiddleware;
 /** @var $app Slim\App */
 $app->get('/setup', Setup::class . ':initDB')
     ->setName('setup');
-$app->get('/seed', setup::class . ':seed')
+$app->get('/seed', Setup::class . ':seed')
     ->setName('seed');
 $app->get('/contact', Contact::class . ':page')
     ->setName('contact');

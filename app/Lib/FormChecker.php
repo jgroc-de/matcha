@@ -41,7 +41,7 @@ class FormChecker
         }
         $account = $this->userModel->getUser($post['pseudo']);
         if (empty($account)) {
-            $this->flashMessage->addMessage('failure', 'wrong login');
+            $this->flashMessage->addMessage('failure', 'wrong login or password');
 
             return false;
         }
@@ -51,7 +51,7 @@ class FormChecker
             return false;
         }
         if (!$this->testPassword($account['password'], $post['password'])) {
-            $this->flashMessage->addMessage('failure', 'wrong password');
+            $this->flashMessage->addMessage('failure', 'wrong login or password');
 
             return false;
         }
