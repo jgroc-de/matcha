@@ -4,6 +4,9 @@ namespace App\Lib;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 
 class _42API extends APIinterface
@@ -40,7 +43,9 @@ class _42API extends APIinterface
             $json = json_decode($curlResponse->getBody());
         } catch (ClientException $error) {
             //print($error->getMessage());
-            return '';
+            return '/';
+        } catch (GuzzleException $error) {
+            return '/';
         }
         $payload = [
             'email' => $json->email,
