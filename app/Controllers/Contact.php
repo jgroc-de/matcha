@@ -36,7 +36,7 @@ class Contact
         $data = array_merge([
             'user' => $user,
             'flash' => $this->flash->getMessages(),
-            'PUB_CAPTCHA_KEY' => $_ENV['PUB_CAPTCHA_KEY']
+            'PUB_CAPTCHA_KEY' => $_ENV['PUB_CAPTCHA_KEY'],
         ]);
 
         return $this->view->render(

@@ -36,7 +36,7 @@ class FormChecker
 
     public function checkLogin(array $post): bool
     {
-        if ($this->validator->validate($post, ['pseudo', 'password']) != "ok") {
+        if ($this->validator->validate($post, ['pseudo', 'password']) != 'ok') {
             return false;
         }
         $account = $this->userModel->getUser($post['pseudo']);
@@ -91,7 +91,7 @@ class FormChecker
 
     public function checkResetEmail(array $post)
     {
-        if ($this->validator->validate($post, ['email']) == "ok") {
+        if ($this->validator->validate($post, ['email']) == 'ok') {
             $account = $this->userModel->getUserByEmail($post['email']);
             if (!empty($account)) {
                 if ($this->mail->sendResetMail($account)) {
@@ -110,21 +110,22 @@ class FormChecker
         $user = $this->userModel;
 
         $keys = ['pseudo', 'password', 'email', 'name', 'surname', 'gender'];
-        if (($valid = $this->validator->validate($post, $keys)) == "ok") {
+        if (($valid = $this->validator->validate($post, $keys)) == 'ok') {
             if ($post['g-recaptcha-response']) {
-                $api_url = "https://www.google.com/recaptcha/api/siteverify?secret="
-                . $_ENV['SECRET_CAPTCHA_KEY'] . "&response="
+                $api_url = 'https://www.google.com/recaptcha/api/siteverify?secret='
+                . $_ENV['SECRET_CAPTCHA_KEY'] . '&response='
                 . $post['g-recaptcha-response']
-                . "&remoteip=" . $_SERVER['REMOTE_ADDR'] ;
+                . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
 
-        	    $decode = json_decode(file_get_contents($api_url), true);
+                $decode = json_decode(file_get_contents($api_url), true);
             }
 
-            if (empty($decode) || $decode['success'] != true)
+            if (empty($decode) || $decode['success'] != true) {
                 $this->flashMessage->addMessage('failure', 'you\'re a robot, don\'t lie');
-            if ($post['password'] != $post['password confirmation'])
+            }
+            if ($post['password'] != $post['password confirmation']) {
                 $this->flashMessage->addMessage('failure', 'Confirm password doesn\'t match');
-            elseif (!empty($user->getUser($post['pseudo']))) {
+            } elseif (!empty($user->getUser($post['pseudo']))) {
                 $this->flashMessage->addMessage('failure', 'pseudo already taken');
             } elseif (!empty($user->getUserByEmail($post['email']))) {
                 $this->flashMessage->addMessage('failure', 'email already taken');
@@ -142,40 +143,39 @@ class FormChecker
                 $this->mail->sendValidationMail($post);
                 $this->flashMessage->addMessage('success', 'mail sent! Check yourmail box (including trash, spam, whatever…)');
             }
+        } else {
+            $this->flashMessage->addMessage('failure', $valid . ' is incorrect');
         }
-        else
-            $this->flashMessage->addMessage('failure', $valid.' is incorrect');
-
 
         return $post;
     }
 
     public function checkContact(array $post)
     {
-        if (($valid = $this->validator->validate($post, ['email', 'text'])) == "ok") {
+        if (($valid = $this->validator->validate($post, ['email', 'text'])) == 'ok') {
             if ($post['g-recaptcha-response']) {
-                $api_url = "https://www.google.com/recaptcha/api/siteverify?secret="
-                . $_ENV['SECRET_CAPTCHA_KEY'] . "&response="
+                $api_url = 'https://www.google.com/recaptcha/api/siteverify?secret='
+                . $_ENV['SECRET_CAPTCHA_KEY'] . '&response='
                 . $post['g-recaptcha-response']
-                . "&remoteip=" . $_SERVER['REMOTE_ADDR'] ;
+                . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
 
                 $decode = json_decode(file_get_contents($api_url), true);
             }
 
-            if (empty($decode) || $decode['success'] != true)
+            if (empty($decode) || $decode['success'] != true) {
                 $this->flashMessage->addMessage('failure', 'you\'re a robot, don\'t lie');
-            else {
+            } else {
                 $this->mail->contactMe($post['text'], $post['email']);
                 $this->flashMessage->addMessage('success', 'Thank you!');
             }
+        } else {
+            $this->flashMessage->addMessage('failure', $valid . ' is incorrect');
         }
-        else
-            $this->flashMessage->addMessage('failure', $valid.' is incorrect');
     }
 
     public function checkPwd(array $post)
     {
-        if ($this->validator->validate($post, ['password', 'password1']) == "ok") {
+        if ($this->validator->validate($post, ['password', 'password1']) == 'ok') {
             if ($post['password'] === $post['password1']) {
                 $this->userModel->updatePassUser(password_hash($post['password'], PASSWORD_DEFAULT));
                 $this->flashMessage->addMessage('success', 'password updated!');
@@ -188,7 +188,7 @@ class FormChecker
     public function checkProfil(array $post): bool
     {
         $keys = ['pseudo', 'email', 'name', 'surname', 'birthdate', 'gender', 'biography', 'sexuality'];
-        if ($this->validator->validate($post, $keys) != "ok") {
+        if ($this->validator->validate($post, $keys) != 'ok') {
             return false;
         }
         if (!empty($this->userModel->getUser($post['pseudo'])) && $post['pseudo'] !== $_SESSION['profil']['pseudo']) {

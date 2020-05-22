@@ -10,7 +10,6 @@ use App\Lib\googleAPI;
 use App\Matcha;
 use App\Model\UserModel;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

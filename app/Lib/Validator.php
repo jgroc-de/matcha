@@ -16,10 +16,10 @@ class Validator
                 }
             }
 
-            return "ok";
+            return 'ok';
         }
 
-        return "";
+        return '';
     }
 
     private function ft_isset(array $array, array $keys): bool
