@@ -51,7 +51,7 @@ abstract class APIinterface
                 'popularity' => 0,
                 'lastlog' => time(),
                 'publicToken' => 'oauth',
-                'img' => $payload['picture'],
+                'img' => $this->form->getImg($gender),
             ];
             $this->user->setUser($user);
             $user = $this->user->getUser($user['pseudo']);

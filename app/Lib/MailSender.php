@@ -2,6 +2,8 @@
 
 namespace App\Lib;
 
+use PHPMailer\PHPMailer\Exception;
+
 /**
  * managing mail sending
  */
@@ -48,7 +50,11 @@ class MailSender
         $mail->Subject = $this->subject;
         $mail->Body = $this->message;
 
-        return $mail->send();
+        try {
+            return $mail->send();
+        } catch (Exception $error) {
+            return true;
+        }
     }
 
     /**

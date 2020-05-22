@@ -1,15 +1,8 @@
 {% extends "layout.html.twig" %}
-{% set color = {
-'Rick': '#878f99',
-'Jerry': '#ff7b25',
-'Beth': '#6b5b95',
-'Morty': '#feb236',
-'Summer': '#d64161',
-} %}
 
 {% block head %}
-<link rel="stylesheet" href="/css/home.css" type="text/css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/home.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% block header %}
@@ -27,7 +20,7 @@
                 <i class="fa fa-bars" alt="menu" title="menu"></i>
             </a>
             <div id="demo1" class="w3-dropdown-content w3-bar-block" style="top:43px">
-                <a href={{ path_for('home') }} class="{{ classDD }}">Home</a>
+                <a href="{{ path_for('home') }}" class="{{ classDD }}">Home</a>
                 <a href="{{ path_for('search') }}" class="{{ classDD }}">Search</a>
                 <a href="{{ path_for('tchat') }}" class="{{ classDD }}">Chat</a>
             </div>
@@ -54,8 +47,8 @@
 
 {% block notification %}
 <div id="notification" class="w3-sidebar w3-bar-block w3-hide w3-card-4 w3-leftbar w3-border-green w3-theme-d5">
-{% for notif in notification %}
-<a class="w3-bar-item w3-button w3-theme-l4 w3-border w3-leftbar w3-hover-border-green" href="{{ notif.link }}">{{ notif.message }}</a>
-{% endfor %}
+    {% for notif in notification %}
+        <a class="w3-bar-item w3-button w3-theme-l4 w3-border w3-leftbar w3-hover-border-green" href="{{ notif.link }}">{{ notif.message }}</a>
+    {% endfor %}
 </div>
 {% endblock %}

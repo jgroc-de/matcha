@@ -62,6 +62,7 @@ class Profil
             [
                 'profil' => $_SESSION['profil'],
                 'me' => $_SESSION['profil'],
+                'imgs' => $this->getImgs($_SESSION['profil']),
                 'friendReq' => $this->friends->getFriendsReqs($_SESSION['id']),
                 'friends' => $this->friends->getFriends($_SESSION['id']),
                 'tags' => $this->tag->getUserTags($_SESSION['id']),
@@ -94,6 +95,7 @@ class Profil
                 [
                     'friend' => $friend,
                     'profil' => $user,
+                    'imgs' => $this->getImgs($user),
                     'me' => $_SESSION['profil'],
                     'tags' => $this->tag->getUserTags($user['id']),
                     'notification' => $this->notif->getNotification(),
@@ -103,5 +105,17 @@ class Profil
         }
 
         return ($this->notFoundHandler)($request, $response);
+    }
+
+    private function getImgs(array $user): array
+    {
+        $imgs = [];
+        foreach($user as $key => $value) {
+            if (strpos($key, 'img') === 0) {
+                $imgs[] = $value;
+            }
+        }
+
+        return $imgs;
     }
 }

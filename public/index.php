@@ -59,8 +59,8 @@ $app->add(function (Request $request, Response $response, $next) {
     $logger->pushHandler($file_handler);
     $error = $response->getStatusCode();
     $method = $request->getMethod();
-    $id = $_SESSION['id'];
-    $user = $_SESSION['profil']['pseudo'];
+    $id = $_SESSION['id'] ?? 0 ;
+    $user = $_SESSION['profil']['pseudo'] ?? '';
     $server = $request->getServerParams();
     $ip = $server['REMOTE_ADDR'];
     $uri = $server['REQUEST_URI'];

@@ -358,6 +358,7 @@ class UserModel
     {
         $req = $this->db->prepare('SELECT bot FROM user WHERE id = ?');
         $req->execute([$id]);
+
         return !empty($req->fetch()['bot']);
     }
 }

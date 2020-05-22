@@ -163,12 +163,13 @@ function prev(id1)
 
 function setImg(node)
 {
-    if (node.firstChild)
-    {
+    if (node.firstChild) {
         var img = node.getElementsByTagName('img')[0]
 
-        if (img)
+        if (img) {
             img.setAttribute('src', img.name)
+            img.setAttribute('alt', 'profil\'s image')
+        }
     }
 }
 

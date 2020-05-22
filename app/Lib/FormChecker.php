@@ -70,7 +70,7 @@ class FormChecker
         $this->userModel->updatePublicToken();
     }
 
-    public function getImgs(string $gender): string
+    public function getImg(string $gender): string
     {
         $files = scandir('img');
         $imgs = [];
@@ -123,7 +123,7 @@ class FormChecker
         $post['lng'] = 0;
         $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
         $post['publicToken'] = $this->genPublicToken($post['pseudo']);
-        $post['img'] = $this->getImgs($post['gender']);
+        $post['img'] = $this->getImg($post['gender']);
         $user->setUser($post);
         $post = $user->getUser($post['pseudo']);
         $this->ft_geoIP->setLatLng($post);

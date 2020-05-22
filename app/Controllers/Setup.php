@@ -76,7 +76,7 @@ class Setup
                 'popularity' => rand(0, 100),
                 'lastlog' => rand(1533224411, time()),
                 'publicToken' => $this->form->genPublicToken($pseudo),
-                'img' => $this->form->getImgs($gender),
+                'img' => $this->form->getImg($gender),
             ];
             $_SESSION['pseudo'] = $profil['pseudo'];
             $this->user->setUser($profil);

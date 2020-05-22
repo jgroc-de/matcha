@@ -1,19 +1,16 @@
 {% macro form(h2, action, flash, show) %}
 <div>
     <h2 class="{% if show %}w3-theme-l1{% else %}w3-theme-d1{% endif %} w3-hover-green" onclick="display('{{ action }}');" style="margin:0;cursor:pointer">
-            {{ h2 }}
-        </h2>
-    </div>
-    <form id="{{ action }}" class="w3-container w3-theme-light clearfix w3-hide {% if show %}w3-show{% endif %}" style="opacity:0.95" action="{{ path_for(action) }}" method="post">
+        {{ h2 }}
+    </h2>
+</div>
+<form id="{{ action }}" class="w3-container w3-theme-light clearfix w3-hide {% if show %}w3-show{% endif %}"
+      style="opacity:0.95" action="{{ path_for(action) }}" method="post">
     {% if show %}
         {% for key, message in flash %}
-            {% if key == "success" %}
-                <div class="w3-panel w3-green">
-            {% else %}
-                <div class="w3-panel w3-red">
-            {% endif %}
-                    <p>{{ message }}</p>
-                </div>
+            <div class="w3-panel w3-{% if key == "success" %}green{% else %}red{% endif %}">
+                <p>{{ message }}</p>
+            </div>
         {% endfor %}
     {% endif %}
 {% endmacro %}

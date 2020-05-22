@@ -82,17 +82,17 @@
     </div>
     {{ button('submit') }}
     </form>
-    </div>
+</div>
 {% endblock %}
 
 {% block script %}
-<script>
-var myId = '{{ me.publicToken }}';
-function deleteAccount() {
-    if (confirm('Do you really want to delete this account?')){
-        ggAjaxGet('/deleteAccount', printNotif, ['response', true]);}}
-function getAllDatas() {ggAjax('POST', '/getAllDatas', printNotif, ['response', true]);}
-</script>
-<script src="js/autobahn.js"></script>
-<script src="js/notification.js"></script>
+    <script>
+        var myId = '{{ me.publicToken }}';
+        function deleteAccount() {
+            if (confirm('Do you really want to delete this account?')){
+                ggAjaxGet('/deleteAccount', printNotif, ['response', true]);}}
+        function getAllDatas() {ggAjax('POST', '/getAllDatas', printNotif, ['response', true]);}
+    </script>
+    <script src="js/autobahn.js"></script>
+    <script src="js/notification.js"></script>
 {% endblock %}

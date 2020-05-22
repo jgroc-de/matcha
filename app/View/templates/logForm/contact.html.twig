@@ -1,38 +1,42 @@
-{% extends 'templates/logForm.html.twig' %}
+{% if me is empty %}
+    {% set template = 'templates/logForm.html.twig' %}
+{% else %}
+    {% set template = 'templates/home.html.twig' %}
+{% endif %}
+{% extends template %}
 {% from 'macro/form/input.html.twig' import input %}
 {% from 'macro/form/textarea.html.twig' import textarea %}
 {% from 'macro/form/button.html.twig' import button %}
 {% from 'macro/form/layout.html.twig' import form %}
-{% from 'macro/form/select.html.twig' import select %}
 
 {% block main %}
-<div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
-{{ form('Contact Us', 'contact', flash, true) }}
-{% if not flash['success'] %}
-    <div class="w3-section">
-        <div id="infopwd" class="w3-panel w3-green">
-            <p>If you have anything to tell us, we will be happy to read you even if Rick doesn't care, like, at all!</p>
-        </div>
+    <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
+        {% if not flash['success'] %}
+            {{ form('Contact Us', 'contact', flash, true) }}
+                <div class="w3-section">
+                    <div id="infopwd" class="w3-panel w3-green">
+                        <p>If you have anything to tell us, we will be happy to read you even if Rick doesn't care, like, at all!</p>
+                    </div>
+                </div>
+                <div class="w3-section">
+                    {{ input('email', 'your email', {'name':'email', 'value': me.email|default("rick@morty.com") }) }}
+                </div>
+                <div class="w3-section">
+                    {{ textarea({'label': 'your message', 'placeholder': 'why we do care!', 'name':'text'}) }}
+                </div>
+                <div class="w3-section g-recaptcha" data-sitekey="{{ PUB_CAPTCHA_KEY }}"></div>
+                <div class="">
+                    {{ button('submit', 'send') }}
+                    {{ button('reset') }}
+                </div>
+            </form>
+        {% else %}
+            <script>
+                setTimeout(function () {location.href = '/'}, 3500);
+            </script>
+        {% endif %}
     </div>
-    <div class="w3-section">
-        {{ input('email', 'your email', {'name':'email', 'value': user.email|default("rick@morty.com") }) }}
-    </div>
-    <div class="w3-section">
-        {{ textarea({'label': 'your message', 'placeholder': 'why we do care!', 'name':'text'}) }}
-    </div>
-    <div class="w3-section g-recaptcha" data-sitekey="{{ PUB_CAPTCHA_KEY }}"></div>
-    <div class="">
-        {{ button('submit', 'send') }}
-        {{ button('reset') }}
-    </div>
-{% else %}
-    <script>
-        setTimeout(function () {location.href = '/'}, 3500);
-    </script>
-{% endif %}
-</form>
-</div>
-{% block script %}
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-{% endblock %}
+    {% block script %}
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    {% endblock %}
 {% endblock %}

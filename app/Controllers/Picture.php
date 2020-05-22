@@ -25,7 +25,8 @@ class Picture
         if ($data['file']->getError() === UPLOAD_ERR_OK
             && $data['file']->getSize() < 4000000
             && in_array($data['file']->getClientMediaType(), $type)
-            && $nb >= 1 && $nb <= 5) {
+            && $nb >= 1 && $nb <= 5
+        ) {
             $nb = 'img' . $nb;
             $path = '/user_img/' . $this->moveUploadedFile('user_img', $data['file']);
             if ($this->userModel->addPicture($nb, $path)) {

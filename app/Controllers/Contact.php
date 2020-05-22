@@ -28,21 +28,14 @@ class Contact
 
     public function page(Request $request, Response $response, array $args): Response
     {
-        $user = [];
-        if (isset($_SESSION['profil'])) {
-            $user = $_SESSION['profil'];
-        }
-
-        $data = array_merge([
-            'user' => $user,
-            'flash' => $this->flash->getMessages(),
-            'PUB_CAPTCHA_KEY' => $_ENV['PUB_CAPTCHA_KEY'],
-        ]);
-
         return $this->view->render(
             $response,
             self::template,
-            $data
+            [
+                'me' => $_SESSION['profil'] ?? null,
+                'flash' => $this->flash->getMessages(),
+                'PUB_CAPTCHA_KEY' => $_ENV['PUB_CAPTCHA_KEY'],
+            ]
         );
     }
 

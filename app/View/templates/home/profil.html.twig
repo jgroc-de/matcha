@@ -4,6 +4,13 @@
 {% from 'macro/home/img.html.twig' import otherImg %}
 {% from 'macro/home/subsectionTitle.html.twig' import subtitle %}
 
+{% set color = {
+    'Rick': '#878f99',
+    'Jerry': '#ff7b25',
+    'Beth': '#6b5b95',
+    'Morty': '#feb236',
+    'Summer': '#d64161',
+} %}
 {# ------------ #}
 {# main content #}
 {# ------------ #}
@@ -94,9 +101,9 @@
                 <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">{{ your }}Pictures</h3>
                 <div id="Picture" style="height:255px">
                     {% if home %}
-                        {{ myImg(profil) }}
+                        {{ myImg(imgs, profil.pseudo) }}
                     {% else %}
-                        {{ otherImg(profil) }}
+                        {{ otherImg(imgs, profil.pseudo) }}
                     {% endif %}
                 </div>
             </div>

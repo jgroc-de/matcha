@@ -1,8 +1,8 @@
 {% macro input(type, label, hash) %}
-{% from 'macro/form/label.html.twig' import Label %}
-{{ Label(label, hash.id|default(hash.id)) }}
+{% set name = hash.id|default(label) %}
+<label for='{{ name }}'>{{ label }}</label>
 <input class="w3-input w3-border {{ hash.class }}"
-       id="{{ hash.id|default(label) }}"
+       id="{{ name }}"
        type="{{ type }}"
        name="{{ hash.name|default(label|default(type)) }}"
        {% for key, value in hash %}

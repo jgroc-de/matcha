@@ -1,22 +1,22 @@
 {% macro subtitle(title, home, icon, path, id, link) %}
 <div class="w3-theme-l4">
-{% if home %}
-    <div class="w3-bar w3-theme-d1" style="cursor:pointer">
-        <h3 class="w3-bar-item w3-hover-green" style="padding:0 0 0 8px;width:65%" onclick="toggleById('{{ title }}')">Your {{ title }}</h3>
-    {% if link %}
-        <a href="{{ path }}" class="w3-bar-item w3-button w3-right w3-hover-green" title="{{ id }}" style="max-width:35%">
-            <i class="{{ icon }} w3-large"></i>
-        </a>
-    {% else %}
-        <div class="w3-bar-item w3-button w3-right w3-hover-green" onclick="{{ path }}" title="{{ id }}" style="max-width:35%">
-            <i class="{{ icon }} w3-large"></i>
+    {% if home %}
+        <div class="w3-bar w3-theme-d1" style="cursor:pointer">
+            <h3 class="w3-bar-item w3-hover-green" style="padding:0 0 0 8px;width:65%" onclick="toggleById('{{ title }}')">Your {{ title }}</h3>
+        {% if link %}
+            <a href="{{ path }}" class="w3-bar-item w3-button w3-right w3-hover-green" title="{{ id }}" style="max-width:35%">
+                <i class="{{ icon }} w3-large"></i>
+            </a>
+        {% else %}
+            <div class="w3-bar-item w3-button w3-right w3-hover-green" onclick="{{ path }}" title="{{ id }}" style="max-width:35%">
+                <i class="{{ icon }} w3-large"></i>
+            </div>
+        {% endif %}
         </div>
+    {% else %}
+        <h3 class="w3-bar-item w3-hover-green" style="padding:0;cursor:pointer" onclick="toggleById('{{ title }}')">
+            {{ title }}
+        </h3>
     {% endif %}
-    </div>
-{% else %}
-    <h3 class="w3-bar-item w3-hover-green" style="padding:0;cursor:pointer" onclick="toggleById('{{ title }}')">
-        {{ title }}
-    </h3>
-{% endif %}
 </div>
 {% endmacro %}
