@@ -81,7 +81,7 @@ class FormChecker
             }
         }
 
-        return 'img/' . $imgs[rand(0, 4)];
+        return 'http://' . $_SERVER['HTTP_HOST'] . '/img/' . $imgs[rand(0, 4)];
     }
 
     public function genPublicToken(string $pseudo): string
