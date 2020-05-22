@@ -73,19 +73,25 @@ class Authentication
             case '42':
                 $client = new _42API($this->container);
                 $token = $request->getQueryParam('code');
+                if (!$token) {
+                    return $response->withRedirect("/");
+                }
+                /** @var APIinterface $client */
+                $url = $client->login($token);
+                $response->withRedirect($url);
                 break;
             case 'google':
                 $client = new googleAPI($this->container);
                 $token = $request->getParsedBody()['idToken'];
-                break;
+                if (!$token) {
+                    return $response->withStatus(404);
+                }
+                /** @var APIinterface $client */
+                $url = $client->login($token);
+                $response->write($url);
         }
-        if (!$token) {
-            return $response->withRedirect('/');
-        }
-        /** @var APIinterface $client */
-        $url = $client->login($token);
 
-        return $response->withRedirect($url);
+        return $response;
     }
 
     public function logout(Request $request, Response $response, array $args): Response

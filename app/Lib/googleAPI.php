@@ -13,7 +13,7 @@ class googleAPI extends APIinterface
     {
         parent::__construct($container);
         $this->client = new Google_Client();
-        $this->client->setAuthConfig(__DIR__ . '/../../code_secret_client_505912914407-r8sntj5k6qcotss7ck33ds7nbj58cotr.apps.googleusercontent.com.json');
+        $this->client->setAuthConfig(__DIR__ . '/../../ggApi.json');
     }
 
     public function login($token): string
