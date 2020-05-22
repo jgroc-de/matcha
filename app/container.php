@@ -2,6 +2,8 @@
 
 use GeoIp2\Database\Reader;
 use GuzzleHttp\Client;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 
@@ -48,4 +50,12 @@ $container['curl'] = function (): Client {
         // You can set any number of default request options.
         'timeout' => 2.0,
     ]);
+};
+
+$container['log'] = function () {
+    $logger = new Logger('my_logger');
+    $file_handler = new StreamHandler('../tmp/logs/app.log');
+    $logger->pushHandler($file_handler);
+
+    return $logger;
 };

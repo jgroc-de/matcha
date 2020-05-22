@@ -1,7 +1,11 @@
 <?php
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Slim\App;
 use Slim\Csrf\Guard;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Symfony\Component\Dotenv\Dotenv;
 
 session_start();
@@ -47,6 +51,23 @@ require '../app/container.php';
 
 // Register routes
 require '../app/routes.php';
+
+$app->add(function (Request $request, Response $response, $next) {
+    $response = $next($request, $response);
+    $logger = new Logger('server');
+    $file_handler = new StreamHandler('../tmp/logs/app.log');
+    $logger->pushHandler($file_handler);
+    $error = $response->getStatusCode();
+    $method = $request->getMethod();
+    $id = $_SESSION['id'];
+    $user = $_SESSION['profil']['pseudo'];
+    $server = $request->getServerParams();
+    $ip = $server['REMOTE_ADDR'];
+    $uri = $server['REQUEST_URI'];
+    $logger->info("[$error] $method - $uri - id: $id - user: $user - IP: $ip");
+
+    return $response;
+});
 
 // Run!
 $app->run();
