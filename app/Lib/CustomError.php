@@ -34,6 +34,7 @@ class CustomError
                 $response->withStatus($code),
                 'templates/error.html.twig',
                 [
+                    'me' => $_SESSION['profil'] ?? null,
                     'error' => "Error $code: $error",
                 ]
             );

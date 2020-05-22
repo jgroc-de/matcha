@@ -11,30 +11,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="favicon.png">
         <meta name="google-signin-client_id" content="{{ PUB_GG_KEY }}">
+        <style>
+            {% set size = "cover" %}
+            {% set position = "center bottom" %}
+            {% set hour = "now"|date("G") %}
+            {% set url = "" %}
+            {% if logout %}
+                {% set url = "title_screen.png" %}
+                {% set size = "contain" %}
+                {% set position = "center" %}
+                body, footer, header, h1, h4 {
+                    background-color: black;
+                }
+            {% elseif error is defined %}
+                {% set url = 'error.jpg' %}
+                {% set size = "contain" %}
+                {% set position = "center" %}
+            {% elseif (hour > 21 or hour < 7) %}
+                {% set url = "search2.jpg" %}
+            {% else %}
+                {% set url = "background.jpg" %}
+            {% endif %}
+            #main {
+                background: url('img/{{ url }}') no-repeat {{ position }};
+                background-size: {{ size }};
+                min-height: 75vh;
+            }
+        </style>
         {% block head %}{% endblock %}
-    <style>
-{% set size = "cover" %}
-{% set position = "center bottom" %}
-{% set hour = "now"|date("G") %}
-{% set url = "" %} 
-{% if logout %}
-    {% set url = "title_screen.png" %} 
-    {% set size = "contain" %} 
-    {% set position = "center" %}
-    body, footer, header, h1, h4 {
-        background-color: black;
-    }
-{% elseif (hour > 21 or hour < 7) %}
-    {% set url = "search2.jpg" %} 
-{% else %}
-    {% set url = "background.jpg" %} 
-{% endif %}
-    #main {
-        background: url('../img/{{ url }}') no-repeat {{ position }};
-        background-size: {{ size }};
-        min-height: 75vh;
-    }
-    </style>
     </head>
     <body>
         <header>

@@ -1,7 +1,5 @@
 {% extends 'templates/logForm.html.twig' %}
 
-{% block main %}
-    <script>
-setTimeout(function() {location.href = '/login';}, 3000);
-    </script>
+{% block script %}
+    <script>setTimeout(function() {location.href = '/login'}, 3000)</script>
 {% endblock %}

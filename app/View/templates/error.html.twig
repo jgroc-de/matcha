@@ -1,29 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8/">
-        <title>Matcha</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link rel="stylesheet" href="/css/main.css" type="text/css"/>
-        <link rel="stylesheet" href="/css/theme.css" type="text/css"/>
-        <link rel="stylesheet" href="/css/error.css" type="text/css"/>
-    </head>
-    <body>
-        <header class="">
-            <a href='{{ path_for('home') }}'><h1>Match a Rick&amp;Morty</h1></a>
-        </header>
-        <main class="w3-container">
-    <div class="w3-row">
-    <h1 class="w3-left w3-xxxlarge w3-text-white">
-    {{ error }}
-    </h1>
-    </div>
-    <img src="/img/error.jpg" alt="error">
-        </main>
-        <footer>
-            <hr>
-            <em>© jgroc-de 2018</em>
-        </footer>
-    </body>
-</html>
+{% if me is empty %}
+    {% set template = 'templates/logForm.html.twig' %}
+{% else %}
+    {% set template = 'templates/home.html.twig' %}
+{% endif %}
+{% extends template %}
+
+{% block main %}
+    <h1 class="w3-display-middle w3-xxlarge w3-text-white w3-padding w3-red">{{ error }}</h1>
+{% endblock %}
