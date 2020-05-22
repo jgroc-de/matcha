@@ -83,7 +83,7 @@ class UserModel
         $id = $_SESSION['id'];
         $req = $this->db->prepare(
             "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity, lastlog
-            FROM user 
+            FROM user
             WHERE birthdate BETWEEN ? AND ? $where
             AND id <> $id
             AND lattitude BETWEEN ? AND ?
@@ -352,5 +352,12 @@ class UserModel
         $req = $this->db->prepare('DELETE FROM user WHERE id = ?');
 
         return $req->execute([$id]);
+    }
+
+    public function isBot(int $id): bool
+    {
+        $req = $this->db->prepare('SELECT bot FROM user WHERE id = ?');
+        $req->execute([$id]);
+        return $req->fetch()['bot'];
     }
 }

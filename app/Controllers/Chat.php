@@ -53,7 +53,7 @@ class Chat
                 ];
                 $this->MyZmq->send($msg);
                 $this->msg->setMessage([$tab[0], $tab[1], $_SESSION['id'], $msg['msg'], date('Y-m-d H:i:s')]);
-                if ($post['id'] < 500) {
+                if ($this->user->isBot($post['id'])) {
                     $chat = [
                         'Jeeeezz… another dumbass pervert?',
                         'U wanna my dickpick?',
