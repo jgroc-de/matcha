@@ -159,7 +159,7 @@
 var myPos = {lat: {{ me.lattitude }}, lng: {{ me.longitude }}};
 var usersPos = [
 {% for user in users %}
-    {title: '{{ user.pseudo }}', id: '{{ user.id }}', score: {{ user.score }}, lat: {{ user.lattitude }}, lng: {{ user.longitude }}, img: '{{ user.img1 }}', kind: '{{ user.gender }}', age: '{{ 2018 - user.birthdate }}', popularity: '{{ user.popularity }}', biography: '{{ user.biography|replace({"\n": " ", "\r": ""}) }}', distance: '{{ user.distance }}', tag: '{{ user.tag }}' },
+    {title: '{{ user.pseudo }}', id: '{{ user.id }}', score: {{ user.score }}, lat: {{ user.lattitude }}, lng: {{ user.longitude }}, img: '{{ user.img1 }}', kind: '{{ user.gender }}', age: '{{ "now"|date("Y") - user.birthdate }}', popularity: '{{ user.popularity }}', biography: '{{ user.biography|replace({"\n": " ", "\r": ""}) }}', distance: '{{ user.distance }}', tag: '{{ user.tag }}' },
 {% endfor %}
 ];
 var myId = '{{ me.publicToken }}';

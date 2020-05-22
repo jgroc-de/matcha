@@ -143,11 +143,9 @@ class FormChecker
 
     public function checkPwd(array $post)
     {
-        if ($this->validator->validate($post, ['password', 'password1'])) {
-            if ($post['password'] !== $post['password1']) {
-                $this->userModel->updatePassUser(password_hash($post['password'], PASSWORD_DEFAULT));
-                $this->flashMessage->addMessage('success', 'password updated!');
-            }
+        if ($this->validator->validate($post, ['password', 'password_confirmation'])) {
+            $this->userModel->updatePassUser(password_hash($post['password'], PASSWORD_DEFAULT));
+            $this->flashMessage->addMessage('success', 'password updated!');
         }
     }
 
