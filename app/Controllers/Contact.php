@@ -33,13 +33,16 @@ class Contact
             $user = $_SESSION['profil'];
         }
 
+        $data = array_merge([
+            'user' => $user,
+            'flash' => $this->flash->getMessages(),
+            'PUB_CAPTCHA_KEY' => $_ENV['PUB_CAPTCHA_KEY']
+        ]);
+
         return $this->view->render(
             $response,
             self::template,
-            [
-                'user' => $user,
-                'flash' => $this->flash->getMessages(),
-            ]
+            $data
         );
     }
 
