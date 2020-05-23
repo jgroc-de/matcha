@@ -20,13 +20,11 @@ function showDivs(n) {
     }
 }
 
-function profilAction(path)
-{
-    ggAjax('POST', path, printNotif, ['response', true])
+function profilAction(path, del = false) {
+    ggAjax(del ? 'DELETE':'POST', path, printNotif, ['response', true])
 }
 
-function onlineProfil(data)
-{
+function onlineProfil(data) {
     var span = document.getElementById('online')
     var spanoff = document.getElementById('offline')
 
@@ -42,9 +40,8 @@ function onlineProfil(data)
     }
 }
 
-function profilStatus()
-{
+function profilStatus() {
     ggAjaxGet('/profilStatus/' + user.id, function(){}, 0)
 }
 
-setInterval(profilStatus, 30000) 
+setInterval(profilStatus, 10000)

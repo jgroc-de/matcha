@@ -141,7 +141,7 @@ class FriendsModel
     public function isLiked(int $id1, int $id2): bool
     {
         $req = $this->db->prepare('SELECT 1 FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
-        $req->execute($this->sortId($id1, $id2));
+        $req->execute($id1, $id2);
 
         return !empty($req->fetch());
     }
@@ -171,9 +171,7 @@ class FriendsModel
             $this->MyZmq->send($msg);
         } else {
             $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?, ?)');
-            $ids = $this->sortId($id1, $id2);
-            $ids[] = true;
-            $req->execute($ids);
+            $req->execute([$id1, $id2, true]);
             $this->userModel->updatePopularity(1, $user);
             $msg = [
                 'category' => '"' . $user['publicToken'] . '"',

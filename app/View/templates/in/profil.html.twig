@@ -30,7 +30,11 @@
         <h2 class='' style="margin-bottom:0;background-color: {{ color[profil.gender] }}">{{ hi }}{{ profil.pseudo }}</h2>
         {% if not home and not isFriend %}
             <div class="w3-row">
-                <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/friend/{{ profil.id }}')" >add to friends</button>
+                {% if isLiked %}
+                    <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/friendReq/{{ profil.id }}', true)" >unlike</button>
+                {% else %}
+                    <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/friend/{{ profil.id }}')" >add to friends</button>
+                {% endif %}
                 <button class="w3-button w3-theme-l1 w3-third" onclick="profilAction('/report/{{ profil.id }}')">report as fake user</button>
                 <button class="w3-button w3-theme-d1 w3-third" onclick="profilAction('/blacklist/{{ profil.id }}')">blacklist this user</button>
             </div>

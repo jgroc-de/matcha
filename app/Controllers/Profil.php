@@ -87,10 +87,11 @@ class Profil
                 'msg' => $_SESSION['profil']['pseudo'] . ' watched your profil!',
             ]);
             $isFriend = $this->friends->isFriend($_SESSION['id'], $user['id']);
+            $isLiked = $this->friends->isLiked($_SESSION['id'], $user['id']);
             if ($isFriend) {
                 $user['pseudo'] .= ' "Friend"';
-            } elseif ($this->friends->isLiked($_SESSION['id'], $user['id'])) {
-                $user['pseudo'] .= "Liked";
+            } elseif ($isLiked) {
+                $user['pseudo'] .= ' "Liked"';
             }
 
 
@@ -99,6 +100,7 @@ class Profil
                 self::template,
                 [
                     'isFriend' => $isFriend,
+                    'isLiked' => $isLiked,
                     'profil' => $user,
                     'imgs' => $this->getImgs($user),
                     'me' => $_SESSION['profil'],

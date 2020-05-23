@@ -40,27 +40,37 @@ class FriendRequest
 
     public function delete(Request $request, Response $response, array $args): Response
     {
-        $this->friendsModel->delFriend(
+        if ($this->friendsModel->delFriend(
             $_SESSION['id'],
             $args['id']
-        );
+        )) {
+            $flash = 'request sent!';
+        } else {
+            $flash = 'already sent!';
+        }
+        $response->write($flash);
 
         return $response;
     }
 
     public function deleteRequest(Request $request, Response $response, array $args): Response
     {
-        $this->friendsModel->delFriendReq(
+        if ($this->friendsModel->delFriendReq(
             $_SESSION['id'],
             $args['id']
-        );
+        )) {
+            $flash = 'request sent!';
+        } else {
+            $flash = 'already sent!';
+        }
+        $response->write($flash);
 
         return $response;
     }
 
     private function isNotAlreadyFriend(int $myId, array $args): bool
     {
-        return $this->friendsModel->isLiked($myId, $args['id'])
-            && $this->friendsModel->isFriend($myId, $args['id']);
+        return !$this->friendsModel->isLiked($myId, $args['id'])
+            && !$this->friendsModel->isFriend($myId, $args['id']);
     }
 }
