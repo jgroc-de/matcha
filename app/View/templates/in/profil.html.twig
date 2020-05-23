@@ -69,7 +69,10 @@
                                 {%if (tag != tags[0])%}
                                     -
                                 {% endif %}
-                                #{{tag.tag}} <span class="del" onclick="delUserTag('/tag/', {{tag.id}})">(delete)</span>
+                                #{{tag.tag}}
+                                {% if home %}
+                                    <span class="del" onclick="delUserTag('/tag/', {{tag.id}})">(delete)</span>
+                                {% endif %}
                             </span>
                         <!--{{ profilButton(color, tag, "delUserTag('/tag/', #{ tag.id })", home, NULL, 'tag') }}-->
                         {% endfor %}
