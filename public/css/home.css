@@ -60,6 +60,7 @@ img {
     color: #555555;
     text-decoration: underline;
     transition: 0.2s;
+    cursor: pointer;
 }
 
 .del:hover {

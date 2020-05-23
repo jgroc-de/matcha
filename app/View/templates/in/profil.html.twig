@@ -1,5 +1,4 @@
 {% extends 'templates/home.html.twig' %}
-{% from 'macro/home/profilButton.html.twig' import profilButton %}
 {% from 'macro/home/subsectionTitle.html.twig' import subtitle %}
 
 {% set color = {
@@ -71,7 +70,6 @@
                                 {% endif %}
                                 #{{tag.tag}} <span class="del" onclick="delUserTag('/tag/', {{tag.id}})">(delete)</span>
                             </span>
-                        <!--{{ profilButton(color, tag, "delUserTag('/tag/', #{ tag.id })", home, NULL, 'tag') }}-->
                         {% endfor %}
                     </div>
                 </div>

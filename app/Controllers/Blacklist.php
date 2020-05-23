@@ -29,7 +29,11 @@ class Blacklist
 
     public function addToBlacklist(Request $request, Response $response, array $args): Response
     {
-        $flash = $this->deleteFriendAndBlacklist($args['id']);
+        if ($this->deleteFriendAndBlacklist($args['id'])) {
+            $flash = 'This user is now on your blacklist!';
+        } else {
+            $flash = 'This user is already on your blacklist!';
+        }
         $response->getBody()->write($flash);
 
         return $response;
@@ -37,22 +41,19 @@ class Blacklist
 
     public function report(Request $request, Response $response, array $args): Response
     {
-        $this->deleteFriendAndBlacklist($args['id']);
-        $this->mail->reportMail($args['id']);
-        $response->getBody()->write('Thank you to help us improved the community!');
+        if ($this->deleteFriendAndBlacklist($args['id'])) {
+            $this->mail->reportMail($args['id']);
+            $response->getBody()->write('Thank you to help us improved the community!');
+        } else {
+            $response->getBody()->write('Already reported');
+        }
 
         return $response;
     }
 
-    private function deleteFriendAndBlacklist(int $id): string
+    private function deleteFriendAndBlacklist(int $id): bool
     {
         $this->friends->delFriend($id, $_SESSION['id']);
-        if (!$this->blacklist->getBlacklistById($id, $_SESSION['id'])) {
-            $this->blacklist->setBlacklist($id);
-
-            return 'This user is now on your blacklist!';
-        }
-
-        return 'This user is already on your blacklist!';
+        return $this->blacklist->setBlacklist($id);
     }
 }

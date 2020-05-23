@@ -126,7 +126,7 @@ class Chat
 
     public function profilStatus($request, $response, $args)
     {
-        if (empty($this->blacklist->getBlacklistById($args['id'], $_SESSION['id']))) {
+        if (!$this->blacklist->isBlacklistById($args['id'], $_SESSION['id'])) {
             $user = $this->user->getUserById($args['id']);
             $msg = [
                 'category' => '"' . $_SESSION['profil']['publicToken'] . '"',

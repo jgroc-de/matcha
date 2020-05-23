@@ -77,7 +77,7 @@ class Profil
         if ($args['id'] == $_SESSION['id']) {
             return $response->withRedirect('/', 302);
         }
-        if (!$this->blacklist->getBlacklistById($args['id'], $_SESSION['id'])
+        if (!$this->blacklist->isBlacklistById($args['id'], $_SESSION['id'])
             && $user = $this->user->getUserById($args['id'])) {
             $this->MyZmq->send([
                 'category' => '"' . $user['publicToken'] . '"',

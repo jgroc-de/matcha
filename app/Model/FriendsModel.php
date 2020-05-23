@@ -13,19 +13,12 @@ class FriendsModel
 {
     /** @var \PDO */
     private $db;
-    /** @var MyZmq */
-    private $MyZmq;
     /** @var FlashMessage */
     private $flashMessage;
-    /** @var UserModel */
-    private $userModel;
 
-    public function __construct(\PDO $db, MyZmq $MyZMQ, FlashMessage $flashMessage, UserModel $userModel)
+    public function __construct(\PDO $db)
     {
         $this->db = $db;
-        $this->MyZmq = $MyZMQ;
-        $this->flashMessage = $flashMessage;
-        $this->userModel = $userModel;
     }
 
     public function isFriend(int $id1, int $id2): bool
@@ -146,61 +139,23 @@ class FriendsModel
         return !empty($req->fetch());
     }
 
-    public function setFriendsReq(int $id1, int $id2)
+    public function setFriendsReq(int $id1, int $id2, array $user)
     {
-        $user = $this->userModel->getUserById($id2);
-        if ($this->isLiked($id2, $id1) || $user['bot']) {
-            $this->setFriend($id1, $id2);
-            $this->userModel->updatePopularity(5, $user);
-            $this->userModel->updatePopularity(5, $_SESSION['profil']);
-            $msg = [
-                'category' => '"' . $user['publicToken'] . '"',
-                'dest' => $user['id'],
-                'exp' => $_SESSION['id'],
-                'link' => '/profil/' . $id1,
-                'msg' => "It's a match! say hi to " . $_SESSION['profil']['pseudo'],
-            ];
-            $this->MyZmq->send($msg);
-            $msg = [
-                'category' => '"' . $_SESSION['profil']['publicToken'] . '"',
-                'dest' => $_SESSION['id'],
-                'exp' => $user['id'],
-                'link' => '/profil/' . $id1,
-                'msg' => "It's a match! say hi to " . $user['pseudo'],
-            ];
-            $this->MyZmq->send($msg);
-        } else {
-            $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?, ?)');
-            $req->execute([$id1, $id2, true]);
-            $this->userModel->updatePopularity(1, $user);
-            $msg = [
-                'category' => '"' . $user['publicToken'] . '"',
-                'dest' => $user['id'],
-                'exp' => $_SESSION['id'],
-                'link' => '/profil/' . $id1,
-                'msg' => $_SESSION['profil']['pseudo'] . ' sent you a friend request',
-            ];
-            $this->MyZmq->send($msg);
-        }
+        $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?, ?)');
+        $req->execute([$id1, $id2, true]);
     }
 
-    public function setFriend(int $id1, int $id2)
+    public function setFriend(int $id1, int $id2): bool
     {
         $tab = $this->sortId($id1, $id2);
-        $req = $this->db->prepare('
-            SELECT * FROM friends
-            WHERE id_user1 = ? AND id_user2 = ?');
-        $req->execute($tab);
-        if (empty($req->fetch())) {
+        $tab[] = password_hash($id1 . random_bytes(4) . $id2, PASSWORD_DEFAULT);
+        $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?, ?)');
+        if ($req->execute($tab)) {
             $this->delFriendReq($id1, $id2);
-            $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?, ?)');
-            $token = password_hash($id1 . random_bytes(4) . $id2, PASSWORD_DEFAULT);
-            $this->flashMessage->addMessage('success', 'this user is now your friends');
-            $tab[] = $token;
-            $req->execute($tab);
-        } else {
-            $this->flashMessage->addMessage('success', 'this user is already your friends');
+            return true;
         }
+
+        return false;
     }
 
     public function delAllFriends(int $id)
@@ -224,20 +179,11 @@ class FriendsModel
         $req->execute([$id, $id]);
     }
 
-    public function delFriend(int $id1, int $id2)
+    public function delFriend(int $id1, int $id2): bool
     {
         $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? AND id_user2 = ?');
-        if ($req->execute($this->sortId($id1, $id2))) {
-            $user = $this->userModel->getUserById($id2);
-            $msg = [
-                'category' => '"' . $user['publicToken'] . '"',
-                'dest' => $user['id'],
-                'exp' => $_SESSION['id'],
-                'link' => '/',
-                'msg' => $_SESSION['profil']['pseudo'] . ' has erased your friendship link',
-            ];
-            $this->MyZmq->send($msg);
-        }
+
+        return $req->execute($this->sortId($id1, $id2));
     }
 
     private function sortId(int $id1, int $id2): array

@@ -58,7 +58,12 @@ $container['App\Controllers\Contact'] = function ($container) {
 
 // ok
 $container['App\Controllers\FriendRequest'] = function ($container) {
-    return new FriendRequest($container->get('friends'), $container->get('user'));
+    return new FriendRequest(
+        $container->get('blacklist'),
+        $container->get('friends'),
+        $container->get('user'),
+        $container->get('MyZmq')
+    );
 };
 
 // ok
