@@ -2,28 +2,48 @@
 
 namespace App\Controllers;
 
+use App\Lib\Common;
+use App\Lib\MailSender;
+use App\Lib\Validator;
+use App\Model\UserModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class RGPD
 {
-    private $container;
+    /** @var UserModel */
+    private $user;
+    /** @var Common */
+    private $common;
+    /** @var MailSender */
+    private $mail;
+    /** @var Validator */
+    private $validator;
 
-    public function __construct(
-        $container
-    ) {
-        $this->container = $container;
-    }
-
-    public function __get($name)
+    public function __construct(UserModel $userModel, Common $common, MailSender $mail, Validator $validator)
     {
-        return $this->container->get($name);
+        $this->user = $userModel;
+        $this->common = $common;
+        $this->mail = $mail;
+        $this->validator = $validator;
     }
 
     public function getAllDatas(Request $request, Response $response, array $args): Response
     {
         $this->common->sendAllDatas();
         $response->getBody()->write('Check your mailbox!');
+
+        return $response;
+    }
+
+    public function deleteAccount(Request $request, Response $response, array $args): Response
+    {
+        if ($this->mail->sendDeleteMail()) {
+            $msg = 'Check your mailbox!';
+        } else {
+            $msg = 'there is a bug… plz contact us, we will answer asap!';
+        }
+        $response->getBody()->write($msg);
 
         return $response;
     }

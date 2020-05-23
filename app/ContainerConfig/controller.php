@@ -8,6 +8,7 @@ use App\Controllers\FriendRequest;
 use App\Controllers\Geolocation;
 use App\Controllers\Picture;
 use App\Controllers\Profil;
+use App\Controllers\RGPD;
 use App\Controllers\Settings;
 use App\Controllers\Setup;
 use App\Controllers\Tag;
@@ -93,15 +94,14 @@ $container['App\Controllers\Profil'] = function ($container) {
     );
 };
 
-/*
 $container['App\Controllers\RGPD'] = function($container) {
-    return new Chat(
-        $container->get('view'),
-        $container['flash'],
-        $container->get('form')
+    return new RGPD(
+        $container->get('user'),
+        $container->get('common'),
+        $container->get('mail'),
+        $container->get('validator')
     );
 };
-*/
 
 /*
 $container['App\Controllers\SEARCH'] = function($container) {

@@ -53,18 +53,6 @@ class Settings
         return $this->renderSettings($response, ['rgpd' => true]);
     }
 
-    public function deleteAccount(Request $request, Response $response, array $args): Response
-    {
-        if ($this->mail->sendDeleteMail()) {
-            $msg = 'Check your mailbox!';
-        } else {
-            $msg = 'there is a bug… plz contact us, we ill answer asap!';
-        }
-        $response->getBody()->write($msg);
-
-        return $response;
-    }
-
     public function editPassword(Request $request, Response $response, array $args): Response
     {
         return $this->renderSettings($response, ['editPwd' => true]);

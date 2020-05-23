@@ -99,7 +99,7 @@ class Common
         return $tab;
     }
 
-    private function deleteAccountExecute()
+    public function deleteAccountExecute()
     {
         $id = $_SESSION['id'];
         $pseudo = $_SESSION['profil']['pseudo'];
