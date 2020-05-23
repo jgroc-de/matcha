@@ -1,8 +1,9 @@
 function updateGeolocation() {
-    if (navigator.geolocation)
+    if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error)
-    else
+    } else {
         error()
+    }
 }
 
 function initMap() {
@@ -70,8 +71,10 @@ function setLocation() {
 
 function success(pos) {
     user = {lat: pos.coords.latitude, lng: pos.coords.longitude}
+    console.log(user)
     majLocation()
 }
 
 function error(err) {
+    console.log(err)
 }
