@@ -46,14 +46,11 @@ function addEvent() {
     var allowedTypes = ['image/png', 'image/jpeg', 'image/gif']
     var prev = this.parentNode.parentNode
 
-    if (allowedTypes.indexOf(this.files[0].type) === -1)
-    {
+    if (allowedTypes.indexOf(this.files[0].type) === -1) {
         printNotif(['not allowed type (png, jpg/jpeg, gif)', false])
-    }
-    else if (this.files[0].size > 400000)
+    } else if (this.files[0].size > 400000) {
         printNotif(['file too large (> 400ko)', false])
-    else
-    {
+    } else {
         var form = new FormData()
         var xhttp = new XMLHttpRequest()
         var reader = new FileReader()

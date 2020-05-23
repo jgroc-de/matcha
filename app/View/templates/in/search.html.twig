@@ -161,9 +161,9 @@
         ];
         var myId = '{{ me.publicToken }}';
     </script>
-    <script src="js/search.js"></script>
-    <script src="js/autobahn.js"></script>
-    <script src="js/notification.js"></script>
-    <script src="js/mapSearch.js"></script>
+    <script src="{{ BASE_URL }}/js/search.js"></script>
+    <script src="{{ BASE_URL }}/js/autobahn.js"></script>
+    <script src="{{ BASE_URL }}/js/notification.js"></script>
+    <script src="{{ BASE_URL }}/js/mapSearch.js"></script>
     <script defer async src="https://maps.googleapis.com/maps/api/js?key={{ mapKey }}&callback=initMap"></script>
 {% endblock %} 

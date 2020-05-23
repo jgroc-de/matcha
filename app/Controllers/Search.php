@@ -30,7 +30,7 @@ class Search
         return $this->container->get($name);
     }
 
-    public function __invoke(Request $request, Response $response, array $args)
+    public function main(Request $request, Response $response, array $args)
     {
         if (!$_SESSION['profil']['biography']) {
             $this->flash->addMessage('failure', 'Plz complete your profil before searching for targets');
@@ -41,6 +41,17 @@ class Search
         $this->listDefault();
 
         return $this->searchResponse($response);
+    }
+
+    public function name(Request $request, Response $response, array $args)
+    {
+        if ($this->validator->validate($args, ['pseudo'])) {
+            $this->list = $this->user->getUserByPseudo($args['pseudo']);
+
+            return $this->searchResponse($response);
+        }
+
+        return $response->withStatus(404);
     }
 
     private function searchResponse(Response $response)
@@ -89,17 +100,6 @@ class Search
                 }
             }
             $this->getTags($post);
-
-            return $this->searchResponse($response);
-        }
-
-        return $response->withStatus(404);
-    }
-
-    public function name(Request $request, Response $response, array $args)
-    {
-        if ($this->validator->validate($args, ['pseudo'])) {
-            $this->list = $this->user->getUserByPseudo($args['pseudo']);
 
             return $this->searchResponse($response);
         }
