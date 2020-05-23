@@ -79,5 +79,5 @@ function success(pos) {
 }
 
 function error(err) {
-    alert(err)
+    alert(err.message)
 }
