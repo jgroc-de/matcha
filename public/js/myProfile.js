@@ -42,7 +42,7 @@ function addPicture() {
 }
 
 function addEvent() {
-    var id = this.id
+    var id = this.getAttribute('data-id')
     var allowedTypes = ['image/png', 'image/jpeg', 'image/gif']
     var prev = this.parentNode.parentNode
 
@@ -109,7 +109,7 @@ function deletePic(id)
                 div.style.height = '125px'
             labelElmt.className = 'w3-button w3-jumbo w3-display-middle fa fa-plus w3-hover-green w3-block w3-padding-large'
             labelElmt.title = 'add picture'
-            inputElemt.id = id
+            inputElemt.setAttribute('data-id', id)
             inputElemt.type = 'file'
             inputElemt2.type = 'hidden'
             inputElemt.style.display = 'none'

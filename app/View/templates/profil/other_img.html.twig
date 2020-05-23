@@ -1,0 +1,14 @@
+<div class="w3-display-container" id="{{ key }}" style="height:255px">
+    {% set multiple = false %}
+    {% for key, url in imgs %}
+        {% if url %}
+            <img class="mySlides w3-image w3-display-middle"
+                 alt="{{ pseudo }}" src="{{ url }}"
+                 title='{{ '%s_img%d'|format(pseudo, key + 2) }}' style="max-height:250px" onclick="displayModal('{{ url }}')">
+        {% endif %}
+    {% endfor %}
+    {% if imgs|length > 1 %}
+        <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+        <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
+    {% endif %}
+</div>

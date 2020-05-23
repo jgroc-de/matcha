@@ -1,7 +1,5 @@
 {% extends 'templates/home.html.twig' %}
 {% from 'macro/home/profilButton.html.twig' import profilButton %}
-{% from 'macro/home/img.html.twig' import myImg %}
-{% from 'macro/home/img.html.twig' import otherImg %}
 {% from 'macro/home/subsectionTitle.html.twig' import subtitle %}
 
 {% set color = {
@@ -98,9 +96,9 @@
                 <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">{{ your }}Pictures</h3>
                 <div id="Picture" style="height:255px">
                     {% if home %}
-                        {{ myImg(imgs, profil.pseudo) }}
+                        {% include 'templates/profil/my_img.html.twig' with imgs only %}
                     {% else %}
-                        {{ otherImg(imgs, profil.pseudo) }}
+                        {% include 'templates/profil/other_img.html.twig' with imgs only %}
                     {% endif %}
                 </div>
             </div>
@@ -159,12 +157,12 @@
         var myId = '{{ me.publicToken }}';
     </script>
     {% if profil.id == me.id %}
-        <script src='../js/myProfile.js'></script>
+        <script src='js/myProfile.js'></script>
     {% else %}
-        <script src='../js/otherProfil.js'></script>
+        <script src='js/otherProfil.js'></script>
     {% endif %}
-    <script src="../js/autobahn.js"></script>
-    <script src="../js/notification.js"></script>
-    <script src="../js/geolocation.js"></script>
+    <script src="js/autobahn.js"></script>
+    <script src="js/notification.js"></script>
+    <script src="js/geolocation.js"></script>
     <script defer async src="https://maps.googleapis.com/maps/api/js?key={{ mapKey }}&callback=initMap"></script>
 {% endblock %}

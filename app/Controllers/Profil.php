@@ -109,10 +109,13 @@ class Profil
 
     private function getImgs(array $user): array
     {
-        $imgs = [];
+        $imgs = [
+            'imgs' => [],
+            'pseudo' => $user['pseudo'],
+        ];
         foreach($user as $key => $value) {
             if (strpos($key, 'img') === 0) {
-                $imgs[] = $value;
+                $imgs['imgs'][] = $value;
             }
         }
 

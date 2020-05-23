@@ -201,7 +201,8 @@ class Search
             if (!empty($post)) {
                 $void = true;
                 foreach ($list as $tag) {
-                    if (!empty($tag = array_intersect($tag, $post))) {
+                    $tag = array_intersect($tag, $post);
+                    if (!empty($tag['tag'])) {
                         $listTag[] = $tag['tag'];
                         $void = false;
                         break;

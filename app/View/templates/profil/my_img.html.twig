@@ -1,4 +1,3 @@
-{% macro myImg(imgs, pseudo) %}
 <div class="w3-half" id="img1">
     <div class="w3-display-container gg-main-image">
         {% if imgs[0] %}
@@ -6,7 +5,7 @@
             <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic('img1')"></i>
         {% else %}
             <label class="w3-button w3-display-middle w3-block w3-jumbo fa fa-plus w3-padding-large w3-hover-green" onchange='addPicture()' title="add picture">
-                <input id="img1" type="file" style="display:none"/>
+                <input data-id="img1" type="file" style="display:none"/>
             </label>
         {% endif %}
     </div>
@@ -24,7 +23,7 @@
                     <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic('{{ key }}')"></i>
                 {% else %}
                 <label class="w3-button w3-display-middle w3-block w3-jumbo fa fa-plus w3-padding-large w3-hover-green" onchange='addPicture()' title="add picture" style="vertical-align:middle">
-                    <input id="{{ id }}" type="file" style="display:none"/>
+                    <input data-id="{{ id }}" type="file" style="display:none"/>
                 </label>
                 {% endif %}
             </div>
@@ -34,21 +33,3 @@
         {% endif %}
     {% endfor %}
 </div>
-{% endmacro %}
-
-{% macro otherImg(imgs, pseudo) %}
-<div class="w3-display-container" id="{{ key }}" style="height:255px">
-    {% for key, url in imgs %}
-        {% if url %}
-            {% set id = 'img%d'|format(key + 2) %}
-            <img class="mySlides w3-image w3-display-middle"
-                 alt="{{ pseudo }}" src="{{ url }}"
-                 title='{{ pseudo }}_{{ id }}' style="max-height:250px" onclick="displayModal('{{ url }}')">
-        {% endif %}
-    {% endfor %}
-    {% if imgs|length > 1 %}
-        <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-        <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
-    {% endif %}
-</div>
-{% endmacro %}
