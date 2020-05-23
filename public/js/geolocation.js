@@ -79,5 +79,5 @@ function success(pos) {
 }
 
 function error(err) {
-    console.log(err)
+    alert(err)
 }
