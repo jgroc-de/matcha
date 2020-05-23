@@ -13,7 +13,6 @@ function display(id)
 
     for (var i = 0; i < forms.length; i++) {
         h2[i].classList.replace("w3-theme-l1", "w3-theme-d1")
-        console.log(forms[i].id, id, forms[i].id === id, forms[i].id == id)
         if (forms[i].id === id) {
             forms[i].classList.add('w3-show')
             h2[i].classList.replace("w3-theme-d1", "w3-theme-l1")

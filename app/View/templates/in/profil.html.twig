@@ -165,12 +165,12 @@
         var myId = '{{ me.publicToken }}';
     </script>
     {% if profil.id == me.id %}
-        <script src='js/myProfile.js'></script>
+        <script src="{{ BASE_URL }}/js/myProfile.js"></script>
     {% else %}
-        <script src='js/otherProfil.js'></script>
+        <script src="{{ BASE_URL }}/js/otherProfil.js"></script>
     {% endif %}
-    <script src="js/autobahn.js"></script>
-    <script src="js/notification.js"></script>
-    <script src="js/geolocation.js"></script>
+    <script src="{{ BASE_URL }}/js/autobahn.js"></script>
+    <script src="{{ BASE_URL }}/js/notification.js"></script>
+    <script src="{{ BASE_URL }}/js/geolocation.js"></script>
     <script defer async src="https://maps.googleapis.com/maps/api/js?key={{ mapKey }}&callback=initMap"></script>
 {% endblock %}

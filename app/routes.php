@@ -48,11 +48,11 @@ $app->group('', function () use ($app) {
         ->setName('profil');
     $this->put('/updateGeolocation', Geolocation::class);
 
-    $this->get('/search', Search::class)
+    $this->get('/search', Search::class . ':main')
         ->setName('search');
     $this->post('/search-criteria', Search::class . ':criteria')
         ->setName('searchByCriteria');
-    $this->get('/search-user/{pseudo}', Search::class . ':name')
+    $this->get('/search-name/{pseudo}', Search::class . ':name')
         ->setName('searchByName');
 
     $this->get('/editProfil', Settings::class . ':editProfil')

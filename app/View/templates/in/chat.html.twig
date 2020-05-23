@@ -33,7 +33,7 @@
 
 {% block script %}
     <script>var myId = '{{ me.publicToken }}'</script>
-    <script src="js/autobahn.js"></script>
-    <script src="js/notification.js"></script>
-    <script src="js/chat.js"></script>
+    <script src="{{ BASE_URL }}/js/autobahn.js"></script>
+    <script src="{{ BASE_URL }}/js/notification.js"></script>
+    <script src="{{ BASE_URL }}/js/chat.js"></script>
 {% endblock %}

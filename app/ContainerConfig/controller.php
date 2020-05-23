@@ -58,7 +58,7 @@ $container['App\Controllers\Contact'] = function ($container) {
 
 // ok
 $container['App\Controllers\FriendRequest'] = function ($container) {
-    return new FriendRequest($container->get('friends'));
+    return new FriendRequest($container->get('friends'), $container->get('user'));
 };
 
 // ok

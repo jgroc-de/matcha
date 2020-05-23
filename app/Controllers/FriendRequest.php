@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Model\FriendsModel;
+use App\Model\UserModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -10,16 +11,20 @@ class FriendRequest
 {
     /** @var FriendsModel */
     private $friendsModel;
+    /** @var UserModel */
+    private $userModel;
 
-    public function __construct(FriendsModel $friendsModel)
+    public function __construct(FriendsModel $friendsModel, UserModel $userModel)
     {
         $this->friendsModel = $friendsModel;
+        $this->userModel = $userModel;
     }
 
     public function add(Request $request, Response $response, array $args): Response
     {
-        if (empty($this->friendsModel->getFriendReq($_SESSION['id'], $args['id']))
-            && empty($this->friendsModel->getFriend($_SESSION['id'], $args['id']))) {
+        if (!$this->userModel->hasPictures($_SESSION['id'])) {
+            $flash = 'You need to add pictures on your profile first!';
+        } elseif ($this->isNotAlreadyFriend($_SESSION['id'], $args)) {
             $this->friendsModel->setFriendsReq(
                 $_SESSION['id'],
                 $args['id']
@@ -51,5 +56,11 @@ class FriendRequest
         );
 
         return $response;
+    }
+
+    private function isNotAlreadyFriend(int $myId, array $args): bool
+    {
+        return empty($this->friendsModel->getFriendReq($myId, $args['id']))
+            && empty($this->friendsModel->getFriend($myId, $args['id']));
     }
 }
