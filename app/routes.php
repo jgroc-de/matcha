@@ -71,7 +71,7 @@ $app->group('', function () use ($app) {
     $this->get('/logout', Authentication::class . ':logout')
         ->setName('logout');
 
-    $this->get('/tchat', Chat::class)
+    $this->get('/tchat', Chat::class . ':page')
         ->setName('tchat');
     $this->get('/chatStatus', Chat::class . ':mateStatus');
     $this->post('/sendMessage', Chat::class . ':send');

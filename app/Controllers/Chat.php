@@ -33,9 +33,8 @@ class Chat
         'You have the manners of a beggar. ',
     ];
 
-    public function __construct(
-        $container
-    ) {
+    public function __construct($container)
+    {
         $this->container = $container;
     }
 
@@ -44,9 +43,12 @@ class Chat
         return $this->container->get($name);
     }
 
-    public function __invoke(Request $request, Response $response, array $args): Response
+    public function page(Request $request, Response $response, array $args): Response
     {
         $friends = $this->friends->getFriends($_SESSION['id']);
+        if (empty($friends)) {
+            return $response->withRedirect('/search');
+        }
 
         return $this->view->render(
             $response,
