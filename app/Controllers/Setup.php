@@ -54,7 +54,6 @@ class Setup
         $count = 500;
         $faker = Factory::create();
         $password = password_hash('trollB1B1', PASSWORD_DEFAULT);
-        $botPseudos = [];
         for ($i = 0; $i < $count; ++$i) {
             $name = $faker->firstName;
             $gender = Matcha::GENDER[rand(0, 4)];
@@ -81,7 +80,7 @@ class Setup
             ];
             $_SESSION['pseudo'] = $profil['pseudo'];
             $this->user->setUser($profil);
-            $botPseudos[] = $profil['pseudo'];
+            $this->user->updateFakeUser($profil);
             $bot = $this->user->getUserByEmail($profil['email']);
             $_SESSION['id'] = $bot['id'];
             for ($j = 0; $j < 5; ++$j) {
@@ -92,7 +91,6 @@ class Setup
             }
             unset($_SESSION['id']);
         }
-        $this->user->updateFakeUser($botPseudos);
 
         return $response->withRedirect('/');
     }

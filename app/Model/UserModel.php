@@ -212,15 +212,37 @@ class UserModel
         $req->execute([$isOauth, $id]);
     }
 
-    public function updateFakeUser(array $pseudos)
+    public function updateFakeUser(array $post)
     {
         $req = $this->db->prepare(
             'UPDATE user
-            SET bot = true
-            where pseudo IN (?)'
+            SET name = ?,
+            surname = ?,
+            birthdate = ?,
+            gender = ?,
+            sexuality = ?,
+            biography = ?,
+            lattitude = ?,
+            longitude = ?,
+            bot = ?,
+            popularity = ?,
+            lastlog = ?
+            where pseudo = ?'
         );
-
-        $req->execute([implode(',', $post['pseudo']),]);
+        $req->execute([
+            $post['name'],
+            $post['surname'],
+            $post['birthdate'],
+            $post['gender'],
+            $post['sexuality'],
+            $post['biography'],
+            $post['lat'],
+            $post['lng'],
+            true,
+            $post['popularity'],
+            $post['lastlog'],
+            $post['pseudo'],
+        ]);
     }
 
     public function updateUser(array $post): bool
