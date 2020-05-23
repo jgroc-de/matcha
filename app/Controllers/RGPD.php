@@ -32,7 +32,7 @@ class RGPD
     {
         $get = $request->getParams();
         if (!$this->validator->validate($get, ['id', 'token', 'action'])) {
-            return $response->withStatus(400);
+            return $response->withStatus(404);
         }
         $account = $this->user->getUserById($get['id']);
         if (empty($account) || ($get['token'] !== $account['token'])) {

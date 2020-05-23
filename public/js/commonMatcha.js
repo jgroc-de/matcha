@@ -10,18 +10,14 @@ function display(id)
 {
     var forms = document.forms
     var h2 = document.getElementsByTagName('h2')
-    var len = forms.length, i
 
-    for (i = 0; i < len; i++)
-    {
+    for (var i = 0; i < forms.length; i++) {
         h2[i].classList.replace("w3-theme-l1", "w3-theme-d1")
-        if (forms[i].id === id)
-        {
+        console.log(forms[i].id, id, forms[i].id === id, forms[i].id == id)
+        if (forms[i].id === id) {
             forms[i].classList.add('w3-show')
             h2[i].classList.replace("w3-theme-d1", "w3-theme-l1")
-        }
-        else
-        {
+        } else {
             forms[i].classList.remove('w3-show')
         }
     }

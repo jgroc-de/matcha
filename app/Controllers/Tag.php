@@ -37,7 +37,7 @@ class Tag
             }
         }
 
-        return $response->withStatus(400);
+        return $response->withStatus(404);
     }
 
     public function delete(Request $request, Response $response, array $args): Response
@@ -46,6 +46,6 @@ class Tag
             return $response;
         }
 
-        return $response->withStatus(400);
+        return $response->withStatus(404);
     }
 }

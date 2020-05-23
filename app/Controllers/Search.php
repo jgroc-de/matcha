@@ -93,19 +93,18 @@ class Search
             return $this->searchResponse($response);
         }
 
-        return $response->withStatus(400);
+        return $response->withStatus(404);
     }
 
     public function name(Request $request, Response $response, array $args)
     {
-        $post = $request->getParsedBody();
-        if ($this->validator->validate($post, ['pseudo'])) {
-            $this->listByName($post['pseudo']);
+        if ($this->validator->validate($args, ['pseudo'])) {
+            $this->list = $this->user->getUserByPseudo($args['pseudo']);
 
             return $this->searchResponse($response);
         }
 
-        return $response->withStatus(400);
+        return $response->withStatus(404);
     }
 
     private function filterList()
@@ -142,11 +141,6 @@ class Search
     private function listByCriteria()
     {
         $this->list = $this->user->getUserByCriteria($this->age, $this->targets, $this->popularity, $this->distance2angle());
-    }
-
-    private function listByName($name)
-    {
-        $this->list = $this->user->getUserByPseudo($name);
     }
 
     private function listDefault()
@@ -266,9 +260,14 @@ class Search
         return sqrt($a * $a + $b * $b);
     }
 
-    private function score($user)
+    private function score($user): int
     {
-        return 1000 + floor($user['popularity'] / 5) + 5 * pow($user['tag'], $user['tag']) - $user['time'] - floor($user['distance'] * 2) - abs($_SESSION['profil']['birthdate'] - $user['birthdate']);
+        return 1000
+            + floor($user['popularity'] / 5)
+            + 5 * pow($user['tag'], $user['tag'])
+            - $user['time']
+            - floor($user['distance'] * 2)
+            - abs($_SESSION['profil']['birthdate'] - $user['birthdate']);
     }
 
     public function sortList($a, $b)

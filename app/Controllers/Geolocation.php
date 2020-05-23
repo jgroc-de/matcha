@@ -25,7 +25,7 @@ class Geolocation
         $keys = ['lat', 'lng'];
         $post = $request->getParsedBody();
         if (!$this->validator->validate($post, $keys)) {
-            return $response->withStatus(400);
+            return $response->withStatus(404);
         }
         if (!$this->user->updateGeolocation($post['lat'], $post['lng'], $_SESSION['id'])) {
             return $response->withStatus(404);

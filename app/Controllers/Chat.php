@@ -95,7 +95,7 @@ class Chat
             return $response->withstatus(403);
         }
 
-        return $response->withstatus(400);
+        return $response->withstatus(404);
     }
 
     public function startChat(Request $request, Response $response, array $args): Response
