@@ -33,7 +33,7 @@ function initMap() {
     }
 }
 
-function majLocation () {
+function majLocation (user) {
     var request = new XMLHttpRequest()
     var params = 'lat=' + user.lat + '&lng=' + user.lng
 
@@ -66,13 +66,13 @@ function changeLocation()
 function setLocation() {
     user.lat = Number(document.getElementById('lat').value)
     user.lng = Number(document.getElementById('lng').value)
-    majLocation()
+    majLocation(user)
 }
 
 function success(pos) {
     user = {lat: pos.coords.latitude, lng: pos.coords.longitude}
     console.log(user)
-    majLocation()
+    majLocation(user)
 }
 
 function error(err) {

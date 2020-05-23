@@ -23,7 +23,7 @@ $config = [
     'displayErrorDetails' => true,
     'addContentLengthHeader' => false,
     //global
-    'siteUrl' => 'http://localhost:8080',
+    'siteUrl' => 'http://' . $_SERVER['HTTP_HOST'],
     // database settings
     'db' => [
         'host' => 'localhost',
