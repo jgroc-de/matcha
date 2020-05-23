@@ -44,14 +44,14 @@
                             {% if not home %}<span id="online" class="w3-text-green w3-hide">(online)<br></span>
                             <span id="offline" class="w3-text-blue">(offline since: {{ profil.lastlog }})<br></span>
                             {% else %}
-                                name: {{ profil.name}} {{profil.surname}}<br>
-                                email: {{ profil.email }}<br>
+                                Name : {{ profil.name}} {{profil.surname}}<br>
+                                Email : {{ profil.email }}<br>
                             {% endif %}
-                            {% if home %}you are{% else %}it's{% endif %} a {{ profil.gender }} aged of {{ "now"|date("Y") - profil.birthdate }} yo and {{ profil.sexuality }}.<br>
-                                popularity : <div class="w3-theme-l5 w3-border w3-round w3-margin-right" style="width:100px;" title="popularity: {{ profil.popularity }}/100">
+                            {% if home %}You are{% else %}it's{% endif %} a {{ profil.gender }} aged of {{ "now"|date("Y") - profil.birthdate }} yo and {{ profil.sexuality }}.<br>
+                                Popularity score : <div class="w3-theme-l5 w3-border w3-round w3-margin-right" style="width:100px;" title="popularity: {{ profil.popularity }}/100">
                                     <div class="w3-round w3-green w3-border" style="width:{{ profil.popularity }}%;height:16px"></div>
                                 </div>
-                                story: {{ profil.biography }}<br>
+                                Story : {{ profil.biography }}<br>
                         </div>
                     </div>
                 </div>
@@ -82,9 +82,17 @@
                 </div>
                 <div class="w3-half w3-padding">
                     <div class="w3-card-4">
-                        <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">{{ your }}Friends</h3><div id="Friend" class="w3-theme-l4 w3-padding gg-section">
+                        <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">{{ your }}Friends</h3>
+                        <div id="Friend" class="w3-theme-l4 w3-padding gg-section">
                             {% for friend in friends %}
-                                {{ profilButton(color, friend, "delFriend('/friend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}
+                                <div class="gg-friend">
+                                    <a class="" href="/profil/{{friend.id}}">
+                                        <img src="{{ friend.img1 }}" alt="{{ friend.name }}'s picture" class="gg-friend-img" style="border-color:{{color[friend.gender]}};">
+                                        {{friend.name}}
+                                    </a>
+                                    <i class="fa fa-remove" onclick="delFriend('/friend/', {{friend.id}})" title="remove"></i>
+                                </div>
+                                <!--{{ profilButton(color, friend, "delFriend('/friend/', #{ friend.id })", home, path_for('profil', friend), 'friend') }}-->
                             {% endfor %}
                         </div>
                     </div>

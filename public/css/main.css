@@ -23,10 +23,10 @@ h2 {
 
 body {
     background: #371b0f;
-    font-family: Verdana, sans-serif;
+    font-family: Arial, sans-serif;
 }
 .w3-myfont {
-    font-family: Verdana, sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 header, footer {
@@ -52,4 +52,14 @@ footer em  {
 
 hr {
     margin: 10px 0 0 0;
+}
+
+label {
+    text-transform: capitalize;
+}
+
+.fix-gg {
+    display: flex;
+    align-items: center;
+    height: 38.5px;
 }
