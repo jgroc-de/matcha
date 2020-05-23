@@ -13,7 +13,9 @@ session_start();
 require '../vendor/autoload.php';
 
 $dotenv = new Dotenv();
-$dotenv->load(__DIR__.'/../.env');
+if (is_file(__DIR__.'/../.env')) {
+    $dotenv->load(__DIR__ . '/../.env');
+}
 
 // Instatiate the app
 $config = [
