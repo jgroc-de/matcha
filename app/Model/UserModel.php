@@ -45,6 +45,14 @@ class UserModel
         return $req->fetch();
     }
 
+    public function hasUser(int $id): bool
+    {
+        $req = $this->db->prepare('select 1 from user where id = ?');
+        $req->execute([$id]);
+
+        return !empty($req->fetch());
+    }
+
     /**
      * @return array|bool
      */
@@ -170,25 +178,29 @@ class UserModel
         return $req->fetch();
     }
 
-    public function setUser(array $post)
+    public function setUser(array $post): bool
     {
         $req = $this->db->prepare('
                 INSERT INTO user (pseudo, password, name, surname, email, gender, token, publicToken, img1, lattitude, longitude, activ)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        $req->execute([
-            $post['pseudo'],
-            $post['password'],
-            $post['name'],
-            $post['surname'],
-            $post['email'],
-            $post['gender'],
-            $post['token'],
-            $post['publicToken'],
-            $post['img'],
-            $post['lat'],
-            $post['lng'],
-            $post['activ'],
-        ]);
+        try {
+            return $req->execute([
+                $post['pseudo'],
+                $post['password'],
+                $post['name'],
+                $post['surname'],
+                $post['email'],
+                $post['gender'],
+                $post['token'],
+                $post['publicToken'],
+                $post['img'],
+                $post['lat'],
+                $post['lng'],
+                $post['activ'],
+            ]);
+        } catch (\PDOException $error) {
+            return false;
+        }
     }
 
     public function setOauth(int $id, bool $isOauth)
@@ -200,41 +212,15 @@ class UserModel
         $req->execute([$isOauth, $id]);
     }
 
-    public function updateFakeUser(array $post)
+    public function updateFakeUser(array $pseudos)
     {
         $req = $this->db->prepare(
             'UPDATE user
-            SET pseudo = ?,
-            email = ?,
-            name = ?,
-            surname = ?,
-            birthdate = ?,
-            gender = ?,
-            sexuality = ?,
-            biography = ?,
-            lattitude = ?,
-            longitude = ?,
-            bot = ?,
-            popularity = ?,
-            lastlog = ?
-            where pseudo = ?'
+            SET bot = true
+            where pseudo IN (?)'
         );
-        $req->execute([
-            $post['pseudo'],
-            $post['email'],
-            $post['name'],
-            $post['surname'],
-            $post['birthdate'],
-            $post['gender'],
-            $post['sexuality'],
-            $post['biography'],
-            $post['lat'],
-            $post['lng'],
-            true,
-            $post['popularity'],
-            $post['lastlog'],
-            $post['pseudo'],
-        ]);
+
+        $req->execute([implode(',', $post['pseudo']),]);
     }
 
     public function updateUser(array $post): bool

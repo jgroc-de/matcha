@@ -86,14 +86,22 @@ class TagModel
     {
         $req = $this->db->prepare('INSERT INTO hashtags (tag) VALUES (?)');
 
-        return $req->execute([$tag]);
+        try {
+            return $req->execute([$tag]);
+        } catch (\PDOException $error) {
+            return false;
+        }
     }
 
     public function setUserTag(int $idtag): bool
     {
         $req = $this->db->prepare('INSERT INTO usertags (idtag, iduser) VALUES (?,?)');
 
-        return $req->execute([$idtag, $_SESSION['id']]);
+        try {
+            return $req->execute([$idtag, $_SESSION['id']]);
+        } catch (\PDOException $error) {
+            return false;
+        }
     }
 
     public function delUserTag(int $idTag, int $idUser): bool

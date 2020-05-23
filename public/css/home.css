@@ -59,12 +59,23 @@ img {
     font-size: 10px;
     color: #555555;
     text-decoration: underline;
-    transition: 0.2s;
-    cursor: pointer;
 }
 
 .del:hover {
     color: black;
+}
+
+.del-red,.check-green,.del {
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.del-red:hover {
+    color: red;
+}
+
+.check-green:hover {
+    color: #4CAF50;
 }
 
 .gg-image {

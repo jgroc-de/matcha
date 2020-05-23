@@ -30,8 +30,9 @@ $container['App\Controllers\Authentication'] = function ($container) {
 // ok
 $container['App\Controllers\Blacklist'] = function ($container) {
     return new Blacklist(
-        $container->get('friends'),
         $container->get('blacklist'),
+        $container->get('friends'),
+        $container->get('user'),
         $container->get('mail')
     );
 };

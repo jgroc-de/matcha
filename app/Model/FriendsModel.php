@@ -139,10 +139,15 @@ class FriendsModel
         return !empty($req->fetch());
     }
 
-    public function setFriendsReq(int $id1, int $id2, array $user)
+    public function setFriendsReq(int $id1, int $id2, array $user): bool
     {
         $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?, ?)');
-        $req->execute([$id1, $id2, true]);
+        try {
+            $req->execute([$id1, $id2, true]);
+            return true;
+        } catch (\PDOException $error) {
+            return false;
+        }
     }
 
     public function setFriend(int $id1, int $id2): bool
@@ -150,12 +155,13 @@ class FriendsModel
         $tab = $this->sortId($id1, $id2);
         $tab[] = password_hash($id1 . random_bytes(4) . $id2, PASSWORD_DEFAULT);
         $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?, ?)');
-        if ($req->execute($tab)) {
+        try {
+            $req->execute($tab);
             $this->delFriendReq($id1, $id2);
             return true;
+        } catch (\PDOException $error) {
+            return false;
         }
-
-        return false;
     }
 
     public function delAllFriends(int $id)

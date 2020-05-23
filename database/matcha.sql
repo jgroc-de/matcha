@@ -43,7 +43,8 @@ CREATE TABLE `user` (
     `img3` TEXT,
     `img4` TEXT,
     `img5` TEXT,
-    CONSTRAINT PK_user PRIMARY KEY (`id`, `pseudo`)
+    CONSTRAINT PK_user PRIMARY KEY (`id`, `pseudo`),
+    CONSTRAINT PK_user2 UNIQUE (`pseudo`, `email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -101,7 +102,8 @@ DROP TABLE IF EXISTS `usertags`;
 CREATE TABLE `usertags` (
     `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
     `idtag` INT(11) NOT NULL,
-    `iduser` INT(11) NOT NULL
+    `iduser` INT(11) NOT NULL,
+    CONSTRAINT PK_usertags UNIQUE (`idtag`, `iduser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

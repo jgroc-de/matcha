@@ -5,34 +5,38 @@ namespace App\Controllers;
 use App\Lib\MailSender;
 use App\Model\BlacklistModel;
 use App\Model\FriendsModel;
+use App\Model\UserModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Blacklist
 {
-    /** @var FriendsModel */
-    private $friends;
     /** @var BlacklistModel */
     private $blacklist;
+    /** @var FriendsModel */
+    private $friends;
+    /** @var UserModel */
+    private $user;
     /** @var MailSender */
     private $mail;
 
     public function __construct(
-        FriendsModel $friendsModel,
         BlacklistModel $blacklistModel,
+        FriendsModel $friendsModel,
+        UserModel $userModel,
         MailSender $mailSender
     ) {
-        $this->friends = $friendsModel;
         $this->blacklist = $blacklistModel;
+        $this->friends = $friendsModel;
+        $this->user = $userModel;
         $this->mail = $mailSender;
     }
 
     public function add(Request $request, Response $response, array $args): Response
     {
-        try {
-            $this->deleteFriendAndBlacklist($args['id']);
+        if ($this->deleteFriendAndBlacklist($args['id'])) {
             $flash = 'This user is now on your blacklist!';
-        } catch(\PDOException $error) {
+        } else {
             $flash = 'This user is already on your blacklist!';
         }
         $response->getBody()->write($flash);
@@ -42,21 +46,24 @@ class Blacklist
 
     public function report(Request $request, Response $response, array $args): Response
     {
-        try {
-            $this->deleteFriendAndBlacklist($args['id']);
+        if ($this->deleteFriendAndBlacklist($args['id'])) {
             $this->mail->reportMail($args['id']);
             $response->getBody()->write('Thank you to help us improved the community!');
-        } catch (\PDOException $error) {
+        } else {
             $response->getBody()->write('Already reported');
         }
 
         return $response;
     }
 
-    private function deleteFriendAndBlacklist(int $id)
+    private function deleteFriendAndBlacklist(int $id): bool
     {
+        if (!$this->user->hasUser($id)) {
+            return false;
+        }
         $this->friends->delFriend($id, $_SESSION['id']);
         $this->friends->delFriendReq($id, $_SESSION['id']);
-        $this->blacklist->setBlacklist($id);
+
+        return $this->blacklist->setBlacklist($id);
     }
 }

@@ -74,7 +74,7 @@ class Profil
 
     public function profil(Request $request, Response $response, array $args): Response
     {
-        if ($args['id'] == $_SESSION['id']) {
+        if ($args['id'] === $_SESSION['id']) {
             return $response->withRedirect('/', 302);
         }
         $user = $this->user->getUserById($args['id']);
