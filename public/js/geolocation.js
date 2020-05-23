@@ -66,12 +66,15 @@ function changeLocation()
 function setLocation() {
     user.lat = Number(document.getElementById('lat').value)
     user.lng = Number(document.getElementById('lng').value)
+    alert(user.lat + ' - ' + user.lng)
+
     majLocation(user)
 }
 
 function success(pos) {
     user = {lat: pos.coords.latitude, lng: pos.coords.longitude}
-    console.log(user)
+    alert(user.lat + ' - ' + user.lng)
+
     majLocation(user)
 }
 
