@@ -46,6 +46,8 @@ img {
 .gg-section {
     height: 200px;
     overflow: auto;
+    display:flex;
+    flex-direction: column;
 }
 
 .gg-image {
@@ -53,6 +55,27 @@ img {
     margin-left: auto;
     margin-right: auto;
     height:40px;
+}
+
+.gg-friend-img {
+    object-fit: cover;
+    height: 30px;
+    width: 30px;
+    border: solid;
+    border-width: 3px;
+}
+
+.gg-friend {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 5px;
+    margin-bottom: 4px;
+    transition: 0.2s;
+}
+
+.gg-friend:hover {
+    background-color: #371b0f20;
 }
 
 h3 {
@@ -63,11 +86,11 @@ h3 {
     .gg-menu {
         display:none !important;
     }
-    
+
     .gg-pop {
         display:none;
     }
-    
+
     .gg-main-image {
         height:125px;
     }
@@ -87,7 +110,7 @@ h3 {
     .gg-burger {
         display:none !important;
     }
-    
+
     .gg-pop {
         width:100px;
         margin:12px;
@@ -98,11 +121,11 @@ h3 {
         width:25%;
         right:0;
     }
-    
+
     .gg-main-image {
         height:250px;
     }
-    
+
     .gg-2nd-image {
         height:125px;
     }
