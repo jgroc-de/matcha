@@ -141,7 +141,7 @@ class FriendsModel
     public function isLiked(int $id1, int $id2): bool
     {
         $req = $this->db->prepare('SELECT 1 FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
-        $req->execute($id1, $id2);
+        $req->execute([$id1, $id2]);
 
         return !empty($req->fetch());
     }
@@ -213,9 +213,9 @@ class FriendsModel
 
     public function delFriendReq(int $id1, int $id2)
     {
-        $req = $this->db->prepare('UPDATE friendsReq set visible = false WHERE id_user1 = ? AND id_user2 = ?');
+        $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute([$id1, $id2]);
-        $req = $this->db->prepare('UPDATE friendsReq set visible = false WHERE id_user1 = ? AND id_user2 = ?');
+        $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute([$id2, $id1]);
     }
 

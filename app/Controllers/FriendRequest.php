@@ -55,13 +55,11 @@ class FriendRequest
 
     public function deleteRequest(Request $request, Response $response, array $args): Response
     {
-        if ($this->friendsModel->delFriendReq(
-            $_SESSION['id'],
-            $args['id']
-        )) {
+        if ($this->friendsModel->isLiked($_SESSION['id'], $args['id'])) {
+            $this->friendsModel->delFriendReq($_SESSION['id'], $args['id']);
             $flash = 'request sent!';
         } else {
-            $flash = 'already sent!';
+            $flash = 'User not liked!';
         }
         $response->write($flash);
 

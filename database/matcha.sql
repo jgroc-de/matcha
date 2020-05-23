@@ -54,7 +54,8 @@ DROP TABLE IF EXISTS `friendsReq`;
 CREATE TABLE `friendsReq` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL,
-    `visible` BOOL DEFAULT TRUE
+    `visible` BOOL DEFAULT TRUE,
+    CONSTRAINT PK_friendsReq UNIQUE (`id_user1`, `id_user2`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -65,7 +66,8 @@ DROP TABLE IF EXISTS `friends`;
 CREATE TABLE `friends` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL,
-    `suscriber` VARCHAR(255) NOT NULL
+    `suscriber` VARCHAR(255) NOT NULL,
+    CONSTRAINT PK_friends UNIQUE (`id_user1`, `id_user2`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
