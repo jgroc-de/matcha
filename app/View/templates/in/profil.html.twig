@@ -28,7 +28,7 @@
             </div>
         </div>
         <h2 class='' style="margin-bottom:0;background-color: {{ color[profil.gender] }}">{{ hi }}{{ profil.pseudo }}</h2>
-        {% if not home and not friend %}
+        {% if not home and not isFriend %}
             <div class="w3-row">
                 <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/friend/{{ profil.id }}')" >add to friends</button>
                 <button class="w3-button w3-theme-l1 w3-third" onclick="profilAction('/report/{{ profil.id }}')">report as fake user</button>
@@ -42,7 +42,7 @@
                     <div id="Profil" class="w3-theme-l4 w3-padding gg-section">
                         <div class="w3-left-align">
                             {% if not home %}<span id="online" class="w3-text-green w3-hide">(online)<br></span>
-                            <span id="offline" class="w3-text-blue">(offline since: {{ profil.lastlog }})<br></span>
+                            <span id="offline" class="w3-text-blue">(offline since: {{ profil.lastlog|date('d M Y') }})<br></span>
                             {% else %}
                                 name: {{ profil.name}} {{profil.surname}}<br>
                                 email: {{ profil.email }}<br>

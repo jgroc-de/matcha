@@ -28,15 +28,12 @@ class FriendsModel
         $this->userModel = $userModel;
     }
 
-    /**
-     * @return array|bool
-     */
-    public function getFriend(int $id1, int $id2)
+    public function isFriend(int $id1, int $id2): bool
     {
-        $req = $this->db->prepare('SELECT * FROM friends WHERE id_user1 = ? AND id_user2 = ?');
+        $req = $this->db->prepare('SELECT 1 FROM friends WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute($this->sortId($id1, $id2));
 
-        return $req->fetch();
+        return !empty($req->fetch());
     }
 
     public function getFriends(int $id): array
@@ -140,10 +137,19 @@ class FriendsModel
         return $req->fetch();
     }
 
+
+    public function isLiked(int $id1, int $id2): bool
+    {
+        $req = $this->db->prepare('SELECT 1 FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
+        $req->execute($this->sortId($id1, $id2));
+
+        return !empty($req->fetch());
+    }
+
     public function setFriendsReq(int $id1, int $id2)
     {
         $user = $this->userModel->getUserById($id2);
-        if ($this->getFriendReq($id2, $id1) or $user['bot']) {
+        if ($this->isLiked($id2, $id1) || $user['bot']) {
             $this->setFriend($id1, $id2);
             $this->userModel->updatePopularity(5, $user);
             $this->userModel->updatePopularity(5, $_SESSION['profil']);
@@ -165,7 +171,9 @@ class FriendsModel
             $this->MyZmq->send($msg);
         } else {
             $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?, ?)');
-            $req->execute([$id1, $id2, true]);
+            $ids = $this->sortId($id1, $id2);
+            $ids[] = true;
+            $req->execute($ids);
             $this->userModel->updatePopularity(1, $user);
             $msg = [
                 'category' => '"' . $user['publicToken'] . '"',
@@ -239,17 +247,6 @@ class FriendsModel
             ];
             $this->MyZmq->send($msg);
         }
-    }
-
-    /**
-     * @return array|bool
-     */
-    public function isFriend(array $id)
-    {
-        $req = $this->db->prepare('select * from friends where id_user1 = ? and id_user2 = ?');
-        $req->execute($id);
-
-        return $req->fetch();
     }
 
     private function sortId(int $id1, int $id2): array

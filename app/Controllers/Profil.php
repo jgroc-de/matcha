@@ -86,14 +86,19 @@ class Profil
                 'link' => '/profil/' . $_SESSION['id'],
                 'msg' => $_SESSION['profil']['pseudo'] . ' watched your profil!',
             ]);
-            $friend = empty($this->friends->getFriend($_SESSION['id'], $user['id'])) ? false : true;
-            $user['lastlog'] = date('d M Y', $user['lastlog']);
+            $isFriend = $this->friends->isFriend($_SESSION['id'], $user['id']);
+            if ($isFriend) {
+                $user['pseudo'] .= ' "Friend"';
+            } elseif ($this->friends->isLiked($_SESSION['id'], $user['id'])) {
+                $user['pseudo'] .= "Liked";
+            }
+
 
             return $this->view->render(
                 $response,
                 self::template,
                 [
-                    'friend' => $friend,
+                    'isFriend' => $isFriend,
                     'profil' => $user,
                     'imgs' => $this->getImgs($user),
                     'me' => $_SESSION['profil'],

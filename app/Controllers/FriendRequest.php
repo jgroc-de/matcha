@@ -60,7 +60,7 @@ class FriendRequest
 
     private function isNotAlreadyFriend(int $myId, array $args): bool
     {
-        return empty($this->friendsModel->getFriendReq($myId, $args['id']))
-            && empty($this->friendsModel->getFriend($myId, $args['id']));
+        return $this->friendsModel->isLiked($myId, $args['id'])
+            && $this->friendsModel->isFriend($myId, $args['id']);
     }
 }
