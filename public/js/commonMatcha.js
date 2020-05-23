@@ -1,15 +1,13 @@
-function displayModal(url)
-{
+function displayModal(url) {
     var modal = document.getElementById('Modal')
     
     modal.getElementsByTagName('img')[0].src = url
     modal.style.display='block'
 }
 
-function display(id)
-{
+function display(id) {
     var forms = document.forms
-    var h2 = document.getElementsByTagName('h2')
+    var h2 = document.querySelectorAll('h2[gg-form]')
 
     for (var i = 0; i < forms.length; i++) {
         h2[i].classList.replace("w3-theme-l1", "w3-theme-d1")
@@ -22,10 +20,8 @@ function display(id)
     }
 }
 
-function toggleDisplay2(x)
-{
-    while (x = x.nextSibling)
-    {
+function toggleDisplay2(x) {
+    while (x = x.nextSibling) {
         if ((x.className) || (x.innerHTML))
         {
             x.classList.toggle('w3-hide')
@@ -33,18 +29,15 @@ function toggleDisplay2(x)
     }
 }
 
-function toggleSibling(node)
-{
+function toggleSibling(node) {
     node.nextSibling.classList.toggle('w3-hide')
 }
 
-function toggleById(id)
-{
+function toggleById(id) {
     document.getElementById(id).classList.toggle('w3-hide')
 }
 
-function printNotif(args)
-{
+function printNotif(args) {
     var p = document.createElement('p')
     var div = document.createElement('div')
     var notif = document.getElementById('notif')
@@ -64,14 +57,12 @@ function printNotif(args)
     }, 4500, notif, div)
 }
 
-function ggAjaxGet(path, callback, args)
-{
+function ggAjaxGet(path, callback, args) {
     var request = new XMLHttpRequest()
 
     request.open('GET', path, true)
     request.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200)
-        {
+        if (this.readyState === 4 && this.status === 200) {
             if (args[0] === 'response')
                 args[0] = this.responseText
             callback(args)
@@ -80,14 +71,12 @@ function ggAjaxGet(path, callback, args)
     request.send()
 }
 
-function ggAjax(method, path, callback, args)
-{
+function ggAjax(method, path, callback, args) {
     var request = new XMLHttpRequest()
 
     request.open(method, path, true)
     request.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200)
-        {
+        if (this.readyState === 4 && this.status === 200) {
             if (args[0] === 'response')
                 args[0] = this.responseText
             callback(args)
@@ -96,8 +85,7 @@ function ggAjax(method, path, callback, args)
     request.send()
 }
 
-function getColor(kind)
-{
+function getColor(kind) {
     switch(kind)
     {
         case 'Rick':
