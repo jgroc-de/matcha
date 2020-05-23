@@ -325,6 +325,22 @@ class UserModel
         $req->execute([time(), $id]);
     }
 
+    public function hasPictures(int $id): bool
+    {
+        $req = $this->db->prepare('
+SELECT 1 FROM user WHERE id = ?
+    AND (
+        img1 IS NOT NULL
+        OR img2 IS NOT NULL
+        OR img3 IS NOT NULL
+        OR img4 IS NOT NULL
+        OR img5 IS NOT NULL
+    )');
+        $req->execute([$id]);
+
+        return !empty($req->fetch());
+    }
+
     public function delPicture(string $nb): bool
     {
         $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = NULL WHERE id = ?');

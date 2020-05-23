@@ -89,8 +89,6 @@ class Settings
         if ($this->form->checkProfil($post) && $this->user->updateUser($post)) {
             $_SESSION['profil'] = array_replace($_SESSION['profil'], $post);
             $this->flash->addMessage('success', 'profil updated!');
-        } else {
-            $this->flash->addMessage('failure', 'something went wrong');
         }
 
         return $this->editProfil($request, $response, $args);

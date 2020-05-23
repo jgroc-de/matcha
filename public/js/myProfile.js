@@ -90,8 +90,7 @@ function addEvent() {
 
 function deletePic(id)
 {
-    if (confirm('Delete?'))
-    {
+    if (confirm('Delete?')) {
         ggAjax('DELETE', 'picture/' + id.charAt(3), function (id) {
             var labelElmt = document.createElement('label')
             var parentNode = document.getElementById(id)
