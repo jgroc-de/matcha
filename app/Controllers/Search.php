@@ -50,7 +50,7 @@ class Search
 
         return $this->view->render(
             $response,
-            'templates/home/search.html.twig',
+            'templates/in/search.html.twig',
             [
                 'me' => $_SESSION['profil'],
                 'gender' => $this->kind,

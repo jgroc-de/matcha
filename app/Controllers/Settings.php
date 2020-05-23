@@ -109,7 +109,7 @@ class Settings
 
         return $this->view->render(
             $response,
-            'templates/home/editProfil.html.twig',
+            'templates/in/editProfil.html.twig',
             $data
         );
     }

@@ -26,7 +26,7 @@ class Chat
 
         return $this->view->render(
             $response,
-            'templates/home/chat.html.twig',
+            'templates/in/chat.html.twig',
             [
                 'me' => $_SESSION['profil'],
                 'notification' => $this->notif->getNotification(),

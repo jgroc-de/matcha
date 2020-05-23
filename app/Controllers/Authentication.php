@@ -16,7 +16,7 @@ use Slim\Views\Twig;
 
 class Authentication
 {
-    const template = 'templates/logForm/login.html.twig';
+    const template = 'templates/out/login.html.twig';
 
     /** @var ContainerInterface */
     private $container;
@@ -98,7 +98,7 @@ class Authentication
         session_unset();
         session_destroy();
 
-        return $this->view->render($response, 'templates/logForm/logout.html.twig', ['logout' => true]);
+        return $this->view->render($response, 'templates/out/logout.html.twig', ['logout' => true]);
     }
 
     public function signup(Request $request, Response $response, array $post): Response

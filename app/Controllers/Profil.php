@@ -15,7 +15,7 @@ use Slim\Views\Twig;
 
 class Profil
 {
-    const template = 'templates/home/profil.html.twig';
+    const template = 'templates/in/profil.html.twig';
 
     /** @var BlacklistModel */
     private $blacklist;
