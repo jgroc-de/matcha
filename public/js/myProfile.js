@@ -6,27 +6,22 @@ function addTag(path) {
     if (tag)
     {
         var xhr = new XMLHttpRequest()
-       
+
         xhr.open('POST', path, true)
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
         xhr.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 var id = this.responseText
-                var div = document.createElement('div')
                 var span = document.createElement('span')
-                var button = document.createElement('i')
-                
-                span.className = 'w3-padding  w3-theme-l1 w3-hover-green w3-col s8'
-                span.textContent = '#' + tag
-                span.style.height = '40px'
-                button.className = 'w3-button w3-right w3-theme-d1 w3-hover-red w3-col s4 fa fa-remove'
-                button.setAttribute('onclick', 'delUserTag("/tag/", ' + id + ')')
-                button.style.height = '40px'
-                div.id = 'tag' + id
-                div.className = 'w3-bar w3-theme-d1 w3-round-xxlarge w3-half w3-row'
-                div.appendChild(span)
-                div.appendChild(button)
-                document.getElementById('Interest').appendChild(div)
+                var del = document.createElement('span')
+
+                span.id = 'tag' + id
+                span.textContent = "- #" + tag + " "
+                del.className = 'del'
+                del.setAttribute('onclick', 'delUserTag("/tag/", ' + id + ')')
+                del.textContent = '(delete)'
+                span.appendChild(del)
+                document.getElementById('Interest').appendChild(span)
             }
         }
         xhr.send('tag=' + tag)
@@ -54,7 +49,7 @@ function addEvent() {
         var form = new FormData()
         var xhttp = new XMLHttpRequest()
         var reader = new FileReader()
-        
+
         form.append('file', this.files[0])
         xhttp.open('POST', '/picture/' + id.charAt(3), true)
         xhttp.setRequestHeader('enctype', 'multipart/form-data')
@@ -111,8 +106,8 @@ function deletePic(id)
             inputElemt.style.display = 'none'
             while (parentNode.hasChildNodes())
                 parentNode.removeChild(parentNode.firstChild)
-            parentNode.appendChild(div) 
-            div.appendChild(labelElmt) 
+            parentNode.appendChild(div)
+            div.appendChild(labelElmt)
             labelElmt.appendChild(inputElemt2)
             labelElmt.appendChild(inputElemt)
             addPicture()
@@ -137,6 +132,27 @@ function delFriendReq(path, id)
 {
     if (confirm('R U SURE?'))
         ggAjax('DELETE', path + id, ggRemoveChild, 'req' + id)
+}
+
+function acceptFriendReq(path, id)
+{
+    var parent = document.getElementById("Friend")
+    var child = document.createElement('div')
+    var del = document.createElement('i')
+    var a = document.getElementById('req' + id).children[0]
+
+    child.id = "friend" + id
+    child.className = "gg-friend"
+    del.className = 'fa fa-remove'
+    del.title = 'delete'
+    del.setAttribute('onclick', 'delFriend("/friend/' + id + '")')
+
+    child.appendChild(a)
+    child.appendChild(del)
+    parent.appendChild(child)
+
+    ggAjax('POST', path + id, ggRemoveChild, 'req' + id)
+    printNotif(["Friend request accepted", true])
 }
 
 function delUserTag(path, id)

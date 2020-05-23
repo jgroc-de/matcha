@@ -50,6 +50,22 @@ img {
     flex-direction: column;
 }
 
+.gg-tag-section {
+    height: 200px;
+    overflow: auto;
+}
+
+.del {
+    font-size: 10px;
+    color: #555555;
+    text-decoration: underline;
+    transition: 0.2s;
+}
+
+.del:hover {
+    color: black;
+}
+
 .gg-image {
     display: block;
     margin-left: auto;
