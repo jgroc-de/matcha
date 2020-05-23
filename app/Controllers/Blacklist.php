@@ -27,11 +27,12 @@ class Blacklist
         $this->mail = $mailSender;
     }
 
-    public function addToBlacklist(Request $request, Response $response, array $args): Response
+    public function add(Request $request, Response $response, array $args): Response
     {
-        if ($this->deleteFriendAndBlacklist($args['id'])) {
+        try {
+            $this->deleteFriendAndBlacklist($args['id']);
             $flash = 'This user is now on your blacklist!';
-        } else {
+        } catch(\PDOException $error) {
             $flash = 'This user is already on your blacklist!';
         }
         $response->getBody()->write($flash);
@@ -41,19 +42,21 @@ class Blacklist
 
     public function report(Request $request, Response $response, array $args): Response
     {
-        if ($this->deleteFriendAndBlacklist($args['id'])) {
+        try {
+            $this->deleteFriendAndBlacklist($args['id']);
             $this->mail->reportMail($args['id']);
             $response->getBody()->write('Thank you to help us improved the community!');
-        } else {
+        } catch (\PDOException $error) {
             $response->getBody()->write('Already reported');
         }
 
         return $response;
     }
 
-    private function deleteFriendAndBlacklist(int $id): bool
+    private function deleteFriendAndBlacklist(int $id)
     {
         $this->friends->delFriend($id, $_SESSION['id']);
-        return $this->blacklist->setBlacklist($id);
+        $this->friends->delFriendReq($id, $_SESSION['id']);
+        $this->blacklist->setBlacklist($id);
     }
 }

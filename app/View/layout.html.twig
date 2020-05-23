@@ -33,7 +33,7 @@
                 {% set url = "background.jpg" %}
             {% endif %}
             #main {
-                background: url('img/{{ url }}') no-repeat {{ position }};
+                background: url('{{ BASE_URL }}/img/{{ url }}') no-repeat {{ position }};
                 background-size: {{ size }};
                 min-height: 75vh;
             }

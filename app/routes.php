@@ -86,7 +86,7 @@ $app->group('', function () use ($app) {
     $this->delete('/friendReq/{id:[0-9]+}', FriendRequest::class . ':deleteRequest');
 
     $this->post('/report/{id:[0-9]+}', Blacklist::class . ':report');
-    $this->post('/blacklist/{id:[0-9]+}', Blacklist::class . ':blacklist');
+    $this->post('/blacklist/{id:[0-9]+}', Blacklist::class . ':add');
 
     $this->post('/picture/{id:[0-9]+}', Picture::class . ':add');
     $this->delete('/picture/{id:[0-9]+}', Picture::class . ':delete');

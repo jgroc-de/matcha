@@ -29,7 +29,7 @@ class BlacklistModel
         $req = $this->db->prepare('SELECT 1 FROM blacklist WHERE iduser = ? and iduser_bl = ?');
         $req->execute([$iduser, $iduser_bl]);
 
-        return $req->fetch();
+        return !empty($req->fetch());
     }
 
     public function getAllBlacklist()
