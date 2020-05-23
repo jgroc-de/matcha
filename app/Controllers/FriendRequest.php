@@ -25,10 +25,7 @@ class FriendRequest
         if (!$this->userModel->hasPictures($_SESSION['id'])) {
             $flash = 'You need to add pictures on your profile first!';
         } elseif ($this->isNotAlreadyFriend($_SESSION['id'], $args)) {
-            $this->friendsModel->setFriendsReq(
-                $_SESSION['id'],
-                $args['id']
-            );
+            $this->friendsModel->setFriendsReq($_SESSION['id'], $args['id']);
             $flash = 'request sent!';
         } else {
             $flash = 'already sent!';
