@@ -17,13 +17,14 @@ if (is_file(__DIR__.'/../.env')) {
     $dotenv->load(__DIR__ . '/../.env');
 }
 
+$proto = strpos($_SERVER['HTTP_HOST'], 'localhost') === 0 ? 'http' : 'https';
 // Instatiate the app
 $config = [
     // Slim settings
     'displayErrorDetails' => true,
     'addContentLengthHeader' => false,
     //global
-    'siteUrl' => 'http://' . $_SERVER['HTTP_HOST'],
+    'siteUrl' => $proto . '://' . $_SERVER['HTTP_HOST'],
     // database settings
     'db' => [
         'host' => 'localhost',
