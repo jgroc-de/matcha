@@ -49,7 +49,7 @@ function addMessage(text, owner, myId)
 
     div.className = "w3-bar"
     p.innerHTML = text
-    if (owner === myId)
+    if (owner == myId)
     {
         p.className = "w3-theme-l2 w3-bar-item w3-round w3-right w3-padding"
     }
