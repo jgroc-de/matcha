@@ -192,8 +192,7 @@ class FriendsModel
             WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute($tab);
         if (empty($req->fetch())) {
-            $this->eraseFriendReq($id1, $id2);
-            $this->eraseFriendReq($id2, $id1);
+            $this->delFriendReq($id1, $id2);
             $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?, ?)');
             $token = password_hash($id1 . random_bytes(4) . $id2, PASSWORD_DEFAULT);
             $this->flashMessage->addMessage('success', 'this user is now your friends');
@@ -223,12 +222,6 @@ class FriendsModel
     {
         $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? OR id_user2 = ?');
         $req->execute([$id, $id]);
-    }
-
-    public function eraseFriendReq(int $id1, int $id2)
-    {
-        $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
-        $req->execute([$id1, $id2]);
     }
 
     public function delFriend(int $id1, int $id2)
