@@ -7,81 +7,84 @@
 
 {% block main %}
 <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
-    {{ form('Change your Password', 'editPassword', flash, editPwd) }}
-    <div class="w3-section">
-        {{ input('password','enter new password', {'name': 'password'}) }}
-    </div>
-    <div class="w3-section">
-        {{ input('password', 're-enter new password', {'name': 'password confirmation'}) }}
-    </div>
-    {{ button('submit') }}
-    </form>
-    {{ form('Your Account', 'RGPD', flash, rgpd) }}
-    <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-green">
-        <div class="w3-tag w3-padding w3-green">About your data</div>
-        <p>We need some of your data to authentificate you on this website. In particular, your email is requested to sign up and to let you reset your password when needed. We dont sell or communicate in any ways your information to any third party.</p>
-    </div>
-    <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-blue">
-        <div class="w3-tag w3-padding w3-blue">Get all your data</div>
-        <p>We will send you everything we know about you by email.</p>
-        <button type="button" class="w3-button w3-blue w3-right" onclick="getAllDatas()">Get data</button>
-    </div>
-    <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-red">
-        <div class="w3-tag w3-padding w3-red">Delete your account and all your data</div>
-        <p>We will delete everything we know about you. Your account will be delete too. A confirmation mail will be sent to you. Please notice that this can't be undone.</p>
-        <button type="button" class="w3-button w3-red w3-right" onclick="deleteAccount()">Delete account</button>
-    </div>
-    </form>
+    {% set inputs %}
+        <div class="w3-section">
+            {{ input('password','enter new password', {'name': 'password'}) }}
+        </div>
+        <div class="w3-section">
+            {{ input('password', 're-enter new password', {'name': 'password confirmation'}) }}
+        </div>
+        {{ button('submit') }}
+    {% endset %}
+    {{ form(inputs, 'Change your Password', 'editPassword', flash, editPwd) }}
+    {% set inputs %}
+        <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-green">
+            <div class="w3-tag w3-padding w3-green">About your data</div>
+            <p>We need some of your data to authentificate you on this website. In particular, your email is requested to sign up and to let you reset your password when needed. We dont sell or communicate in any ways your information to any third party.</p>
+        </div>
+        <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-blue">
+            <div class="w3-tag w3-padding w3-blue">Get all your data</div>
+            <p>We will send you everything we know about you by email.</p>
+            <button type="button" class="w3-button w3-blue w3-right" onclick="getAllDatas()">Get data</button>
+        </div>
+        <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-red">
+            <div class="w3-tag w3-padding w3-red">Delete your account and all your data</div>
+            <p>We will delete everything we know about you. Your account will be delete too. A confirmation mail will be sent to you. Please notice that this can't be undone.</p>
+            <button type="button" class="w3-button w3-red w3-right" onclick="deleteAccount()">Delete account</button>
+        </div>
+    {% endset %}
+    {{ form(inputs, 'Your Account', 'RGPD', flash, rgpd) }}
 
 
-    {{ form('Edit your profil', 'editProfil', flash, editProfil) }}
-    <div class="w3-section">
-        {{ input('text', 'pseudo', {'value': me.pseudo}) }}
-    </div>
-    <div class="w3-section">
-        {{ input('email', 'email', {'value': me.email}) }}
-    </div>
-    <div class="w3-section">
-        {{ input('text', 'name', {'value': me.name}) }}
-    </div>
-    <div class="w3-section">
-        {{ input('text', 'surname', {'value': me.surname}) }}
-    </div>
-    <div class="w3-section">
-        {{ input(
-        'number',
-        'birthdate',
-        {
-        'value': me.birthdate,
-        'min': 1850,
-        'max': year,
-        'name': 'birthdate'
-        })
-        }}
-    </div>
-    <div class="w3-section">
-        {{ select({
-        'label': 'gender',
-        'array': characters,
-        'select': me.gender,
-        'name': 'gender'
-        })
-        }}
-    </div>
-    <div class="w3-section">
-        {{ select({
-        'label': 'orientation',
-        'array': sexualPattern,
-        'select': me.sexuality,
-        'name': 'sexuality'
-        }) 
-        }}
-    </div>
-    <div class="w3-section">
-        {{ textarea({'label': 'Biography', 'name': 'biography', 'value': me.biography}) }}
-    </div>
-    {{ button('submit') }}
-    </form>
+    {% set inputs %}
+        <div class="w3-section">
+            {{ input('text', 'pseudo', {'value': me.pseudo}) }}
+        </div>
+        <div class="w3-section">
+            {{ input('email', 'email', {'value': me.email}) }}
+        </div>
+        <div class="w3-section">
+            {{ input('text', 'name', {'value': me.name}) }}
+        </div>
+        <div class="w3-section">
+            {{ input('text', 'surname', {'value': me.surname}) }}
+        </div>
+        <div class="w3-section">
+            {{ input(
+                'number',
+                'birthdate',
+                {
+                    'value': me.birthdate,
+                    'min': 1850,
+                    'max': year,
+                    'name': 'birthdate'
+                })
+            }}
+        </div>
+        <div class="w3-section">
+            {{ select({
+                'label': 'gender',
+                'array': characters,
+                'select': me.gender,
+                'name': 'gender'
+            })
+            }}
+        </div>
+        <div class="w3-section">
+            {{ select({
+                'label': 'orientation',
+                'array': sexualPattern,
+                'select': me.sexuality,
+                'name': 'sexuality'
+            })
+            }}
+        </div>
+        <div class="w3-section">
+            {{ textarea({'label': 'Biography', 'name': 'biography', 'value': me.biography}) }}
+        </div>
+        {{ button('submit') }}
+    {% endset %}
+    {{ form(inputs, 'Edit your profil', 'editProfil', flash, editProfil) }}
 </div>
 {% endblock %}
 

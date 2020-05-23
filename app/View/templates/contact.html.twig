@@ -12,7 +12,7 @@
 {% block main %}
     <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
         {% if not flash['success'] %}
-            {{ form('Contact Us', 'contact', flash, true) }}
+            {% set inputs %}
                 <div class="w3-section">
                     <div id="infopwd" class="w3-panel w3-green">
                         <p>If you have anything to tell us, we will be happy to read you even if Rick doesn't care, like, at all!</p>
@@ -29,12 +29,14 @@
                     {{ button('submit', 'send') }}
                     {{ button('reset') }}
                 </div>
-            </form>
+            {% endset %}
         {% else %}
+            {% set inputs = '' %}
             <script>
                 setTimeout(function () {location.href = '/'}, 3500);
             </script>
         {% endif %}
+        {{ form(inputs, 'Contact Us', 'contact', flash, true) }}
     </div>
     {% block script %}
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
