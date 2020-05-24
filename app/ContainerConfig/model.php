@@ -20,7 +20,8 @@ $container['db'] = function ($container) {
         $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
     } catch (\PDOException $error) {
         echo $error->getMessage();
-        echo "server database fail"; exit();
+        echo 'server database fail';
+        exit();
     }
 
     return $pdo;

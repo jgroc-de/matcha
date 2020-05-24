@@ -94,7 +94,6 @@ class Profil
                 $user['pseudo'] .= ' "Liked"';
             }
 
-
             return $this->view->render(
                 $response,
                 self::template,
@@ -120,7 +119,7 @@ class Profil
             'imgs' => [],
             'pseudo' => $user['pseudo'],
         ];
-        foreach($user as $key => $value) {
+        foreach ($user as $key => $value) {
             if (strpos($key, 'img') === 0) {
                 $imgs['imgs'][] = $value;
             }

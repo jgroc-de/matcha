@@ -41,7 +41,7 @@ class FriendRequest
             if (empty($user)) {
                 return $response->withRedirect(404);
             }
-            if ($this-> friendsModel->isLiked($args['id'], $_SESSION['id']) || $user['bot']) {
+            if ($this->friendsModel->isLiked($args['id'], $_SESSION['id']) || $user['bot']) {
                 $this->friendsModel->setFriend($_SESSION['id'], $args['id']);
                 $flash = 'You have a new Friend! Congrats!';
                 $this->userModel->updatePopularity(5, $user);
@@ -65,7 +65,8 @@ class FriendRequest
                 $this->userModel->updatePopularity(1, $user);
                 $this->sendNotif(
                     $user['publicToken'],
-                    $user['id'], $_SESSION['id'],
+                    $user['id'],
+                    $_SESSION['id'],
                     $_SESSION['id'],
                     $_SESSION['profil']['pseudo'] . ' sent you a friend request'
                 );

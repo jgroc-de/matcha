@@ -183,6 +183,7 @@ class UserModel
         $req = $this->db->prepare('
                 INSERT INTO user (pseudo, password, name, surname, email, gender, token, publicToken, img1, lattitude, longitude, activ)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+
         try {
             return $req->execute([
                 $post['pseudo'],

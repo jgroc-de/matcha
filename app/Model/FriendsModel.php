@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use App\Lib\FlashMessage;
-use App\Lib\MyZmq;
 
 /**
  * class UserModel
@@ -130,7 +129,6 @@ class FriendsModel
         return $req->fetch();
     }
 
-
     public function isLiked(int $id1, int $id2): bool
     {
         $req = $this->db->prepare('SELECT 1 FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
@@ -142,8 +140,10 @@ class FriendsModel
     public function setFriendsReq(int $id1, int $id2, array $user): bool
     {
         $req = $this->db->prepare('INSERT INTO friendsReq VALUE (?, ?, ?)');
+
         try {
             $req->execute([$id1, $id2, true]);
+
             return true;
         } catch (\PDOException $error) {
             return false;
@@ -155,9 +155,11 @@ class FriendsModel
         $tab = $this->sortId($id1, $id2);
         $tab[] = password_hash($id1 . random_bytes(4) . $id2, PASSWORD_DEFAULT);
         $req = $this->db->prepare('INSERT INTO friends VALUES (?, ?, ?)');
+
         try {
             $req->execute($tab);
             $this->delFriendReq($id1, $id2);
+
             return true;
         } catch (\PDOException $error) {
             return false;

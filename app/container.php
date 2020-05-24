@@ -44,9 +44,9 @@ $container['zmq'] = function () {
         $socket->connect('tcp://localhost:5555');
 
         return $socket;
-    } else {
-        return null;
     }
+
+    return null;
 };
 
 $container['curl'] = function (): Client {
