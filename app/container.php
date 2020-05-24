@@ -34,7 +34,7 @@ $container['view'] = function ($container): Twig {
 };
 
 $container['geoIP'] = function (): Reader {
-    return new Reader('../geoIP2/GeoLite2-City_20180501/GeoLite2-City.mmdb');
+    return new Reader('../geoIP2/GeoLite2-City_20200519/GeoLite2-City.mmdb');
 };
 
 $container['zmq'] = function () {
