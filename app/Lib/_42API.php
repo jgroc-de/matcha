@@ -12,10 +12,13 @@ class _42API extends APIinterface
     /** @var Client */
     protected $client;
 
+    private $baseUrl;
+
     public function __construct($container)
     {
         parent::__construct($container);
         $this->client = $container->get('curl');
+        $baseUrl = $container->get('settings')['siteUrl'];
     }
 
     public function loginToApi($token): string
@@ -29,7 +32,7 @@ class _42API extends APIinterface
                         'client_id' => $_ENV['PUB_42_KEY'],
                         'client_secret' => $_ENV['SECRET_42_KEY'],
                         'code' => $token,
-                        'redirect_uri' => 'http://localhost:8080/apiLogin/42',
+                        'redirect_uri' => $this->baseUrl . '/apiLogin/42',
                     ],
                 ]
             );
