@@ -31,19 +31,19 @@
         {% if not home and not isFriend %}
             <div class="w3-row">
                 {% if isLiked %}
-                    <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/friendReq/{{ profil.id }}', true)" >unlike</button>
+                    <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/friendReq/{{ profil.id }}', true)" >Unlike</button>
                 {% else %}
-                    <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/friend/{{ profil.id }}')" >add to friends</button>
+                    <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/friend/{{ profil.id }}')" >Add to friends</button>
                 {% endif %}
-                <button class="w3-button w3-theme-l1 w3-third" onclick="profilAction('/report/{{ profil.id }}')">report as fake user</button>
-                <button class="w3-button w3-theme-d1 w3-third" onclick="profilAction('/blacklist/{{ profil.id }}')">blacklist this user</button>
+                <button class="w3-button w3-theme-l1 w3-third" onclick="profilAction('/report/{{ profil.id }}')">Report as fake user</button>
+                <button class="w3-button w3-theme-d1 w3-third" onclick="profilAction('/blacklist/{{ profil.id }}')">Blacklist this user</button>
             </div>
         {% endif %}
         <div class="w3-row {% if home %}w3-col l6 s12{% endif %}">
             <div class="w3-half w3-padding">
                 <div class="w3-card-4">
                     {{ subtitle('Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
-                    <div id="Profil" class="w3-theme-l4 w3-padding gg-section">
+                    <div id="Profil" class="w3-white w3-padding gg-section">
                         <div class="w3-left-align">
                             {% if not home %}<span id="online" class="w3-text-green w3-hide">(online)<br></span>
                             <span id="offline" class="w3-text-blue">(offline since: {{ profil.lastlog|date('d M Y') }})<br></span>
@@ -51,8 +51,8 @@
                                 Name : {{ profil.name}} {{profil.surname}}<br>
                                 Email : {{ profil.email }}<br>
                             {% endif %}
-                            {% if home %}You are{% else %}it's{% endif %} a {{ profil.gender }} aged of {{ "now"|date("Y") - profil.birthdate }} yo and {{ profil.sexuality }}.<br>
-                                Popularity score : <div class="w3-theme-l5 w3-border w3-round w3-margin-right" style="width:100px;" title="popularity: {{ profil.popularity }}/100">
+                            {% if home %}You are{% else %}It's{% endif %} a {{ profil.gender }} aged of {{ "now"|date("Y") - profil.birthdate }} yo and {{ profil.sexuality }}.<br>
+                                Popularity score : <div class="w3-theme-l5 w3-border w3-margin-right" style="width:100px;" title="popularity: {{ profil.popularity }}/100">
                                     <div class="w3-round w3-green w3-border" style="width:{{ profil.popularity }}%;height:16px"></div>
                                 </div>
                                 Story : {{ profil.biography }}<br>
@@ -63,7 +63,7 @@
             <div class="w3-half w3-padding">
                 <div class="w3-card-4">
                     {{ subtitle('Interest', home, 'fa fa-plus',  "addTag('/tag')", 'add tag') }}
-                    <div id="Interest" class="w3-theme-l4 gg-tag-section w3-padding" id="userTag">
+                    <div id="Interest" class="w3-white gg-tag-section w3-padding" id="userTag">
                         {% for tag in tags %}
                             <span id="tag{{tag.id}}">
                                 {%if (tag != tags[0])%}
@@ -83,7 +83,7 @@
             <div class="w3-row w3-col l6 s12">
                 <div class="w3-half w3-padding">
                     <div class="w3-card-4">
-                        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleSibling(this)">{{ your }}Friend Request</h3><div id="FriendR" class="w3-theme-l4 w3-padding gg-section">
+                        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleSibling(this)">{{ your }}Friend Request</h3><div id="FriendR" class="w3-white w3-padding gg-section">
                             {% for req in friendReq %}
                                 {% if req.visible %}
                                     <div class="gg-friend" id="req{{req.id}}">
@@ -104,11 +104,11 @@
                 <div class="w3-half w3-padding">
                     <div class="w3-card-4">
                         <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">{{ your }}Friends</h3>
-                        <div id="Friend" class="w3-theme-l4 w3-padding gg-section">
+                        <div id="Friend" class="w3-white w3-padding gg-section">
                             {% for friend in friends %}
                                 <div class="gg-friend" id="friend{{friend.id}}">
                                     <a class="" href="/profil/{{friend.id}}">
-                                        <img src="{{ friend.img1 }}" alt="{{ friend.pseudo }}'s picture" class="gg-friend-img" style="border-color:{{color[friend.gender]}};">
+                                        <img src="{{ friend.img1 }}" alt="{{ friend.pseudo }}'s picture" class="{{color[friend.gender]}} gg-friend-img">
                                         {{friend.pseudo}}
                                     </a>
                                     <i class="fa fa-remove" onclick="delFriend('/friend/', {{friend.id}})" title="remove"></i>
@@ -163,8 +163,8 @@
                                onchange="changeLocation()">
                     </div>
                     <div class="w3-right w3-half w3-section">
-                    <button class="w3-button w3-half w3-ripple w3-theme-l1 w3-hover-green" type="button" onclick="setLocation()">set</button>
-                    <button class="w3-button w3-half w3-ripple w3-theme-d1 w3-hover-green" type="button" onclick="updateGeolocation()">reset</button>
+                    <button class="w3-button w3-half w3-ripple w3-theme-l1 w3-hover-green" type="button" onclick="setLocation()">Set</button>
+                    <button class="w3-button w3-half w3-ripple w3-theme-d1 w3-hover-green" type="button" onclick="updateGeolocation()">Reset</button>
                     </div>
                 </div>
                 {% endif %}
