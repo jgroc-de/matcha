@@ -157,4 +157,24 @@ function delUserTag(path, id)
     ggAjax('DELETE', path + id, ggRemoveChild, 'tag' + id)
 }
 
+function mateStatus() {
+    ggAjaxGet('/chatStatus', function(){}, 0)
+}
+
+function highlightMate(data) {
+    var div
+    var name
+
+    for (name in data.mateStatus)
+    {
+        div = document.getElementById("friend" + name).children[0].children[0]
+        console.log(div)
+        if (data.mateStatus[name])
+            div.setAttribute('style', 'border-color:' + div.classList[0] + ';')
+        else
+            div.setAttribute('style', 'border-color:' + div.classList[0] + '60;')
+    }
+}
+
 addPicture()
+setInterval(mateStatus, 60000)

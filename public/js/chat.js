@@ -29,11 +29,11 @@ function highlightMate(data)
 
     for (name in data.mateStatus)
     {
-        div = document.getElementById(name)
+        div = document.getElementById(name).children[0].children[0]
         if (data.mateStatus[name])
-            div.classList.add("gg-card-4")
+            div.setAttribute('style', 'background-color:' + div.classList[0] + ';')
         else
-            div.classList.remove("gg-card-4")
+            div.setAttribute('style', 'background-color:' + div.classList[0] + '70;')
     }
 }
 

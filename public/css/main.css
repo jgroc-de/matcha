@@ -63,3 +63,7 @@ label {
     align-items: center;
     height: 38.5px;
 }
+
+.cut-img {
+    object-fit: cover;
+}
