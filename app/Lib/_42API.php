@@ -18,7 +18,7 @@ class _42API extends APIinterface
     {
         parent::__construct($container);
         $this->client = $container->get('curl');
-        $baseUrl = $container->get('settings')['siteUrl'];
+        $this->baseUrl = $container->get('settings')['siteUrl'];
     }
 
     public function loginToApi($token): string
