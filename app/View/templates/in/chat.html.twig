@@ -14,11 +14,11 @@
         <h2 class="w3-hover-green w3-theme-l1" style="cursor:pointer;margin:0" onclick="toggleSibling(this)">Choose your "Friend"</h2><div class="w3-row w3-theme-l5" id="Friends">
             {% for user in friends %}
                 <div class="w3-col s6 m3">
-                    <div id="{{ user.id }}" class="w3-margin">
+                    <div id="{{ user.id }}" class="w3-margin  w3-card-4">
                         <a href="#" class="w3-theme-d1" onclick="tchatWith('{{ user.pseudo }}', {{ user.id }}, {{ me.id }}, '{{ user.suscriber }}')">
-                            <h4 style="background-color: {{ color[user.gender] }}">{{ user.pseudo }}</h4>
+                            <h4 class="{{ color[user.gender] }}" style="background-color:{{ color[user.gender] }}">{{ user.pseudo }}</h4>
                             <div class="w3-black w3-display-container" style="height:112px">
-                                <img src="{{ user.img1 }}" alt="{{ user.pseudo }}'s picture" class="w3-display-middle cut-img" height="112px" width="100%">
+                                <img src="{{ user.img1 }}" alt="{{ user.pseudo }}'s picture" class="w3-display-middle cut-img" height="100px" width="100%">
                             </div>
                         </a>
                     </div>

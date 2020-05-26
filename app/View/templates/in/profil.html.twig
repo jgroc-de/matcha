@@ -10,7 +10,7 @@
 } %}
 
 {% block main %}
-<div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw">
+<div class="w3-content w3-section w3-card-4 w3-white" style="max-width:95vw">
     <div id="flash" class="w3-panel w3-green w3-hide" style="position:fixed;bottom:10px;right:10px;z-index:20"><p id="flashText"></p></div>
     <div class="w3-padding w3-row">
         {% if profil.id == me.id %}
@@ -42,7 +42,7 @@
             <div class="w3-half w3-padding">
                 <div class="w3-card-4">
                     {{ subtitle('Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
-                    <div id="Profil" class="w3-white w3-padding gg-section">
+                    <div id="Profil" class="w3-theme-l5 w3-padding gg-section">
                         <div class="w3-left-align">
                             {% if not home %}<span id="online" class="w3-text-green w3-hide">(online)<br></span>
                             <span id="offline" class="w3-text-blue">(offline since: {{ profil.lastlog|date('d M Y') }})<br></span>
@@ -62,7 +62,7 @@
             <div class="w3-half w3-padding">
                 <div class="w3-card-4">
                     {{ subtitle('Interest', home, 'fa fa-plus',  "addTag('/tag')", 'add tag') }}
-                    <div id="Interest" class="w3-white gg-tag-section w3-padding" id="userTag">
+                    <div id="Interest" class="w3-theme-l5 gg-tag-section w3-padding" id="userTag">
                         {% for tag in tags %}
                             <span id="tag{{tag.id}}">
                                 {%if (tag != tags[0])%}
@@ -82,7 +82,7 @@
             <div class="w3-row w3-col l6 s12">
                 <div class="w3-half w3-padding">
                     <div class="w3-card-4">
-                        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleSibling(this)">{{ your }}Friend Request</h3><div id="FriendR" class="w3-white w3-padding gg-section">
+                        <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleSibling(this)">{{ your }}Friend Request</h3><div id="FriendR" class="w3-theme-l5 w3-padding gg-section">
                             {% for req in friendReq %}
                                 {% if req.visible %}
                                     <div class="gg-friend" id="req{{req.id}}">
@@ -103,7 +103,7 @@
                 <div class="w3-half w3-padding">
                     <div class="w3-card-4">
                         <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">{{ your }}Friends</h3>
-                        <div id="Friend" class="w3-white w3-padding gg-section">
+                        <div id="Friend" class="w3-theme-l5 w3-padding gg-section">
                             {% for friend in friends %}
                                 <div class="gg-friend" id="friend{{friend.id}}">
                                     <a class="" href="{{ BASE_URL }}/profil/{{friend.id}}">
