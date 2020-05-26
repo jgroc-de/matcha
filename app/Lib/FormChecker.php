@@ -80,8 +80,9 @@ class FormChecker
                 $imgs[] = $file;
             }
         }
+        $proto = strpos($_SERVER['HTTP_HOST'], 'localhost') === 0 ? 'http' : 'https';
 
-        return 'http://' . $_SERVER['HTTP_HOST'] . '/img/' . $imgs[rand(0, 4)];
+        return $proto . '://' . $_SERVER['HTTP_HOST'] . '/img/' . $imgs[rand(0, 4)];
     }
 
     public function genPublicToken(string $pseudo): string

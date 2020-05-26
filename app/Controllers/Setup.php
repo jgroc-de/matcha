@@ -42,6 +42,9 @@ class Setup
 
     public function initDB(Request $request, Response $response, array $args): Response
     {
+        if ($_ENV['PROD']) {
+            return $response->withRedirect('/');
+        }
         $db = $this->settings;
         $pdo = new \PDO('mysql:host=' . $db['host'], $db['user'], $db['pass']);
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -54,6 +57,9 @@ class Setup
 
     public function seed(Request $request, Response $response, array $args): Response
     {
+        if ($_ENV['PROD']) {
+            return $response->withRedirect('/');
+        }
         $count = 500;
         $faker = Factory::create();
         $password = password_hash('trollB1B1', PASSWORD_DEFAULT);
@@ -94,6 +100,8 @@ class Setup
             }
             unset($_SESSION['id']);
         }
+        session_unset();
+        session_destroy();
 
         return $response->withRedirect('/');
     }

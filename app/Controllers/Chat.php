@@ -103,7 +103,6 @@ class Chat
 
     public function startChat(Request $request, Response $response, array $args): Response
     {
-        $post = $request->getParsedBody();
         $id = intval($args['id']);
         $tab = [$_SESSION['id'], $id];
         sort($tab);

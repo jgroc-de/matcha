@@ -37,7 +37,7 @@ function resetBadge()
                 else if (data.hasOwnProperty('mateStatus'))
                 {
                     if (typeof mateStatus === "function")
-                        highlightMate(data)
+                        highlightMate(daModta)
                 }
                 else if (data.hasOwnProperty('profilStatus'))
                 {

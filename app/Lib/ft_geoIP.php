@@ -30,7 +30,7 @@ class ft_geoIP
         $keys = ['lat', 'lng'];
         if (!$this->validator->validate($post, $keys)) {
             try {
-                $ip = $this->geoIP->city($_SERVER['REMOTE_ADDR']);
+                $ip = $this->geoIP->city($this->getIP());
             } catch (AddressNotFoundException $error) {
                 $ip = $this->geoIP->city('163.172.250.11');
             }
@@ -45,5 +45,16 @@ class ft_geoIP
                 $this->user->updateGeolocation($post['lat'], $post['lng'], $post['id']);
             }
         }
+    }
+
+    private function getIP(): string
+    {
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ipAddresses = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            return trim(end($ipAddresses));
+        } else {
+            return $_SERVER['REMOTE_ADDR'];
+        }
+
     }
 }
