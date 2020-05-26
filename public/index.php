@@ -16,6 +16,9 @@ $dotenv = new Dotenv();
 if (is_file(__DIR__.'/../.env')) {
     $dotenv->load(__DIR__ . '/../.env');
 }
+if ($_ENV['CLOUDINARY_URL']) {
+    \Cloudinary::config_from_url($_ENV['CLOUDINARY_URL']);
+}
 
 $proto = strpos($_SERVER['HTTP_HOST'], 'localhost') === 0 ? 'http' : 'https';
 // Instatiate the app

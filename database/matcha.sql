@@ -7,9 +7,9 @@ SET time_zone = "+00:00";
 -- Databatse: `matcha`
 --
 
-DROP DATABASE IF EXISTS `matcha`;
-CREATE DATABASE matcha;
+CREATE DATABASE IF NOT EXISTS matcha;
 USE matcha;
+
 -- --------------------------------------------------------
 
 --
@@ -19,7 +19,7 @@ USE matcha;
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
-    `id` INT(11) AUTO_INCREMENT,
+    `id` SERIAL,
     `pseudo` VARCHAR(40),
     `password` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL DEFAULT 'lol@matcha.fr',
@@ -38,14 +38,36 @@ CREATE TABLE `user` (
     `popularity` TINYINT NOT NULL DEFAULT 0,
     `bot` BOOL DEFAULT false,
     `lastlog` INT(11) DEFAULT 0,
-    `img1` TEXT,
-    `img2` TEXT,
-    `img3` TEXT,
-    `img4` TEXT,
-    `img5` TEXT,
+    `img1` VARCHAR(255),
+    `img2` VARCHAR(255),
+    `img3` VARCHAR(255),
+    `img4` VARCHAR(255),
+    `img5` VARCHAR(255),
+    `cloud_id1` VARCHAR(255),
+    `cloud_id2` VARCHAR(255),
+    `cloud_id3` VARCHAR(255),
+    `cloud_id4` VARCHAR(255),
+    `cloud_id5` VARCHAR(255),
+    `date` DATETIME DEFAULT NOW(),
     CONSTRAINT PK_user PRIMARY KEY (`id`, `pseudo`),
     CONSTRAINT PK_user2 UNIQUE (`pseudo`, `email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `pictures`
+--
+
+DROP TABLE IF EXISTS `pictures`;
+CREATE TABLE `pictures` (
+    `id` SERIAL PRIMARY KEY,
+    `user_id` BIGINT UNSIGNED NOT NULL,
+    `cloud_id` VARCHAR(255),
+    `url` VARCHAR(255) NOT NULL,
+    `date` DATETIME DEFAULT NOW()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE pictures
+ADD FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE;
 
 --
 -- Table structure for table `friendsReq`
@@ -56,6 +78,7 @@ CREATE TABLE `friendsReq` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL,
     `visible` BOOL DEFAULT TRUE,
+    `date` DATETIME DEFAULT NOW(),
     CONSTRAINT PK_friendsReq UNIQUE (`id_user1`, `id_user2`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -68,6 +91,7 @@ CREATE TABLE `friends` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL,
     `suscriber` VARCHAR(255) NOT NULL,
+    `date` DATETIME DEFAULT NOW(),
     CONSTRAINT PK_friends UNIQUE (`id_user1`, `id_user2`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -90,7 +114,7 @@ CREATE TABLE `message` (
 
 DROP TABLE IF EXISTS `hashtags`;
 CREATE TABLE `hashtags` (
-    `id` INT(11) PRiMARY KEY AUTO_INCREMENT,
+    `id` SERIAL PRIMARY KEY,
     `tag` VARCHAR(255) NOT NULL UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -100,7 +124,7 @@ CREATE TABLE `hashtags` (
 
 DROP TABLE IF EXISTS `usertags`;
 CREATE TABLE `usertags` (
-    `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
+    `id` SERIAL PRIMARY KEY,
     `idtag` INT(11) NOT NULL,
     `iduser` INT(11) NOT NULL,
     CONSTRAINT PK_usertags UNIQUE (`idtag`, `iduser`)
@@ -112,12 +136,12 @@ CREATE TABLE `usertags` (
 
 DROP TABLE IF EXISTS `notification`;
 CREATE TABLE `notification` (
-    `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
+    `id` SERIAL PRIMARY KEY,
     `exp` INT(11) NOT NULL,
     `dest` INT(11) NOT NULL,
     `link` VARCHAR(255) NOT NULL,
     `message` TEXT NOT NULL,
-    `date` DATETIME NOT NULL,
+    `date` DATETIME NOT NULL DEFAULT NOW(),
     `seen` BOOL DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -127,9 +151,10 @@ CREATE TABLE `notification` (
 
 DROP TABLE IF EXISTS `blacklist`;
 CREATE TABLE `blacklist` (
-    `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
+    `id` SERIAL PRIMARY KEY,
     `iduser` INT(11) NOT NULL,
     `iduser_bl` INT(11) NOT NULL,
+    `date` DATETIME DEFAULT NOW(),
     CONSTRAINT PK_blacklist UNIQUE (`iduser`, `iduser_bl`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
