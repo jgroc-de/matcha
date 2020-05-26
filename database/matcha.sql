@@ -7,8 +7,7 @@ SET time_zone = "+00:00";
 -- Databatse: `matcha`
 --
 
-DROP DATABASE IF EXISTS `matcha`;
-CREATE DATABASE matcha;
+CREATE DATABASE IF NOT EXISTS matcha;
 USE matcha;
 
 -- --------------------------------------------------------
@@ -20,7 +19,7 @@ USE matcha;
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
-    `id` SERIAL PRIMARY KEY,
+    `id` SERIAL,
     `pseudo` VARCHAR(40),
     `password` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL DEFAULT 'lol@matcha.fr',
@@ -49,7 +48,7 @@ CREATE TABLE `user` (
     `cloud_id3` VARCHAR(255),
     `cloud_id4` VARCHAR(255),
     `cloud_id5` VARCHAR(255),
-    `date` DATE DEFAULT NOW(),
+    `date` DATETIME DEFAULT NOW(),
     CONSTRAINT PK_user PRIMARY KEY (`id`, `pseudo`),
     CONSTRAINT PK_user2 UNIQUE (`pseudo`, `email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -61,10 +60,10 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `pictures`;
 CREATE TABLE `pictures` (
     `id` SERIAL PRIMARY KEY,
-    `user_id` INT(11) NOT NULL,
+    `user_id` BIGINT UNSIGNED NOT NULL,
     `cloud_id` VARCHAR(255),
     `url` VARCHAR(255) NOT NULL,
-    `date` DATE DEFAULT NOW()
+    `date` DATETIME DEFAULT NOW()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE pictures
@@ -79,7 +78,7 @@ CREATE TABLE `friendsReq` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL,
     `visible` BOOL DEFAULT TRUE,
-    `date` DATE DEFAULT NOW(),
+    `date` DATETIME DEFAULT NOW(),
     CONSTRAINT PK_friendsReq UNIQUE (`id_user1`, `id_user2`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -92,7 +91,7 @@ CREATE TABLE `friends` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL,
     `suscriber` VARCHAR(255) NOT NULL,
-    `date` DATE DEFAULT NOW(),
+    `date` DATETIME DEFAULT NOW(),
     CONSTRAINT PK_friends UNIQUE (`id_user1`, `id_user2`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -155,7 +154,7 @@ CREATE TABLE `blacklist` (
     `id` SERIAL PRIMARY KEY,
     `iduser` INT(11) NOT NULL,
     `iduser_bl` INT(11) NOT NULL,
-    `date` DATE DEFAULT NOW(),
+    `date` DATETIME DEFAULT NOW(),
     CONSTRAINT PK_blacklist UNIQUE (`iduser`, `iduser_bl`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

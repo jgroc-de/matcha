@@ -65,8 +65,8 @@ class Picture
         $filename = sprintf('%s.%0.8s', $basename, $extension);
         $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
         if ($_ENV['CLOUDINARY_URL']) {
-            $response = Uploader::upload($filename);
-            unlink('/user_img/' . $filename);
+            $response = Uploader::upload(__DIR__ . '/../../public/user_img/' . $filename);
+            unlink(__DIR__ . '/../../public/user_img/' . $filename);
             return $response;
         }
 

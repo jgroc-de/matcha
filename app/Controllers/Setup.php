@@ -100,6 +100,8 @@ class Setup
             }
             unset($_SESSION['id']);
         }
+        session_unset();
+        session_destroy();
 
         return $response->withRedirect('/');
     }
