@@ -34,15 +34,19 @@ $container['view'] = function ($container): Twig {
 };
 
 $container['geoIP'] = function (): Reader {
-    return new Reader('../geoIP2/GeoLite2-City_20180501/GeoLite2-City.mmdb');
+    return new Reader('../geoIP2/GeoLite2-City_20200519/GeoLite2-City.mmdb');
 };
 
-$container['zmq'] = function (): ZMQSocket {
-    $context = new ZMQContext();
-    $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my pusher');
-    $socket->connect('tcp://localhost:5555');
+$container['zmq'] = function () {
+    if (class_exists('ZMQContext')) {
+        $context = new ZMQContext();
+        $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my pusher');
+        $socket->connect('tcp://localhost:5555');
 
-    return $socket;
+        return $socket;
+    }
+
+    return null;
 };
 
 $container['curl'] = function (): Client {

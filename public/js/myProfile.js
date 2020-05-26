@@ -17,7 +17,7 @@ function addTag(path) {
 
                 span.id = 'tag' + id
                 span.textContent = "- #" + tag + " "
-                del.className = 'del'
+                del.className = 'del-red'
                 del.setAttribute('onclick', 'delUserTag("/tag/", ' + id + ')')
                 del.textContent = '(delete)'
                 span.appendChild(del)
@@ -70,7 +70,7 @@ function addEvent() {
                 imgElement.setAttribute('onclick', 'displayModal("' + reader.result + '")')
                 imgElement.src = reader.result
                 prev.appendChild(imgElement)
-                iElement.className = 'w3-button w3-display-topright w3-hover-red fa fa-remove'
+                iElement.className = 'w3-padding w3-display-topright del-red fa fa-remove'
                 iElement.title = 'remove picture'
                 iElement.setAttribute('onclick', 'deletePic("' + id + '")')
                 prev.appendChild(iElement)
@@ -85,34 +85,32 @@ function addEvent() {
 
 function deletePic(id)
 {
-    if (confirm('Delete?')) {
-        ggAjax('DELETE', 'picture/' + id.charAt(3), function (id) {
-            var labelElmt = document.createElement('label')
-            var parentNode = document.getElementById(id)
-            var inputElemt = document.createElement('input')
-            var inputElemt2 = document.createElement('input')
-            var div = document.createElement('div')
+    ggAjax('DELETE', 'picture/' + id.charAt(3), function (id) {
+        var labelElmt = document.createElement('label')
+        var parentNode = document.getElementById(id)
+        var inputElemt = document.createElement('input')
+        var inputElemt2 = document.createElement('input')
+        var div = document.createElement('div')
 
-            div.className = 'w3-display-container'
-            if (id === 'img1')
-                div.style.height = '250px'
-            else
-                div.style.height = '125px'
-            labelElmt.className = 'w3-button w3-jumbo w3-display-middle fa fa-plus w3-hover-green w3-block w3-padding-large'
-            labelElmt.title = 'add picture'
-            inputElemt.setAttribute('data-id', id)
-            inputElemt.type = 'file'
-            inputElemt2.type = 'hidden'
-            inputElemt.style.display = 'none'
-            while (parentNode.hasChildNodes())
-                parentNode.removeChild(parentNode.firstChild)
-            parentNode.appendChild(div)
-            div.appendChild(labelElmt)
-            labelElmt.appendChild(inputElemt2)
-            labelElmt.appendChild(inputElemt)
-            addPicture()
-        }, id)
-    }
+        div.className = 'w3-display-container'
+        if (id === 'img1')
+            div.style.height = '250px'
+        else
+            div.style.height = '125px'
+        labelElmt.className = 'w3-section w3-jumbo w3-center fa fa-plus check-green w3-block w3-padding-large'
+        labelElmt.title = 'add picture'
+        inputElemt.setAttribute('data-id', id)
+        inputElemt.type = 'file'
+        inputElemt2.type = 'hidden'
+        inputElemt.style.display = 'none'
+        while (parentNode.hasChildNodes())
+            parentNode.removeChild(parentNode.firstChild)
+        parentNode.appendChild(div)
+        div.appendChild(labelElmt)
+        labelElmt.appendChild(inputElemt2)
+        labelElmt.appendChild(inputElemt)
+        addPicture()
+    }, id)
 }
 
 function ggRemoveChild(id)
@@ -130,8 +128,7 @@ function delFriend(path, id)
 
 function delFriendReq(path, id)
 {
-    if (confirm('R U SURE?'))
-        ggAjax('DELETE', path + id, ggRemoveChild, 'req' + id)
+    ggAjax('DELETE', path + id, ggRemoveChild, 'req' + id)
 }
 
 function acceptFriendReq(path, id)

@@ -25,15 +25,13 @@ class Tag
         $post = $request->getParsedBody();
         $tag = $this->tag;
         if ($this->validator->validate($post, ['tag'])) {
-            if (empty($tag->getTag($post['tag']))) {
-                $tag->setTag($post['tag']);
-            }
+            $tag->setTag($post['tag']);
             $tagInfo = $tag->getTag($post['tag']);
-            if (empty($tag->getUserTag($tagInfo['id'], $_SESSION['id']))) {
-                $tag->setUserTag($tagInfo['id']);
+            if ($tag->setUserTag($tagInfo['id'])) {
                 $post = $tag->getUserTagByName($tagInfo['tag'], $_SESSION['id']);
+                $response->write($post['id']);
 
-                return $response->write($post['id']);
+                return $response;
             }
         }
 

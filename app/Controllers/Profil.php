@@ -74,11 +74,11 @@ class Profil
 
     public function profil(Request $request, Response $response, array $args): Response
     {
-        if ($args['id'] == $_SESSION['id']) {
+        if ($args['id'] === $_SESSION['id']) {
             return $response->withRedirect('/', 302);
         }
-        if (!$this->blacklist->getBlacklistById($args['id'], $_SESSION['id'])
-            && $user = $this->user->getUserById($args['id'])) {
+        $user = $this->user->getUserById($args['id']);
+        if (!$this->blacklist->isBlacklistById($args['id'], $_SESSION['id']) && !empty($user)) {
             $this->MyZmq->send([
                 'category' => '"' . $user['publicToken'] . '"',
                 'dest' => $user['id'],
@@ -93,7 +93,6 @@ class Profil
             } elseif ($isLiked) {
                 $user['pseudo'] .= ' "Liked"';
             }
-
 
             return $this->view->render(
                 $response,
@@ -120,7 +119,7 @@ class Profil
             'imgs' => [],
             'pseudo' => $user['pseudo'],
         ];
-        foreach($user as $key => $value) {
+        foreach ($user as $key => $value) {
             if (strpos($key, 'img') === 0) {
                 $imgs['imgs'][] = $value;
             }

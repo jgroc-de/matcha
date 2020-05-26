@@ -117,7 +117,7 @@ class FormChecker
 
             return $post;
         }
-        $post['activ'] = 0;
+        $post['activ'] = 1;
         $post['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
         $post['lat'] = 0;
         $post['lng'] = 0;

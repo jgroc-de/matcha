@@ -24,15 +24,14 @@ class BlacklistModel
         return $req->fetchAll();
     }
 
-    /**
-     * @return array|bool
-     */
-    public function getBlacklistById(int $idu, int $idb)
+    public function isBlacklistById(int $iduser, int $iduser_bl): bool
     {
-        $req = $this->db->prepare('SELECT * FROM blacklist WHERE iduser = ? and iduser_bl = ?');
-        $req->execute([$idu, $idb]);
+        $req = $this->db->prepare('
+SELECT 1 FROM blacklist
+WHERE (iduser = ? AND iduser_bl = ?) OR (iduser = ? AND iduser_bl = ?)');
+        $req->execute([$iduser, $iduser_bl, $iduser_bl, $iduser]);
 
-        return $req->fetch();
+        return !empty($req->fetch());
     }
 
     public function getAllBlacklist()
@@ -43,10 +42,15 @@ class BlacklistModel
         return $req->fetchAll();
     }
 
-    public function setBlacklist(int $id)
+    public function setBlacklist(int $id): bool
     {
         $req = $this->db->prepare('INSERT INTO blacklist (iduser, iduser_bl) VALUES (?, ?)');
-        $req->execute([$_SESSION['id'], $id]);
+
+        try {
+            return $req->execute([$_SESSION['id'], $id]);
+        } catch (\PDOException $error) {
+            return false;
+        }
     }
 
     public function deleteBlacklist(int $id): bool

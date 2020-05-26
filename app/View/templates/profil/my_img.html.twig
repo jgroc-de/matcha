@@ -2,9 +2,9 @@
     <div class="w3-display-container gg-main-image">
         {% if imgs[0] %}
             <img src='{{ imgs[0] }}' alt='{{ imgs[0] }}' title='{{ pseudo }}_img1' class="w3-image w3-display-middle" style="max-height:100%" onclick="displayModal('{{ imgs[0] }}')">
-            <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic('img1')"></i>
+            <i class="w3-padding w3-display-topright del-red fa fa-remove" title="remove picture" onclick="deletePic('img1')"></i>
         {% else %}
-            <label class="w3-button w3-display-middle w3-block w3-jumbo fa fa-plus w3-padding-large w3-hover-green" onchange='addPicture()' title="add picture">
+            <label class="w3-section w3-display-middle w3-block w3-jumbo fa fa-plus w3-padding-large check-green" onchange='addPicture()' title="add picture">
                 <input data-id="img1" type="file" style="display:none"/>
             </label>
         {% endif %}
@@ -20,9 +20,9 @@
             <div class="w3-display-container" style="height:125px">
                 {% if url %}
                     <img src='{{ url }}' alt='{{ pseudo }}' title='{{ pseudo }}_{{ id }}' class="w3-image w3-display-middle" style="max-height:100%" onclick="displayModal('{{ url }}')">
-                    <i class="w3-button w3-display-topright w3-hover-red fa fa-remove" title="remove picture" onclick="deletePic('{{ id }}')"></i>
+                    <i class="w3-padding w3-display-topright del-red fa fa-remove" title="remove picture" onclick="deletePic('{{ id }}')"></i>
                 {% else %}
-                <label class="w3-button w3-display-middle w3-block w3-jumbo fa fa-plus w3-padding-large w3-hover-green" onchange='addPicture()' title="add picture" style="vertical-align:middle">
+                <label class="w3-section w3-center w3-block w3-jumbo fa fa-plus w3-padding-large check-green" onchange='addPicture()' title="add picture" style="vertical-align:middle">
                     <input data-id="{{ id }}" type="file" style="display:none"/>
                 </label>
                 {% endif %}

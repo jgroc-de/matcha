@@ -1,8 +1,9 @@
 function updateGeolocation() {
-    if (navigator.geolocation)
+    if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error)
-    else
+    } else {
         error()
+    }
 }
 
 function initMap() {
@@ -32,7 +33,7 @@ function initMap() {
     }
 }
 
-function majLocation () {
+function majLocation (user) {
     var request = new XMLHttpRequest()
     var params = 'lat=' + user.lat + '&lng=' + user.lng
 
@@ -65,13 +66,18 @@ function changeLocation()
 function setLocation() {
     user.lat = Number(document.getElementById('lat').value)
     user.lng = Number(document.getElementById('lng').value)
-    majLocation()
+    alert(user.lat + ' - ' + user.lng)
+
+    majLocation(user)
 }
 
 function success(pos) {
     user = {lat: pos.coords.latitude, lng: pos.coords.longitude}
-    majLocation()
+    alert(user.lat + ' - ' + user.lng)
+
+    majLocation(user)
 }
 
 function error(err) {
+    alert(err.message)
 }

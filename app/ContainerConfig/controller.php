@@ -8,6 +8,7 @@ use App\Controllers\FriendRequest;
 use App\Controllers\Geolocation;
 use App\Controllers\Picture;
 use App\Controllers\Profil;
+use App\Controllers\RGPD;
 use App\Controllers\Settings;
 use App\Controllers\Setup;
 use App\Controllers\Tag;
@@ -30,8 +31,9 @@ $container['App\Controllers\Authentication'] = function ($container) {
 // ok
 $container['App\Controllers\Blacklist'] = function ($container) {
     return new Blacklist(
-        $container->get('friends'),
         $container->get('blacklist'),
+        $container->get('friends'),
+        $container->get('user'),
         $container->get('mail')
     );
 };
@@ -58,7 +60,12 @@ $container['App\Controllers\Contact'] = function ($container) {
 
 // ok
 $container['App\Controllers\FriendRequest'] = function ($container) {
-    return new FriendRequest($container->get('friends'), $container->get('user'));
+    return new FriendRequest(
+        $container->get('blacklist'),
+        $container->get('friends'),
+        $container->get('user'),
+        $container->get('MyZmq')
+    );
 };
 
 // ok
@@ -87,15 +94,14 @@ $container['App\Controllers\Profil'] = function ($container) {
     );
 };
 
-/*
-$container['App\Controllers\RGPD'] = function($container) {
-    return new Chat(
-        $container->get('view'),
-        $container['flash'],
-        $container->get('form')
+$container['App\Controllers\RGPD'] = function ($container) {
+    return new RGPD(
+        $container->get('user'),
+        $container->get('common'),
+        $container->get('mail'),
+        $container->get('validator')
     );
 };
-*/
 
 /*
 $container['App\Controllers\SEARCH'] = function($container) {

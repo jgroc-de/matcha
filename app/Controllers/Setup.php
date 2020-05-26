@@ -35,6 +35,9 @@ class Setup
         $this->settings = $dbSettings;
         $this->db = $db;
         $this->form = $form;
+        if (!is_dir(__DIR__ . '/../../public/user_img')) {
+            mkdir(__DIR__ . '/../../public/user_img');
+        }
     }
 
     public function initDB(Request $request, Response $response, array $args): Response
@@ -85,9 +88,7 @@ class Setup
             $_SESSION['id'] = $bot['id'];
             for ($j = 0; $j < 5; ++$j) {
                 $word = $faker->word();
-                if (empty($this->tag->getTag($word))) {
-                    $this->tag->setTag($word);
-                }
+                $this->tag->setTag($word);
                 $tagInfo = $this->tag->getTag($word);
                 $this->tag->setUserTag($tagInfo['id']);
             }

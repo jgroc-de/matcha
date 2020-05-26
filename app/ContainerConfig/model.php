@@ -13,10 +13,16 @@ use Psr\Container\ContainerInterface;
 
 /** @var ContainerInterface $container */
 $container['db'] = function ($container) {
-    $db = $container->get('settings')['db'];
-    $pdo = new \PDO('mysql:host=' . $db['host'] . ';dbname=' . $db['dbname'], $db['user'], $db['pass']);
-    $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+    try {
+        $pdo = new \PDO('mysql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASS']);
+        //$pdo = new \PDO($_ENV['JAWSDB_URL']);
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+    } catch (\PDOException $error) {
+        echo $error->getMessage();
+        echo 'server database fail';
+        exit();
+    }
 
     return $pdo;
 };
@@ -26,12 +32,7 @@ $container['user'] = function ($container) {
 };
 
 $container['friends'] = function ($container) {
-    return new FriendsModel(
-        $container->get('db'),
-        $container->get('MyZmq'),
-        $container->get('flash'),
-        $container->get('user')
-    );
+    return new FriendsModel($container->get('db'));
 };
 
 $container['tag'] = function ($container) {
