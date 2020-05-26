@@ -12,8 +12,14 @@ class googleAPI extends APIinterface
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->client = new Google_Client();
-        $this->client->setAuthConfig(__DIR__ . '/../../ggApi.json');
+
+        if (!file_exists(__DIR__ . '/../../ggApi.json')) {
+            $conf = json_decode($_ENV['GG_CONF'], true);
+            $this->client = new Google_Client($conf['web']);
+        } else {
+            $this->client = new Google_Client();
+            $this->client->setAuthConfig(__DIR__ . '/../../ggApi.json');
+        }
     }
 
     public function loginToApi($token): string
