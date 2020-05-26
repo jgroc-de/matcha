@@ -352,16 +352,16 @@ SELECT 1 FROM user WHERE id = ?
 
     public function delPicture(string $nb): bool
     {
-        $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = NULL WHERE id = ?');
+        $req = $this->db->prepare('UPDATE user SET img' . $nb . ' = NULL, cloud_id' . $nb . ' = NULL WHERE id = ?');
 
         return $req->execute([$_SESSION['id']]);
     }
 
-    public function addPicture(string $nb, string $path): bool
+    public function addPicture(int $nb, array $data): bool
     {
-        $req = $this->db->prepare('UPDATE user SET ' . $nb . ' = ? WHERE id = ?');
+        $req = $this->db->prepare('UPDATE user SET img' . $nb . ' = ?, cloud_id' . $nb . ' = ? WHERE id = ?');
 
-        return $req->execute([$path, $_SESSION['id']]);
+        return $req->execute([$data['secure_url'], $data['public_id'], $_SESSION['id']]);
     }
 
     public function deleteUser(int $id): bool
