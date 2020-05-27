@@ -34,7 +34,7 @@ class FormChecker
         $this->ft_geoIP = $ft_geoIP;
     }
 
-    public function checkLogin(array $post): bool
+    public function checkLogin(?array $post): bool
     {
         if (!$this->validator->validate($post, ['pseudo', 'password'])) {
             return false;
@@ -90,7 +90,7 @@ class FormChecker
         return time() . $pseudo . bin2hex(random_bytes(4));
     }
 
-    public function checkResetEmail(array $post)
+    public function checkResetEmail(?array $post)
     {
         if ($this->validator->validate($post, ['email'])) {
             $account = $this->userModel->getUserByEmail($post['email']);
@@ -101,7 +101,7 @@ class FormChecker
         }
     }
 
-    public function checkSignup(array $post): array
+    public function checkSignup(?array $post): array
     {
         $user = $this->userModel;
         $keys = ['pseudo', 'password', 'password_confirmation', 'email', 'name', 'surname', 'gender', 'g-recaptcha-response'];
@@ -134,7 +134,7 @@ class FormChecker
         return $post;
     }
 
-    public function checkContact(array $post)
+    public function checkContact(?array $post)
     {
         if ($valid = $this->validator->validate($post, ['email', 'text', 'g-recaptcha-response'])) {
             $this->mail->contactMe($post['text'], $post['email']);
@@ -142,7 +142,7 @@ class FormChecker
         $this->flashMessage->addMessage('success', 'Thank you!');
     }
 
-    public function checkPwd(array $post)
+    public function checkPwd(?array $post)
     {
         if ($this->validator->validate($post, ['password', 'password_confirmation'])) {
             $this->userModel->updatePassUser(password_hash($post['password'], PASSWORD_DEFAULT));
@@ -150,7 +150,7 @@ class FormChecker
         }
     }
 
-    public function checkProfil(array $post): bool
+    public function checkProfil(?array $post): bool
     {
         $keys = ['pseudo', 'email', 'name', 'surname', 'birthdate', 'gender', 'biography', 'sexuality'];
         if (!$this->validator->validate($post, $keys)) {

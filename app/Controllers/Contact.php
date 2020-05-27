@@ -10,7 +10,7 @@ use Slim\Views\Twig;
 
 class Contact
 {
-    const template = 'templates/logForm/contact.html.twig';
+    const template = 'templates/contact.html.twig';
 
     /** @var Twig */
     private $view;

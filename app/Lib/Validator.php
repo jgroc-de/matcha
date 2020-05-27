@@ -17,7 +17,7 @@ class Validator
         $this->flashMessage = $flashMessage;
     }
 
-    public function validate(array $array, array $keys)
+    public function validate(?array $array, ?array $keys)
     {
         if (!$this->ft_isset($array, $keys)) {
             return false;
@@ -37,7 +37,7 @@ class Validator
         return true;
     }
 
-    private function ft_isset(array $array, array $keys): bool
+    private function ft_isset(?array $array, ?array $keys): bool
     {
         foreach ($keys as $key) {
             if (!isset($array[$key])) {
