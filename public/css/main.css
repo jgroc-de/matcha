@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+@font-face {
+	font-family: "Geo";
+	src: url('../font/GeosansLight.ttf');
+}
+
 h1, h2, h3, h4, h5, h6, footer, header {
     font-family: "Amatic SC", Verdana, sans-serif;
     color: white;
@@ -23,10 +28,10 @@ h2 {
 
 body {
     background: #371b0f;
-    font-family: Arial, sans-serif;
+    font-family: "Geo", Arial, sans-serif;
 }
 .w3-myfont {
-    font-family: Arial, sans-serif;
+    font-family: "Geo", Arial, sans-serif;
 }
 
 header, footer {
