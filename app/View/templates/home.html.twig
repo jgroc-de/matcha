@@ -16,7 +16,7 @@
         {% set classDD = "w3-bar-item w3-button w3-theme-l5" %}
         {% set classR = "w3-bar-item w3-button w3-right w3-large" %}
         <div class="w3-dropdown-click">
-            <a href="#" class="{{ class2 }}" onclick="this.nextSibling.nextSibling.classList.toggle('w3-show')">
+            <a href="#" class="{{ class2 }}" onclick="this.nextElementSibling.classList.toggle('w3-show')">
                 <i class="fa fa-bars" alt="menu" title="menu"></i>
             </a>
             <div id="demo1" class="w3-dropdown-content w3-bar-block" style="top:43px">

@@ -6,26 +6,35 @@
 
 
 {% block main %}
-<div class="w3-content w3-section w3-card-4 w3-theme-l5" style="max-width:95vw"> 
+<div class="w3-content w3-section w3-card-4 w3-white" style="max-width:95vw">
+    <div id="flash" class="w3-panel w3-green w3-hide" style="position:fixed;bottom:10px;right:10px;z-index:20">
+        <p id="flashText"></p>
+    </div>
     <div class="w3-padding w3-row">
         <h2 class='w3-theme-l1'>Search</h2>
-        <div class="w3-row w3-col l6">
-            <div class="w3-row w3-col s12">
-                <h3 class="w3-hover-green w3-col s12" style="cursor:pointer" onclick="toggleDisplay2(this)">Focus</h3>
-                <div id="focus" class="w3-col s12 w3-row">
+        <div class="w3-row">
+            <div class="w3-half w3-padding">
+                <div class="w3-card-4">
+                    <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">Actions</h3>
+                    <div id="Actions" class="w3-theme-l5 w3-padding gg-section">
+                        <button id="prev" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue">prev</button>
+                        <button id="add" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-green">add</button>
+                        <button id="next" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue">next</button>
+                        {{ select({
+                            'label': 'sort by',
+                            'name': 'sort1',
+                            'array': sort,
+                            'select': '',
+                            'style': 'width:auto;max-width:75%',
+                            'class': '',
+                            'change': 'sortCard("sort1", "focus")'
+                        }) }}
+                    </div>
                 </div>
-                <button id="prev" type="button" class="w3-col s4 w3-theme-l1 w3-button w3-hover-blue">prev</button>
-                <button id="add" type="button" class="w3-col s4 w3-theme-l2 w3-button w3-hover-green">add</button>
-                <button id="next" type="button" class="w3-col s4 w3-theme-l1 w3-button w3-hover-blue">next</button>
-                {{ select({
-                    'label': 'sort by',
-                    'name': 'sort1',
-                    'array': sort,
-                    'select': '',
-                    'style': 'width:auto;max-width:75%',
-                    'class': '',
-                    'change': 'sortCard("sort1", "focus")'
-                }) }}
+            </div>
+            <div class="w3-half w3-padding">
+                <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay2(this)">Focus</h3>
+                <div id="focus" class="w3-card-4"></div>
             </div>
         </div>
         <div class="w3-col l6">
@@ -152,6 +161,21 @@
 {% endblock %}
 
 {% block script %}
+    <template id="repeatProfil">
+        <div class="w3-theme-l5 w3-row w3-hide">
+            <a class="w3-col s12" href="..{{ path_for('profil', {'id': ''}) }}" target="_blank" id="">
+                <div class="w3-theme-l5 w3-row" style="height: 200px; overflow: auto;">
+                    <div class="w3-col s6 w3-padding">
+                        <div class="" style="background-color: rgb(214, 65, 97); height: 10%;" gg-name></div>
+                        <div gg-bio></div>
+                    </div>
+                    <div class="w3-right w3-black w3-col s6 w3-display-container" style="height: 100%;">
+                        <img class="w3-image w3-display-middle" style="max-width: 95%; max-height: 95%;" src="">
+                    </div>
+                </div>
+            </a>
+        </div>
+    </template>
     <script>
         var myPos = {lat: {{ me.lattitude }}, lng: {{ me.longitude }}};
         var usersPos = [

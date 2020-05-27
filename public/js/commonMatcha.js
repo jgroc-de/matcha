@@ -21,7 +21,7 @@ function display(id) {
 }
 
 function toggleDisplay2(x) {
-    while (x = x.nextSibling) {
+    while (x = x.nextElementSibling) {
         if ((x.className) || (x.innerHTML))
         {
             x.classList.toggle('w3-hide')
@@ -30,7 +30,7 @@ function toggleDisplay2(x) {
 }
 
 function toggleSibling(node) {
-    node.nextSibling.classList.toggle('w3-hide')
+    node.nextElementSibling.classList.toggle('w3-hide')
 }
 
 function toggleById(id) {

@@ -11,7 +11,9 @@
 
 {% block main %}
 <div class="w3-content w3-section w3-card-4 w3-white" style="max-width:95vw">
-    <div id="flash" class="w3-panel w3-green w3-hide" style="position:fixed;bottom:10px;right:10px;z-index:20"><p id="flashText"></p></div>
+    <div id="flash" class="w3-panel w3-green w3-hide" style="position:fixed;bottom:10px;right:10px;z-index:20">
+        <p id="flashText"></p>
+    </div>
     <div class="w3-padding w3-row">
         {% if profil.id == me.id %}
             {% set hi = 'Hi ' %}
@@ -27,19 +29,26 @@
             </div>
         </div>
         <h2 class='' style="margin-bottom:0;background-color: {{ color[profil.gender] }}">{{ hi }}{{ profil.pseudo }}</h2>
-        {% if not home and not isFriend %}
-            <div class="w3-row">
-                {% if isLiked %}
-                    <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/friendReq/{{ profil.id }}', true)" >Unlike</button>
-                {% else %}
-                    <button class="w3-button w3-theme-l2 w3-third" onclick="profilAction('/friend/{{ profil.id }}')" >Add to friends</button>
-                {% endif %}
-                <button class="w3-button w3-theme-l1 w3-third" onclick="profilAction('/report/{{ profil.id }}')">Report as fake user</button>
-                <button class="w3-button w3-theme-d1 w3-third" onclick="profilAction('/blacklist/{{ profil.id }}')">Blacklist this user</button>
-            </div>
-        {% endif %}
         <div class="w3-row {% if home %}w3-col l6 s12{% endif %}">
-            <div class="w3-half w3-padding">
+            {% if not home %}
+            <div class="w3-third w3-padding">
+                <div class="w3-card-4">
+                    <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">Actions</h3>
+                    <div id="Actions" class="w3-theme-l5 w3-padding gg-section">
+                        {% if not friends %}
+                            {% if isLiked %}
+                                <button class="w3-button w3-orange w3-margin-top" onclick="profilAction('/friendReq/{{ profil.id }}', true)" >Unlike</button>
+                            {% else %}
+                                <button class="w3-button w3-green w3-margin-top" onclick="profilAction('/friend/{{ profil.id }}')" >Add to friends</button>
+                            {% endif %}
+                        {% endif %}
+                        <button class="w3-button w3-red w3-margin-top" onclick="profilAction('/report/{{ profil.id }}')">Report as fake user</button>
+                        <button class="w3-button w3-black w3-margin-top" onclick="profilAction('/blacklist/{{ profil.id }}')">Blacklist this user</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="w3-{% if home %}half{% else %}third{% endif %} w3-padding">
                 <div class="w3-card-4">
                     {{ subtitle('Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
                     <div id="Profil" class="w3-theme-l5 w3-padding gg-section">
@@ -59,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w3-half w3-padding">
+            <div class="w3-{% if home %}half{% else %}third{% endif %} w3-padding">
                 <div class="w3-card-4">
                     {{ subtitle('Interest', home, 'fa fa-plus',  "addTag('/tag')", 'add tag') }}
                     <div id="Interest" class="w3-theme-l5 gg-tag-section w3-padding" id="userTag">
@@ -131,9 +140,9 @@
             </div>
             <div class="w3-row w3-card-4 w3-col l6 s12 w3-white">
                 <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay2(this)">{{ your }}Location</h3>
-                <div id="Location" class="gg-map-small" style="height:255px"></div>
+                <div id="Location" class="gg-map-small{% if home %} w3-half{% endif %}" style="height:255px"></div>
                 {% if home %}
-                <div class="w3-padding w3-row">
+                <div class="w3-padding w3-half w3-row">
                     <p id="textLocation">You are currently located at {{ profil.lattitude }}° of lattitude north and {{ profil.longitude }}° of longitude east.</p>
                     <div class="w3-half">
                         <label for="lat">lattitude</label>
