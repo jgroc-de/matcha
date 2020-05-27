@@ -124,7 +124,7 @@ class Authentication
         $post = $request->getParsedBody();
         $this->form->checkResetEmail($post);
 
-        return $this->resetPassword($request, $response, $post);
+        return $response->withJson($this->flashMessage->getMessages());
     }
 
     private function renderSettings(Response $response, array $post, array $viewOption): Response

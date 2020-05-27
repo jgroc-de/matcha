@@ -1,8 +1,8 @@
 {% extends 'templates/logForm.html.twig' %}
 {% from 'macro/form/input.html.twig' import input %}
-{% from 'macro/form/button.html.twig' import button %}
 {% from 'macro/form/select.html.twig' import select %}
 {% from 'macro/form/layout.html.twig' import form %}
+{% set buttonClass = "w3-button w3-right w3-ripple w3-theme-l1 w3-hover-green w3-margin-left w3-margin-bottom" %}
 
 {% block main %}
 <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="width:90vw;max-width:500px">
@@ -14,7 +14,7 @@
             {{ input('password', 'password', {'id': 'password1'}) }}
         </div>
         <div class="">
-            {{ button('submit', 'Login') }}
+            <input class="{{ buttonClass }}" type="submit" value="Login">
             <a class="w3-button w3-right w3-ripple w3-black w3-hover-green w3-margin-left w3-margin-bottom"
                href="https://api.intra.42.fr/oauth/authorize?client_id={{ PUB_42_KEY }}&redirect_uri={{ BASE_URL }}{{ path_for('apiLogin', {'name': '42'}) }}&response_type=code"
             >
@@ -29,9 +29,7 @@
         <div class="w3-section">
             {{ input('email', 'email', {'id': 'email1', 'value': post.email }) }}
         </div>
-        <div class="">
-            {{ button('submit', 'send') }}
-        </div>
+        <input class="{{ buttonClass }}" type="submit" value="Send">
     {% endset %}
     {{ form(inputs, 'Reset Your Password', 'resetPassword', flash, reset) }}
     {% set inputs %}
@@ -67,8 +65,8 @@
         </div>
         <div class="w3-section g-recaptcha" data-sitekey="{{ PUB_CAPTCHA_KEY }}"></div>
         <div class="">
-            {{ button('submit', 'signup') }}
-            {{ button('reset') }}
+            <input class="{{ buttonClass }}" type="submit" value="Signup">
+            <input class="{{ buttonClass }}" type="reset" value="Reset">
         </div>
     {% endset %}
     {{ form(inputs, 'Sign Up', 'signup', flash, signup) }}

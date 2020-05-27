@@ -1,9 +1,8 @@
 {% extends 'templates/home.html.twig' %}
-{% from 'macro/form/button.html.twig' import button %}
 {% from 'macro/form/input.html.twig' import input %}
 {% from 'macro/form/select.html.twig' import select %}
 {% from 'macro/form/layout.html.twig' import form %}
-
+{% set buttonClass = "w3-button w3-right w3-ripple w3-theme-l1 w3-hover-green w3-margin-left w3-margin-bottom" %}
 
 {% block main %}
 <div class="w3-content w3-section w3-card-4 w3-white" style="max-width:95vw">
@@ -45,11 +44,8 @@
         {% set inputs %}
         <legend>Search by Name</legend>
             {{ input('text', '', {'value': '','placeholder':'pseudo', 'class':'w3-col s12 m9 l6', 'name': 'pseudo'}) }}
-            <button class="w3-button w3-right w3-ripple w3-theme-l1 w3-hover-green w3-margin-left w3-margin-bottom"
-                    type=button
-                    onclick="location.href = this.value + this.previousElementSibling.value"
-                    value={{ path_for('searchByName', {'pseudo':''}) }}
-            >Search</button>
+            <button class="{{ buttonClass }}" type=button onclick="location.href = this.value + this.previousElementSibling.value"
+                    value={{ path_for('searchByName', {'pseudo':''}) }}>Search</button>
         {% endset %}
         {{ form(inputs, 'Search By Name', 'home', flash, False) }}
         {% set inputs %}
@@ -163,7 +159,7 @@
 {% block script %}
     <template id="repeatProfil">
         <div class="w3-theme-l5 w3-row w3-hide">
-            <a class="w3-col s12" href="..{{ path_for('profil', {'id': ''}) }}" target="_blank" id="">
+            <a class="w3-col s12" href="{{ path_for('profil', {'id': ''}) }}" target="_blank" id="">
                 <div class="w3-theme-l5 w3-row" style="height: 200px; overflow: auto;">
                     <div class="w3-col s6 w3-padding">
                         <div class="" style="background-color: rgb(214, 65, 97); height: 10%;" gg-name></div>

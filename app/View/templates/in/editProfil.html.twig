@@ -1,9 +1,9 @@
 {% extends "templates/home.html.twig" %}
 {% from 'macro/form/input.html.twig' import input %}
-{% from 'macro/form/button.html.twig' import button %}
 {% from 'macro/form/textarea.html.twig' import textarea %}
 {% from 'macro/form/select.html.twig' import select %}
 {% from 'macro/form/layout.html.twig' import form %}
+{% set buttonClass = "w3-button w3-right w3-ripple w3-theme-l1 w3-hover-green w3-margin-left w3-margin-bottom" %}
 
 {% block main %}
 <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
@@ -14,7 +14,7 @@
         <div class="w3-section">
             {{ input('password', 're-enter new password', {'name': 'password confirmation'}) }}
         </div>
-        {{ button('submit') }}
+        <input class="{{ buttonClass }}" type=submit value=Submit>
     {% endset %}
     {{ form(inputs, 'Change your Password', 'editPassword', flash, editPwd) }}
     {% set inputs %}
@@ -82,7 +82,7 @@
         <div class="w3-section">
             {{ textarea({'label': 'Biography', 'name': 'biography', 'value': me.biography}) }}
         </div>
-        {{ button('submit') }}
+        <input class="{{ buttonClass }}" type=submit value=Submit>
     {% endset %}
     {{ form(inputs, 'Edit your profil', 'editProfil', flash, editProfil) }}
 </div>
