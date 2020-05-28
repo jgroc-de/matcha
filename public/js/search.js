@@ -1,4 +1,5 @@
 function sortCard(id2sort, id) {
+    console.log('sortcard')
     var key = document.getElementById(id2sort).value
     var father = document.getElementById(id)
 
@@ -6,8 +7,11 @@ function sortCard(id2sort, id) {
 }
 
 function generateCard(idFeed, key) {
+    console.log('generateCard')
+    console.log(idFeed)
     var show = 1
     var main = document.getElementById(idFeed)
+    main.textContent = ''
 
     if (key) {
         if ((key === 'age asc.') || (key === 'distance')) {
@@ -33,13 +37,17 @@ function addChildrenCard(hash, key, show) {
     if (show) {
         let body = clone.querySelector('div')
         body.classList.remove('w3-hide')
+        document.getElementById('add').setAttribute('onclick', "addFriend(" + hash.id + ")")
+        document.getElementById('next').setAttribute('onclick', "next(" + hash.id + ")")
     }
     let link = clone.querySelector('a')
     link.href = link.href + hash.id
     link.id = hash.id
 
     let img = clone.querySelector('img')
-    img.src = hash.img
+    img.name = hash.img
+    if (show)
+        img.src = hash.img
 
     let description = clone.querySelector('div[gg-bio]')
     description.innerText = hash.biography
@@ -78,49 +86,51 @@ function addFriend(id) {
 function next(id1) {
     var nextNode = document.getElementById(id1)
 
-    if (nextNode.nextElementSibling) {
-        view(id1, nextNode.nextElementSibling.id)
+    if (nextNode.parentElement.nextElementSibling) {
+        view(id1, nextNode.parentElement.nextElementSibling.children[0].id)
     }
 }
 
 function prev(id1) {
     var prevNode = document.getElementById(id1)
 
-    if (prevNode.previousElementSibling.id) {
-        view(id1, prevNode.previousElementSibling.id)
+    if (prevNode.parentElement.previousElementSibling) {
+        view(id1, prevNode.parentElement.previousElementSibling.children[0].id)
     }
 }
 
 function setImg(node) {
+    console.log(node)
     if (node.firstChild) {
         var img = node.getElementsByTagName('img')[0]
 
-        if (img) {
+        if (img.name != "") {
             img.setAttribute('src', img.name)
             img.setAttribute('alt', 'profil\'s image')
+            img.name = ""
+            console.log(img)
         }
     }
 }
 
 function setPrevNext(node) {
-    var prev = node.previousElementSibling
-    var prev2 = prev.previousElementSibling
-    var next = node.nextElementSibling
-    var next2 = next.nextElementSibling
-
     setImg(node)
-    setImg(prev)
-    setImg(next)
-    setImg(prev2)
-    setImg(next2)
+    if (node.nextElementSibling)
+        setImg(node.nextElementSibling)
+
+    if (node.previousElementSibling)
+        setImg(node.previousElementSibling)
+
 }
 
 function view(id1, id) {
     var divSelected = document.getElementById(id)
+    console.log(id);
+    setPrevNext(document.getElementById(id).parentElement)
 
-    setPrevNext(divSelected)
-    toggleById(id1)
-    toggleById(id)
+    document.getElementById(id).parentElement.classList.remove('w3-hide')
+    document.getElementById(id1).parentElement.classList.add('w3-hide')
+
     divSelected.setAttribute('name', 'visible')
     document.getElementById(id1).setAttribute('name', '')
     document.getElementById('prev').setAttribute('onclick', "prev(" + id + ")")
@@ -132,7 +142,6 @@ function mapView(id) {
     var hide = document.getElementsByName('visible')[0]
 
     view(hide.id, id)
-    document.getElementsByTagName('h3')[0].scrollIntoView()
 }
 
 generateCard('focus')
