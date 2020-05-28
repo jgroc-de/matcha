@@ -36,8 +36,8 @@ $container['debug'] = function () {
 
 $container['flash'] = new FlashMessage();
 
-$container['mail'] = function () {
-    return new MailSender();
+$container['mail'] = function ($container) {
+    return new MailSender($container->get('flash'));
 };
 
 $container['notFoundHandler'] = function ($container) {

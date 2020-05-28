@@ -6,39 +6,32 @@
 {% extends template %}
 {% from 'macro/form/input.html.twig' import input %}
 {% from 'macro/form/textarea.html.twig' import textarea %}
-{% from 'macro/form/layout.html.twig' import form %}
+{% from 'macro/form/title.html.twig' import title %}
 {% set buttonClass = "w3-button w3-right w3-ripple w3-theme-l1 w3-hover-green w3-margin-left w3-margin-bottom" %}
 
 {% block main %}
     <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
-        {% if not flash['success'] %}
-            {% set inputs %}
-                <div class="w3-section">
-                    <div id="infopwd" class="w3-panel w3-green">
-                        <p>If you have anything to tell us, we will be happy to read you even if Rick doesn't care, like, at all!</p>
-                    </div>
-                </div>
-                <div class="w3-section">
-                    {{ input('email', 'your email', {'name':'email', 'value': me.email|default("rick@morty.com") }) }}
-                </div>
-                <div class="w3-section">
-                    {{ textarea({'label': 'your message', 'placeholder': 'why we do care!', 'name':'text'}) }}
-                </div>
-                <div class="w3-section g-recaptcha" data-sitekey="{{ PUB_CAPTCHA_KEY }}"></div>
-                <div class="">
-                    <input class="{{ buttonClass }}" type=submit value=Send>
-                    <input class="{{ buttonClass }}" type=reset value=Reset>
-                </div>
-            {% endset %}
-        {% else %}
-            {% set inputs = '' %}
-            <script>
-                setTimeout(function () {location.href = '/'}, 3500);
-            </script>
-        {% endif %}
-        {{ form(inputs, 'Contact Us', 'contact', flash, true) }}
+        {{ title('Contact Us', 'contact',  true) }}
+        <form id="contact" class="w3-container w3-theme-light clearfix w3-hide w3-show"
+                  style="opacity:0.95" action="{{ path_for('contact') }}" method="post" matcha-form>
+            <div id="infopwd" class="w3-section w3-panel w3-green">
+                <p>If you have anything to tell us, we will be happy to read you even if Rick doesn't care, like, at all!</p>
+            </div>
+            <div class="w3-section">
+                {{ input('email', 'your email', {'name':'email', 'value': me.email|default("rick@morty.com") }) }}
+            </div>
+            <div class="w3-section">
+                {{ textarea({'label': 'your message', 'placeholder': 'why we do care!', 'name':'text'}) }}
+            </div>
+            <div class="w3-section g-recaptcha" data-sitekey="{{ PUB_CAPTCHA_KEY }}"></div>
+            <div class="">
+                <input class="{{ buttonClass }}" type=submit value=Send>
+                <input class="{{ buttonClass }}" type=reset value=Reset>
+            </div>
+        </form>
     </div>
-    {% block script %}
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    {% endblock %}
+{% endblock %}
+
+{% block script %}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}

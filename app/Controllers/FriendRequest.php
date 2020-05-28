@@ -35,49 +35,48 @@ class FriendRequest
     public function add(Request $request, Response $response, array $args): Response
     {
         if (!$this->userModel->hasPictures($_SESSION['id'])) {
-            $flash = 'You need to add pictures on your profile first!';
-        } elseif ($this->isNotAlreadyFriendOrBlacklisted($_SESSION['id'], $args['id'])) {
-            $user = $this->userModel->getUserById($args['id']);
-            if (empty($user)) {
-                return $response->withRedirect(404);
-            }
-            if ($this->friendsModel->isLiked($args['id'], $_SESSION['id']) || $user['bot']) {
-                $this->friendsModel->setFriend($_SESSION['id'], $args['id']);
-                $flash = 'You have a new Friend! Congrats!';
-                $this->userModel->updatePopularity(5, $user);
-                $this->userModel->updatePopularity(5, $_SESSION['profil']);
-                $this->sendNotif(
-                    $user['publicToken'],
-                    $user['id'],
-                    $_SESSION['id'],
-                    $user['id'],
-                    "It's a match! say hi to " . $_SESSION['profil']['pseudo']
-                );
-                $this->sendNotif(
-                    $_SESSION['profil']['publicToken'],
-                    $_SESSION['id'],
-                    $user['id'],
-                    $_SESSION['id'],
-                    "It's a match! say hi to " . $user['pseudo']
-                );
-            } else {
-                $this->friendsModel->setFriendsReq($_SESSION['id'], $args['id'], $user);
-                $this->userModel->updatePopularity(1, $user);
-                $this->sendNotif(
-                    $user['publicToken'],
-                    $user['id'],
-                    $_SESSION['id'],
-                    $_SESSION['id'],
-                    $_SESSION['profil']['pseudo'] . ' sent you a friend request'
-                );
-                $flash = 'Request Sent!';
-            }
-        } else {
-            $flash = 'already sent!';
+            return $response->withJson(['failure' => ['1' => 'You need to add pictures on your profile first!']]);
         }
-        $response->write($flash);
+        if (!$this->isNotAlreadyFriendOrBlacklisted($_SESSION['id'], $args['id'])) {
+            return $response->withJson(['success' => 'already sent!']);
+        }
+        $user = $this->userModel->getUserById($args['id']);
+        if (empty($user)) {
+            return $response->withJson(['failure' => ['1' => 'Not Found!'], 404]);
+        }
+        if ($this->friendsModel->isLiked($args['id'], $_SESSION['id']) || $user['bot']) {
+            $this->friendsModel->setFriend($_SESSION['id'], $args['id']);
+            $flash = 'You have a new Friend! Congrats!';
+            $this->userModel->updatePopularity(5, $user);
+            $this->userModel->updatePopularity(5, $_SESSION['profil']);
+            $this->sendNotif(
+                $user['publicToken'],
+                $user['id'],
+                $_SESSION['id'],
+                $user['id'],
+                "It's a match! say hi to " . $_SESSION['profil']['pseudo']
+            );
+            $this->sendNotif(
+                $_SESSION['profil']['publicToken'],
+                $_SESSION['id'],
+                $user['id'],
+                $_SESSION['id'],
+                "It's a match! say hi to " . $user['pseudo']
+            );
+        } else {
+            $this->friendsModel->setFriendsReq($_SESSION['id'], $args['id'], $user);
+            $this->userModel->updatePopularity(1, $user);
+            $this->sendNotif(
+                $user['publicToken'],
+                $user['id'],
+                $_SESSION['id'],
+                $_SESSION['id'],
+                $_SESSION['profil']['pseudo'] . ' sent you a friend request'
+            );
+            $flash = 'Request Sent!';
+        }
 
-        return $response;
+        return $response->withJson(['success' => $flash]);
     }
 
     private function sendNotif($token, $destID, $expID, $friendId, $msg)

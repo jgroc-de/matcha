@@ -39,21 +39,20 @@ class Blacklist
         } else {
             $flash = 'This user is already on your blacklist!';
         }
-        $response->getBody()->write($flash);
 
-        return $response;
+        return $response->withJson(['success' => $flash]);
     }
 
     public function report(Request $request, Response $response, array $args): Response
     {
         if ($this->deleteFriendAndBlacklist($args['id'])) {
             $this->mail->reportMail($args['id']);
-            $response->getBody()->write('Thank you to help us improved the community!');
+            $flash = 'Thank you to help us improved the community!';
         } else {
-            $response->getBody()->write('Already reported');
+            $flash = 'Already reported';
         }
 
-        return $response;
+        return $response->withJson(['success' => $flash]);
     }
 
     private function deleteFriendAndBlacklist(int $id): bool

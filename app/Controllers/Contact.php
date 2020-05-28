@@ -28,6 +28,7 @@ class Contact
 
     public function page(Request $request, Response $response, array $args): Response
     {
+        echo'lol';
         return $this->view->render(
             $response,
             self::template,
@@ -44,7 +45,13 @@ class Contact
         $post = $request->getParsedBody();
         /** @var FormChecker */
         $this->form->checkContact($post);
+        $msg = $this->flash->getMessages();
+        if (empty($msg)) {
+            $status = 404;
+        } else {
+            $status = 200;
+        }
 
-        return $this->page($request, $response, $args);
+        return $response->withJson($msg, $status);
     }
 }

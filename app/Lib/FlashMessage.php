@@ -19,9 +19,12 @@ class FlashMessage
     public function addMessage(string $key, string $message)
     {
         if ($key === 'success') {
-            $this->storage[$key] = $message;
+            $this->storage['success'] = $message;
         } else {
-            $this->storage[$this->id] = $message;
+            if (!isset($this->storage['failure'])) {
+                $this->storage['failure'] = [];
+            }
+            $this->storage['failure'][$this->id] = $message;
             ++$this->id;
         }
     }

@@ -7,7 +7,7 @@ function displayModal(url) {
 
 function display(id) {
     var forms = document.forms
-    var h2 = document.querySelectorAll('h2[gg-form]')
+    var h2 = document.querySelectorAll('h2[matcha-title]')
 
     for (var i = 0; i < forms.length; i++) {
         h2[i].classList.replace("w3-theme-l1", "w3-theme-d1")
@@ -37,19 +37,72 @@ function toggleById(id) {
     document.getElementById(id).classList.toggle('w3-hide')
 }
 
-function printNotif(args) {
-    var p = document.createElement('p')
-    var div = document.createElement('div')
-    var notif = document.getElementById('notif')
+async function postData(url = '', data = {}) {
+    console.log(data)
+    // Default options are marked with *
+    const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'same-origin', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        body: data // body data type must match "Content-Type" header
+    });
 
-    p.textContent = args[0]
-    div.appendChild(p)
-        div.className = "w3-panel w3-round"
-    if (args[1])
+    return response.json();
+}
+
+function getUrl(event) {
+    postData(event.currentTarget.dataset.url)
+        .then(data => {
+            if (data.success) {
+                printNotif([data.success, true])
+            } else {
+                printNotif([data.failure['1'], false])
+            }
+        });
+}
+
+function submitForm(event) {
+    event.preventDefault()
+    postData(event.currentTarget.action, new FormData(event.currentTarget))
+        .then(data => {
+            if (data.success) {
+                printNotif([data.success, true])
+            } else {
+                printNotif([data.failure['1'], false])
+            }
+    });
+}
+
+(function() {
+    let forms = document.querySelectorAll('form[matcha-form]')
+
+    forms.forEach(function(form) {
+        form.addEventListener('submit', submitForm, true)
+    })
+})()
+
+function xhrButtons() {
+    let buttons = document.querySelectorAll('button[data-url]')
+
+    buttons.forEach(function(button) {
+        button.addEventListener('click', getUrl)
+    })
+}
+
+xhrButtons()
+
+function printNotif(args) {
+    let template = document.querySelector("#repeatNotif")
+    let div = document.importNode(template.content, true).firstElementChild
+    let notif = document.getElementById('notif')
+
+    div.querySelector('p').textContent = args[0]
+    if (args[1]) {
         div.classList.add('w3-green')
-    else
+    } else {
         div.classList.add('w3-red')
-    div.style.margin = "0"
+    }
     notif.appendChild(div)
 
     setTimeout(function() {
@@ -86,8 +139,7 @@ function ggAjax(method, path, callback, args) {
 }
 
 function getColor(kind) {
-    switch(kind)
-    {
+    switch(kind) {
         case 'Rick':
             return '878f99'
         case 'Jerry':

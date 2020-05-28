@@ -96,9 +96,10 @@ $container['App\Controllers\Profil'] = function ($container) {
 
 $container['App\Controllers\RGPD'] = function ($container) {
     return new RGPD(
-        $container->get('user'),
         $container->get('common'),
+        $container->get('flash'),
         $container->get('mail'),
+        $container->get('user'),
         $container->get('validator')
     );
 };

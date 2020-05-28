@@ -97,7 +97,7 @@ class FormChecker
             if ($account) {
                 $this->mail->sendResetMail($account);
             }
-            $this->flashMessage->addMessage('success', 'Check your mail!');
+            $this->flashMessage->addMessage('success', 'Email sent, check your mailbox!!');
         }
     }
 
@@ -138,8 +138,8 @@ class FormChecker
     {
         if ($valid = $this->validator->validate($post, ['email', 'text', 'g-recaptcha-response'])) {
             $this->mail->contactMe($post['text'], $post['email']);
+            $this->flashMessage->addMessage('success', 'Thank you!');
         }
-        $this->flashMessage->addMessage('success', 'Thank you!');
     }
 
     public function checkPwd(?array $post)

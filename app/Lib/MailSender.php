@@ -18,6 +18,11 @@ class MailSender
     private $message = '';
     private $files = [];
 
+    public function __construct(FlashMessage $flashMessage)
+    {
+        $this->flash = $flashMessage;
+    }
+
     /**
      * @param string $this->dest email address
      * @param string $this->subject
@@ -51,8 +56,11 @@ class MailSender
         $mail->Body = $this->message;
 
         try {
-            return $mail->send();
+            $mail->send();
+            $this->flash->addMessage('success', 'Email sent. Check your mailbox, your spambox, your lunchbox, everything!!!');
+            return true;
         } catch (Exception $error) {
+            $this->flash->addMessage('failure', 'Email NOT sent.. For emergency cases, plz, contact us!!!');
             return true;
         }
     }

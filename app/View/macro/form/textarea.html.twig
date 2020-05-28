@@ -7,7 +7,5 @@
     name="{{ hash.name|default(label) }}"
     class="w3-input w3-border"
     placeholder="{{ hash.placeholder|default('do something of your life, go watch TV!') }}"
-    required>
-    {{ hash.value }}
-</textarea>
+    required>{{ hash.value }}</textarea>
 {% endmacro %}

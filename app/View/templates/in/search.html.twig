@@ -17,7 +17,7 @@
                     <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">Actions</h3>
                     <div id="Actions" class="w3-theme-l5 w3-padding gg-section">
                         <button id="prev" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue">prev</button>
-                        <button id="add" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-green">add</button>
+                        <button id="add" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-green" data-url="/friend/{{ profil.id }}">add</button>
                         <button id="next" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue">next</button>
                         {{ select({
                             'label': 'sort by',
@@ -149,7 +149,7 @@
                     <button type="button" onclick="checkTags()">Check all</button>
                 </div>
             </div>
-            {{ button('submit', 'search') }}
+            <button type="submit" class="{{ buttonClass }}">Search</button>
         {% endset %}
         {{ form(inputs, 'Search By Criteria', 'searchByCriteria', flash, False) }}
     </div>

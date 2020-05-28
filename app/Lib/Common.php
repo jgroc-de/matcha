@@ -51,7 +51,7 @@ class Common
         return $this->container->get($name);
     }
 
-    public function sendAllDatas()
+    public function sendAllData()
     {
         $data = [];
         $data['tag'] = $this->tag->getAllUserTags($_SESSION['id']);
