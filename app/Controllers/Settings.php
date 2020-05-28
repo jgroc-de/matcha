@@ -9,6 +9,7 @@ use App\Lib\Validator;
 use App\Matcha;
 use App\Model\NotificationModel;
 use App\Model\UserModel;
+use Memcached;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
@@ -75,6 +76,11 @@ class Settings
         $post = $request->getParsedBody();
         if ($this->form->checkProfil($post) && $this->user->updateUser($post)) {
             $_SESSION['profil'] = array_replace($_SESSION['profil'], $post);
+            if (class_exists('Memcached')) {
+                $memcached = new Memcached();
+                $memcached->addServer("127.0.0.1", 11211);
+                $memcached->set('user_' . $_SESSION['id'], $_SESSION['profil']);
+            }
             $this->flash->addMessage('success', 'profil updated!');
         }
 

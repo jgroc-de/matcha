@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Memcached;
+
 /**
  * class UserModel
  * request to database about user
@@ -28,10 +30,11 @@ class UserModel
      */
     public function getUser(string $pseudo)
     {
-        $req = $this->db->prepare('select * from user where pseudo = ?');
+        $req = $this->db->prepare('SELECT * FROM user WHERE pseudo = ?');
         $req->execute([$pseudo]);
+        $result = $req->fetch();
 
-        return $req->fetch();
+        return $result;
     }
 
     /**
@@ -39,15 +42,31 @@ class UserModel
      */
     public function getUserById(int $id)
     {
-        $req = $this->db->prepare('select * from user where id = ?');
-        $req->execute([$id]);
+        if (class_exists('Memcached')) {
+            $memcached = new Memcached();
+            $memcached->addServer("127.0.0.1", 11211);
+            $result = $memcached->get('user_' . $id);
 
-        return $req->fetch();
+            if (!empty($result)) {
+                return $result;
+            }
+        }
+        $req = $this->db->prepare('SELECT * FROM user WHERE id = ?');
+        $req->execute([$id]);
+        $result = $req->fetch();
+
+        if (class_exists('Memcached') && !empty($result)) {
+            $memcached = new Memcached();
+            $memcached->addServer("127.0.0.1", 11211);
+            $memcached->set('user_' . $id, $result);
+        }
+
+        return $result;
     }
 
     public function hasUser(int $id): bool
     {
-        $req = $this->db->prepare('select 1 from user where id = ?');
+        $req = $this->db->prepare('SELECT 1 FROM user WHERE id = ?');
         $req->execute([$id]);
 
         return !empty($req->fetch());
@@ -58,7 +77,7 @@ class UserModel
      */
     public function getUserByEmail(string $email)
     {
-        $req = $this->db->prepare('select * from user where email = ? and oauth = 0');
+        $req = $this->db->prepare('SELECT * FROM user WHERE email = ? and oauth = 0');
         $req->execute([$email]);
 
         return $req->fetch();
@@ -69,7 +88,7 @@ class UserModel
      */
     public function getAuthUserByEmail(string $email)
     {
-        $req = $this->db->prepare('select * from user where email = ? and oauth = 1');
+        $req = $this->db->prepare('SELECT * FROM user WHERE email = ? and oauth = 1');
         $req->execute([$email]);
 
         return $req->fetch();
@@ -209,7 +228,7 @@ class UserModel
         $req = $this->db->prepare('
             UPDATE user
             SET oauth = ?
-            where id = ?');
+            WHERE id = ?');
         $req->execute([$isOauth, $id]);
     }
 
@@ -228,7 +247,7 @@ class UserModel
             bot = ?,
             popularity = ?,
             lastlog = ?
-            where pseudo = ?'
+            WHERE pseudo = ?'
         );
         $req->execute([
             $post['name'],
@@ -248,9 +267,6 @@ class UserModel
 
     public function updateUser(array $post): bool
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            return false;
-        }
         $req = $this->db->prepare(
             'UPDATE user
             SET pseudo = ?,
@@ -261,7 +277,7 @@ class UserModel
             gender = ?,
             sexuality = ?,
             biography = ?
-            where pseudo = ?'
+            WHERE pseudo = ?'
         );
 
         return $req->execute([
@@ -282,7 +298,7 @@ class UserModel
         $req = $this->db->prepare('
             UPDATE user
             SET password = ?
-            where id = ?');
+            WHERE id = ?');
         $req->execute([$pwd, $_SESSION['id']]);
     }
 

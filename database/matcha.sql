@@ -7,7 +7,8 @@ SET time_zone = "+00:00";
 -- Databatse: `matcha`
 --
 
-CREATE DATABASE IF NOT EXISTS matcha;
+DROP DATABASE IF EXISTS matcha;
+CREATE DATABASE matcha;
 USE matcha;
 
 -- --------------------------------------------------------
@@ -15,8 +16,6 @@ USE matcha;
 --
 -- Table structure for table `user`
 --
-
-DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
     `id` SERIAL,
@@ -57,7 +56,6 @@ CREATE TABLE `user` (
 -- Table structure for table `pictures`
 --
 
-DROP TABLE IF EXISTS `pictures`;
 CREATE TABLE `pictures` (
     `id` SERIAL PRIMARY KEY,
     `user_id` BIGINT UNSIGNED NOT NULL,
@@ -73,7 +71,6 @@ ADD FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE;
 -- Table structure for table `friendsReq`
 --
 
-DROP TABLE IF EXISTS `friendsReq`;
 CREATE TABLE `friendsReq` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL,
@@ -86,7 +83,6 @@ CREATE TABLE `friendsReq` (
 -- Table structure for table `friends`
 --
 
-DROP TABLE IF EXISTS `friends`;
 CREATE TABLE `friends` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL,
@@ -99,7 +95,6 @@ CREATE TABLE `friends` (
 -- Table structure for table `message`
 --
 
-DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
     `id_user1` INT(11) NOT NULL,
     `id_user2` INT(11) NOT NULL,
@@ -112,7 +107,6 @@ CREATE TABLE `message` (
 -- Table structure for table `hashtags`
 --
 
-DROP TABLE IF EXISTS `hashtags`;
 CREATE TABLE `hashtags` (
     `id` SERIAL PRIMARY KEY,
     `tag` VARCHAR(255) NOT NULL UNIQUE
@@ -122,7 +116,6 @@ CREATE TABLE `hashtags` (
 -- Table structure for table `usertags`
 --
 
-DROP TABLE IF EXISTS `usertags`;
 CREATE TABLE `usertags` (
     `id` SERIAL PRIMARY KEY,
     `idtag` INT(11) NOT NULL,
@@ -134,7 +127,6 @@ CREATE TABLE `usertags` (
 -- Table structure for table `notification`
 --
 
-DROP TABLE IF EXISTS `notification`;
 CREATE TABLE `notification` (
     `id` SERIAL PRIMARY KEY,
     `exp` INT(11) NOT NULL,
@@ -149,7 +141,6 @@ CREATE TABLE `notification` (
 -- Table structure for table `blacklist`
 --
 
-DROP TABLE IF EXISTS `blacklist`;
 CREATE TABLE `blacklist` (
     `id` SERIAL PRIMARY KEY,
     `iduser` INT(11) NOT NULL,
