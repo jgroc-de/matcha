@@ -30,6 +30,18 @@ function generateCard(idFeed, key) {
     }
 }
 
+
+function createTitle(hash)
+{
+    var h4 = document.createElement("div")
+
+    h4.className = "w3-col s12 w3-padding"
+    h4.innerHTML = hash.title
+    h4.style.backgroundColor = '#' + getColor(hash.kind)
+    h4.style.height = "10%"
+    return h4
+}
+
 function addChildrenCard(hash, key, show) {
     let template = document.querySelector("#repeatProfil")
     let clone = document.importNode(template.content, true)
@@ -45,14 +57,19 @@ function addChildrenCard(hash, key, show) {
     link.id = hash.id
 
     let img = clone.querySelector('img')
-    img.name = hash.img
+    img.dataset.src = hash.img
+    img.parentElement.style.backgroundColor = '#' + getColor(hash.kind)
+
     if (show)
         img.src = hash.img
 
-    let description = clone.querySelector('div[gg-bio]')
+    let name = clone.querySelector('span.matcha-name')
+    name.innerText = hash.title + ', ' + hash.age
+    let score = clone.querySelector('div.matcha-pop-score')
+    score.innerText = hash.popularity + ' %'
+    score.style.backgroundColor = '#' + getColor(hash.kind)
+    let description = clone.querySelector('span[matcha-bio]')
     description.innerText = hash.biography
-    let name = clone.querySelector('div[gg-name]')
-    name.innerText = hash.title
 
     return clone
 }
@@ -104,10 +121,9 @@ function setImg(node) {
     if (node.firstChild) {
         var img = node.getElementsByTagName('img')[0]
 
-        if (img.name != "") {
-            img.setAttribute('src', img.name)
+        if (img.dataset.src != "") {
+            img.setAttribute('src', img.dataset.src)
             img.setAttribute('alt', 'profil\'s image')
-            img.name = ""
             console.log(img)
         }
     }

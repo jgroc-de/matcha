@@ -55,15 +55,15 @@
                         <div class="w3-left-align">
                             <div class="profil-wrap">
                                 <p>{% if not home %}<span id="online" class="w3-text-green w3-hide">(online)<br></span>
-                                    <span id="offline" class="small-text w3-text-blue">(offline since: {{ profil.lastlog|date('d M Y') }})<br></span>
+                                    <span id="offline" class="matcha-small-text w3-text-blue">(offline since: {{ profil.lastlog|date('d M Y') }})<br></span>
                                 {% endif %}
                                 <span class="name">{{ profil.name}} {{profil.surname}}, {{ "now"|date("Y") - profil.birthdate }}</span><br>
-                                <span class="small-text">{{ profil.email }} - {{ profil.gender }} - {{ profil.sexuality }}</span><br>
+                                <span class="matcha-small-text">{{ profil.email }} - {{ profil.gender }} - {{ profil.sexuality }}</span><br>
                                 </p>
-                                <div class="pop-score" style="background-color:{{(profil.popularity > 50) ? '#5ad168' : '#a7e9af'}};">{{ profil.popularity }} %</div>
+                                <div class="matcha-pop-score" style="background-color:{{(profil.popularity > 50) ? '#5ad168' : '#a7e9af'}};">{{ profil.popularity }} %</div>
                             </div>
-                            <span class="medium-text">Biographie :</span><br>
-                            <span class="small-text">{{ profil.biography }}</span>
+                            <span class="matcha-medium-text">Biographie :</span><br>
+                            <span class="matcha-small-text">{{ profil.biography }}</span>
                         </div>
                     </div>
                 </div>
