@@ -177,7 +177,7 @@ class UserModel
             ORDER BY pseudo
             LIMIT 50"
         );
-        $req->execute([$pseudo . '%']);
+        $req->execute(['%' . $pseudo . '%']);
 
         return $req->fetchAll();
     }

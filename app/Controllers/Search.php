@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Model\UserModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -45,13 +46,14 @@ class Search
 
     public function name(Request $request, Response $response, array $args)
     {
-        if ($this->validator->validate($args, ['pseudo'])) {
-            $this->list = $this->user->getUserByPseudo($args['pseudo']);
+        $name = $request->getQueryParams();
+        if ($name && $this->validator->validate($name, ['pseudo'])) {
+            $this->list = $this->user->getUserByPseudo($name['pseudo']);
 
             return $this->searchResponse($response);
         }
 
-        return $response->withStatus(404);
+        return ($this->notFoundHandler)($request, $response);
     }
 
     private function searchResponse(Response $response)
