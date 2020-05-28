@@ -35,12 +35,12 @@
                 <div class="w3-card-4">
                     <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">Actions</h3>
                     <div id="Actions" class="w3-theme-l5 w3-padding gg-section">
-                        {% if not friends %}
-                            {% if isLiked %}
-                                <button class="w3-button w3-orange w3-margin-top" onclick="profilAction('/friendReq/{{ profil.id }}', true)" >Unlike</button>
-                            {% else %}
-                                <button class="w3-button w3-green w3-margin-top" data-url="/friend/{{ profil.id }}" >Add to friends</button>
-                            {% endif %}
+                        {% if isLiked %}
+                            <button class="w3-button w3-orange w3-margin-top" onclick="profilAction('/friendReq/{{ profil.id }}', true)" >Unlike</button>
+                        {% elseif isFriend %}
+                            <button class="w3-button w3-orange w3-margin-top" onclick="profilAction('/friend/{{ profil.id }}', true)" >Unfriend</button>
+                        {% else %}
+                            <button class="w3-button w3-green w3-margin-top" data-url="/friend/{{ profil.id }}" >Add to friends</button>
                         {% endif %}
                         <button class="w3-button w3-red w3-margin-top" data-url="/report/{{ profil.id }}">Report as fake user</button>
                         <button class="w3-button w3-black w3-margin-top" data-url="/blacklist/{{ profil.id }}">Blacklist this user</button>
