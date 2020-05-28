@@ -32,7 +32,7 @@ class ft_geoIP
             try {
                 $ip = $this->geoIP->city($this->getIP());
             } catch (AddressNotFoundException $error) {
-                $ip = $this->geoIP->city('163.172.250.11');
+                $ip = $this->geoIP->city('195.248.251.195');
             }
             //$ip = $this->geoIP->city('82.231.186.199');
             $post['lat'] = $ip->location->latitude;
