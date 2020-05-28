@@ -30,18 +30,6 @@ function generateCard(idFeed, key) {
     }
 }
 
-
-function createTitle(hash)
-{
-    var h4 = document.createElement("div")
-
-    h4.className = "w3-col s12 w3-padding"
-    h4.innerHTML = hash.title
-    h4.style.backgroundColor = '#' + getColor(hash.kind)
-    h4.style.height = "10%"
-    return h4
-}
-
 function addChildrenCard(hash, key, show) {
     let template = document.querySelector("#repeatProfil")
     let clone = document.importNode(template.content, true)
