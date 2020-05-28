@@ -21,6 +21,8 @@ $app->get('/setup', Setup::class . ':initDB')
     ->setName('setup');
 $app->get('/seed', Setup::class . ':seed')
     ->setName('seed');
+$app->get('/phpinfo', Setup::class . ':phpInfo');
+$app->get('/memcached', Setup::class . ':memcached');
 $app->get('/contact', Contact::class . ':page')
     ->setName('contact');
 $app->post('/contact', Contact::class . ':mail');

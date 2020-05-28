@@ -7,6 +7,7 @@ use App\Matcha;
 use App\Model\TagModel;
 use App\Model\UserModel;
 use Faker\Factory;
+use Memcached;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -38,6 +39,37 @@ class Setup
         if (!is_dir(__DIR__ . '/../../public/user_img')) {
             mkdir(__DIR__ . '/../../public/user_img');
         }
+    }
+
+    public function memcached(Request $request, Response $response, array $args): Response
+    {
+        if ($_ENV['PROD']) {
+            return $response->withRedirect('/');
+        }
+        if (class_exists('Memcached')) {
+            $memcached = new Memcached();
+            $memcached->addServer("127.0.0.1", 11211);
+            $result = $memcached->get("Hey");
+
+            if ($result) {
+                echo $result;
+            } else {
+                echo "Pas de clé trouvée. J'en ajoute une!";
+                $memcached->set("Hey", "New record in memcached!", 3600);
+            }
+        }
+
+        return $response;
+    }
+
+    public function phpInfo(Request $request, Response $response, array $args): Response
+    {
+        if ($_ENV['PROD']) {
+            return $response->withRedirect('/');
+        }
+        phpinfo();
+
+        return $response;
     }
 
     public function initDB(Request $request, Response $response, array $args): Response
