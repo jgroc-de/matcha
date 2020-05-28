@@ -42,7 +42,6 @@ class UserModel
      */
     public function getUserById(int $id)
     {
-        echo "lol<br>";
         if (class_exists('Memcached')) {
             $memcached = new Memcached();
             $memcached->addServer("127.0.0.1", 11211);
