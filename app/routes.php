@@ -64,8 +64,9 @@ $app->group('', function () use ($app) {
     $this->get('/rgpd', Settings::class . ':rgpd')
         ->setName('RGPD');
 
-    $this->post('/getAllDatas', RGPD::class . ':getAllDatas');
-    $this->get('/deleteAccount', RGPD::class . ':deleteAccount')
+    $this->post('/getAllData', RGPD::class . ':getAllData')
+        ->setName('getMyData');
+    $this->post('/deleteAccount', RGPD::class . ':deleteAccount')
         ->setName('deleteAccount');
 
     $this->get('/logout', Authentication::class . ':logout')

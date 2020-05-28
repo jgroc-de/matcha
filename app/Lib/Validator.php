@@ -41,6 +41,7 @@ class Validator
     {
         foreach ($keys as $key) {
             if (!isset($array[$key])) {
+                $this->flashMessage->addMessage('failure', $key . ' is missing');
                 return false;
             }
         }

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Lib\Common;
+use App\Lib\FlashMessage;
 use App\Lib\MailSender;
 use App\Lib\Validator;
 use App\Model\UserModel;
@@ -19,33 +20,35 @@ class RGPD
     private $mail;
     /** @var Validator */
     private $validator;
+    /** @var FlashMessage */
+    private $flash;
 
-    public function __construct(UserModel $userModel, Common $common, MailSender $mail, Validator $validator)
-    {
-        $this->user = $userModel;
+    public function __construct(
+        Common $common,
+        FlashMessage $flashMessage,
+        MailSender $mail,
+        UserModel $userModel,
+        Validator $validator
+    ) {
         $this->common = $common;
+        $this->flash = $flashMessage;
         $this->mail = $mail;
+        $this->user = $userModel;
         $this->validator = $validator;
     }
 
-    public function getAllDatas(Request $request, Response $response, array $args): Response
+    public function getAllData(Request $request, Response $response, array $args): Response
     {
-        $this->common->sendAllDatas();
-        $response->getBody()->write('Check your mailbox!');
+        $this->common->sendAllData();
 
-        return $response;
+        return $response->withJson($this->flash->getMessages());
     }
 
     public function deleteAccount(Request $request, Response $response, array $args): Response
     {
-        if ($this->mail->sendDeleteMail()) {
-            $msg = 'Check your mailbox!';
-        } else {
-            $msg = 'there is a bug… plz contact us, we will answer asap!';
-        }
-        $response->getBody()->write($msg);
+        $this->mail->sendDeleteMail();
 
-        return $response;
+        return $response->withJson($this->flash->getMessages());
     }
 
     public function validationDeletion(Request $request, Response $response, array $args): Response

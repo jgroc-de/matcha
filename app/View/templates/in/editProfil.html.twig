@@ -2,12 +2,14 @@
 {% from 'macro/form/input.html.twig' import input %}
 {% from 'macro/form/textarea.html.twig' import textarea %}
 {% from 'macro/form/select.html.twig' import select %}
-{% from 'macro/form/layout.html.twig' import form %}
+{% from 'macro/form/title.html.twig' import title %}
 {% set buttonClass = "w3-button w3-right w3-ripple w3-theme-l1 w3-hover-green w3-margin-left w3-margin-bottom" %}
 
 {% block main %}
 <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
-    {% set inputs %}
+    {{ title('Change your Password', 'editPassword',  editPwd) }}
+    <form id="editPassword" class="w3-container w3-theme-light clearfix w3-hide {% if editPwd %}w3-show{% endif %}"
+          style="opacity:0.95" action="{{ path_for('editPassword') }}" method="post" matcha-form>
         <div class="w3-section">
             {{ input('password','enter new password', {'name': 'password'}) }}
         </div>
@@ -15,9 +17,10 @@
             {{ input('password', 're-enter new password', {'name': 'password confirmation'}) }}
         </div>
         <input class="{{ buttonClass }}" type=submit value=Submit>
-    {% endset %}
-    {{ form(inputs, 'Change your Password', 'editPassword', flash, editPwd) }}
-    {% set inputs %}
+    </form>
+    {{ title('Your Account', 'RGPD',  rgpd) }}
+    <form id="RGPD" class="w3-container w3-theme-light clearfix w3-hide {% if rgpd %}w3-show{% endif %}"
+          style="opacity:0.95" action="">
         <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-green">
             <div class="w3-tag w3-padding w3-green">About your data</div>
             <p>We need some of your data to authentificate you on this website. In particular, your email is requested to sign up and to let you reset your password when needed. We dont sell or communicate in any ways your information to any third party.</p>
@@ -25,18 +28,17 @@
         <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-blue">
             <div class="w3-tag w3-padding w3-blue">Get all your data</div>
             <p>We will send you everything we know about you by email.</p>
-            <button type="button" class="w3-button w3-blue w3-right" onclick="getAllDatas()">Get data</button>
+            <button type="button" class="w3-button w3-blue w3-right" data-url="{{ path_for('getMyData') }}">Get data</button>
         </div>
         <div class="w3-white w3-padding w3-margin w3-container w3-leftbar w3-border-red">
             <div class="w3-tag w3-padding w3-red">Delete your account and all your data</div>
             <p>We will delete everything we know about you. Your account will be delete too. A confirmation mail will be sent to you. Please notice that this can't be undone.</p>
-            <button type="button" class="w3-button w3-red w3-right" onclick="deleteAccount()">Delete account</button>
+            <button type="button" class="w3-button w3-red w3-right" data-url="{{ path_for('deleteAccount') }}">Delete account</button>
         </div>
-    {% endset %}
-    {{ form(inputs, 'Your Account', 'RGPD', flash, rgpd) }}
-
-
-    {% set inputs %}
+    </form>
+    {{ title('Edit your profil', 'editProfil',  editProfil) }}
+    <form id="editProfil" class="w3-container w3-theme-light clearfix w3-hide {% if editProfil %}w3-show{% endif %}"
+          style="opacity:0.95" action="{{ path_for('editProfil') }}" method="post" matcha-form>
         <div class="w3-section">
             {{ input('text', 'pseudo', {'value': me.pseudo}) }}
         </div>
@@ -50,10 +52,7 @@
             {{ input('text', 'surname', {'value': me.surname}) }}
         </div>
         <div class="w3-section">
-            {{ input(
-                'number',
-                'birthdate',
-                {
+            {{ input('number', 'birthdate', {
                     'value': me.birthdate,
                     'min': 1850,
                     'max': year,
@@ -83,17 +82,12 @@
             {{ textarea({'label': 'Biography', 'name': 'biography', 'value': me.biography}) }}
         </div>
         <input class="{{ buttonClass }}" type=submit value=Submit>
-    {% endset %}
-    {{ form(inputs, 'Edit your profil', 'editProfil', flash, editProfil) }}
+    </form>
 </div>
 {% endblock %}
 
 {% block script %}
-    <script>
-        var myId = '{{ me.publicToken }}';
-        function deleteAccount() {ggAjaxGet('{{ path_for('deleteAccount') }}', printNotif, ['response', true]);}
-        function getAllDatas() {ggAjax('POST', '/getAllDatas', printNotif, ['response', true]);}
-    </script>
+    <script>var myId = '{{ me.publicToken }}'</script>
     <script src="{{ BASE_URL }}/js/autobahn.js"></script>
     <script src="{{ BASE_URL }}/js/notification.js"></script>
 {% endblock %}

@@ -39,11 +39,11 @@
                             {% if isLiked %}
                                 <button class="w3-button w3-orange w3-margin-top" onclick="profilAction('/friendReq/{{ profil.id }}', true)" >Unlike</button>
                             {% else %}
-                                <button class="w3-button w3-green w3-margin-top" onclick="profilAction('/friend/{{ profil.id }}')" >Add to friends</button>
+                                <button class="w3-button w3-green w3-margin-top" data-url="/friend/{{ profil.id }}" >Add to friends</button>
                             {% endif %}
                         {% endif %}
-                        <button class="w3-button w3-red w3-margin-top" onclick="profilAction('/report/{{ profil.id }}')">Report as fake user</button>
-                        <button class="w3-button w3-black w3-margin-top" onclick="profilAction('/blacklist/{{ profil.id }}')">Blacklist this user</button>
+                        <button class="w3-button w3-red w3-margin-top" data-url="/report/{{ profil.id }}">Report as fake user</button>
+                        <button class="w3-button w3-black w3-margin-top" data-url="/blacklist/{{ profil.id }}">Blacklist this user</button>
                     </div>
                 </div>
             </div>

@@ -108,10 +108,9 @@ class Authentication
 
     public function postSignup(Request $request, Response $response, array $args): Response
     {
-        $post = $request->getParsedBody();
-        $post = $this->form->checkSignup($post);
+        $this->form->checkSignup($request->getParsedBody());
 
-        return $this->signup($request, $response, $post);
+        return $response->withJson($this->flashMessage->getMessages());
     }
 
     public function resetPassword(Request $request, Response $response, array $post): Response
@@ -121,8 +120,7 @@ class Authentication
 
     public function postPassword(Request $request, Response $response, array $args): Response
     {
-        $post = $request->getParsedBody();
-        $this->form->checkResetEmail($post);
+        $this->form->checkResetEmail($request->getParsedBody());
 
         return $response->withJson($this->flashMessage->getMessages());
     }

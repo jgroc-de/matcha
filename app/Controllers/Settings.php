@@ -60,10 +60,9 @@ class Settings
 
     public function updatePassword(Request $request, Response $response, array $args): Response
     {
-        $post = $request->getParsedBody();
-        $this->form->checkPwd($post);
+        $this->form->checkPwd($request->getParsedBody());
 
-        return $this->editPassword($request, $response, $args);
+        return $response->withJson($this->flash->getMessages());
     }
 
     public function editProfil(Request $request, Response $response, array $args): Response
@@ -79,7 +78,7 @@ class Settings
             $this->flash->addMessage('success', 'profil updated!');
         }
 
-        return $this->editProfil($request, $response, $args);
+        return $response->withJson($this->flash->getMessages());
     }
 
     private function renderSettings(Response $response, array $args): Response
