@@ -2,7 +2,7 @@
 {% from 'macro/form/input.html.twig' import input %}
 {% from 'macro/form/select.html.twig' import select %}
 {% from 'macro/form/layout.html.twig' import form %}
-{% set buttonClass = "w3-button w3-right w3-ripple w3-theme-l1 w3-hover-green w3-margin-left w3-margin-bottom" %}
+
 
 {% block main %}
 <div class="w3-content w3-section w3-card-4 w3-white" style="max-width:95vw">
@@ -44,8 +44,11 @@
         {% set inputs %}
         <legend>Search by Name</legend>
             {{ input('text', '', {'value': '','placeholder':'pseudo', 'class':'w3-col s12 m9 l6', 'name': 'pseudo'}) }}
-            <button class="{{ buttonClass }}" type=button onclick="location.href = this.value + this.previousElementSibling.value"
-                    value={{ path_for('searchByName', {'pseudo':''}) }}>Search</button>
+            <button class="w3-button w3-right w3-ripple w3-theme-l1 w3-hover-green w3-margin-left w3-margin-bottom"
+                    type=button
+                    onclick="location.href = this.value + this.previousElementSibling.value"
+                    value={{ path_for('searchByName', {'pseudo':''}) }}
+            >Search</button>
         {% endset %}
         {{ form(inputs, 'Search By Name', 'home', flash, False) }}
         {% set inputs %}
@@ -149,7 +152,6 @@
                     <button type="button" onclick="checkTags()">Check all</button>
                 </div>
             </div>
-            {{ button('submit', 'search') }}
         {% endset %}
         {{ form(inputs, 'Search By Criteria', 'searchByCriteria', flash, False) }}
     </div>
@@ -159,10 +161,10 @@
 {% block script %}
     <template id="repeatProfil">
         <div class="w3-theme-l5 w3-row w3-hide">
-            <a class="w3-col s12" href="{{ path_for('profil', {'id': ''}) }}" target="_blank" id="">
+            <a class="w3-col s12" href="..{{ path_for('profil', {'id': ''}) }}" target="_blank" id="">
                 <div class="w3-theme-l5 w3-row" style="height: 200px; overflow: auto;">
                     <div class="w3-col s6 w3-padding">
-                        <div class="" style="background-color: rgb(214, 65, 97); height: 10%;" gg-name></div>
+                        <div class="medium-text" style="background-color: rgb(214, 65, 97); height: 10%;" gg-name></div>
                         <div gg-bio></div>
                     </div>
                     <div class="w3-right w3-black w3-col s6 w3-display-container" style="height: 100%;">
@@ -186,4 +188,4 @@
     <script src="{{ BASE_URL }}/js/notification.js"></script>
     <script src="{{ BASE_URL }}/js/mapSearch.js"></script>
     <script defer async src="https://maps.googleapis.com/maps/api/js?key={{ mapKey }}&callback=initMap"></script>
-{% endblock %} 
+{% endblock %}
