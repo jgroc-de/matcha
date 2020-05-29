@@ -15,19 +15,23 @@
             <div class="w3-half w3-padding">
                 <div class="w3-card-4">
                     <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">Actions</h3>
-                    <div id="Actions" class="w3-theme-l5 w3-padding gg-section">
-                        <button id="prev" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue">prev</button>
-                        <button id="add" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-green" data-url="/friend/{{ profil.id }}">add</button>
-                        <button id="next" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue">next</button>
-                        {{ select({
-                            'label': 'sort by',
-                            'name': 'sort1',
-                            'array': sort,
-                            'select': '',
-                            'style': 'width:auto;max-width:75%',
-                            'class': '',
-                            'change': 'sortCard("sort1", "focus")'
-                        }) }}
+                    <div id="Actions" class="w3-theme-l5 w3-padding gg-section search-wrap">
+                        <div class="profil-wrap">
+                            <button id="prev" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue width150">Previous</button>
+                            <button id="add" type="button" class="w3-button w3-green w3-margin-top width150" data-url="/friend/{{ profil.id }}">Add to friend</button>
+                            <button id="next" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue width150">Next</button>
+                        </div>
+                        <div>
+                            {{ select({
+                                'label': 'Sort by :',
+                                'name': 'sort1',
+                                'array': sort,
+                                'select': '',
+                                'style': 'width:auto;max-width:75%',
+                                'class': '',
+                                'change': 'sortCard("sort1", "focus")'
+                            }) }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -176,6 +180,12 @@
         </div>
     </template>
     <script>
+
+        var color = ['Rick': '#878f99',
+        'Jerry': '#ff7b25',
+        'Beth': '#6b5b95',
+        'Morty': '#feb236',
+        'Summer': '#d64161'];
         var myPos = {lat: {{ me.lattitude }}, lng: {{ me.longitude }}};
         var usersPos = [
             {% for user in users %}

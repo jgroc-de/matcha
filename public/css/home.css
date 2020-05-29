@@ -141,6 +141,18 @@ img {
     justify-content: space-between;
 }
 
+.search-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-around;
+}
+
+.width150 {
+    width: 150px;
+}
+
 h3 {
     min-height:38.5px;
 }
