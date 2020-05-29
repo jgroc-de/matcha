@@ -24,8 +24,7 @@
       "guzzlehttp/guzzle": "~6.0",
       "google/apiclient": "^2.4",
       "monolog/monolog": "^2.1",
-      "cloudinary/cloudinary_php": "^1.16",
-      "ext-memcached": "*"
+      "cloudinary/cloudinary_php": "^1.16"
     },
     "autoload": {
         "psr-4": {
