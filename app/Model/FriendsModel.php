@@ -173,12 +173,15 @@ class FriendsModel
         $req->execute([$id, $id]);
     }
 
-    public function delFriendReq(int $id1, int $id2)
+    public function delFriendReq(int $id1, int $id2): bool
     {
         $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute([$id1, $id2]);
+        $count = $req->rowCount();
         $req = $this->db->prepare('DELETE FROM friendsReq WHERE id_user1 = ? AND id_user2 = ?');
         $req->execute([$id2, $id1]);
+
+        return $count || $req->rowCount();
     }
 
     public function delAllFriendReq(int $id)
@@ -187,11 +190,12 @@ class FriendsModel
         $req->execute([$id, $id]);
     }
 
-    public function delFriend(int $id1, int $id2): bool
+    public function delFriend(int $id1, int $id2): int
     {
         $req = $this->db->prepare('DELETE FROM friends WHERE id_user1 = ? AND id_user2 = ?');
+        $req->execute($this->sortId($id1, $id2));
 
-        return $req->execute($this->sortId($id1, $id2));
+        return $req->rowCount();
     }
 
     private function sortId(int $id1, int $id2): array

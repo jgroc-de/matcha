@@ -76,11 +76,6 @@ class Settings
         $post = $request->getParsedBody();
         if ($this->form->checkProfil($post) && $this->user->updateUser($post)) {
             $_SESSION['profil'] = array_replace($_SESSION['profil'], $post);
-            if (class_exists('Memcached')) {
-                $memcached = new Memcached();
-                $memcached->addServer("127.0.0.1", 11211);
-                $memcached->set('user_' . $_SESSION['id'], $_SESSION['profil']);
-            }
             $this->flash->addMessage('success', 'profil updated!');
         }
 

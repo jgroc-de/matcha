@@ -9,13 +9,14 @@ class Search
 {
     private $kind = ['Rick', 'Morty', 'Beth', 'Summer', 'Jerry'];
     private $list = [];
-    private $age = ['min' => 2000, 'max' => 0];
+    private $age = ['min' => 2000, 'max' => 1990];
     private $targets = ['Rick', 'Morty', 'Beth', 'Summer', 'Jerry'];
     private $tags = [];
     private $popularity = ['min' => 0, 'max' => 100];
     private $dist = 30;
     private $date = 0;
     private $criteria = false;
+    private $name = '';
 
     private $container;
 
@@ -37,7 +38,6 @@ class Search
 
             return $response->withRedirect('/editProfil', 302);
         }
-        $this->date = date('Y');
         $this->listDefault();
 
         return $this->searchResponse($response);
@@ -45,13 +45,16 @@ class Search
 
     public function name(Request $request, Response $response, array $args)
     {
-        if ($this->validator->validate($args, ['pseudo'])) {
-            $this->list = $this->user->getUserByPseudo($args['pseudo']);
+        $name = $request->getQueryParams();
+        if ($name && $this->validator->validate($name, ['pseudo'])) {
+            $this->list = $this->user->getUserByPseudo($name['pseudo']);
+            $this->name = $name['pseudo'];
+            $this->listDefault();
 
             return $this->searchResponse($response);
         }
 
-        return $response->withStatus(404);
+        return ($this->notFoundHandler)($request, $response);
     }
 
     private function searchResponse(Response $response)
@@ -68,7 +71,10 @@ class Search
                 'target' => $this->targets,
                 'users' => $this->list,
                 'tags' => $this->tags,
-                'age' => ['min' => (($this->date - $this->age['min']) >= 18 ? $this->date - $this->age['min'] : 18), 'max' => $this->date - $this->age['max']],
+                'age' => [
+                    'min' => (($this->date - $this->age['min']) >= 18 ? $this->date - $this->age['min'] : 18),
+                    'max' => $this->date - $this->age['max']
+                ],
                 'distSelect' => $this->dist,
                 'distance' => ['1', '5', '10', '20', '30', '50', '100', '500', '1000', '10000'],
                 'popularity' => $this->popularity,
@@ -76,6 +82,7 @@ class Search
                 'notification' => $this->notif->getNotification(),
                 'criteria' => $this->criteria,
                 'mapKey' => $_ENV['GMAP_KEY'],
+                'name' => $this->name,
             ]
         );
     }
@@ -145,6 +152,7 @@ class Search
 
     private function listDefault()
     {
+        $this->date = date('Y');
         $this->age['min'] = $_SESSION['profil']['birthdate'] + 10;
         $this->age['max'] = $_SESSION['profil']['birthdate'] - 10;
         $this->list = $this->user->getUsersBySexuality($this->age, $this->distance2angle());

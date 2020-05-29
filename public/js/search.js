@@ -1,16 +1,12 @@
 function sortCard(id2sort, id) {
-    console.log('sortcard')
-    var key = document.getElementById(id2sort).value
-    var father = document.getElementById(id)
+    let key = document.getElementById(id2sort).value
 
     generateCard(id, key)
 }
 
 function generateCard(idFeed, key) {
-    console.log('generateCard')
-    console.log(idFeed)
-    var show = 1
-    var main = document.getElementById(idFeed)
+    let show = 1
+    let main = document.getElementById(idFeed)
     main.textContent = ''
 
     if (key) {
@@ -24,6 +20,7 @@ function generateCard(idFeed, key) {
             usersPos.sort(function(a, b) {return b[key] - a[key]})
         }
     }
+    document.getElementById('add').addEventListener('click', getUrl)
     for (let user of usersPos) {
         main.appendChild(addChildrenCard(user, key, show))
         show = 0
@@ -37,7 +34,7 @@ function addChildrenCard(hash, key, show) {
     if (show) {
         let body = clone.querySelector('div')
         body.classList.remove('w3-hide')
-        document.getElementById('add').setAttribute('onclick', "addFriend(" + hash.id + ")")
+        document.getElementById('add').dataset.url = "/friend/" + hash.id
         document.getElementById('next').setAttribute('onclick', "next(" + hash.id + ")")
     }
     let link = clone.querySelector('a')
@@ -45,21 +42,26 @@ function addChildrenCard(hash, key, show) {
     link.id = hash.id
 
     let img = clone.querySelector('img')
-    img.name = hash.img
+    img.dataset.src = hash.img
+    img.parentElement.style.backgroundColor = '#' + getColor(hash.kind)
+
     if (show)
         img.src = hash.img
 
-    let description = clone.querySelector('div[gg-bio]')
+    let name = clone.querySelector('span.matcha-name')
+    name.innerText = hash.title + ', ' + hash.age
+    let score = clone.querySelector('div.matcha-pop-score')
+    score.innerText = hash.popularity + ' %'
+    score.style.backgroundColor = '#' + getColor(hash.kind)
+    let description = clone.querySelector('span[matcha-bio]')
     description.innerText = hash.biography
-    let name = clone.querySelector('div[gg-name]')
-    name.innerText = hash.title
 
     return clone
 }
 
 function uncheckTags() {
-    var dad = document.getElementById('tags')
-    var tags = dad.childNodes
+    let dad = document.getElementById('tags')
+    let tags = dad.childNodes
 
     for (let tag of tags) {
         if (tag.nodeType === 1) {
@@ -69,8 +71,8 @@ function uncheckTags() {
 }
 
 function checkTags() {
-    var dad = document.getElementById('tags')
-    var tags = dad.childNodes
+    let dad = document.getElementById('tags')
+    let tags = dad.childNodes
 
     for (let tag of tags) {
         if (tag.nodeType === 1) {
@@ -79,12 +81,8 @@ function checkTags() {
     }
 }
 
-function addFriend(id) {
-    ggAjax('POST', '/friend/' + id, printNotif, ['response', true])
-}
-
 function next(id1) {
-    var nextNode = document.getElementById(id1)
+    let nextNode = document.getElementById(id1)
 
     if (nextNode.parentElement.nextElementSibling) {
         view(id1, nextNode.parentElement.nextElementSibling.children[0].id)
@@ -92,7 +90,7 @@ function next(id1) {
 }
 
 function prev(id1) {
-    var prevNode = document.getElementById(id1)
+    let prevNode = document.getElementById(id1)
 
     if (prevNode.parentElement.previousElementSibling) {
         view(id1, prevNode.parentElement.previousElementSibling.children[0].id)
@@ -100,15 +98,12 @@ function prev(id1) {
 }
 
 function setImg(node) {
-    console.log(node)
     if (node.firstChild) {
-        var img = node.getElementsByTagName('img')[0]
+        let img = node.getElementsByTagName('img')[0]
 
-        if (img.name != "") {
-            img.setAttribute('src', img.name)
+        if (img.dataset.src != "") {
+            img.setAttribute('src', img.dataset.src)
             img.setAttribute('alt', 'profil\'s image')
-            img.name = ""
-            console.log(img)
         }
     }
 }
@@ -117,31 +112,25 @@ function setPrevNext(node) {
     setImg(node)
     if (node.nextElementSibling)
         setImg(node.nextElementSibling)
-
     if (node.previousElementSibling)
         setImg(node.previousElementSibling)
-
 }
 
-function view(id1, id) {
-    var divSelected = document.getElementById(id)
-    console.log(id);
-    setPrevNext(document.getElementById(id).parentElement)
+function view(oldId, id) {
+    let divSelected = document.getElementById(id)
+    let divOld = document.getElementById(oldId)
 
-    document.getElementById(id).parentElement.classList.remove('w3-hide')
-    document.getElementById(id1).parentElement.classList.add('w3-hide')
-
-    divSelected.setAttribute('name', 'visible')
-    document.getElementById(id1).setAttribute('name', '')
+    setPrevNext(divSelected.parentElement)
+    divOld.parentElement.classList.add('w3-hide')
+    divSelected.parentElement.classList.remove('w3-hide')
     document.getElementById('prev').setAttribute('onclick', "prev(" + id + ")")
-    document.getElementById('add').setAttribute('onclick', "addFriend(" + id + ")")
+    document.getElementById('add').dataset.url = "/friend/" + id
     document.getElementById('next').setAttribute('onclick', "next(" + id + ")")
 }
 
 function mapView(id) {
-    var hide = document.getElementsByName('visible')[0]
 
-    view(hide.id, id)
+    view(document.querySelector('#focus>div:not(.w3-hide)').children[0].id, id)
 }
 
 generateCard('focus')

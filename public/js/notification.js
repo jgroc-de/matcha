@@ -1,5 +1,4 @@
-function addNotification(data)
-{
+function addNotification(data) {
     var link = document.createElement("a")
     var notif = document.getElementById("notification")
     var badge = document.getElementById("badge")
@@ -12,16 +11,14 @@ function addNotification(data)
     notif.insertBefore(link, notif.firstChild)
 }
 
-function resetBadge()
-{
+function resetBadge() {
     var badge = document.getElementById("badge")
 
     badge.classList.add("w3-hide")
     badge.innerHTML = ""
 }
 
-(function ()
-{
+(function() {
     var notifSocket
 
     notifSocket = new ab.Session('ws://localhost:3001',
@@ -30,28 +27,20 @@ function resetBadge()
             notifSocket.subscribe('"' + myId + '"', function(topic, data)
             {
                 //console.log('New notification received')
-                if (data.hasOwnProperty('msg'))
-                {
+                if (data.hasOwnProperty('msg')) {
                     addNotification(data)
-                }
-                else if (data.hasOwnProperty('mateStatus'))
-                {
+                } else if (data.hasOwnProperty('mateStatus')) {
                     if (typeof mateStatus === "function")
                         highlightMate(data)
-                }
-                else if (data.hasOwnProperty('profilStatus'))
-                {
+                } else if (data.hasOwnProperty('profilStatus')) {
                     if (typeof profilStatus === "function")
                         onlineProfil(data)
                 }
             })
             //console.warn('WebSocket connection opened')
-            if (typeof mateStatus === "function")
-            {
+            if (typeof mateStatus === "function") {
                 mateStatus()
-            }
-            else if (typeof profilStatus === "function")
-            {
+            } else if (typeof profilStatus === "function") {
                 profilStatus()
             }
         },

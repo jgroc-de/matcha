@@ -54,7 +54,7 @@ $app->group('', function () use ($app) {
         ->setName('search');
     $this->post('/search-criteria', Search::class . ':criteria')
         ->setName('searchByCriteria');
-    $this->get('/search-name/{pseudo}', Search::class . ':name')
+    $this->get('/search-name', Search::class . ':name')
         ->setName('searchByName');
 
     $this->get('/editProfil', Settings::class . ':editProfil')

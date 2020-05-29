@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use Memcached;
-
 /**
  * class UserModel
  * request to database about user
@@ -42,24 +40,9 @@ class UserModel
      */
     public function getUserById(int $id)
     {
-        if (class_exists('Memcached')) {
-            $memcached = new Memcached();
-            $memcached->addServer("127.0.0.1", 11211);
-            $result = $memcached->get('user_' . $id);
-
-            if (!empty($result)) {
-                return $result;
-            }
-        }
         $req = $this->db->prepare('SELECT * FROM user WHERE id = ?');
         $req->execute([$id]);
         $result = $req->fetch();
-
-        if (class_exists('Memcached') && !empty($result)) {
-            $memcached = new Memcached();
-            $memcached->addServer("127.0.0.1", 11211);
-            $memcached->set('user_' . $id, $result);
-        }
 
         return $result;
     }
@@ -177,7 +160,7 @@ class UserModel
             ORDER BY pseudo
             LIMIT 50"
         );
-        $req->execute([$pseudo . '%']);
+        $req->execute(['%' . $pseudo . '%']);
 
         return $req->fetchAll();
     }

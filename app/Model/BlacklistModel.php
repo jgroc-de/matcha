@@ -42,21 +42,19 @@ WHERE (iduser = ? AND iduser_bl = ?) OR (iduser = ? AND iduser_bl = ?)');
         return $req->fetchAll();
     }
 
-    public function setBlacklist(int $id): bool
+    public function setBlacklist(int $id): int
     {
-        $req = $this->db->prepare('INSERT INTO blacklist (iduser, iduser_bl) VALUES (?, ?)');
+        $req = $this->db->prepare('INSERT IGNORE INTO blacklist (iduser, iduser_bl) VALUES (?, ?)');
+        $req->execute([$_SESSION['id'], $id]);
 
-        try {
-            return $req->execute([$_SESSION['id'], $id]);
-        } catch (\PDOException $error) {
-            return false;
-        }
+        return $req->rowCount();
     }
 
-    public function deleteBlacklist(int $id): bool
+    public function deleteBlacklist(int $id): int
     {
         $req = $this->db->prepare('DELETE FROM blacklist WHERE iduser = ? OR iduser_bl = ?');
+        $req->execute([$id, $id]);
 
-        return $req->execute([$id, $id]);
+        return $req->rowCount();
     }
 }
