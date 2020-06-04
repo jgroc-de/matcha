@@ -18,7 +18,7 @@ class BlacklistModel
 
     public function getBlacklist(): array
     {
-        $req = $this->db->prepare('SELECT * FROM blacklist WHERE iduser = ?');
+        $req = $this->db->prepare('SELECT * FROM blacklist WHERE id_user = ?');
         $req->execute([$_SESSION['id']]);
 
         return $req->fetchAll();
@@ -28,7 +28,7 @@ class BlacklistModel
     {
         $req = $this->db->prepare('
 SELECT 1 FROM blacklist
-WHERE (iduser = ? AND iduser_bl = ?) OR (iduser = ? AND iduser_bl = ?)');
+WHERE (id_user = ? AND id_user_bl = ?) OR (id_user = ? AND id_user_bl = ?)');
         $req->execute([$iduser, $iduser_bl, $iduser_bl, $iduser]);
 
         return !empty($req->fetch());
@@ -36,7 +36,7 @@ WHERE (iduser = ? AND iduser_bl = ?) OR (iduser = ? AND iduser_bl = ?)');
 
     public function getAllBlacklist()
     {
-        $req = $this->db->prepare('SELECT iduser, iduser_bl FROM blacklist WHERE iduser = ? OR iduser_bl = ?');
+        $req = $this->db->prepare('SELECT id_user, id_user_bl FROM blacklist WHERE id_user = ? OR id_user_bl = ?');
         $req->execute([$_SESSION['id'], $_SESSION['id']]);
 
         return $req->fetchAll();
@@ -44,7 +44,7 @@ WHERE (iduser = ? AND iduser_bl = ?) OR (iduser = ? AND iduser_bl = ?)');
 
     public function setBlacklist(int $id): int
     {
-        $req = $this->db->prepare('INSERT IGNORE INTO blacklist (iduser, iduser_bl) VALUES (?, ?)');
+        $req = $this->db->prepare('INSERT IGNORE INTO blacklist (id_user, id_user_bl) VALUES (?, ?)');
         $req->execute([$_SESSION['id'], $id]);
 
         return $req->rowCount();
@@ -52,7 +52,7 @@ WHERE (iduser = ? AND iduser_bl = ?) OR (iduser = ? AND iduser_bl = ?)');
 
     public function deleteBlacklist(int $id): int
     {
-        $req = $this->db->prepare('DELETE FROM blacklist WHERE iduser = ? OR iduser_bl = ?');
+        $req = $this->db->prepare('DELETE FROM blacklist WHERE id_user = ? OR id_user_bl = ?');
         $req->execute([$id, $id]);
 
         return $req->rowCount();

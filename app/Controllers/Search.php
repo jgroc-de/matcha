@@ -120,10 +120,10 @@ class Search
         $bList = $this->blacklist->getAllBlacklist();
         $blacklist = [];
         foreach ($bList as $id) {
-            if ($id['iduser'] === $_SESSION['id']) {
-                $blacklist[] = $id['iduser_bl'];
+            if ($id['id_user'] === $_SESSION['id']) {
+                $blacklist[] = $id['id_user_bl'];
             } else {
-                $blacklist[] = $id['iduser'];
+                $blacklist[] = $id['id_user'];
             }
         }
         $friends = $this->friends->getfriends($_SESSION['id']);

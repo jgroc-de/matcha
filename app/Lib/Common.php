@@ -8,6 +8,7 @@ use App\Model\MessageModel;
 use App\Model\NotificationModel;
 use App\Model\TagModel;
 use App\Model\UserModel;
+use Cloudinary\Uploader;
 
 class Common
 {
@@ -104,14 +105,16 @@ class Common
         $id = $_SESSION['id'];
         $pseudo = $_SESSION['profil']['pseudo'];
         $mail = $_SESSION['profil']['email'];
+        $nb = 1;
+        while ($nb <= 5) {
+            if ($_SESSION['profil']['cloud_id' . $nb]) {
+                Uploader::destroy($_SESSION['profil']['cloud_id' . $nb]);
+            }
+            $nb++;
+        }
         session_unset();
         session_destroy();
         $this->user->deleteUser($id);
-        $this->friends->delAllFriends($id);
-        $this->msg->delAllMessages($id);
-        $this->tag->delAllUserTag($id);
-        $this->notif->deleteNotifications($id);
-        $this->blacklist->deleteBlacklist($id);
         $this->mail->sendDeleteMail2($pseudo, $mail);
     }
 }
