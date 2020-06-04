@@ -58,50 +58,65 @@ CREATE TABLE `user` (
 
 CREATE TABLE `pictures` (
     `id` SERIAL PRIMARY KEY,
-    `user_id` BIGINT UNSIGNED NOT NULL,
+    `id_user` BIGINT UNSIGNED NOT NULL,
     `cloud_id` VARCHAR(255),
     `url` VARCHAR(255) NOT NULL,
     `date` DATETIME DEFAULT NOW()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE pictures
-ADD FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE;
+    ADD FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE;
 
 --
 -- Table structure for table `friendsReq`
 --
 
 CREATE TABLE `friendsReq` (
-    `id_user1` INT(11) NOT NULL,
-    `id_user2` INT(11) NOT NULL,
+    `id_user1` BIGINT UNSIGNED NOT NULL,
+    `id_user2` BIGINT UNSIGNED NOT NULL,
     `visible` BOOL DEFAULT TRUE,
     `date` DATETIME DEFAULT NOW(),
     CONSTRAINT PK_friendsReq UNIQUE (`id_user1`, `id_user2`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE friendsReq
+    ADD FOREIGN KEY (id_user1) REFERENCES user(id) ON DELETE CASCADE;
+ALTER TABLE friendsReq
+    ADD FOREIGN KEY (id_user2) REFERENCES user(id) ON DELETE CASCADE;
 
 --
 -- Table structure for table `friends`
 --
 
 CREATE TABLE `friends` (
-    `id_user1` INT(11) NOT NULL,
-    `id_user2` INT(11) NOT NULL,
+    `id_user1` BIGINT UNSIGNED NOT NULL,
+    `id_user2` BIGINT UNSIGNED NOT NULL,
     `suscriber` VARCHAR(255) NOT NULL,
     `date` DATETIME DEFAULT NOW(),
     CONSTRAINT PK_friends UNIQUE (`id_user1`, `id_user2`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE friends
+    ADD FOREIGN KEY (id_user1) REFERENCES user(id) ON DELETE CASCADE;
+ALTER TABLE friends
+    ADD FOREIGN KEY (id_user2) REFERENCES user(id) ON DELETE CASCADE;
 
 --
 -- Table structure for table `message`
 --
 
 CREATE TABLE `message` (
-    `id_user1` INT(11) NOT NULL,
-    `id_user2` INT(11) NOT NULL,
-    `owner` INT(11) NOT NULL,
+    `id_user1` BIGINT UNSIGNED NOT NULL,
+    `id_user2` BIGINT UNSIGNED NOT NULL,
+    `owner` BIGINT UNSIGNED NOT NULL,
     `message` TEXT NOT NULL,
     `date` DATETIME NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE message
+    ADD FOREIGN KEY (id_user1) REFERENCES user(id) ON DELETE CASCADE;
+ALTER TABLE message
+    ADD FOREIGN KEY (id_user2) REFERENCES user(id) ON DELETE CASCADE;
 
 --
 -- Table structure for table `hashtags`
@@ -118,24 +133,31 @@ CREATE TABLE `hashtags` (
 
 CREATE TABLE `usertags` (
     `id` SERIAL PRIMARY KEY,
-    `idtag` INT(11) NOT NULL,
-    `iduser` INT(11) NOT NULL,
-    CONSTRAINT PK_usertags UNIQUE (`idtag`, `iduser`)
+    `idtag` BIGINT UNSIGNED NOT NULL,
+    `id_user` BIGINT UNSIGNED NOT NULL,
+    CONSTRAINT PK_usertags UNIQUE (`idtag`, `id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+ALTER TABLE usertags
+    ADD FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE;
 --
 -- Table structure for table `notification`
 --
 
 CREATE TABLE `notification` (
     `id` SERIAL PRIMARY KEY,
-    `exp` INT(11) NOT NULL,
-    `dest` INT(11) NOT NULL,
+    `exp` BIGINT UNSIGNED NOT NULL,
+    `dest` BIGINT UNSIGNED NOT NULL,
     `link` VARCHAR(255) NOT NULL,
     `message` TEXT NOT NULL,
     `date` DATETIME NOT NULL DEFAULT NOW(),
     `seen` BOOL DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE notification
+    ADD FOREIGN KEY (exp) REFERENCES user(id) ON DELETE CASCADE;
+ALTER TABLE notification
+    ADD FOREIGN KEY (dest) REFERENCES user(id) ON DELETE CASCADE;
 
 --
 -- Table structure for table `blacklist`
@@ -143,10 +165,15 @@ CREATE TABLE `notification` (
 
 CREATE TABLE `blacklist` (
     `id` SERIAL PRIMARY KEY,
-    `iduser` INT(11) NOT NULL,
-    `iduser_bl` INT(11) NOT NULL,
+    `id_user` BIGINT UNSIGNED NOT NULL,
+    `id_user_bl` BIGINT UNSIGNED NOT NULL,
     `date` DATETIME DEFAULT NOW(),
-    CONSTRAINT PK_blacklist UNIQUE (`iduser`, `iduser_bl`)
+    CONSTRAINT PK_blacklist UNIQUE (`id_user`, `id_user_bl`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE blacklist
+    ADD FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE;
+ALTER TABLE blacklist
+    ADD FOREIGN KEY (id_user_bl) REFERENCES user(id) ON DELETE CASCADE;
 
 COMMIT;
