@@ -60,8 +60,8 @@
                     <div class="w3-row w3-margin-bottom">
                         <div class="w3-third">
                             <h3 class="w3-theme-l1">age</h3>
-                            <div class="w3-border">
-                                <div class="w3-col s6">
+                            <div>
+                                <div class="w3-col s6 top13">
                                     {{ input(
                                         'number',
                                         '',
@@ -73,7 +73,7 @@
                                         'style': 'width:90%'
                                     }) }}
                                 </div>
-                                <div class="w3-col s6">
+                                <div class="w3-col s6 top13">
                                     {{ input(
                                         'number',
                                         '',
@@ -102,7 +102,7 @@
                         <div class="w3-third" style="text-align:center">
                             <h3 class="w3-theme-l1">popularity</h3>
                             <div class="w3-border">
-                                <div class="w3-col s6">
+                                <div class="w3-col s6 top13">
                                     {{ input(
                                     'number',
                                     '',
@@ -115,7 +115,7 @@
                                     })
                                     }}
                                 </div>
-                                <div class="w3-col s6">
+                                <div class="w3-col s6 top13">
                                     {{ input(
                                     'number',
                                     '',
@@ -145,16 +145,18 @@
                         </div>
                         <div class="w3-half">
                             <h3 class="w3-theme-l1">interest</h3>
-                            <div id="tags" class="w3-border w3-padding" style="max-height:122px;overflow:auto">
-                                {% for tag in tags %}
+                            <div id="tags" class="w3-border w3-padding" style="height:122px;overflow:auto">
+                                <textarea name="tags" class="w3-input" placeholder="Write tags you want here (split with comma)"></textarea>
+
+                            <!--    {% for tag in tags %}
                                     <div>
                                         <input name="tag_{{ tag }}" value="{{ tag }}" type="checkbox" checked>
                                         <label>{{ tag }}</label>
                                     </div>
-                                {% endfor %}
+                                {% endfor %} -->
                             </div>
-                            <button type="button" onclick="uncheckTags()">Uncheck all</button>
-                            <button type="button" onclick="checkTags()">Check all</button>
+                            <!--<button type="button" onclick="uncheckTags()">Uncheck all</button>
+                            <button type="button" onclick="checkTags()">Check all</button>-->
                         </div>
                     </div>
                     <button type="submit" class="{{ buttonClass }}">Search</button>
@@ -183,7 +185,7 @@
                         </div>
                     </div>
                     <div class="w3-right w3-col s6 w3-display-container" style="height: 100%;">
-                        <img class="w3-image w3-display-middle" style="max-width: 95%; max-height: 95%;" src="">
+                        <img class="w3-image w3-display-middle cut-img" style="width: 95%; height: 95%;" src="">
                     </div>
                 </div>
             </a>

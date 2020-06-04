@@ -100,6 +100,7 @@ class Search
             $this->popularity['max'] = $post['Pmax'];
             $this->dist = $post['distance'];
             $this->getTarget($post);
+            print_r($this);
             $this->listByCriteria();
             foreach ($post as $key => $value) {
                 if ($key === $value) {
