@@ -146,17 +146,17 @@
                         <div class="w3-half">
                             <h3 class="w3-theme-l1">interest</h3>
                             <div id="tags" class="w3-border w3-padding" style="height:122px;overflow:auto">
-                                <textarea name="tags" class="w3-input" placeholder="Write tags you want here (split with comma)"></textarea>
+                                <!--<textarea name="tags" class="w3-input" placeholder="Write tags you want here (split with comma)"></textarea>-->
 
-                            <!--    {% for tag in tags %}
+                                {% for tag in tags %}
                                     <div>
                                         <input name="tag_{{ tag }}" value="{{ tag }}" type="checkbox" checked>
                                         <label>{{ tag }}</label>
                                     </div>
-                                {% endfor %} -->
+                                {% endfor %}
                             </div>
-                            <!--<button type="button" onclick="uncheckTags()">Uncheck all</button>
-                            <button type="button" onclick="checkTags()">Check all</button>-->
+                            <button type="button" onclick="uncheckTags()">Uncheck all</button>
+                            <button type="button" onclick="checkTags()">Check all</button>
                         </div>
                     </div>
                     <button type="submit" class="{{ buttonClass }}">Search</button>
