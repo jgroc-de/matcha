@@ -136,6 +136,7 @@ img {
 
 .profil-wrap {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -151,6 +152,10 @@ img {
 
 .width150 {
     width: 150px;
+}
+
+.top13 {
+    padding-top: 13px;
 }
 
 h3 {

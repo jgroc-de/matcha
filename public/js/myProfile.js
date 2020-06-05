@@ -5,6 +5,7 @@ function addTag(path) {
 
     if (tag)
     {
+        tag = tag.replace(/(?:\s)/g, "")
         var xhr = new XMLHttpRequest()
 
         xhr.open('POST', path, true)
@@ -17,7 +18,7 @@ function addTag(path) {
 
                 span.id = 'tag' + id
                 span.textContent = "- #" + tag + " "
-                del.className = 'del-red'
+                del.className = 'del'
                 del.setAttribute('onclick', 'delUserTag("/tag/", ' + id + ')')
                 del.textContent = '(delete)'
                 span.appendChild(del)
