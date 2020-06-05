@@ -9,6 +9,7 @@ use App\Controllers\Geolocation;
 use App\Controllers\Picture;
 use App\Controllers\Profil;
 use App\Controllers\RGPD;
+use App\Controllers\Search;
 use App\Controllers\Settings;
 use App\Controllers\Setup;
 use App\Controllers\Tag;
@@ -104,15 +105,17 @@ $container['App\Controllers\RGPD'] = function ($container) {
     );
 };
 
-/*
-$container['App\Controllers\SEARCH'] = function($container) {
-    return new Chat(
-        $container->get('view'),
+
+$container['App\Controllers\Search'] = function($container) {
+    return new Search(
         $container['flash'],
-        $container->get('form')
+        $container->get('notif'),
+        $container->get('user'),
+        $container->get('validator'),
+        $container->get('view')
     );
 };
-*/
+
 
 $container['App\Controllers\Settings'] = function ($container) {
     return new Settings(

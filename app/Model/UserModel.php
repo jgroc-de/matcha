@@ -81,91 +81,132 @@ class UserModel
     {
         switch ($_SESSION['profil']['sexuality']) {
             case 'homo':
-                $where = "gender = ? AND sexuality <> 'hetero'";
+                $where = "gender = :gender AND sexuality <> 'hetero'";
                 break;
             case 'hetero':
-                $where = "gender <> ? AND sexuality <> 'homo'";
+                $where = "gender <> :gender AND sexuality <> 'homo'";
                 break;
             case 'bi':
-                $where = "((gender = ? AND sexuality <> 'hetero') OR (gender <> '" . $_SESSION['profil']['gender'] . "' AND sexuality <> 'homo'))";
+                $where = "((gender = :gender AND sexuality <> 'hetero') OR (gender <> :gender AND sexuality <> 'homo'))";
         }
         $req = $this->db->prepare(
             "
             SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, user.id, popularity, lastlog
             FROM user
-            LEFT OUTER JOIN blacklist ON user.id = blacklist.id_user OR user.id = blacklist.id_user_bl 
-            LEFT OUTER JOIN friends ON user.id = friends.id_user1 OR user.id = friends.id_user2 
-            LEFT OUTER JOIN friendsReq ON user.id = friendsReq.id_user1 OR user.id = friendsReq.id_user2 
-            WHERE birthdate BETWEEN ? AND ?
+            LEFT OUTER JOIN blacklist ON
+                blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
+            LEFT OUTER JOIN friends ON
+                friends.id_user1 = IF(:id > user.id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
+            LEFT OUTER JOIN friendsReq ON
+                friendsReq.id_user1 = IF(:id > user.id, user.id, :id) AND friendsReq.id_user2 = IF(user.id > :id, user.id, :id)
+            WHERE birthdate BETWEEN :aMax AND :aMin
                 AND $where
-                AND user.id <> ?
-                AND lattitude BETWEEN ? AND ?
-                AND longitude BETWEEN ? AND ?
+                AND user.id <> :id
+                AND lattitude BETWEEN :latMin AND :latMax
+                AND longitude BETWEEN :longMin AND :longMax
                 AND ACTIV = 1
             ORDER BY lastlog DESC
             LIMIT 200"
         );
         $req->execute([
-            $age['max'],
-            $age['min'],
-            $_SESSION['profil']['gender'],
-            $_SESSION['id'],
-            $_SESSION['profil']['lattitude'] - $angle['lat'],
-            $_SESSION['profil']['lattitude'] + $angle['lat'],
-            $_SESSION['profil']['longitude'] - $angle['lng'],
-            $_SESSION['profil']['longitude'] + $angle['lng'],
+            'aMax' => $age['max'],
+            'aMin' => $age['min'],
+            'gender' => $_SESSION['profil']['gender'],
+            'id' => $_SESSION['id'],
+            'latMin' => $_SESSION['profil']['lattitude'] - $angle['lat'],
+            'latMax' => $_SESSION['profil']['lattitude'] + $angle['lat'],
+            'longMin' => $_SESSION['profil']['longitude'] - $angle['lng'],
+            'longMax' => $_SESSION['profil']['longitude'] + $angle['lng'],
         ]);
 
         return $req->fetchAll();
     }
 
-    public function getUserByCriteria(array $age, array $target, array $pop, array $angle): array
+    public function getUserListByPseudo(string $name): array
     {
-        $id = $_SESSION['id'];
-        $count = str_repeat('?,', count($target) - 1) . '?';
+        switch ($_SESSION['profil']['sexuality']) {
+            case 'homo':
+                $where = "gender = :gender AND sexuality <> 'hetero'";
+                break;
+            case 'hetero':
+                $where = "gender <> :gender AND sexuality <> 'homo'";
+                break;
+            case 'bi':
+                $where = "((gender = :gender AND sexuality <> 'hetero') OR (gender <> :gender AND sexuality <> 'homo'))";
+        }
         $req = $this->db->prepare(
-            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity, lastlog
+            "
+            SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, user.id, popularity, lastlog
             FROM user
-            WHERE gender IN ($count)
-            AND id <> $id
-            AND birthdate BETWEEN ? AND ?
-            AND lattitude BETWEEN ? AND ?
-            AND longitude BETWEEN ? AND ?
-            AND popularity BETWEEN ? AND ?
-            AND ACTIV = 1
+            LEFT OUTER JOIN blacklist ON
+                blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
+            LEFT OUTER JOIN friends ON
+                friends.id_user1 = IF(:id > user.id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
+            LEFT OUTER JOIN friendsReq ON
+                friendsReq.id_user1 = IF(:id > user.id, user.id, :id) AND friendsReq.id_user2 = IF(user.id > :id, user.id, :id) 
+            WHERE $where
+                AND user.id <> :id
+                AND ACTIV = 1
+                AND pseudo like :name
             ORDER BY lastlog DESC
             LIMIT 200"
         );
-        $array = array_merge(
-            $target,
-            [
-                $age['max'],
-                $age['min'],
-                $_SESSION['profil']['lattitude'] - $angle['lat'],
-                $_SESSION['profil']['lattitude'] + $angle['lat'],
-                $_SESSION['profil']['longitude'] - $angle['lng'],
-                $_SESSION['profil']['longitude'] + $angle['lng'],
-                $pop['min'],
-                $pop['max'], ]
-        );
-        $req->execute($array);
+        $req->execute([
+            'gender' => $_SESSION['profil']['gender'],
+            'id' => $_SESSION['id'],
+            'name' => '%' . $name . '%',
+        ]);
 
         return $req->fetchAll();
     }
 
-    public function getUserByPseudo(string $pseudo): array
+    public function getUserListByCriteria(array $age, array $target, array $popularity, array $angle): array
     {
-        $id = $_SESSION['id'];
+        $targets  = str_repeat('?,', count($target) - 1) . '?';
+        switch ($_SESSION['profil']['sexuality']) {
+            case 'homo':
+                $where = "gender = :gender AND sexuality <> 'hetero'";
+                break;
+            case 'hetero':
+                $where = "gender <> :gender AND sexuality <> 'homo'";
+                break;
+            case 'bi':
+                $where = "((gender = :gender AND sexuality <> 'hetero') OR (gender <> :gender AND sexuality <> 'homo'))";
+        }
         $req = $this->db->prepare(
-            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity, lastlog
+            "
+            SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, user.id, popularity, lastlog
             FROM user
-            WHERE pseudo LIKE ?
-            AND id <> $id
-            AND ACTIV = 1
-            ORDER BY pseudo
-            LIMIT 50"
+            LEFT OUTER JOIN blacklist ON
+                blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
+            LEFT OUTER JOIN friends ON
+                friends.id_user1 = IF(:id > user.id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
+            LEFT OUTER JOIN friendsReq ON
+                friendsReq.id_user1 = IF(:id > user.id, user.id, :id) AND friendsReq.id_user2 = IF(user.id > :id, user.id, :id)
+            WHERE birthdate BETWEEN :aMax AND :aMin
+                AND $where
+                AND gender in :targets
+                AND user.id <> :id
+                AND popularity BETWEEN :popMin AND :popMax
+                AND lattitude BETWEEN :latMin AND :latMax
+                AND longitude BETWEEN :longMin AND :longMax
+                AND ACTIV = 1
+            ORDER BY lastlog DESC
+            LIMIT 200"
         );
-        $req->execute(['%' . $pseudo . '%']);
+        $req->execute([
+            'aMax' => $age['max'],
+            'aMin' => $age['min'],
+            'gender' => $_SESSION['profil']['gender'],
+            'id' => $_SESSION['id'],
+            'popMin' => $popularity['min'],
+            'popMax' => $popularity['max'],
+            'latMin' => $_SESSION['profil']['lattitude'] - $angle['lat'],
+            'latMax' => $_SESSION['profil']['lattitude'] + $angle['lat'],
+            'longMin' => $_SESSION['profil']['longitude'] - $angle['lng'],
+            'longMax' => $_SESSION['profil']['longitude'] + $angle['lng'],
+            'targets' => $targets,
+        ]);
 
         return $req->fetchAll();
     }
@@ -323,13 +364,13 @@ class UserModel
 
     public function updatePopularity(int $add, array $profil)
     {
-        $pop = intval($profil['popularity']);
-        $pop += $add;
-        if ($pop > 100) {
-            $pop = 100;
+        $popularity = intval($profil['popularity']);
+        $popularity += $add;
+        if ($popularity > 100) {
+            $popularity = 100;
         }
         $req = $this->db->prepare('UPDATE user SET popularity = ? WHERE pseudo = ?');
-        $req->execute([$pop, $profil['pseudo']]);
+        $req->execute([$popularity, $profil['pseudo']]);
     }
 
     public function updateLastlog(int $id)
@@ -356,9 +397,9 @@ SELECT 1 FROM user WHERE id = ?
 
     public function delPicture(string $nb): bool
     {
-        $req = $this->db->prepare('UPDATE user SET img' . $nb . ' = NULL, cloud_id' . $nb . ' = NULL WHERE id = ?');
+        $req = $this->db->prepare('UPDATE user SET img' . $nb . ' = NULL, cloud_id' . $nb . ' = NULL WHERE id = :id');
 
-        return $req->execute([$_SESSION['id']]);
+        return $req->execute(['id' => $_SESSION['id']]);
     }
 
     public function addPicture(int $nb, array $data): bool

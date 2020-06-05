@@ -2,36 +2,46 @@
 
 namespace App\Controllers;
 
+use App\Lib\FlashMessage;
+use App\Lib\Validator;
+use App\Model\NotificationModel;
+use App\Model\UserModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Views\Twig;
 
 class Search
 {
+    private const RADIUS = 6400;
     private const AGE = ['min' => 18, 'max' => 118];
     private const POPULARITY = ['min' => 0, 'max' => 100];
-    private const TARGETS = ['Rick', 'Morty', 'Beth', 'Summer', 'Jerry'];
     private const DISTANCE_MIN = 1;
     private const DISTANCE_DEFAULT = 30;
     private const KIND = ['Rick', 'Morty', 'Beth', 'Summer', 'Jerry'];
-    private $list = [];
-    private $age = ['min' => 2000, 'max' => 1990];
-    private $tags = [];
-    private $popularity = ['min' => 0, 'max' => 100];
-    private $date = 0;
-    private $criteria = false;
-    private $name = '';
 
-    private $container;
+    /** @var FlashMessage */
+    private $flash;
+    /** @var NotificationModel */
+    private $notif;
+    /** @var UserModel */
+    private $user;
+    /** @var Validator */
+    private $validator;
+    /** @var Twig */
+    private $view;
 
     public function __construct(
-        $container
+        FlashMessage $flashMessage,
+        NotificationModel $notificationModel,
+        UserModel $userModel,
+        Validator $validator,
+        Twig $view
     ) {
-        $this->container = $container;
-    }
-
-    public function __get($name)
-    {
-        return $this->container->get($name);
+        $this->flash = $flashMessage;
+        $this->notif = $notificationModel;
+        $this->user = $userModel;
+        $this->validator = $validator;
+        $this->view = $view;
     }
 
     public function main(Request $request, Response $response, array $args)
@@ -42,7 +52,12 @@ class Search
             return $response->withRedirect('/editProfil', 302);
         }
 
-        $list = $this->listDefault();
+        $age = [
+            'min' => $_SESSION['profil']['birthdate'] + 10,
+            'max' => $_SESSION['profil']['birthdate'] - 10,
+        ];
+        $list = $this->user->getDefaultUserList($age, $this->distance2angle(self::DISTANCE_DEFAULT));
+        $list = $this->computeMisc($list);
 
         return $this->view->render(
             $response,
@@ -67,7 +82,8 @@ class Search
     {
         $getParams = $request->getQueryParams();
         if ($this->validator->validate($getParams, ['pseudo'])) {
-            $list = $this->user->getUserByPseudo($getParams['pseudo']);
+            $list = $this->user->getUserListByPseudo($getParams['pseudo']);
+            $list = $this->computeMisc($list);
 
             return $response->withJson($list);
         }
@@ -91,7 +107,8 @@ class Search
             ];
             $dist = max((int) $post['distance'], self::DISTANCE_MIN);
             $targets = $this->getTarget($post);
-            $list = $this->user->getUserByCriteria($age, $targets, $popularity, $this->distance2angle($dist));
+            $list = $this->user->getUserListByCriteria($age, $targets, $popularity, $this->distance2angle($dist));
+            $list = $this->computeMisc($list);
 
             return $response->withJson($list);
         }
@@ -99,44 +116,22 @@ class Search
         return $response->withJson([], 404);
     }
 
-    private function filterList(array $list)
+    private function computeMisc(array $list): array
     {
         foreach ($list as $key => $user) {
             $tmp = [
                 'time' => floor((time() - intval($user['lastlog'])) / 3600),
                 'distance' => $this->angle2distance($user),
-                'score' => $this->score($list[$key]),
+                'score' => $this->computeScore($user),
             ];
-            $list[$key] = array_merge($list[$key], $tmp);
+            $list[$key] = array_merge($user, $tmp);
         }
-    }
-
-    /**
-     * search 'listCmp' for used
-     *
-     * @param $a
-     * @param $b
-     * @return mixed
-     */
-    private function listCmp($a, $b)
-    {
-        return $a['id'] - $b['id'];
-    }
-
-    private function listDefault(): array
-    {
-        $age = [
-            'min' => $_SESSION['profil']['birthdate'] + 10,
-            'max' => $_SESSION['profil']['birthdate'] - 10,
-        ];
-        $list = $this->user->getDefaultUserList($age, $this->distance2angle(self::DISTANCE_DEFAULT));
-        $this->filterList($list);
         usort($list, [$this, 'sortList']);
 
         return $list;
     }
 
-    private function getTarget(array $post = [])
+    private function getTarget(array $post = []): array
     {
         if (!empty($post)) {
             $targets = [];
@@ -155,37 +150,34 @@ class Search
             case 'homo':
                 return [$_SESSION['profil']['gender']];
             default:
-                return self::TARGETS;
+                return self::KIND;
         }
     }
 
-    private function distance2angle(int $dist)
+    private function distance2angle(int $dist): array
     {
-        $rayon = 6400;
-        $angle = [];
-
-        $rayonlng = $rayon * cos(deg2rad($_SESSION['profil']['lattitude']));
-        $angle['lat'] = rad2deg($dist / $rayon);
-        $angle['lng'] = rad2deg($dist / $rayonlng);
+        $rayonlng = self::RADIUS * cos(deg2rad($_SESSION['profil']['lattitude']));
+        $angle = [
+            'lat' => rad2deg($dist / self::RADIUS),
+            'lng' => rad2deg($dist / $rayonlng),
+        ];
 
         return $angle;
     }
 
-    private function angle2distance(array $user)
+    private function angle2distance(array $user): int
     {
-        $rayon = 6400;
-
         $lat = deg2rad($_SESSION['profil']['lattitude']);
-        $rayonlng = $rayon * cos($lat);
+        $rayonlng = self::RADIUS * cos($lat);
         $latrad = deg2rad($user['lattitude'] - $_SESSION['profil']['lattitude']);
         $lngrad = deg2rad($user['longitude'] - $_SESSION['profil']['longitude']);
-        $a = $rayon * sin($latrad);
+        $a = self::RADIUS * sin($latrad);
         $b = $rayonlng * sin($lngrad);
 
-        return sqrt($a * $a + $b * $b);
+        return $a * $a + $b * $b;
     }
 
-    private function score($user): int
+    private function computeScore(array $user): int
     {
         return 1000
             + floor($user['popularity'] / 5)
@@ -195,7 +187,7 @@ class Search
             - abs($_SESSION['profil']['birthdate'] - $user['birthdate']);
     }
 
-    public function sortList($a, $b)
+    public function sortList(array $a, array $b): int
     {
         return $b['score'] - $a['score'];
     }
