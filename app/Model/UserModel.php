@@ -77,34 +77,39 @@ class UserModel
         return $req->fetch();
     }
 
-    public function getUsersBySexuality(array $age, array $angle): array
+    public function getDefaultUserList(array $age, array $angle): array
     {
-        $reqTab = [];
         switch ($_SESSION['profil']['sexuality']) {
             case 'homo':
-                $where = "AND gender = '" . $_SESSION['profil']['gender'] . "' AND sexuality <> 'hetero'";
+                $where = "gender = ? AND sexuality <> 'hetero'";
                 break;
             case 'hetero':
-                $where = "AND gender <> '" . $_SESSION['profil']['gender'] . "' AND sexuality <> 'homo'";
+                $where = "gender <> ? AND sexuality <> 'homo'";
                 break;
-            default:
-                $where = '';
+            case 'bi':
+                $where = "((gender = ? AND sexuality <> 'hetero') OR (gender <> '" . $_SESSION['profil']['gender'] . "' AND sexuality <> 'homo'))";
         }
-        $id = $_SESSION['id'];
         $req = $this->db->prepare(
-            "SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, id, popularity, lastlog
+            "
+            SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, user.id, popularity, lastlog
             FROM user
-            WHERE birthdate BETWEEN ? AND ? $where
-            AND id <> $id
-            AND lattitude BETWEEN ? AND ?
-            AND longitude BETWEEN ? AND ?
-            AND ACTIV = 1
+            LEFT OUTER JOIN blacklist ON user.id = blacklist.id_user OR user.id = blacklist.id_user_bl 
+            LEFT OUTER JOIN friends ON user.id = friends.id_user1 OR user.id = friends.id_user2 
+            LEFT OUTER JOIN friendsReq ON user.id = friendsReq.id_user1 OR user.id = friendsReq.id_user2 
+            WHERE birthdate BETWEEN ? AND ?
+                AND $where
+                AND user.id <> ?
+                AND lattitude BETWEEN ? AND ?
+                AND longitude BETWEEN ? AND ?
+                AND ACTIV = 1
             ORDER BY lastlog DESC
             LIMIT 200"
         );
         $req->execute([
             $age['max'],
             $age['min'],
+            $_SESSION['profil']['gender'],
+            $_SESSION['id'],
             $_SESSION['profil']['lattitude'] - $angle['lat'],
             $_SESSION['profil']['lattitude'] + $angle['lat'],
             $_SESSION['profil']['longitude'] - $angle['lng'],

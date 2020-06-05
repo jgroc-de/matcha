@@ -61,11 +61,9 @@ CREATE TABLE `pictures` (
     `id_user` BIGINT UNSIGNED NOT NULL,
     `cloud_id` VARCHAR(255),
     `url` VARCHAR(255) NOT NULL,
-    `date` DATETIME DEFAULT NOW()
+    `date` DATETIME DEFAULT NOW(),
+    CONSTRAINT FK_picture FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-ALTER TABLE pictures
-    ADD FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE;
 
 --
 -- Table structure for table `friendsReq`
@@ -76,13 +74,10 @@ CREATE TABLE `friendsReq` (
     `id_user2` BIGINT UNSIGNED NOT NULL,
     `visible` BOOL DEFAULT TRUE,
     `date` DATETIME DEFAULT NOW(),
-    CONSTRAINT PK_friendsReq UNIQUE (`id_user1`, `id_user2`)
+    CONSTRAINT PK_friendsReq UNIQUE (`id_user1`, `id_user2`),
+    CONSTRAINT FK_friendsReq1 FOREIGN KEY (id_user1) REFERENCES user(id) ON DELETE CASCADE,
+    CONSTRAINT FK_friendsReq2 FOREIGN KEY (id_user2) REFERENCES user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-ALTER TABLE friendsReq
-    ADD FOREIGN KEY (id_user1) REFERENCES user(id) ON DELETE CASCADE;
-ALTER TABLE friendsReq
-    ADD FOREIGN KEY (id_user2) REFERENCES user(id) ON DELETE CASCADE;
 
 --
 -- Table structure for table `friends`
@@ -93,13 +88,10 @@ CREATE TABLE `friends` (
     `id_user2` BIGINT UNSIGNED NOT NULL,
     `suscriber` VARCHAR(255) NOT NULL,
     `date` DATETIME DEFAULT NOW(),
-    CONSTRAINT PK_friends UNIQUE (`id_user1`, `id_user2`)
+    CONSTRAINT PK_friends UNIQUE (`id_user1`, `id_user2`),
+    CONSTRAINT FK_friends1 FOREIGN KEY (id_user1) REFERENCES user(id) ON DELETE CASCADE,
+    CONSTRAINT FK_friends2 FOREIGN KEY (id_user2) REFERENCES user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-ALTER TABLE friends
-    ADD FOREIGN KEY (id_user1) REFERENCES user(id) ON DELETE CASCADE;
-ALTER TABLE friends
-    ADD FOREIGN KEY (id_user2) REFERENCES user(id) ON DELETE CASCADE;
 
 --
 -- Table structure for table `message`
@@ -110,13 +102,10 @@ CREATE TABLE `message` (
     `id_user2` BIGINT UNSIGNED NOT NULL,
     `owner` BIGINT UNSIGNED NOT NULL,
     `message` TEXT NOT NULL,
-    `date` DATETIME NOT NULL
+    `date` DATETIME NOT NULL,
+    CONSTRAINT FK_message1 FOREIGN KEY (id_user1) REFERENCES user(id) ON DELETE CASCADE,
+    CONSTRAINT FK_message2 FOREIGN KEY (id_user2) REFERENCES user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-ALTER TABLE message
-    ADD FOREIGN KEY (id_user1) REFERENCES user(id) ON DELETE CASCADE;
-ALTER TABLE message
-    ADD FOREIGN KEY (id_user2) REFERENCES user(id) ON DELETE CASCADE;
 
 --
 -- Table structure for table `hashtags`
@@ -135,11 +124,10 @@ CREATE TABLE `usertags` (
     `id` SERIAL PRIMARY KEY,
     `idtag` BIGINT UNSIGNED NOT NULL,
     `id_user` BIGINT UNSIGNED NOT NULL,
-    CONSTRAINT PK_usertags UNIQUE (`idtag`, `id_user`)
+    CONSTRAINT PK_usertags UNIQUE (`idtag`, `id_user`),
+    CONSTRAINT FK_usertags FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE usertags
-    ADD FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE;
 --
 -- Table structure for table `notification`
 --
@@ -151,13 +139,10 @@ CREATE TABLE `notification` (
     `link` VARCHAR(255) NOT NULL,
     `message` TEXT NOT NULL,
     `date` DATETIME NOT NULL DEFAULT NOW(),
-    `seen` BOOL DEFAULT false
+    `seen` BOOL DEFAULT false,
+    CONSTRAINT FK_exp FOREIGN KEY (exp) REFERENCES user(id) ON DELETE CASCADE,
+    CONSTRAINT FK_dest FOREIGN KEY (dest) REFERENCES user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-ALTER TABLE notification
-    ADD FOREIGN KEY (exp) REFERENCES user(id) ON DELETE CASCADE;
-ALTER TABLE notification
-    ADD FOREIGN KEY (dest) REFERENCES user(id) ON DELETE CASCADE;
 
 --
 -- Table structure for table `blacklist`
@@ -168,12 +153,9 @@ CREATE TABLE `blacklist` (
     `id_user` BIGINT UNSIGNED NOT NULL,
     `id_user_bl` BIGINT UNSIGNED NOT NULL,
     `date` DATETIME DEFAULT NOW(),
-    CONSTRAINT PK_blacklist UNIQUE (`id_user`, `id_user_bl`)
+    CONSTRAINT PK_blacklist UNIQUE (`id_user`, `id_user_bl`),
+    CONSTRAINT FK_blacklist FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE,
+    CONSTRAINT FK_user_bl FOREIGN KEY (id_user_bl) REFERENCES user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-ALTER TABLE blacklist
-    ADD FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE;
-ALTER TABLE blacklist
-    ADD FOREIGN KEY (id_user_bl) REFERENCES user(id) ON DELETE CASCADE;
 
 COMMIT;
