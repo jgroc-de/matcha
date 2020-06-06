@@ -132,8 +132,9 @@ class TagModel
     public function delUserTag(int $idTag, int $iduser): bool
     {
         $req = $this->db->prepare('DELETE FROM usertags WHERE idtag = ? AND id_user = ?');
+        $req->execute([$idTag, $iduser]);
 
-        return $req->execute([$idTag, $idUser]);
+        return $req->rowCount() > 0;
     }
 
     public function delAllUserTag(int $idUser): bool

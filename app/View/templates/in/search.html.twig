@@ -12,42 +12,40 @@
     </div>
     <div class="w3-padding w3-row">
         <h2 class='w3-theme-l1'>Search</h2>
-        <div class="w3-row">
-            <div class="w3-half w3-padding">
-                <div class="w3-card-4 w3-theme-l5">
-                    <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">Actions</h3>
-                    <div id="Actions" class="w3-theme-l5 w3-padding gg-section search-wrap">
-                        <div class="profil-wrap">
-                            <button id="prev" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue width150">Previous</button>
-                            <button id="add" type="button" class="w3-button w3-green w3-margin-top width150" data-url="/friend/{{ profil.id }}">Add to friend</button>
-                            <button id="next" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue width150">Next</button>
-                        </div>
-                        <div>
-                            {{ select({
-                                'label': 'Sort by :',
-                                'name': 'sort1',
-                                'array': sort,
-                                'select': '',
-                                'style': 'width:auto;max-width:75%',
-                                'class': '',
-                                'change': 'sortCard("sort1", "focus")'
-                            }) }}
-                        </div>
-                        {% if tags is not empty %}
-                        <div class="w3-border w3-padding">
-                            {% for tag in tags %}
-                                <input id="tag_{{ tag.id }}" name="{{ tag.id }}" type="checkbox" value="">
-                                <label for="tag_{{ tag.id }}">#{{ tag.tag }}</label>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
+        <div class="w3-col l6 w3-padding">
+            <div class="w3-card-4 w3-theme-l5">
+                <h3 class="w3-hover-green" style="cursor:pointer"  onclick="toggleSibling(this)">Actions</h3>
+                <div id="Actions" class="w3-theme-l5 w3-padding gg-section search-wrap">
+                    <div class="profil-wrap">
+                        <button id="prev" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue width150">Previous</button>
+                        <button id="add" type="button" class="w3-button w3-green w3-margin-top width150" data-url="/friend/{{ profil.id }}">Add to friend</button>
+                        <button id="next" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue width150">Next</button>
                     </div>
+                    <div>
+                        {{ select({
+                            'label': 'Sort by :',
+                            'name': 'sort1',
+                            'array': sort,
+                            'select': '',
+                            'style': 'width:auto;max-width:75%',
+                            'class': '',
+                            'change': 'sortCard("sort1", "focus")'
+                        }) }}
+                    </div>
+                    {% if tags is not empty %}
+                    <div id="myTags" class="w3-border w3-padding">
+                        {% for tag in tags %}
+                            <input id="tag_{{ tag.id }}" name="{{ tag.id }}" type="checkbox" value="">
+                            <label for="tag_{{ tag.id }}">#{{ tag.tag }}</label>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
             </div>
-            <div class="w3-rest w3-padding">
-                <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay2(this)">Focus</h3>
-                <div id="focus" class="w3-card-4"></div>
-            </div>
+        </div>
+        <div class="w3-col l6 w3-padding">
+            <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay2(this)">Focus</h3>
+            <div id="focus" class="w3-card-4"></div>
         </div>
         <div class="w3-col l6 w3-padding">
             <div class="w3-row w3-card-4">

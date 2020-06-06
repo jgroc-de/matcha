@@ -135,8 +135,31 @@ function view(oldId, id) {
 }
 
 function mapView(id) {
-
     view(document.querySelector('#focus>div:not(.w3-hide)').children[0].id, id)
 }
 
+function test(event) {
+    console.log(event)
+    let test = [];
+    let childrens = event.target.parentElement.children
+    console.log(childrens)
+    let i = 0
+    while (i < childrens.length) {
+        if (childrens[i].checked) {
+            test.push(childrens[i])
+        }
+        i++;
+    }
+
+    alert('call generate card now')
+}
+
+function setEvents() {
+    $tags = document.getElementById('myTags')
+
+    $tags.addEventListener('change' +
+        '', test, true)
+}
+
 generateCard('focus')
+setEvents()

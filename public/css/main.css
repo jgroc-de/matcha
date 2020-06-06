@@ -3,8 +3,8 @@
 }
 
 @font-face {
-	font-family: "Geo";
-	src: url('../font/GeosansLight.ttf');
+	font-family: 'Geo', sans-serif;
+	src: url('../font/GeosansLight.ttf') format("truetype");
 }
 
 h1, h2, h3, h4, h5, h6, footer, header {
