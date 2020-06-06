@@ -29,8 +29,8 @@ function toggleDisplay2(x) {
     }
 }
 
-function toggleSibling(node) {
-    node.nextElementSibling.classList.toggle('w3-hide')
+function toggleSibling(event) {
+    event.target.nextElementSibling.classList.toggle('w3-hide')
 }
 
 function toggleById(id) {
@@ -159,3 +159,14 @@ function revokeAllScopes(url) {
     gapi.auth2.getAuthInstance().signOut();
     window.location.href = url
 }
+
+function setCommonEvents() {
+    let titles = document.querySelectorAll('h3[matcha-toggle]')
+    let i = 0
+    while (i < titles.length) {
+        titles[i].addEventListener('click', toggleSibling)
+        i++
+    }
+}
+
+setCommonEvents()

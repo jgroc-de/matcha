@@ -22,13 +22,11 @@ msg.addEventListener("keyup", function(event) {
 })
 
 
-function highlightMate(data)
-{
+function highlightMate(data) {
     var div
     var name
 
-    for (name in data.mateStatus)
-    {
+    for (name in data.mateStatus) {
         div = document.getElementById(name).children[0].children[0]
         if (data.mateStatus[name])
             div.setAttribute('style', 'background-color:' + div.classList[0] + ';')
@@ -37,24 +35,19 @@ function highlightMate(data)
     }
 }
 
-function mateStatus()
-{
+function mateStatus() {
     ggAjaxGet('/chatStatus', function(){}, 0)
 }
 
-function addMessage(text, owner, myId)
-{
+function addMessage(text, owner, myId) {
     var div = document.createElement("div")
     var p = document.createElement("span")
 
     div.className = "w3-bar"
     p.innerHTML = text
-    if (owner == myId)
-    {
+    if (owner == myId) {
         p.className = "w3-theme-l2 w3-bar-item w3-round w3-right w3-padding"
-    }
-    else
-    {
+    } else {
         p.className = "w3-theme-d1 w3-bar-item w3-round w3-left w3-padding"
     }
     p.style.wordWrap = "break-word"
@@ -64,8 +57,7 @@ function addMessage(text, owner, myId)
     p.scrollIntoView()
 }
 
-function tchatWith(name, id, myId, token)
-{
+function tchatWith(name, id, myId, token) {
     var xhr = new XMLHttpRequest()
 
     if (websocket)
@@ -76,14 +68,11 @@ function tchatWith(name, id, myId, token)
     xhr.open('GET', '/startChat/' + id, true)
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
     xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200)
-        {
+        if (this.readyState === 4 && this.status === 200) {
             var history = JSON.parse(this.response)
             websocket = new ab.Session('ws://localhost:3001',
-                function()
-                {
-                    websocket.subscribe(token, function(topic, data)
-                    {
+                function() {
+                    websocket.subscribe(token, function(topic, data) {
                         //console.log('topic: "' + topic)
                         //console.log('New msg received from' + data.exp + ' to ' + data.dest + " . my id: " + data.myId)
                         addMessage(data.msg, data.exp, myId)
@@ -97,8 +86,7 @@ function tchatWith(name, id, myId, token)
             )
 
             TWindow.classList.remove('w3-hide')
-            history.forEach(function(value, index, array)
-            {
+            history.forEach(function(value, index, array) {
                 addMessage(value.message, value.owner, myId)
             })
             msg.scrollIntoView()
@@ -108,13 +96,11 @@ function tchatWith(name, id, myId, token)
     xhr.send()
 }
 
-function sendMessageTo(myId, name, id, token)
-{
+function sendMessageTo(myId, name, id, token) {
     var text = msg.value.replace(/(?:\r\n|\r|\n)/g, "<br>")
     console.log(text === "<br>")
 
-    if (text && text !== "<br>")
-    {
+    if (text && text !== "<br>") {
         var xhr = new XMLHttpRequest()
 
         xhr.open('POST', '/sendMessage', true)

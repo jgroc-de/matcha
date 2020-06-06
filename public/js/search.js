@@ -1,15 +1,6 @@
-function sortCard(id2sort, id) {
-    let key = document.getElementById(id2sort).value
-
-    generateCard(id, key)
-}
-
-function generateCard(idFeed, key) {
-    let show = 1
-    let main = document.getElementById(idFeed)
-    main.textContent = ''
-
-    if (key) {
+function generateCard(event) {
+    if (event) {
+        let key = event.target.value
         if ((key === 'age asc.') || (key === 'distance')) {
             if (key === 'age asc.')
                 key = 'age'
@@ -20,14 +11,48 @@ function generateCard(idFeed, key) {
             usersPos.sort(function(a, b) {return b[key] - a[key]})
         }
     }
-    document.getElementById('add').addEventListener('click', getUrl)
+    reloadProfilCards()
+}
+
+function reloadProfilCards() {
+    let show = 1
+    let main = document.getElementById('focus')
+    main.textContent = ''
     for (let user of usersPos) {
-        main.appendChild(addChildrenCard(user, key, show))
+        main.appendChild(addChildrenCard(user, show))
         show = 0
     }
 }
 
-function addChildrenCard(hash, key, show) {
+function tagSort(event) {
+    let tags = [];
+    let childrens = event.target.parentElement.children
+    let i = 0
+    while (i < childrens.length) {
+        if (childrens[i].checked) {
+            tags.push(parseInt(childrens[i].name))
+        }
+        i++;
+    }
+    usersPos.sort(function(a, b) {
+        let bRes = 0
+        let aRes = 0
+        let i = 0
+        while (i < tags.length) {
+            if (b['tag'].includes(tags[i])) {
+                bRes++
+            }
+            if (a['tag'].includes(tags[i])) {
+                aRes++
+            }
+            i++
+        }
+        return bRes - aRes
+    })
+    reloadProfilCards()
+}
+
+function addChildrenCard(hash, show) {
     let template = document.querySelector("#repeatProfil")
     let clone = document.importNode(template.content, true)
 
@@ -138,28 +163,13 @@ function mapView(id) {
     view(document.querySelector('#focus>div:not(.w3-hide)').children[0].id, id)
 }
 
-function test(event) {
-    console.log(event)
-    let test = [];
-    let childrens = event.target.parentElement.children
-    console.log(childrens)
-    let i = 0
-    while (i < childrens.length) {
-        if (childrens[i].checked) {
-            test.push(childrens[i])
-        }
-        i++;
-    }
-
-    alert('call generate card now')
-}
-
 function setEvents() {
-    $tags = document.getElementById('myTags')
+    let tags = document.getElementById('myTags')
+    let select = document.getElementById('sort1')
 
-    $tags.addEventListener('change' +
-        '', test, true)
+    select.addEventListener('change', generateCard)
+    tags.addEventListener('change', tagSort, true)
 }
 
-generateCard('focus')
+reloadProfilCards()
 setEvents()
