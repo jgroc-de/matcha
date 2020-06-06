@@ -110,6 +110,7 @@ $container['App\Controllers\Search'] = function($container) {
     return new Search(
         $container['flash'],
         $container->get('notif'),
+        $container->get('tag'),
         $container->get('user'),
         $container->get('validator'),
         $container->get('view')

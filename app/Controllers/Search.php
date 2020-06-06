@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Lib\FlashMessage;
 use App\Lib\Validator;
 use App\Model\NotificationModel;
+use App\Model\TagModel;
 use App\Model\UserModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -23,6 +24,8 @@ class Search
     private $flash;
     /** @var NotificationModel */
     private $notif;
+    /** @var TagModel */
+    private $tag;
     /** @var UserModel */
     private $user;
     /** @var Validator */
@@ -33,12 +36,14 @@ class Search
     public function __construct(
         FlashMessage $flashMessage,
         NotificationModel $notificationModel,
+        TagModel $tagModel,
         UserModel $userModel,
         Validator $validator,
         Twig $view
     ) {
         $this->flash = $flashMessage;
         $this->notif = $notificationModel;
+        $this->tag = $tagModel;
         $this->user = $userModel;
         $this->validator = $validator;
         $this->view = $view;
@@ -56,8 +61,18 @@ class Search
             'min' => $_SESSION['profil']['birthdate'] + 10,
             'max' => $_SESSION['profil']['birthdate'] - 10,
         ];
-        $list = $this->user->getDefaultUserList($age, $this->distance2angle(self::DISTANCE_DEFAULT));
+        $tags = $this->tag->getUserTags($_SESSION['id']);
+        $list = $this->user->getDefaultUserList($age, $this->distance2angle(self::DISTANCE_DEFAULT), $tags);
         $list = $this->computeMisc($list);
+        $userTags = $this->tag->getCommonUserIdTags($list, $tags);
+        foreach ($list as &$user) {
+            $user['tags'] = [];
+            foreach ($userTags as $userTag) {
+                if ($userTag['id_user'] === $user['id']) {
+                    $user['tags'][] = $userTag['id'];
+                }
+            }
+        }
 
         return $this->view->render(
             $response,
@@ -74,6 +89,7 @@ class Search
                 'sort' => ['score', 'popularity', 'age desc.', 'age asc.', 'distance'],
                 'notification' => $this->notif->getNotification(),
                 'mapKey' => $_ENV['GMAP_KEY'],
+                'tags' => $tags,
             ]
         );
     }

@@ -55,6 +55,12 @@ function addChildrenCard(hash, key, show) {
     score.style.backgroundColor = '#' + getColor(hash.kind)
     let description = clone.querySelector('span[matcha-bio]')
     description.innerText = hash.biography
+    if (hash.tag.length) {
+        let tags = clone.querySelector('span[matcha-tags]')
+        for(let tag in hash.tag) {
+            tags.innerText += '#' + myTags[hash.tag[tag]] + ' '
+        }
+    }
 
     return clone
 }

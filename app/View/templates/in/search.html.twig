@@ -33,6 +33,14 @@
                                 'change': 'sortCard("sort1", "focus")'
                             }) }}
                         </div>
+                        {% if tags is not empty %}
+                        <div class="w3-border w3-padding">
+                            {% for tag in tags %}
+                                <input id="tag_{{ tag.id }}" name="{{ tag.id }}" type="checkbox" value="">
+                                <label for="tag_{{ tag.id }}">#{{ tag.tag }}</label>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -76,7 +84,9 @@
                                     <div class="matcha-pop-score"></div>
                                 </div>
                                 <span class="matcha-medium-text">Biographie :</span><br>
-                                <span class="matcha-small-text" matcha-bio></span>
+                                <span class="matcha-small-text" matcha-bio></span><br>
+                                <span class="matcha-medium-text">Tags :</span>
+                                <span class="matcha-small-text" matcha-tags></span>
                             </div>
                         </div>
                     </div>
@@ -88,10 +98,16 @@
         </div>
     </template>
     <script>
-        var myPos = {lat: {{ me.lattitude }}, lng: {{ me.longitude }}};
+        var myTags = { {% for tag in tags %}'{{ tag.id }}':'{{ tag.tag }}'{% if not loop.last %},{% endif %}{% endfor %} };
+        var myPos = {lat:{{ me.lattitude }}, lng:{{ me.longitude }}};
         var usersPos = [
             {% for user in users %}
-                {title: '{{ user.pseudo }}', id: '{{ user.id }}', score: {{ user.score }}, lat: {{ user.lattitude }}, lng: {{ user.longitude }}, img: '{{ user.img1 }}', kind: '{{ user.gender }}', age: '{{ "now"|date("Y") - user.birthdate }}', popularity: '{{ user.popularity }}', biography: '{{ user.biography|replace({"\n": " ", "\r": ""}) }}', distance: '{{ user.distance }}', tag: '{{ user.tag }}' },
+                {
+                	title:'{{ user.pseudo }}',id:'{{ user.id }}',score:{{ user.score }},lat:{{ user.lattitude }},lng:{{ user.longitude }},
+                    img:'{{ user.img1 }}',kind:'{{ user.gender }}',age:'{{ "now"|date("Y") - user.birthdate }}',popularity:'{{ user.popularity }}',
+                    biography:'{{ user.biography|replace({"\n":" ","\r":""}) }}',distance:'{{ user.distance }}',
+                    tag:[{% for userTags in user.tags %}{{ userTags }},{% endfor %}]
+                },
             {% endfor %}
         ];
         var myId = '{{ me.publicToken }}';

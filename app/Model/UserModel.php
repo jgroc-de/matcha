@@ -93,11 +93,11 @@ class UserModel
             "
             SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, user.id, popularity, lastlog
             FROM user
-            LEFT OUTER JOIN blacklist ON
+            LEFT JOIN blacklist ON
                 blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
-            LEFT OUTER JOIN friends ON
-                friends.id_user1 = IF(:id > user.id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
-            LEFT OUTER JOIN friendsReq ON
+            LEFT JOIN friends ON
+                friends.id_user1 = IF(user.id < :id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
+            LEFT JOIN friendsReq ON
                 friendsReq.id_user1 = IF(:id > user.id, user.id, :id) AND friendsReq.id_user2 = IF(user.id > :id, user.id, :id)
             WHERE birthdate BETWEEN :aMax AND :aMin
                 AND $where
@@ -105,6 +105,9 @@ class UserModel
                 AND lattitude BETWEEN :latMin AND :latMax
                 AND longitude BETWEEN :longMin AND :longMax
                 AND ACTIV = 1
+                AND blacklist.id_user IS NULL
+                AND friends.id_user1 IS NULL
+                AND friendsReq.id_user1 IS NULL
             ORDER BY lastlog DESC
             LIMIT 200"
         );
@@ -138,16 +141,19 @@ class UserModel
             "
             SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, user.id, popularity, lastlog
             FROM user
-            LEFT OUTER JOIN blacklist ON
+            LEFT JOIN blacklist ON
                 blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
-            LEFT OUTER JOIN friends ON
+            LEFT JOIN friends ON
                 friends.id_user1 = IF(:id > user.id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
-            LEFT OUTER JOIN friendsReq ON
+            LEFT JOIN friendsReq ON
                 friendsReq.id_user1 = IF(:id > user.id, user.id, :id) AND friendsReq.id_user2 = IF(user.id > :id, user.id, :id) 
             WHERE $where
                 AND user.id <> :id
                 AND ACTIV = 1
                 AND pseudo like :name
+                AND blacklist.id_user IS NULL
+                AND friends.id_user1 IS NULL
+                AND friendsReq.id_user1 IS NULL
             ORDER BY lastlog DESC
             LIMIT 200"
         );
@@ -177,20 +183,23 @@ class UserModel
             "
             SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, user.id, popularity, lastlog
             FROM user
-            LEFT OUTER JOIN blacklist ON
+            LEFT JOIN blacklist ON
                 blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
-            LEFT OUTER JOIN friends ON
+            LEFT JOIN friends ON
                 friends.id_user1 = IF(:id > user.id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
-            LEFT OUTER JOIN friendsReq ON
+            LEFT JOIN friendsReq ON
                 friendsReq.id_user1 = IF(:id > user.id, user.id, :id) AND friendsReq.id_user2 = IF(user.id > :id, user.id, :id)
             WHERE birthdate BETWEEN :aMax AND :aMin
                 AND $where
-                AND gender in :targets
+                AND gender IN :targets
                 AND user.id <> :id
                 AND popularity BETWEEN :popMin AND :popMax
                 AND lattitude BETWEEN :latMin AND :latMax
                 AND longitude BETWEEN :longMin AND :longMax
                 AND ACTIV = 1
+                AND blacklist.id_user IS NULL
+                AND friends.id_user1 IS NULL
+                AND friendsReq.id_user1 IS NULL
             ORDER BY lastlog DESC
             LIMIT 200"
         );

@@ -52,7 +52,32 @@ class TagModel
         return $req->fetch();
     }
 
-    public function getUserTags(int $userId): array
+    public function getCommonUserIdTags(array $usersID, array $tagsID): array
+    {
+        $tags = [];
+        foreach($tagsID as $tag) {
+            $tags[] = $tag['id'];
+        }
+        $tags = implode(',', $tags);
+        $users = [];
+        foreach($usersID as $user) {
+            $users[] = $user['id'];
+        }
+        $users = implode(',', $users);
+        $req = $this->db->prepare("
+            SELECT hashtags.id, usertags.id_user
+            FROM hashtags
+            INNER JOIN usertags
+            ON usertags.idtag = hashtags.id
+            WHERE usertags.id_user IN ($users)
+                AND hashtags.id IN ($tags)
+        ");
+        $req->execute();
+
+        return $req->fetchAll();
+    }
+
+    public function getUserTags(int $userID): array
     {
         $req = $this->db->prepare('
             SELECT hashtags.id, tag
@@ -62,12 +87,12 @@ class TagModel
             WHERE id_user = ?
             ORDER BY hashtags.tag
         ');
-        $req->execute([$userId]);
+        $req->execute([$userID]);
 
         return $req->fetchAll();
     }
 
-    public function getAllUserTags(int $userId): array
+    public function getAllUserTags(int $userID): array
     {
         $req = $this->db->prepare('
             SELECt tag
@@ -77,7 +102,7 @@ class TagModel
             WHERE id_user = ?
             ORDER BY hashtags.tag
         ');
-        $req->execute([$userId]);
+        $req->execute([$userID]);
 
         return $req->fetchAll();
     }
