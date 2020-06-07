@@ -14,7 +14,7 @@
         <h2 class='w3-theme-l1'>Search</h2>
         <div class="w3-col l6 w3-padding">
             <div class="w3-card-4 w3-theme-l5">
-                <h3 class="w3-hover-green" style="cursor:pointer" matcha-toggle>Actions</h3>
+                <h3 class="w3-hover-green" matcha-toggle>Actions</h3>
                 <div id="Actions" class="w3-theme-l5 w3-padding gg-section search-wrap">
                     <div class="profil-wrap">
                         <button id="prev" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue width150">Previous</button>
@@ -43,24 +43,24 @@
             </div>
         </div>
         <div class="w3-col l6 w3-padding">
-            <h3 class="w3-hover-green" style="cursor:pointer" onclick="toggleDisplay2(this)">Focus</h3>
+            <h3 class="w3-hover-green" onclick="toggleDisplay2(this)">Focus</h3>
             <div id="focus" class="w3-card-4"></div>
         </div>
         <div class="w3-col l6 w3-padding">
             <div class="w3-row w3-card-4">
-                <h3 class="w3-hover-green" style="cursor:pointer" matcha-toggle>Map</h3>
+                <h3 class="w3-hover-green" matcha-toggle>Map</h3>
                 <div id="map" class="gg-map-med"></div>
             </div>
         </div>
         <div class="w3-col l6 w3-padding">
             <div class="w3-row w3-card-4">
-                <h3 class="w3-hover-green" style="cursor:pointer"matcha-toggle>Search By Name</h3>
-                <form class="w3-container w3-theme-light clearfix" style="opacity:0.95" action="/search-name" method="get">
-                    <legend>Search by Name</legend>
-                    {{ input('text', '', {'value': name, 'placeholder':'pseudo', 'class':'w3-col s12 m9 l6', 'name': 'pseudo'}) }}
+                <h3 class="w3-hover-green"matcha-toggle>Search By Name</h3>
+                <form id="searchByName" class="w3-container w3-theme-light clearfix" action="{{ path_for('searchByName') }}" method="POST">
+                    <legend><label for="pseudo">Search By Name</label></legend>
+                    <input class="w3-input w3-border w3-col s12 m9 l6" type="text" name="pseudo" placeholder="pseudo" required>
                     <button class="{{ buttonClass }}">Search</button>
                 </form>
-                <h3 class="w3-hover-green" style="cursor:pointer"matcha-toggle>Search By Criteria</h3>
+                <h3 class="w3-hover-green"matcha-toggle>Search By Criteria</h3>
                 {% include '/templates/in/search_by_criteria_form.html.twig' %}
             </div>
         </div>
@@ -80,10 +80,10 @@
                                     <p><span class="matcha-name"></span><br></p>
                                     <div class="matcha-pop-score"></div>
                                 </div>
+                                <span class="matcha-medium-text">Tags :</span><br>
+                                <span class="matcha-small-text" matcha-tags></span><br>
                                 <span class="matcha-medium-text">Biographie :</span><br>
                                 <span class="matcha-small-text" matcha-bio></span><br>
-                                <span class="matcha-medium-text">Tags :</span>
-                                <span class="matcha-small-text" matcha-tags></span>
                             </div>
                         </div>
                     </div>
@@ -100,10 +100,9 @@
         var usersPos = [
             {% for user in users %}
                 {
-                	title:'{{ user.pseudo }}',id:'{{ user.id }}',score:{{ user.score }},lat:{{ user.lattitude }},lng:{{ user.longitude }},
-                    img:'{{ user.img1 }}',kind:'{{ user.gender }}',age:'{{ "now"|date("Y") - user.birthdate }}',popularity:'{{ user.popularity }}',
-                    biography:'{{ user.biography|replace({"\n":" ","\r":""}) }}',distance:'{{ user.distance }}',
-                    tag:[{% for userTags in user.tags %}{{ userTags }},{% endfor %}]
+                	pseudo:'{{ user.pseudo }}',id:'{{ user.id }}',score:{{ user.score }},lat:{{ user.lat }},lng:{{ user.lng }},
+                    img:'{{ user.img }}',gender:'{{ user.gender }}',age:'{{ user.age }}',popularity:'{{ user.popularity }}',
+                    biography:'{{ user.biography }}',distance:'{{ user.distance }}', tag:[{% for userTags in user.tag %}{{ userTags }},{% endfor %}]
                 },
             {% endfor %}
         ];

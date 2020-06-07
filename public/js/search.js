@@ -68,16 +68,16 @@ function addChildrenCard(hash, show) {
 
     let img = clone.querySelector('img')
     img.dataset.src = hash.img
-    img.parentElement.style.backgroundColor = '#' + getColor(hash.kind)
+    img.parentElement.style.backgroundColor = '#' + getColor(hash.gender)
 
     if (show)
         img.src = hash.img
 
     let name = clone.querySelector('span.matcha-name')
-    name.innerText = hash.title + ', ' + hash.age
+    name.innerText = hash.pseudo + ', ' + hash.age
     let score = clone.querySelector('div.matcha-pop-score')
     score.innerText = hash.popularity + ' %'
-    score.style.backgroundColor = '#' + getColor(hash.kind)
+    score.style.backgroundColor = '#' + getColor(hash.gender)
     let description = clone.querySelector('span[matcha-bio]')
     description.innerText = hash.biography
     if (hash.tag.length) {
@@ -163,12 +163,30 @@ function mapView(id) {
     view(document.querySelector('#focus>div:not(.w3-hide)').children[0].id, id)
 }
 
+function searchForm(event) {
+    event.preventDefault()
+    postData(event.currentTarget.action, new FormData(event.currentTarget))
+        .then(data => {
+            if (data.failure) {
+                printNotif([data.failure, false])
+            } else {
+                usersPos = data
+                reloadProfilCards()
+                initMap()
+            }
+        });
+}
+
 function setEvents() {
     let tags = document.getElementById('myTags')
     let select = document.getElementById('sort1')
+    let nameForm = document.getElementById('searchByName')
+    let critForm = document.getElementById('searchByCriteria')
 
     select.addEventListener('change', generateCard)
     tags.addEventListener('change', tagSort, true)
+    nameForm.addEventListener('submit', searchForm)
+    critForm.addEventListener('submit', searchForm)
 }
 
 reloadProfilCards()

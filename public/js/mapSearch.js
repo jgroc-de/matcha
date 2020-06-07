@@ -1,21 +1,23 @@
 function initMap() {
+    let mapNode = document.getElementById('map')
+    mapNode.innerText = ''
     let map = new google.maps.Map(document.getElementById('map'), {center: myPos, zoom: 11});
     let marker = [];
-    for (x in usersPos) {
+    for (let key in usersPos) {
         marker = new google.maps.Marker({
-            position: usersPos[x],
+            position: usersPos[key],
             map: map,
-            icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + getColor(usersPos[x].kind),
+            icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + getColor(usersPos[key].gender),
             title: 'click me!'
         });
-        attachInfo(marker, usersPos[x]);
+        attachInfo(marker, usersPos[key]);
     }
 }
 
 function attachInfo(marker, info) {
     let infowindow = new google.maps.InfoWindow({});
     marker.addListener('click', function() {
-        infowindow.setContent("<div class='w3-button w3-theme-l5' onclick='mapView(" + info.id + ")'><h6 class='w3-container' style='background-color:#" + getColor(info.kind) + "'>" + info.title + "</h6><p class='w3-padding' style='margin:0'>" + info.kind + ", "  + info.age + "yo<br>score: " + info.score +"<br></p><img src=" + info.img + " style='height:40px'><div>"); 
+        infowindow.setContent("<div class='w3-button w3-theme-l5' onclick='mapView(" + info.id + ")'><h6 class='w3-container' style='background-color:#" + getColor(info.gender) + "'>" + info.pseudo + "</h6><p class='w3-padding' style='margin:0'>" + info.gender + ", "  + info.age + "yo<br>score: " + info.score +"<br></p><img src=" + info.img + " style='height:40px'><div>");
         infowindow.open(map, this);
     });
 }

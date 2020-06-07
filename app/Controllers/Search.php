@@ -61,18 +61,9 @@ class Search
             'min' => $_SESSION['profil']['birthdate'] + 10,
             'max' => $_SESSION['profil']['birthdate'] - 10,
         ];
+        $list = $this->user->getDefaultUserList($age, $this->distance2angle(self::DISTANCE_DEFAULT));
         $tags = $this->tag->getUserTags($_SESSION['id']);
-        $list = $this->user->getDefaultUserList($age, $this->distance2angle(self::DISTANCE_DEFAULT), $tags);
-        $list = $this->computeMisc($list);
-        $userTags = $this->tag->getCommonUserIdTags($list, $tags);
-        foreach ($list as &$user) {
-            $user['tags'] = [];
-            foreach ($userTags as $userTag) {
-                if ($userTag['id_user'] === $user['id']) {
-                    $user['tags'][] = $userTag['id'];
-                }
-            }
-        }
+        $list = $this->computeMisc($list, $tags);
 
         return $this->view->render(
             $response,
@@ -96,15 +87,17 @@ class Search
 
     public function name(Request $request, Response $response, array $args)
     {
-        $getParams = $request->getQueryParams();
-        if ($this->validator->validate($getParams, ['pseudo'])) {
-            $list = $this->user->getUserListByPseudo($getParams['pseudo']);
-            $list = $this->computeMisc($list);
-
-            return $response->withJson($list);
+        $post = $request->getParsedBody();
+        if ($this->validator->validate($post, ['pseudo'])) {
+            $list = $this->user->getUserListByPseudo($post['pseudo']);
+            $tags = $this->tag->getUserTags($_SESSION['id']);
+            $list = $this->computeMisc($list, $tags);
+            if (!empty($list)) {
+                return $response->withJson($list);
+            }
         }
 
-        return $response->withJson([], 404);
+        return $response->withJson(['failure' => 'nothing Found'], 404);
     }
 
     public function criteria(Request $request, Response $response, array $args)
@@ -124,15 +117,18 @@ class Search
             $dist = max((int) $post['distance'], self::DISTANCE_MIN);
             $targets = $this->getTarget($post);
             $list = $this->user->getUserListByCriteria($age, $targets, $popularity, $this->distance2angle($dist));
-            $list = $this->computeMisc($list);
+            $tags = $this->tag->getUserTags($_SESSION['id']);
+            $list = $this->computeMisc($list, $tags);
 
-            return $response->withJson($list);
+            if (!empty($list)) {
+                return $response->withJson($list);
+            }
         }
 
-        return $response->withJson([], 404);
+        return $response->withJson(['failure' => 'nothing Found'], 404);
     }
 
-    private function computeMisc(array $list): array
+    private function computeMisc(array $list, array $tags): array
     {
         foreach ($list as $key => $user) {
             $tmp = [
@@ -140,9 +136,25 @@ class Search
                 'distance' => $this->angle2distance($user),
                 'score' => $this->computeScore($user),
             ];
-            $list[$key] = array_merge($user, $tmp);
+            $user = array_merge($user, $tmp);
+            $user['lat'] = (float) $user['lat'];
+            $user['lng'] = (float) $user['lng'];
+            $user['age'] = date('Y') - $user['birthdate'];
+            $user['biography'] = str_replace(['\n', '\r'], [' ', ''], $user['biography']);
+            $list[$key] = $user;
         }
         usort($list, [$this, 'sortList']);
+        if (!empty($tags) && !empty($list)) {
+            $userTags = $this->tag->getCommonUserIdTags($list, $tags);
+            foreach ($list as &$user) {
+                $user['tag'] = [];
+                foreach ($userTags as $userTag) {
+                    if ($userTag['id_user'] === $user['id']) {
+                        $user['tag'][] = (int) $userTag['id'];
+                    }
+                }
+            }
+        }
 
         return $list;
     }
@@ -185,8 +197,8 @@ class Search
     {
         $lat = deg2rad($_SESSION['profil']['lattitude']);
         $rayonlng = self::RADIUS * cos($lat);
-        $latrad = deg2rad($user['lattitude'] - $_SESSION['profil']['lattitude']);
-        $lngrad = deg2rad($user['longitude'] - $_SESSION['profil']['longitude']);
+        $latrad = deg2rad($user['lat'] - $_SESSION['profil']['lattitude']);
+        $lngrad = deg2rad($user['lng'] - $_SESSION['profil']['longitude']);
         $a = self::RADIUS * sin($latrad);
         $b = $rayonlng * sin($lngrad);
 

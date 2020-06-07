@@ -79,19 +79,10 @@ class UserModel
 
     public function getDefaultUserList(array $age, array $angle): array
     {
-        switch ($_SESSION['profil']['sexuality']) {
-            case 'homo':
-                $where = "gender = :gender AND sexuality <> 'hetero'";
-                break;
-            case 'hetero':
-                $where = "gender <> :gender AND sexuality <> 'homo'";
-                break;
-            case 'bi':
-                $where = "((gender = :gender AND sexuality <> 'hetero') OR (gender <> :gender AND sexuality <> 'homo'))";
-        }
+        $where = $this->getSexWherePart();
         $req = $this->db->prepare(
             "
-            SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, user.id, popularity, lastlog
+            SELECT pseudo, sexuality, biography, lattitude as lat, longitude as lng, img1 as img, birthdate, gender, user.id, popularity, lastlog
             FROM user
             LEFT JOIN blacklist ON
                 blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
@@ -127,30 +118,21 @@ class UserModel
 
     public function getUserListByPseudo(string $name): array
     {
-        switch ($_SESSION['profil']['sexuality']) {
-            case 'homo':
-                $where = "gender = :gender AND sexuality <> 'hetero'";
-                break;
-            case 'hetero':
-                $where = "gender <> :gender AND sexuality <> 'homo'";
-                break;
-            case 'bi':
-                $where = "((gender = :gender AND sexuality <> 'hetero') OR (gender <> :gender AND sexuality <> 'homo'))";
-        }
+        $where = $this->getSexWherePart();
         $req = $this->db->prepare(
             "
-            SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, user.id, popularity, lastlog
+            SELECT pseudo, sexuality, biography, lattitude as lat, longitude as lng, img1 as img, birthdate, gender, user.id, popularity, lastlog
             FROM user
             LEFT JOIN blacklist ON
                 blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
             LEFT JOIN friends ON
-                friends.id_user1 = IF(:id > user.id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
+                friends.id_user1 = IF(user.id < :id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
             LEFT JOIN friendsReq ON
-                friendsReq.id_user1 = IF(:id > user.id, user.id, :id) AND friendsReq.id_user2 = IF(user.id > :id, user.id, :id) 
+                friendsReq.id_user1 = IF(:id > user.id, user.id, :id) AND friendsReq.id_user2 = IF(user.id > :id, user.id, :id)
             WHERE $where
+                AND pseudo LIKE :name
                 AND user.id <> :id
                 AND ACTIV = 1
-                AND pseudo like :name
                 AND blacklist.id_user IS NULL
                 AND friends.id_user1 IS NULL
                 AND friendsReq.id_user1 IS NULL
@@ -166,37 +148,42 @@ class UserModel
         return $req->fetchAll();
     }
 
-    public function getUserListByCriteria(array $age, array $target, array $popularity, array $angle): array
+    private function getSexWherePart(): string
     {
-        $targets  = str_repeat('?,', count($target) - 1) . '?';
         switch ($_SESSION['profil']['sexuality']) {
             case 'homo':
-                $where = "gender = :gender AND sexuality <> 'hetero'";
+                return "gender = :gender AND sexuality <> 'hetero'";
                 break;
             case 'hetero':
-                $where = "gender <> :gender AND sexuality <> 'homo'";
+                return "gender <> :gender AND sexuality <> 'homo'";
                 break;
-            case 'bi':
-                $where = "((gender = :gender AND sexuality <> 'hetero') OR (gender <> :gender AND sexuality <> 'homo'))";
+            default:
+                return "((gender = :gender AND sexuality <> 'hetero') OR (gender <> :gender AND sexuality <> 'homo'))";
         }
+    }
+
+    public function getUserListByCriteria(array $age, array $target, array $popularity, array $angle): array
+    {
+        $targets  = implode(',', $target);
+        $where = $this->getSexWherePart();
         $req = $this->db->prepare(
             "
-            SELECT pseudo, sexuality, biography, lattitude, longitude, img1, birthdate, gender, user.id, popularity, lastlog
+            SELECT pseudo, sexuality, biography, lattitude as lat, longitude as lng, img1 as img, birthdate, gender, user.id, popularity, lastlog
             FROM user
             LEFT JOIN blacklist ON
                 blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
             LEFT JOIN friends ON
-                friends.id_user1 = IF(:id > user.id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
+                friends.id_user1 = IF(user.id < :id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
             LEFT JOIN friendsReq ON
                 friendsReq.id_user1 = IF(:id > user.id, user.id, :id) AND friendsReq.id_user2 = IF(user.id > :id, user.id, :id)
             WHERE birthdate BETWEEN :aMax AND :aMin
                 AND $where
-                AND gender IN :targets
                 AND user.id <> :id
-                AND popularity BETWEEN :popMin AND :popMax
                 AND lattitude BETWEEN :latMin AND :latMax
                 AND longitude BETWEEN :longMin AND :longMax
-                AND ACTIV = 1
+                AND ACTIV = 1       
+                AND gender IN (:targets)
+                AND popularity BETWEEN :popMin AND :popMax
                 AND blacklist.id_user IS NULL
                 AND friends.id_user1 IS NULL
                 AND friendsReq.id_user1 IS NULL

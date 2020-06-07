@@ -56,8 +56,7 @@ function majLocation (user) {
     request.send(params)
 }
 
-function changeLocation()
-{
+function changeLocation() {
     user.lat = Number(document.getElementById('lat').value)
     user.lng = Number(document.getElementById('lng').value)
     initMap()
