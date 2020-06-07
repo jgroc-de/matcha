@@ -125,7 +125,14 @@ class Search
         if (empty($targets)) {
             return $response->withJson(['failure' => 'nothing Found'], 404);
         }
-        $userTags = $this->getTags($post);
+        if ($post['tags']) {
+            $userTags = $this->getTags($post);
+            if (empty($userTags)) {
+                return $response->withJson(['failure' => 'nothing Found'], 404);
+            }
+        } else {
+            $userTags = [];
+        }
         $list = $this->user->getUserListByCriteria($age, $targets, $popularity, $this->distance2angle($dist), $userTags);
         if (empty($list)) {
             return $response->withJson(['failure' => 'nothing Found'], 404);
@@ -170,22 +177,20 @@ class Search
     private function getTags($post): array
     {
         $tags = [];
-        if ($post['tags']) {
-            $tmp = explode(' ', $post['tags']);
-            foreach ($tmp as $tag) {
-                if (strpos($tag, '#') !== 0) {
-                    continue;
-                }
-                $slice = substr($tag, 1);
-                if (!$slice) {
-                    continue;
-                }
-                $idTag = $this->tag->getTagByName($slice);
-                if (empty($idTag)) {
-                    continue;
-                }
-                $tags[] = $idTag['id'];
+        $tmp = explode(' ', $post['tags']);
+        foreach ($tmp as $tag) {
+            if (strpos($tag, '#') !== 0) {
+                continue;
             }
+            $slice = substr($tag, 1);
+            if (!$slice) {
+                continue;
+            }
+            $idTag = $this->tag->getTagByName($slice);
+            if (empty($idTag)) {
+                continue;
+            }
+            $tags[] = $idTag['id'];
         }
 
         return array_unique($tags);
