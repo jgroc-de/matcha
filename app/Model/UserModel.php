@@ -164,7 +164,7 @@ class UserModel
 
     public function getUserListByCriteria(array $age, array $target, array $popularity, array $angle): array
     {
-        $targets  = implode(',', $target);
+        $targets  = "'" . implode("','", $target) . "'";
         $where = $this->getSexWherePart();
         $req = $this->db->prepare(
             "
@@ -177,12 +177,12 @@ class UserModel
             LEFT JOIN friendsReq ON
                 friendsReq.id_user1 = IF(:id > user.id, user.id, :id) AND friendsReq.id_user2 = IF(user.id > :id, user.id, :id)
             WHERE birthdate BETWEEN :aMax AND :aMin
-                AND $where
+                AND ((gender = :gender AND sexuality <> 'hetero') OR (gender <> :gender AND sexuality <> 'homo'))
                 AND user.id <> :id
                 AND lattitude BETWEEN :latMin AND :latMax
                 AND longitude BETWEEN :longMin AND :longMax
-                AND ACTIV = 1       
-                AND gender IN (:targets)
+                AND ACTIV = 1
+                AND gender IN ($targets)
                 AND popularity BETWEEN :popMin AND :popMax
                 AND blacklist.id_user IS NULL
                 AND friends.id_user1 IS NULL
@@ -201,7 +201,6 @@ class UserModel
             'latMax' => $_SESSION['profil']['lattitude'] + $angle['lat'],
             'longMin' => $_SESSION['profil']['longitude'] - $angle['lng'],
             'longMax' => $_SESSION['profil']['longitude'] + $angle['lng'],
-            'targets' => $targets,
         ]);
 
         return $req->fetchAll();

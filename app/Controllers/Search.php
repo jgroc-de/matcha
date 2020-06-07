@@ -62,6 +62,9 @@ class Search
             'max' => $_SESSION['profil']['birthdate'] - 10,
         ];
         $list = $this->user->getDefaultUserList($age, $this->distance2angle(self::DISTANCE_DEFAULT));
+        if (empty($list)) {
+            return $response->withRedirect('/', 302);
+        }
         $tags = $this->tag->getUserTags($_SESSION['id']);
         $list = $this->computeMisc($list, $tags);
 
@@ -71,7 +74,7 @@ class Search
             [
                 'me' => $_SESSION['profil'],
                 'gender' => self::KIND,
-                'target' => $this->getTarget([]),
+                'target' => $this->getDefaultTarget(),
                 'users' => $list,
                 'age' => self::AGE,
                 'distSelect' => self::DISTANCE_DEFAULT,
@@ -90,9 +93,10 @@ class Search
         $post = $request->getParsedBody();
         if ($this->validator->validate($post, ['pseudo'])) {
             $list = $this->user->getUserListByPseudo($post['pseudo']);
-            $tags = $this->tag->getUserTags($_SESSION['id']);
-            $list = $this->computeMisc($list, $tags);
             if (!empty($list)) {
+                $tags = $this->tag->getUserTags($_SESSION['id']);
+                $list = $this->computeMisc($list, $tags);
+
                 return $response->withJson($list);
             }
         }
@@ -104,28 +108,32 @@ class Search
     {
         $post = $request->getParsedBody();
         $keys = ['Amin', 'Amax', 'Pmin', 'Pmax', 'distance'];
-        if ($this->validator->validate($post, $keys)) {
-            $date = date('Y');
-            $age = [
-                'min' => max($date - $post['min'], self::AGE['min']),
-                'max' => min($date - $post['max'], self::AGE['max']),
-            ];
-            $popularity = [
-                'min' => max($post['Pmin'], 0),
-                'max' => min($post['Pmax'], 100),
-            ];
-            $dist = max((int) $post['distance'], self::DISTANCE_MIN);
-            $targets = $this->getTarget($post);
-            $list = $this->user->getUserListByCriteria($age, $targets, $popularity, $this->distance2angle($dist));
-            $tags = $this->tag->getUserTags($_SESSION['id']);
-            $list = $this->computeMisc($list, $tags);
-
-            if (!empty($list)) {
-                return $response->withJson($list);
-            }
+        if (!$this->validator->validate($post, $keys)) {
+            return $response->withJson(['failure' => 'nothing Found'], 404);
         }
+        $date = date('Y');
+        $age = [
+            'min' => min($date - (int) $post['Amin'], $date - self::AGE['min']),
+            'max' => max($date - (int) $post['Amax'], $date - self::AGE['max']),
+        ];
+        $popularity = [
+            'min' => max((int) $post['Pmin'], 0),
+            'max' => min((int) $post['Pmax'], 100),
+        ];
+        $dist = max((int) $post['distance'], self::DISTANCE_MIN);
+        $targets = $this->getTarget($post);
+        if (empty($targets)) {
+            return $response->withJson(['failure' => 'nothing Found'], 404);
+        }
+        $list = $this->user->getUserListByCriteria($age, $targets, $popularity, $this->distance2angle($dist));
+        if (empty($list)) {
+            return $response->withJson(['failure' => 'nothing Found'], 404);
+        }
+        $tags = $this->tag->getUserTags($_SESSION['id']);
+        $list = $this->computeMisc($list, $tags);
+        //traitement des tags
 
-        return $response->withJson(['failure' => 'nothing Found'], 404);
+        return $response->withJson($list);
     }
 
     private function computeMisc(array $list, array $tags): array
@@ -144,7 +152,7 @@ class Search
             $list[$key] = $user;
         }
         usort($list, [$this, 'sortList']);
-        if (!empty($tags) && !empty($list)) {
+        if (!empty($tags)) {
             $userTags = $this->tag->getCommonUserIdTags($list, $tags);
             foreach ($list as &$user) {
                 $user['tag'] = [];
@@ -172,6 +180,12 @@ class Search
                 return array_unique($targets);
             }
         }
+
+        return [];
+    }
+
+    private function getDefaultTarget()
+    {
         switch ($_SESSION['profil']['sexuality']) {
             case 'hetero':
                 return array_diff(self::KIND, [$_SESSION['profil']['gender']]);
