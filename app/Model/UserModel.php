@@ -162,10 +162,16 @@ class UserModel
         }
     }
 
-    public function getUserListByCriteria(array $age, array $target, array $popularity, array $angle): array
+    public function getUserListByCriteria(array $age, array $target, array $popularity, array $angle, array $userTags): array
     {
         $targets  = "'" . implode("','", $target) . "'";
-        $where = $this->getSexWherePart();
+        if (!empty($userTags)) {
+            $count = count($userTags);
+            $tagsImplode = implode(',', $userTags);
+            $tagCondition = "AND (SELECT COUNT(id) FROM usertags WHERE id_user = user.id AND id_tag IN ($tagsImplode)) = $count";
+        } else {
+            $tagCondition = '';
+        }
         $req = $this->db->prepare(
             "
             SELECT pseudo, sexuality, biography, lattitude as lat, longitude as lng, img1 as img, birthdate, gender, user.id, popularity, lastlog
@@ -187,6 +193,7 @@ class UserModel
                 AND blacklist.id_user IS NULL
                 AND friends.id_user1 IS NULL
                 AND friendsReq.id_user1 IS NULL
+                $tagCondition
             ORDER BY lastlog DESC
             LIMIT 200"
         );
@@ -201,6 +208,7 @@ class UserModel
             'latMax' => $_SESSION['profil']['lattitude'] + $angle['lat'],
             'longMin' => $_SESSION['profil']['longitude'] - $angle['lng'],
             'longMax' => $_SESSION['profil']['longitude'] + $angle['lng'],
+            'userTags' => implode(",", $userTags),
         ]);
 
         return $req->fetchAll();

@@ -125,19 +125,30 @@ class Search
         if (empty($targets)) {
             return $response->withJson(['failure' => 'nothing Found'], 404);
         }
-        $list = $this->user->getUserListByCriteria($age, $targets, $popularity, $this->distance2angle($dist));
+        $userTags = $this->getTags($post);
+        $list = $this->user->getUserListByCriteria($age, $targets, $popularity, $this->distance2angle($dist), $userTags);
         if (empty($list)) {
             return $response->withJson(['failure' => 'nothing Found'], 404);
         }
         $tags = $this->tag->getUserTags($_SESSION['id']);
         $list = $this->computeMisc($list, $tags);
-        //traitement des tags
 
         return $response->withJson($list);
     }
 
     private function computeMisc(array $list, array $tags): array
     {
+        if (!empty($tags)) {
+            $userTags = $this->tag->getCommonUserIdTags($list, $tags);
+            foreach ($list as &$user) {
+                $user['tag'] = [];
+                foreach ($userTags as $userTag) {
+                    if ($userTag['id_user'] === $user['id']) {
+                        $user['tag'][] = (int) $userTag['id'];
+                    }
+                }
+            }
+        }
         foreach ($list as $key => $user) {
             $tmp = [
                 'time' => floor((time() - intval($user['lastlog'])) / 3600),
@@ -152,19 +163,32 @@ class Search
             $list[$key] = $user;
         }
         usort($list, [$this, 'sortList']);
-        if (!empty($tags)) {
-            $userTags = $this->tag->getCommonUserIdTags($list, $tags);
-            foreach ($list as &$user) {
-                $user['tag'] = [];
-                foreach ($userTags as $userTag) {
-                    if ($userTag['id_user'] === $user['id']) {
-                        $user['tag'][] = (int) $userTag['id'];
-                    }
+
+        return $list;
+    }
+
+    private function getTags($post): array
+    {
+        $tags = [];
+        if ($post['tags']) {
+            $tmp = explode(' ', $post['tags']);
+            foreach ($tmp as $tag) {
+                if (strpos($tag, '#') !== 0) {
+                    continue;
                 }
+                $slice = substr($tag, 1);
+                if (!$slice) {
+                    continue;
+                }
+                $idTag = $this->tag->getTagByName($slice);
+                if (empty($idTag)) {
+                    continue;
+                }
+                $tags[] = $idTag['id'];
             }
         }
 
-        return $list;
+        return array_unique($tags);
     }
 
     private function getTarget(array $post = []): array

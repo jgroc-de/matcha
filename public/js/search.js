@@ -80,7 +80,7 @@ function addChildrenCard(hash, show) {
     score.style.backgroundColor = '#' + getColor(hash.gender)
     let description = clone.querySelector('span[matcha-bio]')
     description.innerText = hash.biography
-    if (hash.tag.length) {
+    if (hash.tag && hash.tag.length) {
         let tags = clone.querySelector('span[matcha-tags]')
         for(let tag in hash.tag) {
             tags.innerText += '#' + myTags[hash.tag[tag]] + ' '
@@ -184,7 +184,9 @@ function setEvents() {
     let critForm = document.getElementById('searchByCriteria')
 
     select.addEventListener('change', generateCard)
-    tags.addEventListener('change', tagSort, true)
+    if (tags) {
+        tags.addEventListener('change', tagSort, true)
+    }
     nameForm.addEventListener('submit', searchForm)
     critForm.addEventListener('submit', searchForm)
 }

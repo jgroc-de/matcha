@@ -28,7 +28,7 @@ class TagModel
      */
     public function getUserTag(int $id, string $user)
     {
-        $req = $this->db->prepare('SELECT * FROM usertags WHERE idtag = ? AND id_user = ?');
+        $req = $this->db->prepare('SELECT * FROM usertags WHERE id_tag = ? AND id_user = ?');
         $req->execute([$id, $user]);
 
         return $req->fetch();
@@ -43,11 +43,23 @@ class TagModel
             SELECT *
             FROM usertags
             INNER JOIN hashtags
-            ON hashtags.id = usertags.idtag
+            ON hashtags.id = usertags.id_tag
             WHERE hashtags.tag = ?
             AND id_user = ?
         ');
         $req->execute([$tag, $user]);
+
+        return $req->fetch();
+    }
+
+    public function getTagByName(string $tag)
+    {
+        $req = $this->db->prepare('
+            SELECT id
+            FROM hashtags
+            WHERE hashtags.tag = ?
+        ');
+        $req->execute([$tag]);
 
         return $req->fetch();
     }
@@ -68,7 +80,7 @@ class TagModel
             SELECT hashtags.id, usertags.id_user
             FROM hashtags
             INNER JOIN usertags
-            ON usertags.idtag = hashtags.id
+            ON usertags.id_tag = hashtags.id
             WHERE usertags.id_user IN ($users)
                 AND hashtags.id IN ($tags)
         ");
@@ -83,7 +95,7 @@ class TagModel
             SELECT hashtags.id, tag
             FROM usertags
             INNER JOIN hashtags
-            ON usertags.idtag = hashtags.id
+            ON usertags.id_tag = hashtags.id
             WHERE id_user = ?
             ORDER BY hashtags.tag
         ');
@@ -98,7 +110,7 @@ class TagModel
             SELECt tag
             FROM usertags
             INNER JOIN hashtags
-            ON usertags.idtag = hashtags.id
+            ON usertags.id_tag = hashtags.id
             WHERE id_user = ?
             ORDER BY hashtags.tag
         ');
@@ -120,7 +132,7 @@ class TagModel
 
     public function setUserTag(int $idtag): bool
     {
-        $req = $this->db->prepare('INSERT INTO usertags (idtag, id_user) VALUES (?,?)');
+        $req = $this->db->prepare('INSERT INTO usertags (id_tag, id_user) VALUES (?,?)');
 
         try {
             return $req->execute([$idtag, $_SESSION['id']]);
@@ -131,7 +143,7 @@ class TagModel
 
     public function delUserTag(int $idTag, int $iduser): bool
     {
-        $req = $this->db->prepare('DELETE FROM usertags WHERE idtag = ? AND id_user = ?');
+        $req = $this->db->prepare('DELETE FROM usertags WHERE id_tag = ? AND id_user = ?');
         $req->execute([$idTag, $iduser]);
 
         return $req->rowCount() > 0;

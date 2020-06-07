@@ -122,10 +122,11 @@ CREATE TABLE `hashtags` (
 
 CREATE TABLE `usertags` (
     `id` SERIAL PRIMARY KEY,
-    `idtag` BIGINT UNSIGNED NOT NULL,
+    `id_tag` BIGINT UNSIGNED NOT NULL,
     `id_user` BIGINT UNSIGNED NOT NULL,
-    CONSTRAINT PK_usertags UNIQUE (`idtag`, `id_user`),
-    CONSTRAINT FK_usertags FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE
+    CONSTRAINT PK_usertags UNIQUE (`id_tag`, `id_user`),
+    CONSTRAINT FK_usertags FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE,
+    CONSTRAINT FK_hashtags FOREIGN KEY (id_tag) REFERENCES hashtags(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
