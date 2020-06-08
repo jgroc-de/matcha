@@ -137,7 +137,7 @@ class FormChecker
     public function checkContact(?array $post)
     {
         if ($valid = $this->validator->validate($post, ['email', 'text', 'g-recaptcha-response'])) {
-            $this->mail->contactMe($post['text'], $post['email']);
+            $this->mail->contactMe(htmlentities($post['text']), $post['email']);
             $this->flashMessage->addMessage('success', 'Thank you!');
         }
     }
