@@ -28,7 +28,7 @@ class UserModel
      */
     public function getUser(string $pseudo)
     {
-        $req = $this->db->prepare('SELECT * FROM user WHERE pseuido = ?');
+        $req = $this->db->prepare('SELECT * FROM user WHERE pseudo = ?');
         $req->execute([$pseudo]);
         $result = $req->fetch();
 
@@ -40,7 +40,7 @@ class UserModel
      */
     public function getUserById(int $id)
     {
-        $req = $this->db->prepare('SELECT * FROM user WHERE idi = ?');
+        $req = $this->db->prepare('SELECT * FROM user WHERE id = ?');
         $req->execute([$id]);
         $result = $req->fetch();
 
