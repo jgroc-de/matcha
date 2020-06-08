@@ -69,7 +69,7 @@ class Chat
             $tab = [$_SESSION['id'], $post['id']];
             sort($tab);
             if ($this->friends->isFriend($_SESSION['id'], $post['id'])) {
-                $post['msg'] = htmlentities($post['msg']);
+                $post['msg'] = $post['msg'];
                 $msg = [
                     'category' => $post['token'],
                     'exp' => $_SESSION['id'],
@@ -79,7 +79,7 @@ class Chat
                     'when' => time(),
                 ];
                 $this->MyZmq->send($msg);
-                $this->msg->setMessage([$tab[0], $tab[1], $_SESSION['id'], $msg['msg'], date('Y-m-d H:i:s')]);
+                $this->msg->setMessage([$tab[0], $tab[1], $_SESSION['id'], htmlentities($msg['msg']), date('Y-m-d H:i:s')]);
                 if ($this->user->isBot($post['id'])) {
                     $msg = [
                         'category' => $post['token'],

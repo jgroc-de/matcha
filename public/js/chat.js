@@ -7,15 +7,15 @@ var websocket
 var shiftDown = 0
 
 msg.addEventListener("keydown", function(event) {
-    if (event.keyCode === 16)
+    if (event.code === "ShiftLeft")
         shiftDown = 1
 })
 
 msg.addEventListener("keyup", function(event) {
-    if (event.keyCode === 16)
+    if (event.code === "ShiftLeft")
         shiftDown = 0
 
-    if (event.keyCode === 13 && shiftDown === 0) {
+    if (event.code === "Enter" && shiftDown === 1) {
         event.preventDefault()
         button.click()
     }
