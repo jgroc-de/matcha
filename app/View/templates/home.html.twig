@@ -36,11 +36,11 @@
         </a>
         <a href="#" class="{{ classR }} w3-display-container">
             <i class="fa fa-bell" alt="like" title="new likes" onclick="toggleById('notification');resetBadge()"></i>
-                <span id="badge" class="w3-badge w3-display-topright w3-green w3-tiny w3-hide"></span>
+                <span id="badge" class="gg-badge w3-display-topright w3-tiny w3-hide"></span>
         </a>
         <div class="g-signin2" hidden></div>
-        <div class="w3-right w3-theme-l5 w3-border w3-round gg-pop" title="popularity: {{ me.popularity }}/100">
-            <div class="w3-round w3-green w3-border" style="width:{{ me.popularity }}%;height:16px"></div>
+        <div class="w3-right w3-white gg-pop" title="Popularity: {{ me.popularity }}%">
+            <div style="width:{{ me.popularity }}%;height:18px;background-color:{{(me.popularity > 50) ? '#5ad168' : '#a7e9af'}};"></div>
         </div>
     </div>
 {% endblock %}

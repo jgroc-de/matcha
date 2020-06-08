@@ -141,7 +141,7 @@ function acceptFriendReq(path, id)
 
     child.id = "friend" + id
     child.className = "gg-friend"
-    del.className = 'fa fa-remove'
+    del.className = 'fa fa-remove del-red'
     del.title = 'delete'
     del.setAttribute('onclick', 'delFriend("/friend/' + id + '")')
 

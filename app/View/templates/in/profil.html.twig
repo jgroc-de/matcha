@@ -101,8 +101,8 @@
                                             {{req.pseudo}}
                                         </a>
                                         <div>
-                                            <i class="fa fa-check check-green" onclick="acceptFriendReq('/friend/', {{req.id}})" title="accept"></i>
-                                            <i class="fa fa-remove del-red" onclick="delFriendReq('/friendReq/', {{req.id}})" title="remove"></i>
+                                            <i class="fa fa-check check-green" onclick="acceptFriendReq('/friend/', {{req.id}})" title="Accept"></i>
+                                            <i class="fa fa-remove del-red" onclick="delFriendReq('/friendReq/', {{req.id}})" title="Remove"></i>
                                         </div>
                                     </div>
                                 {% endif %}
@@ -120,7 +120,7 @@
                                         <img src="{{ friend.img1 }}" alt="{{ friend.pseudo }}'s picture" class="{{color[friend.gender]}} gg-friend-img" style="border-color:{{color[friend.gender]}};">
                                         {{friend.pseudo}}
                                     </a>
-                                    <i class="fa fa-remove del-red" onclick="delFriend('/friend/', {{friend.id}})" title="remove"></i>
+                                    <i class="fa fa-remove del-red" onclick="delFriend('/friend/', {{friend.id}})" title="Remove"></i>
                                 </div>
                             {% endfor %}
                         </div>
