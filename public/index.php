@@ -24,7 +24,7 @@ $proto = strpos($_SERVER['HTTP_HOST'], 'localhost') === 0 ? 'http' : 'https';
 // Instatiate the app
 $config = [
     // Slim settings
-    'displayErrorDetails' => true,
+    'displayErrorDetails' => $_ENV['PROD'] == 0,
     'addContentLengthHeader' => false,
     //global
     'siteUrl' => $proto . '://' . $_SERVER['HTTP_HOST'],
