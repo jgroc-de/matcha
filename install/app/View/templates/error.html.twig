@@ -1,0 +1,10 @@
+{% if me is empty %}
+    {% set template = 'templates/logForm.html.twig' %}
+{% else %}
+    {% set template = 'templates/home.html.twig' %}
+{% endif %}
+{% extends template %}
+
+{% block main %}
+    <h1 class="w3-display-middle w3-xxlarge w3-text-white w3-padding w3-red">{{ error }}</h1>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "layout.html.twig" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ BASE_URL }}/css/home.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block header %}
+    <a href='{{ path_for('home') }}'><h1>Match a Rick&amp;Morty</h1></a>
+{% endblock %}
+
+{% block navbar %}
+    <div class="w3-bar w3-theme-d1 gg-navbar">
+        {% set class = "w3-bar-item w3-button w3-large gg-menu" %}
+        {% set class2 = "w3-bar-item w3-button w3-large gg-burger" %}
+        {% set classDD = "w3-bar-item w3-button w3-theme-l5" %}
+        {% set classR = "w3-bar-item w3-button w3-right w3-large" %}
+        <div class="w3-dropdown-click">
+            <a href="#" class="{{ class2 }}" onclick="this.nextElementSibling.classList.toggle('w3-show')">
+                <i class="fa fa-bars" alt="menu" title="menu"></i>
+            </a>
+            <div id="demo1" class="w3-dropdown-content w3-bar-block" style="top:43px">
+                <a href="{{ path_for('home') }}" class="{{ classDD }}">Home</a>
+                <a href="{{ path_for('search') }}" class="{{ classDD }}">Search</a>
+                <a href="{{ path_for('tchat') }}" class="{{ classDD }}">Chat</a>
+            </div>
+        </div>
+        <a href={{ path_for('home') }} class="{{ class }}">Home</a>
+        <a href="{{ path_for('search') }}" class="{{ class }}">Search</a>
+        <a href="{{ path_for('tchat') }}" class="{{ class }}">Chat</a>
+        <a href="#" class="{{ classR }}" title="logout" alt="logout" onclick="revokeAllScopes('{{ path_for('logout') }}')">
+            <i class="fa fa-power-off" alt="logout" title="logout"></i>
+        </a>
+        <a href="{{ path_for('editProfil') }}" class="{{ classR }}" title="edit profil" alt="edit">
+            <i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
+        </a>
+        <a href="#" class="{{ classR }} w3-display-container">
+            <i class="fa fa-bell" alt="like" title="new likes" onclick="toggleById('notification');resetBadge()"></i>
+                <span id="badge" class="gg-badge w3-display-topright w3-tiny w3-hide"></span>
+        </a>
+        <div class="g-signin2" hidden></div>
+        <div class="w3-right w3-white gg-pop" title="Popularity: {{ me.popularity }}%">
+            <div style="width:{{ me.popularity }}%;height:18px;background-color:{{(me.popularity > 50) ? '#5ad168' : '#a7e9af'}};"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block notification %}
+<div id="notification" class="w3-sidebar w3-bar-block w3-hide w3-card-4 w3-leftbar w3-border-green w3-theme-d5">
+    {% for notif in notification %}
+        <a class="w3-bar-item w3-button w3-theme-l4 w3-border w3-leftbar w3-hover-border-green" href="{{ notif.link }}">{{ notif.message }}</a>
+    {% endfor %}
+</div>
+{% endblock %}

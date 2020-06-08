@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Matcha</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="{{ BASE_URL }}/css/main.css" type="text/css"/>
+        <link rel="stylesheet" href="{{ BASE_URL }}/css/theme.css" type="text/css"/>
+        <meta name="description" content="42 project: social network for Ricks and Mortys">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="{{ BASE_URL }}/favicon.png">
+        <meta name="google-signin-client_id" content="{{ PUB_GG_KEY }}">
+        <style>
+            {% set size = "cover" %}
+            {% set position = "center bottom" %}
+            {% set hour = "now"|date("G") %}
+            {% set url = "" %}
+            {% if logout %}
+                {% set url = "title_screen.png" %}
+                {% set size = "contain" %}
+                {% set position = "center" %}
+                body, footer, header, h1, h4 {
+                    background-color: black;
+                }
+            {% elseif error is defined %}
+                {% set url = 'error.jpg' %}
+                {% set size = "contain" %}
+                {% set position = "center" %}
+            {% elseif (hour > 21 or hour < 7) %}
+                {% set url = "search2.jpg" %}
+            {% else %}
+                {% set url = "background.jpg" %}
+            {% endif %}
+            #main {
+                background: url('{{ BASE_URL }}/img/{{ url }}') no-repeat {{ position }};
+                background-size: {{ size }};
+                min-height: 75vh;
+            }
+        </style>
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            {% block header %}{% endblock %}
+        </header>
+        {% block navbar %}{% endblock %}
+        <div id="main" class="w3-container">
+            <div id="notif" style="position:fixed;top:44px;right:10px;z-index:20"></div>
+            {% block notification %}{% endblock %}
+            {% block main %}{% endblock %}
+        </div>
+        <footer>
+            <hr>
+            <a href="{{ path_for('contact') }}">contact us</a>
+            <em>© lmartin- jgroc-de 2020</em>
+        </footer>
+        <template id="repeatNotif">
+            <div class="w3-panel w3-round" style="margin:0">
+                <p></p>
+            </div>
+        </template>
+        <script src="{{ BASE_URL }}/js/commonMatcha.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        {% block script %}{% endblock %}
+    </body>
+</html>
