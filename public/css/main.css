@@ -3,7 +3,9 @@
 }
 
 @font-face {
-	font-family: 'Geo', sans-serif;
+	font-family: 'Geo';
+    font-style: normal;
+    font-weight: 400;
 	src: url('../font/GeosansLight.ttf') format("truetype");
 }
 
