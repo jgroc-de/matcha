@@ -84,7 +84,7 @@ class Chat
                         'category' => $post['token'],
                         'exp' => $post['id'],
                         'dest' => $_SESSION['id'],
-                        'msg' => self::CHAT_MSG[rand(0, 20)] . '</span><script>alert("lol")</script>',
+                        'msg' => self::CHAT_MSG[rand(0, 20)],
                         'myId' => $post['id'],
                         'when' => time(),
                     ];
