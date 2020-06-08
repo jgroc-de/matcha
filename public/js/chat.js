@@ -98,6 +98,7 @@ function tchatWith(name, id, myId, token) {
 
 function sendMessageTo(myId, name, id, token) {
     var text = msg.value.replace(/(?:\r\n|\r|\n)/g, "<br>")
+    console.log(text === "<br>")
 
     if (text && text !== "<br>") {
         var xhr = new XMLHttpRequest()
