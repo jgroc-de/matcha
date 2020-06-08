@@ -30,6 +30,7 @@ class MyZmq
         if (array_key_exists('mateStatus', $msg) || array_key_exists('profilStatus', $msg)) {
             $this->zmq->send(json_encode($msg));
         } elseif (!$this->blacklist->isBlacklistById($msg['exp'], $msg['dest'])) {
+            $msg['msg'] = htmlentities($msg['msg']);
             $this->zmq->send(json_encode($msg));
             if (!array_key_exists('when', $msg)) {
                 $notif = [

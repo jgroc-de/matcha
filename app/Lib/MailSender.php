@@ -53,7 +53,7 @@ class MailSender
         $mail->setFrom(self::EXP, $user);
         $mail->addAddress($this->dest);
         $mail->Subject = $this->subject;
-        $mail->Body = $this->message;
+        $mail->Body = htmlentities($this->message);
 
         try {
             $mail->send();
