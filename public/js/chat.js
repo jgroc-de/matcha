@@ -7,12 +7,12 @@ var websocket
 var shiftDown = 0
 
 msg.addEventListener("keydown", function(event) {
-    if (event.code === "ShiftLeft")
+    if (event.code === "ShiftLeft" || event.code === "ShiftRight")
         shiftDown = 1
 })
 
 msg.addEventListener("keyup", function(event) {
-    if (event.code === "ShiftLeft")
+    if (event.code === "ShiftLeft" || event.code === "ShiftRight")
         shiftDown = 0
 
     if (event.code === "Enter" && shiftDown === 1) {

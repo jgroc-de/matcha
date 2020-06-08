@@ -194,13 +194,13 @@ ab.log = function (o) {
    if (window.console && console.log) {
       //console.log.apply(console, !!arguments.length ? arguments : [this]);
       if (arguments.length > 1) {
-         console.group("Log Item");
+         //console.group("Log Item");
          for (var i = 0; i < arguments.length; i += 1) {
-            console.log(arguments[i]);
+            //console.log(arguments[i]);
          }
-         console.groupEnd();
+         //console.groupEnd();
       } else {
-         console.log(arguments[0]);
+         //console.log(arguments[0]);
       }
    }
 };
@@ -359,11 +359,11 @@ ab.Session = function (wsuri, onopen, onclose, options) {
    {
       if (ab._debugws) {
          self._rxcnt += 1;
-         console.group("WS Receive");
-         console.info(self._wsuri + "  [" + self._session_id + "]");
-         console.log(self._rxcnt);
-         console.log(e.data);
-         console.groupEnd();
+         //console.group("WS Receive");
+         //console.info(self._wsuri + "  [" + self._session_id + "]");
+         //console.log(self._rxcnt);
+         //console.log(e.data);
+         //console.groupEnd();
       }
 
       var o = JSON.parse(e.data);
@@ -375,22 +375,22 @@ ab.Session = function (wsuri, onopen, onclose, options) {
             var r = o[2];
 
             if (ab._debugrpc && dr._ab_callobj !== undefined) {
-               console.group("WAMP Call", dr._ab_callobj[2]);
-               console.timeEnd(dr._ab_tid);
-               console.group("Arguments");
+               //console.group("WAMP Call", dr._ab_callobj[2]);
+               //console.timeEnd(dr._ab_tid);
+               //console.group("Arguments");
                for (var i = 3; i < dr._ab_callobj.length; i += 1) {
                   var arg = dr._ab_callobj[i];
                   if (arg !== undefined) {
-                     console.log(arg);
+                     //console.log(arg);
                   } else {
                      break;
                   }
                }
-               console.groupEnd();
-               console.group("Result");
-               console.log(r);
-               console.groupEnd();
-               console.groupEnd();
+               //console.groupEnd();
+               //console.group("Result");
+               //console.log(r);
+               //console.groupEnd();
+               //console.groupEnd();
             }
 
             dr.resolve(r);
@@ -403,26 +403,26 @@ ab.Session = function (wsuri, onopen, onclose, options) {
             var detail = o[4];
 
             if (ab._debugrpc && de._ab_callobj !== undefined) {
-               console.group("WAMP Call", de._ab_callobj[2]);
-               console.timeEnd(de._ab_tid);
-               console.group("Arguments");
+               //console.group("WAMP Call", de._ab_callobj[2]);
+               //console.timeEnd(de._ab_tid);
+               //console.group("Arguments");
                for (var j = 3; j < de._ab_callobj.length; j += 1) {
                   var arg2 = de._ab_callobj[j];
                   if (arg2 !== undefined) {
-                     console.log(arg2);
+                     //console.log(arg2);
                   } else {
                      break;
                   }
                }
-               console.groupEnd();
-               console.group("Error");
-               console.log(uri);
-               console.log(desc);
+               //console.groupEnd();
+               //console.group("Error");
+               //console.log(uri);
+               //console.log(desc);
                if (detail !== undefined) {
-                  console.log(detail);
+                  //console.log(detail);
                }
-               console.groupEnd();
-               console.groupEnd();
+               //console.groupEnd();
+               //console.groupEnd();
             }
 
             if (detail !== undefined) {
@@ -442,11 +442,11 @@ ab.Session = function (wsuri, onopen, onclose, options) {
             var val = o[2];
 
             if (ab._debugpubsub) {
-               console.group("WAMP Event");
-               console.info(self._wsuri + "  [" + self._session_id + "]");
-               console.log(uri2);
-               console.log(val);
-               console.groupEnd();
+               //console.group("WAMP Event");
+               //console.info(self._wsuri + "  [" + self._session_id + "]");
+               //console.log(uri2);
+               //console.log(val);
+               //console.groupEnd();
             }
 
             self._subscriptions[subid].forEach(function (callback) {
@@ -466,11 +466,11 @@ ab.Session = function (wsuri, onopen, onclose, options) {
             self._server = o[3];
 
             if (ab._debugrpc || ab._debugpubsub) {
-               console.group("WAMP Welcome");
-               console.info(self._wsuri + "  [" + self._session_id + "]");
-               console.log(self._wamp_version);
-               console.log(self._server);
-               console.groupEnd();
+               //console.group("WAMP Welcome");
+               //console.info(self._wsuri + "  [" + self._session_id + "]");
+               //console.log(self._wamp_version);
+               //console.log(self._server);
+               //console.groupEnd();
             }
 
             // only now that we have received the initial server-to-client
@@ -494,21 +494,21 @@ ab.Session = function (wsuri, onopen, onclose, options) {
             // does NOT set the protocol attribute of the websocket object (broken)
             //
             if (ab._debugws) {
-               console.group("WS Warning");
-               console.info(self._wsuri);
-               console.log("WebSocket object has no protocol attribute: WAMP subprotocol check skipped!");
-               console.groupEnd();
+               //console.group("WS Warning");
+               //console.info(self._wsuri);
+               //console.log("WebSocket object has no protocol attribute: WAMP subprotocol check skipped!");
+               //console.groupEnd();
             }
          }
          else if (self._options && self._options.skipSubprotocolCheck) {
             // WAMP subprotocol check disabled by session option
             //
             if (ab._debugws) {
-               console.group("WS Warning");
-               console.info(self._wsuri);
-               console.log("Server does not speak WAMP, but subprotocol check disabled by option!");
-               console.log(self._websocket.protocol);
-               console.groupEnd();
+               //console.group("WS Warning");
+               //console.info(self._wsuri);
+               //console.log("Server does not speak WAMP, but subprotocol check disabled by option!");
+               //console.log(self._websocket.protocol);
+               //console.groupEnd();
             }
          } else {
             // we only speak WAMP .. if the server denied us this, we bail out.
@@ -518,10 +518,10 @@ ab.Session = function (wsuri, onopen, onclose, options) {
          }
       }
       if (ab._debugws) {
-         console.group("WAMP Connect");
-         console.info(self._wsuri);
-         console.log(self._websocket.protocol);
-         console.groupEnd();
+         //console.group("WAMP Connect");
+         //console.info(self._wsuri);
+         //console.log(self._websocket.protocol);
+         //console.groupEnd();
       }
       self._websocket_connected = true;
    };
@@ -536,9 +536,9 @@ ab.Session = function (wsuri, onopen, onclose, options) {
    {
       if (ab._debugws) {
          if (self._websocket_connected) {
-            console.log("Autobahn connection to " + self._wsuri + " lost (code " + e.code + ", reason '" + e.reason + "', wasClean " + e.wasClean + ").");
+            //console.log("Autobahn connection to " + self._wsuri + " lost (code " + e.code + ", reason '" + e.reason + "', wasClean " + e.wasClean + ").");
          } else {
-            console.log("Autobahn could not connect to " + self._wsuri + " (code " + e.code + ", reason '" + e.reason + "', wasClean " + e.wasClean + ").");
+            //console.log("Autobahn could not connect to " + self._wsuri + " (code " + e.code + ", reason '" + e.reason + "', wasClean " + e.wasClean + ").");
          }
       }
 
@@ -581,11 +581,11 @@ ab.Session.prototype._send = function (msg) {
    self._txcnt += 1;
 
    if (ab._debugws) {
-      console.group("WS Send");
-      console.info(self._wsuri + "  [" + self._session_id + "]");
-      console.log(self._txcnt);
-      console.log(rmsg);
-      console.groupEnd();
+      //console.group("WS Send");
+      //console.info(self._wsuri + "  [" + self._session_id + "]");
+      //console.log(self._txcnt);
+      //console.log(rmsg);
+      //console.groupEnd();
    }
 };
 
@@ -634,11 +634,11 @@ ab.Session.prototype.prefix = function (prefix, uri) {
    self._prefixes.set(prefix, uri);
 
    if (ab._debugrpc || ab._debugpubsub) {
-      console.group("WAMP Prefix");
-      console.info(self._wsuri + "  [" + self._session_id + "]");
-      console.log(prefix);
-      console.log(uri);
-      console.groupEnd();
+      //console.group("WAMP Prefix");
+      //console.info(self._wsuri + "  [" + self._session_id + "]");
+      //console.log(prefix);
+      //console.log(uri);
+      //console.groupEnd();
    }
 
    var msg = [ab._MESSAGE_TYPEID_PREFIX, prefix, uri];
@@ -671,8 +671,8 @@ ab.Session.prototype.call = function () {
    if (ab._debugrpc) {
       d._ab_callobj = obj;
       d._ab_tid = self._wsuri + "  [" + self._session_id + "][" + callid + "]";
-      console.time(d._ab_tid);
-      console.info();
+      //console.time(d._ab_tid);
+      //console.info();
    }
 
    return d;
@@ -689,11 +689,11 @@ ab.Session.prototype.subscribe = function (topicuri, callback) {
    if (!(rtopicuri in self._subscriptions)) {
 
       if (ab._debugpubsub) {
-         console.group("WAMP Subscribe");
-         console.info(self._wsuri + "  [" + self._session_id + "]");
-         console.log(topicuri);
-         console.log(callback);
-         console.groupEnd();
+         //console.group("WAMP Subscribe");
+         //console.info(self._wsuri + "  [" + self._session_id + "]");
+         //console.log(topicuri);
+         //console.log(callback);
+         //console.groupEnd();
       }
 
       var msg = [ab._MESSAGE_TYPEID_SUBSCRIBE, topicuri];
@@ -751,11 +751,11 @@ ab.Session.prototype.unsubscribe = function (topicuri, callback) {
          delete self._subscriptions[rtopicuri];
          if (ab._debugpubsub)
          {
-            console.group("WAMP Unsubscribe");
-            console.info(self._wsuri + "  [" + self._session_id + "]");
-            console.log(topicuri);
-            console.log(removed);
-            console.groupEnd();
+            //console.group("WAMP Unsubscribe");
+            //console.info(self._wsuri + "  [" + self._session_id + "]");
+            //console.log(topicuri);
+            //console.log(removed);
+            //console.groupEnd();
          }
          var msg = [ab._MESSAGE_TYPEID_UNSUBSCRIBE, topicuri];
 
@@ -813,22 +813,22 @@ ab.Session.prototype.publish = function () {
    }
 
    if (ab._debugpubsub) {
-      console.group("WAMP Publish");
-      console.info(self._wsuri + "  [" + self._session_id + "]");
-      console.log(topicuri);
-      console.log(event);
+      //console.group("WAMP Publish");
+      //console.info(self._wsuri + "  [" + self._session_id + "]");
+      //console.log(topicuri);
+      //console.log(event);
 
       if (excludeMe !== null) {
-         console.log(excludeMe);
+         //console.log(excludeMe);
       } else {
          if (exclude !== null) {
-            console.log(exclude);
+            //console.log(exclude);
             if (eligible !== null) {
-               console.log(eligible);
+               //console.log(eligible);
             }
          }
       }
-      console.groupEnd();
+      //console.groupEnd();
    }
 
    self._send(msg);
