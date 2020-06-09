@@ -2,13 +2,6 @@
     box-sizing: border-box;
 }
 
-@font-face {
-	font-family: 'Geo';
-    font-style: normal;
-    font-weight: 400;
-    stretch: 100;
-	src: url('../font/GeosansLight.ttf') format("truetype");
-}
 
 h1, h2, h3, h4, h5, h6, footer, header {
     font-family: "Amatic SC", Verdana, sans-serif;
@@ -35,10 +28,12 @@ h3 {
 
 body {
     background: #371b0f;
-    font-family: "Geo", Arial, sans-serif;
+    font-family: "Quicksand", Arial, sans-serif;
+    font-weight: lighter;
 }
 .w3-myfont {
-    font-family: "Geo", Arial, sans-serif;
+    font-family: "Quicksand", Arial, sans-serif;
+    font-weight: lighter;
 }
 
 header, footer {
