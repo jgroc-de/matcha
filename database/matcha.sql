@@ -17,6 +17,16 @@ USE matcha;
 -- Table structure for table `user`
 --
 
+DROP TABLE `blacklist`;
+DROP TABLE `notification`;
+DROP TABLE `usertags`;
+DROP TABLE `hashtags`;
+DROP TABLE `message`;
+DROP TABLE `friends`;
+DROP TABLE `friendsReq`;
+DROP TABLE `pictures`;
+DROP TABLE `user`;
+
 CREATE TABLE `user` (
     `id` SERIAL,
     `pseudo` VARCHAR(40),

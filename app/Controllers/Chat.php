@@ -69,7 +69,6 @@ class Chat
             $tab = [$_SESSION['id'], $post['id']];
             sort($tab);
             if ($this->friends->isFriend($_SESSION['id'], $post['id'])) {
-                $post['msg'] = $post['msg'];
                 $msg = [
                     'category' => $post['token'],
                     'exp' => $_SESSION['id'],
