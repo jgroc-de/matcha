@@ -1,3 +1,5 @@
+'use strict'
+
 function updateGeolocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error)

@@ -39,6 +39,11 @@
 {% endblock %}
 
 {% block script %}
+    <template id="repeatChat">
+        <div class="w3-bar">
+            <span class="w3-bar-item w3-round w3-padding" style="overflow-wrap: break-word; max-width: 70%;"></span>
+        </div>
+    </template>
     <script>var myId = '{{ me.publicToken }}'</script>
     <script src="{{ BASE_URL }}/js/autobahn.js"></script>
     <script src="{{ BASE_URL }}/js/notification.js"></script>

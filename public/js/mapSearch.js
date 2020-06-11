@@ -1,3 +1,5 @@
+'use strict'
+
 function initMap() {
     let mapNode = document.getElementById('map')
     mapNode.innerText = ''

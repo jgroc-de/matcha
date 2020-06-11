@@ -1,3 +1,5 @@
+'use strict'
+
 window.URL = window.URL || window.webkitURL
 
 function addTag(path) {

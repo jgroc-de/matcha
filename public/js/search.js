@@ -1,3 +1,5 @@
+'use strict'
+
 function generateCard(event) {
     if (event) {
         let key = event.target.value

@@ -1,3 +1,5 @@
+'use strict'
+
 function displayModal(url) {
     var modal = document.getElementById('Modal')
     
