@@ -115,7 +115,9 @@ function deletePic(id) {
 }
 
 function ggRemoveChild(id) {
-    document.getElementById(id).parentNode.removeChild(child)
+    let child = document.getElementById(id)
+
+    child.parentNode.removeChild(child)
 }
 
 function delFriend(path, id) {
