@@ -5,18 +5,17 @@ window.URL = window.URL || window.webkitURL
 function addTag(path) {
     var tag = prompt("add a tag (without the '#'):")
 
-    if (tag)
-    {
+    if (tag) {
         tag = tag.replace(/(?:\s)/g, "")
-        var xhr = new XMLHttpRequest()
+        let xhr = new XMLHttpRequest()
 
         xhr.open('POST', path, true)
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
         xhr.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                var id = this.responseText
-                var span = document.createElement('span')
-                var del = document.createElement('span')
+                let id = this.responseText
+                let span = document.createElement('span')
+                let del = document.createElement('span')
 
                 span.id = 'tag' + id
                 span.textContent = "- #" + tag + " "
@@ -32,15 +31,15 @@ function addTag(path) {
 }
 
 function addPicture() {
-    var files = document.querySelectorAll('input[type=file]')
-    var len = files.length
+    let files = document.querySelectorAll('input[type=file]')
 
-    for (var i = 0; i < len; i++)
-        files[i].addEventListener('change', addEvent)
+    for (let file of files) {
+        file.addEventListener('change', addEvent)
+    }
 }
 
-function addEvent() {
-    var id = this.getAttribute('data-id')
+function addEvent(event) {
+    var id = event.currentTarget.getAttribute('data-id')
     var allowedTypes = ['image/png', 'image/jpeg', 'image/gif']
     var prev = this.parentNode.parentNode
 
@@ -86,8 +85,7 @@ function addEvent() {
     }
 }
 
-function deletePic(id)
-{
+function deletePic(id) {
     ggAjax('DELETE', 'picture/' + id.charAt(3), function (id) {
         var labelElmt = document.createElement('label')
         var parentNode = document.getElementById(id)
@@ -116,30 +114,24 @@ function deletePic(id)
     }, id)
 }
 
-function ggRemoveChild(id)
-{
-    var child = document.getElementById(id)
-
-    child.parentNode.removeChild(child)
+function ggRemoveChild(id) {
+    document.getElementById(id).parentNode.removeChild(child)
 }
 
-function delFriend(path, id)
-{
+function delFriend(path, id) {
     if (confirm('Seriously bro?'))
         ggAjax('DELETE', path + id, ggRemoveChild, 'friend' + id)
 }
 
-function delFriendReq(path, id)
-{
+function delFriendReq(path, id) {
     ggAjax('DELETE', path + id, ggRemoveChild, 'req' + id)
 }
 
-function acceptFriendReq(path, id)
-{
-    var parent = document.getElementById("Friend")
-    var child = document.createElement('div')
-    var del = document.createElement('i')
-    var a = document.getElementById('req' + id).firstElementChild
+function acceptFriendReq(path, id) {
+    let parent = document.getElementById("Friend")
+    let child = document.createElement('div')
+    let del = document.createElement('i')
+    let a = document.getElementById('req' + id).firstElementChild
 
     child.id = "friend" + id
     child.className = "gg-friend"
@@ -155,8 +147,7 @@ function acceptFriendReq(path, id)
     printNotif(["Friend request accepted", true])
 }
 
-function delUserTag(path, id)
-{
+function delUserTag(path, id) {
     ggAjax('DELETE', path + id, ggRemoveChild, 'tag' + id)
 }
 
@@ -165,11 +156,9 @@ function mateStatus() {
 }
 
 function highlightMate(data) {
-    var div
-    var name
+    let div, name
 
-    for (name in data.mateStatus)
-    {
+    for (name in data.mateStatus) {
         div = document.getElementById("friend" + name).children[0].children[0]
         if (data.mateStatus[name])
             div.setAttribute('style', 'border-color:' + div.classList[0] + ';')
