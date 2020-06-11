@@ -2,7 +2,7 @@
 
 function displayModal(url) {
     var modal = document.getElementById('Modal')
-    
+
     modal.getElementsByTagName('img')[0].src = url
     modal.style.display='block'
 }
@@ -48,6 +48,7 @@ async function postData(url = '', data = {}) {
         credentials: 'same-origin', // include, *same-origin, omit
         body: data // body data type must match "Content-Type" header
     });
+    console.log(response);
 
     return response.json();
 }
