@@ -4,35 +4,17 @@ var TWindow = document.getElementById('tchatWindow')
 var title = document.getElementById('tchatTitle')
 var messages = document.getElementById('tchatMessages')
 var msgBox = document.getElementById('tchatMsg')
-var button = document.getElementById('tchatButton')
+var sendButton = document.getElementById('tchatButton')
 var websocket
 var shiftDown = 0
 
-msgBox.addEventListener("keydown", function(event) {
-    if (event.code === "ShiftLeft" || event.code === "ShiftRight")
-        shiftDown = 1
-})
-
-msgBox.addEventListener("keyup", function(event) {
-    if (event.code === "ShiftLeft" || event.code === "ShiftRight")
-        shiftDown = 0
-
-    if (event.code === "Enter" && shiftDown === 1) {
-        event.preventDefault()
-        button.click()
-    }
-})
-
-
 function highlightMate(data) {
-    let div, name
+    let div, name, darker
 
     for (name in data.mateStatus) {
-        div = document.getElementById(name).children[0].children[0]
-        if (data.mateStatus[name])
-            div.setAttribute('style', 'background-color:' + div.classList[0] + ';')
-        else
-            div.setAttribute('style', 'background-color:' + div.classList[0] + '70;')
+        div = document.getElementById(name).firstElementChild
+        darker = data.mateStatus[name] ? '':'70';
+        div.setAttribute('style', 'background-color:#' + div.dataset.color + darker + ';')
     }
 }
 
@@ -58,25 +40,26 @@ function addMessage(text, owner, myId) {
     div.scrollIntoView()
 }
 
-function tchatWith(name, id, myId, token) {
+function tchatWith(event) {
     let xhr = new XMLHttpRequest()
+    var dataset = event.currentTarget.dataset
 
     if (websocket)
         websocket.close()
     messages.innerHTML = ""
-    title.innerHTML = "flame " + name
-    button.setAttribute("onclick", "sendMessageTo(" + myId + ", '" + name + "'," + id + ", '" + token + "')")
-    xhr.open('GET', '/startChat/' + id, true)
+    title.innerHTML = "flame " + dataset.pseudo
+    sendButton.dataset.targetId = dataset.id
+    xhr.open('GET', '/startChat/' + dataset.id, true)
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
     xhr.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let history = JSON.parse(this.response)
             websocket = new ab.Session('ws://localhost:3001',
                 function() {
-                    websocket.subscribe(token, function(topic, data) {
+                    websocket.subscribe(dataset.token, function(topic, data) {
                         //console.log('topic: "' + topic)
                         //console.log('New msg received from' + data.exp + ' to ' + data.dest + " . my id: " + data.myId)
-                        addMessage(data.msg, data.exp, myId)
+                        addMessage(data.msg, data.exp, dataset.myId)
                     })
                     //console.log(websocket)
                     //console.warn('WebSocket connection opened')
@@ -88,7 +71,7 @@ function tchatWith(name, id, myId, token) {
 
             TWindow.classList.remove('w3-hide')
             history.forEach(function(value, index, array) {
-                addMessage(value.message, value.owner, myId)
+                addMessage(value.message, value.owner, dataset.myId)
             })
             msgBox.scrollIntoView()
             msgBox.focus()
@@ -97,18 +80,44 @@ function tchatWith(name, id, myId, token) {
     xhr.send()
 }
 
-function sendMessageTo(myId, name, id, token) {
+function sendMessageTo(event) {
     let text = msgBox.value
+    let targetId = event.currentTarget.dataset.targetId
+    let dataset = document.getElementById(targetId).dataset
 
     if (text && text !== "") {
         let xhr = new XMLHttpRequest()
 
         xhr.open('POST', '/sendMessage', true)
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-        xhr.send('myId=' + myId + ',&msg=' + text + '&id=' + id + '&token=' + token)
+        xhr.send('myId=' + dataset.myId + ',&msg=' + text + '&id=' + dataset.id + '&token=' + dataset.token)
     }
     msgBox.value = ""
     msgBox.focus()
 }
 
+function setEventListener(msgBox) {
+    msgBox.addEventListener("keydown", function(event) {
+        if (event.code === "ShiftLeft" || event.code === "ShiftRight")
+            shiftDown = 1
+    }, true)
+
+    msgBox.addEventListener("keyup", function(event) {
+        if (event.code === "ShiftLeft" || event.code === "ShiftRight")
+            shiftDown = 0
+
+        if (event.code === "Enter" && shiftDown === 1) {
+            event.preventDefault()
+            sendButton.click()
+        }
+    }, true)
+
+    let users = document.querySelectorAll('div[matcha-chat]')
+    for (let user of users) {
+        user.addEventListener('click', tchatWith, true)
+    }
+    sendButton.addEventListener('click', sendMessageTo, true)
+}
+
+setEventListener(msgBox)
 setInterval(mateStatus, 60000)

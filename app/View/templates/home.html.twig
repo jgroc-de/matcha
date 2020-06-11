@@ -35,7 +35,7 @@
             <i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
         </a>
         <a href="#" class="{{ classR }} w3-display-container">
-            <i class="fa fa-bell" alt="like" title="new likes" onclick="toggleById('notification');resetBadge()"></i>
+            <i class="fa fa-bell" alt="like" title="new likes" onclick="toggleById('notification');resetBadge(this.firstElementChild)"></i>
                 <span id="badge" class="gg-badge w3-display-topright w3-tiny w3-hide"></span>
         </a>
         <div class="g-signin2" hidden></div>

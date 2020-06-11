@@ -25,7 +25,7 @@ class SendGrid implements MailInterface
 
     public function setSubject(string $subject): MailInterface
     {
-        $this->mail->   setSubject($subject);
+        $this->mail->setSubject($subject);
 
         return $this;
     }
@@ -65,10 +65,10 @@ class SendGrid implements MailInterface
         $sendgrid = new \SendGrid($_ENV['SENDGRID_API_KEY']);
         try {
             $response = $sendgrid->send($this->mail);
+            return true;
         } catch (\Exception $e) {
             echo 'Caught exception: '. $e->getMessage() ."\n";
+            return false;
         }
-
-        return true;
     }
 }

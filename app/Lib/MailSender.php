@@ -13,12 +13,25 @@ class MailSender
     private $siteUrl;
     /** @var MailInterface */
     private $mail;
+    /** @var FlashMessage */
+    private $flash;
 
     public function __construct(FlashMessage $flashMessage, MailInterface $mail, string $siteUrl)
     {
         $this->flash = $flashMessage;
         $this->siteUrl = $siteUrl;
         $this->mail = $mail;
+    }
+
+    public function send(): bool
+    {
+        if ($this->mail->send()) {
+            $this->flash->addMessage('success', 'Email sent. Check your mailbox, your spambox, your lunchbox, everything!!!');
+        } else {
+            $this->flash->addMessage('failure', 'Email NOT sent.. For emergency cases, plz, "contact" us!!!');
+        }
+
+        return true;
     }
 
     public function sendValidationMail(array $user): bool
@@ -36,7 +49,7 @@ class MailSender
             ---------------
             This is an automatic mail, thx to not reply.');
 
-        return $this->mail->send();
+        return $this->send();
     }
 
     public function sendResetMail(array $user): bool
@@ -54,7 +67,7 @@ class MailSender
             ---------------
             This is an automatic mail, thx to not reply.');
 
-        return $this->mail->send();
+        return $this->send();
     }
 
     public function sendDeleteMail(): bool
@@ -75,7 +88,7 @@ class MailSender
             ---------------
             This is an automatic mail, thx to not reply.');
 
-        return $this->mail->send();
+        return $this->send();
     }
 
     public function sendDataMail(array $data): bool
@@ -104,7 +117,7 @@ class MailSender
             ---------------
             This is an automatic mail, thx to not reply.");
 
-        return $this->mail->send();
+        return $this->send();
     }
 
     public function sendDeleteMail2($pseudo, $mail): bool
@@ -123,7 +136,7 @@ class MailSender
             ---------------
             This is an automatic mail, thx to not reply.");
 
-        return $this->mail->send();
+        return $this->send();
     }
 
     public function reportMail($id): bool
@@ -138,7 +151,7 @@ class MailSender
 
             Votre dévoué, " . $_SERVER['SERVER_NAME']);
 
-        return $this->mail->send($_SESSION['profil']['email']);
+        return $this->send($_SESSION['profil']['email']);
     }
 
     public function contactMe($msg, $mail): bool
@@ -160,7 +173,7 @@ class MailSender
 
             Votre dévoué, " . $_SERVER['SERVER_NAME']);
 
-        return $this->mail->send($mail, $user);
+        return $this->send($mail, $user);
     }
 
     private function linkGen(array $user, string $action): string

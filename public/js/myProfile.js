@@ -139,7 +139,7 @@ function acceptFriendReq(path, id)
     var parent = document.getElementById("Friend")
     var child = document.createElement('div')
     var del = document.createElement('i')
-    var a = document.getElementById('req' + id).children[0]
+    var a = document.getElementById('req' + id).firstElementChild
 
     child.id = "friend" + id
     child.className = "gg-friend"

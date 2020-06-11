@@ -75,11 +75,10 @@ class PHPMailer2 implements MailInterface
 
         try {
             $this->mail->send();
+            return true;
         } catch (Exception $error) {
-            echo $error->getMessage();exit();
+            return false;
         }
-
-        return true;
     }
 
 }

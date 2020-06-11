@@ -13,17 +13,13 @@ function addNotification(data) {
     notif.insertBefore(link, notif.firstElementChild)
 }
 
-function resetBadge() {
-    let badge = document.getElementById("badge")
-
+function resetBadge(badge) {
     badge.classList.add("w3-hide")
     badge.innerHTML = ""
 }
 
 (function() {
-    var notifSocket
-
-    notifSocket = new ab.Session('ws://localhost:3001',
+    var notifSocket = new ab.Session('ws://localhost:3001',
         function () {
             notifSocket.subscribe('"' + myId + '"', function (topic, data) {
                 //console.log('New notification received')
