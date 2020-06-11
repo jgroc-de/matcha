@@ -2,13 +2,19 @@
 
 namespace App\Controllers;
 
+use App\Lib\MyZmq;
+use App\Lib\Validator;
+use App\Model\BlacklistModel;
+use App\Model\FriendsModel;
+use App\Model\MessageModel;
+use App\Model\NotificationModel;
+use App\Model\UserModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Views\Twig;
 
 class Chat
 {
-    private $container;
-
     const CHAT_MSG = [
         'Jeeeezz… another dumbass pervert?',
         'U wanna my dickpick?',
@@ -33,14 +39,41 @@ class Chat
         'You have the manners of a beggar. ',
     ];
 
-    public function __construct($container)
-    {
-        $this->container = $container;
-    }
+    /** @var BlacklistModel */
+    private $blacklist;
+    /** @var FriendsModel */
+    private $friends;
+    /** @var MessageModel */
+    private $msg;
+    /** @var MyZmq */
+    private $myZmq;
+    /** @var NotificationModel */
+    private $notif;
+    /** @var UserModel */
+    private $user;
+    /** @var Twig */
+    private $view;
+    /** @var Validator */
+    private $validator;
 
-    public function __get($name)
-    {
-        return $this->container->get($name);
+    public function __construct(
+        BlacklistModel $blacklistModel,
+        FriendsModel $friendsModel,
+        MessageModel $messageModel,
+        MyZmq $myZmq,
+        NotificationModel $notificationModel,
+        UserModel $userModel,
+        Validator $validator,
+        Twig $view
+    ) {
+        $this->blacklist = $blacklistModel;
+        $this->friends = $friendsModel;
+        $this->msg = $messageModel;
+        $this->myZmq = $myZmq;
+        $this->notif = $notificationModel;
+        $this->user = $userModel;
+        $this->validator = $validator;
+        $this->view = $view;
     }
 
     public function page(Request $request, Response $response, array $args): Response
@@ -77,7 +110,7 @@ class Chat
                     'myId' => $_SESSION['id'],
                     'when' => time(),
                 ];
-                $this->MyZmq->send($msg);
+                $this->myZmq->send($msg);
                 $this->msg->setMessage([$tab[0], $tab[1], $_SESSION['id'], htmlentities($msg['msg']), date('Y-m-d H:i:s')]);
                 if ($this->user->isBot($post['id'])) {
                     $msg = [
@@ -88,7 +121,7 @@ class Chat
                         'myId' => $post['id'],
                         'when' => time(),
                     ];
-                    $this->MyZmq->send($msg);
+                    $this->myZmq->send($msg);
                     $this->msg->setMessage([$tab[0], $tab[1], $post['id'], $msg['msg'], date('Y-m-d H:i:s')]);
                 }
 
@@ -115,17 +148,16 @@ class Chat
                 'msg' => $_SESSION['profil']['pseudo'] . ' is starting a chat session!',
                 'link' => '/tchat',
             ];
-            $this->MyZmq->send($msg);
+            $this->myZmq->send($msg);
             $msgs = $this->msg->getMessages($tab);
-            $response->getBody()->write(json_encode($msgs));
 
-            return $response;
+            return $response->withJson($msgs);
         }
 
         return $response->withstatus(403);
     }
 
-    public function profilStatus($request, $response, $args)
+    public function profilStatus($request, $response, $args): Response
     {
         if (!$this->blacklist->isBlacklistById($args['id'], $_SESSION['id'])) {
             $user = $this->user->getUserById($args['id']);
@@ -133,7 +165,7 @@ class Chat
                 'category' => '"' . $_SESSION['profil']['publicToken'] . '"',
                 'profilStatus' => '"' . $user['publicToken'] . '"',
             ];
-            $this->MyZmq->send($msg);
+            $this->myZmq->send($msg);
 
             return $response;
         }
@@ -141,7 +173,7 @@ class Chat
         return $response->withStatus(404);
     }
 
-    public function mateStatus(Request $request, Response $response, array $args)
+    public function mateStatus(Request $request, Response $response, array $args): Response
     {
         $friends = $this->friends->getFriends($_SESSION['id']);
         $msg = [
@@ -151,6 +183,8 @@ class Chat
         foreach ($friends as $friend) {
             $msg['mateStatus'][$friend['id']] = '"' . $friend['publicToken'] . '"';
         }
-        $this->MyZmq->send($msg);
+        $this->myZmq->send($msg);
+
+        return $response;
     }
 }

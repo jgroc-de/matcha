@@ -15,6 +15,22 @@ use App\Controllers\Setup;
 use App\Controllers\Tag;
 use App\Middlewares\authMiddleware;
 use App\Middlewares\noAuthMiddleware;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Slim\Http\Request;
+use Slim\Http\Response;
+
+// enabling lazy cors
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+});
+$app->add(function ($req, $res, $next) {
+    $response = $next($req, $res);
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', $this->get('settings')['siteUrl'])
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+});
 
 /** @var $app Slim\App */
 $app->get('/setup', Setup::class . ':initDB')
@@ -103,4 +119,22 @@ $app->group('', function () use ($app) {
 $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($req, $res) {
     $handler = $this->notFoundHandler; // handle using the default Slim page not found handler
     return $handler($req, $res);
+});
+
+/** logger */
+$app->add(function (Request $request, Response $response, $next) {
+    $response = $next($request, $response);
+    $logger = new Logger('server');
+    $file_handler = new StreamHandler('../tmp/logs/app.log');
+    $logger->pushHandler($file_handler);
+    $error = $response->getStatusCode();
+    $method = $request->getMethod();
+    $id = $_SESSION['id'] ?? 0 ;
+    $user = $_SESSION['profil']['pseudo'] ?? '';
+    $server = $request->getServerParams();
+    $ip = $server['REMOTE_ADDR'];
+    $uri = $server['REQUEST_URI'];
+    $logger->info("[$error] $method - $uri - id: $id - user: $user - IP: $ip");
+
+    return $response;
 });

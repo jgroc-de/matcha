@@ -2,79 +2,31 @@
 
 namespace App\Lib;
 
-use PHPMailer\PHPMailer\Exception;
+use App\Lib\Mail\MailInterface;
 
 /**
  * managing mail sending
  */
 class MailSender
 {
-    const USER = 'webmestre';
-    const EXP = 'webmestre@matcha.fr';
-    const PASS = 'lol';
-    const PORT = ':8080';
-    private $dest = 'webmestre@matcha.fr';
-    private $subject = '';
-    private $message = '';
-    private $files = [];
+    /** @var string */
+    private $siteUrl;
+    /** @var MailInterface */
+    private $mail;
 
-    public function __construct(FlashMessage $flashMessage)
+    public function __construct(FlashMessage $flashMessage, MailInterface $mail, string $siteUrl)
     {
         $this->flash = $flashMessage;
+        $this->siteUrl = $siteUrl;
+        $this->mail = $mail;
     }
 
-    /**
-     * @param string $this->dest email address
-     * @param string $this->subject
-     * @param string $this->message
-     *
-     * @return string for success or failure
-     */
-    private function sendMail(string $replyTo = self::EXP, string $user = self::USER): bool
-    {
-        $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
-
-        $mail->isSendmail();
-        #$mail->IsSMTP();
-        #$mail->SMTPDebug = 1;
-        #$mail->Host = 'smtp.example.com';
-        #$mail->Port = 2025;
-        #$mail->SMTPSecure = 'tls';
-        #$mail->SMTPAuth = true;
-        $mail->Username = self::EXP;
-        #$mail->Password = self::PASS;
-        $mail->CharSet = 'UTF-8';
-        if (!empty($this->files)) {
-            foreach ($this->files as $file) {
-                $mail->addAttachment(__DIR__ . '/../../public' . $file);
-            }    // Optional name
-        }
-        $mail->addReplyTo($replyTo, 'First Last');
-        $mail->setFrom(self::EXP, $user);
-        $mail->addAddress($this->dest);
-        $mail->Subject = $this->subject;
-        $mail->Body = $this->message;
-
-        try {
-            $mail->send();
-            $this->flash->addMessage('success', 'Email sent. Check your mailbox, your spambox, your lunchbox, everything!!!');
-            return true;
-        } catch (Exception $error) {
-            $this->flash->addMessage('failure', 'Email NOT sent.. For emergency cases, plz, contact us!!!');
-            return true;
-        }
-    }
-
-    /**
-     * @param string $login name
-     * @param string $this->dest email address
-     * @param string $token hashed key
-     */
     public function sendValidationMail(array $user): bool
     {
-        $this->dest = $user['email'];
-        $this->subject = 'Matcha Activation link';
-        $this->message = 'Hi ' . $user['pseudo'] . ',
+        $this->mail->addTo($user['email'], $user['pseudo']);
+
+        $this->mail->setSubject('Matcha Activation link');
+        $this->mail->addContent(MailInterface::TYPE_TEXT, 'Hi ' . $user['pseudo'] . ',
 
             Welcome on match a Rick&Morty!
             To activate your account, plz click on the link bellow or paste it into your web browser.
@@ -82,21 +34,17 @@ class MailSender
 ' . $this->linkGen($user, 'act') . '
 
             ---------------
-            This is an automatic mail, thx to not reply.';
+            This is an automatic mail, thx to not reply.');
 
-        return $this->sendMail();
+        return $this->mail->send();
     }
 
-    /**
-     * @param string $login name
-     * @param string $this->dest email address
-     * @param string $token hashed key
-     */
     public function sendResetMail(array $user): bool
     {
-        $this->dest = $user['email'];
-        $this->subject = 'Matcha Reinitialisation link';
-        $this->message = 'Hi ' . $user['pseudo'] . ',
+        $this->mail->addTo($user['email'], $user['pseudo']);
+
+        $this->mail->setSubject('Matcha Reinitialisation link');
+        $this->mail->addContent(MailInterface::TYPE_TEXT, 'Hi ' . $user['pseudo'] . ',
 
             A password reinitialistion request has been made on our website.
             To proceed, plz click on the link bellow or paste it into your web browser.
@@ -104,16 +52,17 @@ class MailSender
 ' . $this->linkGen($user, 'ini') . '
 
             ---------------
-            This is an automatic mail, thx to not reply.';
+            This is an automatic mail, thx to not reply.');
 
-        return $this->sendMail();
+        return $this->mail->send();
     }
 
     public function sendDeleteMail(): bool
     {
-        $this->dest = $_SESSION['profil']['email'];
-        $this->subject = 'Delete Request for your account on ' . $_SERVER['SERVER_NAME'];
-        $this->message = 'Hi ' . $_SESSION['profil']['pseudo'] . ",
+        $this->mail->addTo($_SESSION['profil']['email'], $_SESSION['profil']['pseudo']);
+
+        $this->mail->setSubject('Delete Request for your account on ' . $_SERVER['SERVER_NAME']);
+        $this->mail->addContent(MailInterface::TYPE_TEXT, 'Hi ' . $_SESSION['profil']['pseudo'] . ",
 
             It's sad but if you really really want to delete your profil, please, click on this last link:
     
@@ -124,17 +73,21 @@ class MailSender
         GG,            
 
             ---------------
-            This is an automatic mail, thx to not reply.';
+            This is an automatic mail, thx to not reply.');
 
-        return $this->sendMail();
+        return $this->mail->send();
     }
 
     public function sendDataMail(array $data): bool
     {
-        $this->files = $data['img'];
+        if (!empty($data['img'])) {
+            foreach ($data['img'] as $file) {
+                $this->mail->addAttachment(__DIR__ . '/../../public' . $file);
+            }
+        }
         unset($data['img']);
-        $this->subject = 'Your Datas on ' . $_SERVER['SERVER_NAME'];
-        $this->dest = $_SESSION['profil']['email'];
+        $this->mail->setSubject('Your Datas on ' . $_SERVER['SERVER_NAME']);
+        $this->mail->addTo($_SESSION['profil']['email'], $_SESSION['profil']['pseudo']);
         $str = '';
         foreach ($data as $key => $value) {
             $str = $str . "\n$key :\n";
@@ -142,23 +95,24 @@ class MailSender
                 $str = $str . "    $key2 : $info\n";
             }
         }
-        $this->message = 'Hi ' . $_SESSION['profil']['pseudo'] . ",
+        $this->mail->addContent(MailInterface::TYPE_TEXT, 'Hi ' . $_SESSION['profil']['pseudo'] . ",
 
             Here is all the datas we have about you. Thank you for your trust!
     
     $str
 
             ---------------
-            This is an automatic mail, thx to not reply.";
+            This is an automatic mail, thx to not reply.");
 
-        return $this->sendMail();
+        return $this->mail->send();
     }
 
     public function sendDeleteMail2($pseudo, $mail): bool
     {
         $this->dest = $mail;
-        $this->subject = 'Account successfully deleted  on ' . $_SERVER['SERVER_NAME'];
-        $this->message = "Hi $pseudo,
+        $this->mail->addTo($mail, $_SESSION['profil']['pseudo']);
+        $this->mail->setSubject('Account successfully deleted  on ' . $_SERVER['SERVER_NAME']);
+        $this->mail->addContent(MailInterface::TYPE_TEXT, "Hi $pseudo,
 
             Last mail from us. We confirm that your account doesn't exist anymore.
 
@@ -167,34 +121,36 @@ class MailSender
         GG, 
 
             ---------------
-            This is an automatic mail, thx to not reply.";
+            This is an automatic mail, thx to not reply.");
 
-        return $this->sendMail();
+        return $this->mail->send();
     }
 
     public function reportMail($id): bool
     {
-        $this->subject = 'User report on ' . $_SERVER['SERVER_NAME'];
-        $this->message = "Bonjour maître des 7 océans numériques,
+        $this->mail->addTo($_ENV['MAIL_OWNER'], MailInterface::OWNER);
+        $this->mail->setSubject('User report on ' . $_SERVER['SERVER_NAME']);
+        $this->mail->addContent(MailInterface::TYPE_TEXT, "Bonjour maître des 7 océans numériques,
 
     L'utilisateur " . $_SESSION['id'] . " a dénoncé l'utlisateur $id comme étant un faux compte. Veuillez mettre en place les actions adéquates.
 
     Glorieuse journée à vous!
 
-            Votre dévoué, " . $_SERVER['SERVER_NAME'];
+            Votre dévoué, " . $_SERVER['SERVER_NAME']);
 
-        return $this->sendMail($_SESSION['profil']['email']);
+        return $this->mail->send($_SESSION['profil']['email']);
     }
 
     public function contactMe($msg, $mail): bool
     {
-        if (isset($_SESSION['profil'])) {
+        if (!empty($_SESSION['profil']['pseudo'])) {
             $user = $_SESSION['profil']['pseudo'];
         } else {
             $user = 'anonymous';
         }
-        $this->subject = 'User contact from ' . $_SERVER['SERVER_NAME'];
-        $this->message = "Bonjour maître des 7 océans numériques,
+        $this->mail->addTo($_ENV['MAIL_OWNER'], MailInterface::OWNER);
+        $this->mail->setSubject('User contact from ' . $_SERVER['SERVER_NAME']);
+        $this->mail->addContent(MailInterface::TYPE_TEXT, "Bonjour maître des 7 océans numériques,
 
     On vous a laissé ce messsage:
 
@@ -202,13 +158,13 @@ class MailSender
 
     Glorieuse journée à vous!
 
-            Votre dévoué, " . $_SERVER['SERVER_NAME'];
+            Votre dévoué, " . $_SERVER['SERVER_NAME']);
 
-        return $this->sendMail($mail, $user);
+        return $this->mail->send($mail, $user);
     }
 
-    private function linkGen($user, $action): string
+    private function linkGen(array $user, string $action): string
     {
-        return 'http://' . $_SERVER['SERVER_NAME'] . self::PORT . "/validation?action=$action&token=" . rawurlencode($user['token']) . '&id=' . $user['id'];
+        return $this->siteUrl . "/validation?action=$action&token=" . rawurlencode($user['token']) . '&id=' . $user['id'];
     }
 }

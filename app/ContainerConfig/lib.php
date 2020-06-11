@@ -27,7 +27,15 @@ $container['validator'] = function ($container) {
 };
 
 $container['common'] = function ($container) {
-    return new Common($container);
+    return new Common(
+        $container->get('blacklist'),
+        $container->get('friends'),
+        $container->get('msg'),
+        $container->get('notif'),
+        $container->get('tag'),
+        $container->get('user'),
+        $container->get('mail')
+    );
 };
 
 $container['debug'] = function () {
@@ -37,7 +45,12 @@ $container['debug'] = function () {
 $container['flash'] = new FlashMessage();
 
 $container['mail'] = function ($container) {
-    return new MailSender($container->get('flash'));
+    if ($_ENV['PROD']) {
+        $mail = new \App\Lib\Mail\SendGrid();
+    } else {
+        $mail = new \App\Lib\Mail\PHPMailer2();
+    }
+    return new MailSender($container->get('flash'), $mail, $container->get('settings')['siteUrl']);
 };
 
 $container['notFoundHandler'] = function ($container) {

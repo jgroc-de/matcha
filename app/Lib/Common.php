@@ -12,7 +12,6 @@ use Cloudinary\Uploader;
 
 class Common
 {
-    /*
     private $blacklist;
     private $friends;
     private $msg;
@@ -37,19 +36,6 @@ class Common
         $this->tag = $tagModel;
         $this->user = $userModel;
         $this->mail = $mailSender;
-    }
-    */
-    private $container;
-
-    public function __construct(
-        $container
-    ) {
-        $this->container = $container;
-    }
-
-    public function __get($name)
-    {
-        return $this->container->get($name);
     }
 
     public function sendAllData()

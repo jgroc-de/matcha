@@ -8,6 +8,7 @@ namespace App\Model;
  */
 class UserModel
 {
+    private const LENGTH_LIST = 200;
     /** @var \PDO */
     private $db;
 
@@ -100,7 +101,7 @@ class UserModel
                 AND friends.id_user1 IS NULL
                 AND friendsReq.id_user1 IS NULL
             ORDER BY lastlog DESC
-            LIMIT 200"
+            LIMIT " . self::LENGTH_LIST
         );
         $req->execute([
             'aMax' => $age['max'],
@@ -137,7 +138,7 @@ class UserModel
                 AND friends.id_user1 IS NULL
                 AND friendsReq.id_user1 IS NULL
             ORDER BY lastlog DESC
-            LIMIT 200"
+            LIMIT " . self::LENGTH_LIST
         );
         $req->execute([
             'gender' => $_SESSION['profil']['gender'],
@@ -195,7 +196,7 @@ class UserModel
                 AND friendsReq.id_user1 IS NULL
                 $tagCondition
             ORDER BY lastlog DESC
-            LIMIT 200"
+            LIMIT " . self::LENGTH_LIST
         );
         $req->execute([
             'aMax' => $age['max'],

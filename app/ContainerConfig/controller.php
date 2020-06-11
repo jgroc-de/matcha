@@ -17,7 +17,6 @@ use Psr\Container\ContainerInterface;
 
 /** @var ContainerInterface $container */
 
-// ok
 $container['App\Controllers\Authentication'] = function ($container) {
     return new Authentication(
         $container,
@@ -29,7 +28,6 @@ $container['App\Controllers\Authentication'] = function ($container) {
     );
 };
 
-// ok
 $container['App\Controllers\Blacklist'] = function ($container) {
     return new Blacklist(
         $container->get('blacklist'),
@@ -39,18 +37,19 @@ $container['App\Controllers\Blacklist'] = function ($container) {
     );
 };
 
-//nok
-/*
 $container['App\Controllers\Chat'] = function($container) {
     return new Chat(
-        $container->get('view'),
-        $container['flash'],
-        $container->get('form')
+        $container->get('blacklist'),
+        $container->get('friends'),
+        $container->get('msg'),
+        $container->get('MyZmq'),
+        $container->get('notif'),
+        $container->get('user'),
+        $container->get('validator'),
+        $container->get('view')
     );
 };
-*/
 
-// ok
 $container['App\Controllers\Contact'] = function ($container) {
     return new Contact(
         $container->get('view'),
@@ -59,7 +58,6 @@ $container['App\Controllers\Contact'] = function ($container) {
     );
 };
 
-// ok
 $container['App\Controllers\FriendRequest'] = function ($container) {
     return new FriendRequest(
         $container->get('blacklist'),
@@ -69,7 +67,6 @@ $container['App\Controllers\FriendRequest'] = function ($container) {
     );
 };
 
-// ok
 $container['App\Controllers\Geolocation'] = function ($container) {
     return new Geolocation(
         $container->get('validator'),
@@ -81,7 +78,6 @@ $container['App\Controllers\Picture'] = function ($container) {
     return new Picture($container->get('user'));
 };
 
-// ok
 $container['App\Controllers\Profil'] = function ($container) {
     return new Profil(
         $container->get('blacklist'),
@@ -117,7 +113,6 @@ $container['App\Controllers\Search'] = function($container) {
     );
 };
 
-
 $container['App\Controllers\Settings'] = function ($container) {
     return new Settings(
         $container['flash'],
@@ -135,8 +130,7 @@ $container['App\Controllers\Setup'] = function ($container) {
         $container->get('form'),
         $container->get('tag'),
         $container->get('user'),
-        $container->get('db'),
-        $container->get('settings')['db']
+        $container->get('db')
     );
 };
 

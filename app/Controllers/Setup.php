@@ -19,22 +19,18 @@ class Setup
     private $tag;
     /** @var UserModel */
     private $user;
-    /** @var array */
-    private $settings;
     /** @var \PDO */
-    private $db;
+    private $pdo;
 
     public function __construct(
         FormChecker $form,
         TagModel $tagModel,
         UserModel $userModel,
-        \PDO $db,
-        array $dbSettings
+        \PDO $db
     ) {
         $this->tag = $tagModel;
         $this->user = $userModel;
-        $this->settings = $dbSettings;
-        $this->db = $db;
+        $this->pdo = $db;
         $this->form = $form;
         if (!is_dir(__DIR__ . '/../../public/user_img')) {
             mkdir(__DIR__ . '/../../public/user_img');
@@ -77,12 +73,8 @@ class Setup
         if ($_ENV['PROD']) {
             return $response->withRedirect('/');
         }
-        $db = $this->settings;
-        $pdo = new \PDO('mysql:host=' . $db['host'], $db['user'], $db['pass']);
-        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
         $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
-        $this->db->exec($file);
+        $this->pdo->exec($file);
 
         return $response->withRedirect('/');
     }
