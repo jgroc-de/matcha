@@ -64,8 +64,7 @@ class Setup
 
     public function initDB(Request $request, Response $response, array $args): Response
     {
-        $file = file_get_contents(__DIR__ . '/../../data
-        base/matcha.sql');
+        $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
         $this->pdo->exec($file);
 
         return $response->withRedirect('/');
