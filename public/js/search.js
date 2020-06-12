@@ -58,8 +58,7 @@ function addChildrenCard(hash, show) {
     let clone = getTemplate("repeatProfil")
 
     if (show) {
-        let body = clone.querySelector('div')
-        body.classList.remove('w3-hide')
+        clone.classList.remove('w3-hide')
         document.getElementById('add').dataset.url = "/friend/" + hash.id
         document.getElementById('next').setAttribute('onclick', "next(" + hash.id + ")")
     }
