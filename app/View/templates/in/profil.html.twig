@@ -153,7 +153,7 @@
                             <input id="lat" class="w3-input w3-border"
                                    type="number" name="lat"
                                    value={{ profil.lattitude }}
-                                   min="-85" max="85"
+                                   min="{{ constant('App\\Lib\\Validator::MIN_LAT') }}" max="{{ constant('App\\Lib\\Validator::MAX_LAT') }}"
                                    step="0.0000001">
                         </div>
                         <div class="w3-half">
@@ -161,7 +161,7 @@
                             <input id="lng" class="w3-input w3-border"
                                    type="number" name="lng"
                                    value={{ profil.longitude }}
-                                   min="-180" max="180"
+                                   min="{{ constant('App\\Lib\\Validator::MIN_LNG') }}" max="{{ constant('App\\Lib\\Validator::MAX_LNG') }}"
                                    step="0.0000001">
                         </div>
                         <div class="w3-right w3-half w3-section">

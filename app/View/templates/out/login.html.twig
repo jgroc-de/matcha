@@ -17,7 +17,7 @@
             {% endfor %}
         {% endif %}
         <div class="w3-section">
-            {{ input('text', 'pseudo', {'id': 'pseudo1', 'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}
+            {{ input('text', 'pseudo', {'id': 'pseudo1', 'value': post.pseudo, 'pattern': constant('App\\Lib\\Validator::PSEUDO')}) }}
         </div>
         <div class="w3-section">
             {{ input('password', 'password', {'id': 'password1'}) }}
@@ -45,7 +45,7 @@
     <form id="signup" class="w3-container w3-theme-light clearfix w3-hide {% if signup %}w3-show{% endif %}"
           style="opacity:0.95" action="{{ path_for('signup') }}" method="post" matcha-form>
         <div class="w3-section">
-            {{ input('text', 'pseudo', {'value': post.pseudo, 'pattern': '[^\ \'\"]+'}) }}
+            {{ input('text', 'pseudo', {'value': post.pseudo, 'pattern': constant('App\\Lib\\Validator::PSEUDO')}) }}
         </div>
         <div class="w3-section">
             <div id="infopwd" class="w3-panel w3-green">
@@ -66,13 +66,13 @@
             {{ input('email', 'email', {'value': post.email }) }}
         </div>
         <div class="w3-section">
-            {{ input('text', 'name', {'value': post.name|default("Ann") }) }}
+            {{ input('text', 'name', {'value': post.name|default("Ann"), 'maxlength': constant('App\\Lib\\Validator::MAX_NAME_LENGTH') }) }}
         </div>
         <div class="w3-section">
-            {{ input('text', 'surname', {'value': post.surname|default("Onymous") }) }}
+            {{ input('text', 'surname', {'value': post.surname|default("Onymous"), 'maxlength': constant('App\\Lib\\Validator::MAX_NAME_LENGTH') }) }}
         </div>
         <div class="w3-section">
-            {{ select({'label': 'you are a', 'name': 'gender', 'array': characters, 'select': post.gender}) }}
+            {{ select({'label': 'you are a', 'name': 'gender', 'array': constant('App\\Lib\\Validator::GENDER'), 'select': post.gender}) }}
         </div>
         <div class="w3-section g-recaptcha" data-sitekey="{{ PUB_CAPTCHA_KEY }}"></div>
         <div class="">

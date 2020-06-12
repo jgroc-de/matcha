@@ -7,11 +7,13 @@
             <div class="w3-border">
                 <div class="w3-col s6">
                     <label for="age_min">min</label>
-                    <input class="w3-input w3-border" id="age_min" type="number" name="Amin" value="{{ age.min }}" min="18" max="118">
+                    <input class="w3-input w3-border" id="age_min" type="number" name="Amin" value="{{ age.min }}"
+                           min="{{ constant('App\\Lib\\Validator::MIN_AGE') }}" max="constant('App\\Lib\\Validator::MAX_AGE')">
                 </div>
                 <div class="w3-col s6">
                     <label for="age_max">max</label>
-                    <input class="w3-input w3-border" id="age_max" type="number" name="Amax" value="{{ age.max }}" min="18" max="118">
+                    <input class="w3-input w3-border" id="age_max" type="number" name="Amax" value="{{ age.max }}"
+                           min="constant('App\\Lib\\Validator::MIN_AGE')" max="constant('App\\Lib\\Validator::MAX_AGE')">
                 </div>
             </div>
         </div>
@@ -45,7 +47,7 @@
         <div class="w3-half">
             <h3 class="w3-theme-l1">kind</h3>
             <div class="w3-border w3-padding" style="height:122px">
-                {% for type in gender %}
+                {% for type in constant('App\\Lib\\Validator::GENDER') %}
                     <div>
                         <input id="gender_{{ type }}" name="{{ type }}" type="checkbox" value="" {% if type in target %}checked{% endif %}>
                         <label for="gender_{{ type }}">{{ type }}</label>

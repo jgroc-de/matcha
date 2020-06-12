@@ -2,7 +2,6 @@
 
 namespace App\Lib;
 
-use App\Matcha;
 use App\Model\UserModel;
 
 abstract class APIinterface
@@ -32,7 +31,7 @@ abstract class APIinterface
             while ($this->user->getUserByEmail($pseudo)) {
                 $pseudo = $payload['given_name'] . rand(0, 10000000);
             }
-            $gender = Matcha::GENDER[rand(0, 4)];
+            $gender = Validator::GENDER[rand(0, 4)];
             $user = [
                 'gender' => $gender,
                 'pseudo' => $pseudo,
@@ -40,7 +39,7 @@ abstract class APIinterface
                 'name' => $payload['given_name'],
                 'surname' => $payload['family_name'],
                 'birthdate' => 2000,
-                'sexuality' => Matcha::KIND[0],
+                'sexuality' => Validator::KIND[0],
                 'biography' => '',
                 'password' => '',
                 'activ' => 1,

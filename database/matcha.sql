@@ -17,15 +17,15 @@ USE matcha;
 -- Table structure for table `user`
 --
 
-DROP TABLE `blacklist`;
-DROP TABLE `notification`;
-DROP TABLE `usertags`;
-DROP TABLE `hashtags`;
-DROP TABLE `message`;
-DROP TABLE `friends`;
-DROP TABLE `friendsReq`;
-DROP TABLE `pictures`;
-DROP TABLE `user`;
+DROP TABLE IF EXISTS `blacklist`;
+DROP TABLE IF EXISTS `notification`;
+DROP TABLE IF EXISTS `usertags`;
+DROP TABLE IF EXISTS `hashtags`;
+DROP TABLE IF EXISTS `message`;
+DROP TABLE IF EXISTS `friends`;
+DROP TABLE IF EXISTS `friendsReq`;
+DROP TABLE IF EXISTS `pictures`;
+DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
     `id` SERIAL,

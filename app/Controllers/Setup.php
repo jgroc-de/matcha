@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Lib\FormChecker;
-use App\Matcha;
+use App\Lib\Validator;
 use App\Model\TagModel;
 use App\Model\UserModel;
 use Faker\Factory;
@@ -77,7 +77,7 @@ class Setup
         $password = password_hash('trollB1B1', PASSWORD_DEFAULT);
         for ($i = 0; $i < $count; ++$i) {
             $name = $faker->firstName;
-            $gender = Matcha::GENDER[rand(0, 4)];
+            $gender = Validator::GENDER[rand(0, 4)];
             $pseudo = $gender . $name;
             $profil = [
                 'gender' => $gender,
@@ -86,7 +86,7 @@ class Setup
                 'name' => $name,
                 'surname' => $faker->lastName,
                 'birthdate' => rand(1970, 2000),
-                'sexuality' => Matcha::KIND[rand(0, 2)],
+                'sexuality' => Validator::KIND[rand(0, 2)],
                 'biography' => $faker->text(250),
                 'password' => $password,
                 'activ' => 1,

@@ -11,7 +11,7 @@
            {% endif %}
        {% endfor %}
        {% if type == 'password' %}
-           pattern="{{ hash.pattern|default('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}') }}"
+           pattern="{{ hash.pattern|default(constant('App\\Lib\\Validator::PASSWORD')) }}"
        {% endif %}
        required>
 {% endmacro %}

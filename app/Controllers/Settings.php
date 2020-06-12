@@ -6,7 +6,6 @@ use App\Lib\FlashMessage;
 use App\Lib\FormChecker;
 use App\Lib\MailSender;
 use App\Lib\Validator;
-use App\Matcha;
 use App\Model\NotificationModel;
 use App\Model\UserModel;
 use Memcached;
@@ -103,17 +102,11 @@ class Settings
     {
         $data = array_merge([
             'me' => $_SESSION['profil'],
-            'characters' => Matcha::GENDER,
-            'sexualPattern' => Matcha::KIND,
             'flash' => $this->flash->getMessages(),
-            'year' => date('Y') - 18,
             'notification' => $this->notif->getNotification(),
         ], $args);
+        $template = 'templates/in/editProfil.html.twig';
 
-        return $this->view->render(
-            $response,
-            'templates/in/editProfil.html.twig',
-            $data
-        );
+        return $this->view->render($response, $template, $data);
     }
 }

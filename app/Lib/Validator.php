@@ -7,6 +7,21 @@ namespace App\Lib;
  */
 class Validator
 {
+    /** @var array of all kind available */
+    const GENDER = ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer'];
+    /** @var array all orientation available */
+    const KIND = ['bi', 'homo', 'hetero'];
+    const PSEUDO = '[^\s\'"`]{1,42}';
+    const PASSWORD = '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}';
+    const MAX_AGE = 150;
+    const MIN_AGE = 18;
+    const MAX_TEXT_LENGTH = 1500;
+    const MAX_NAME_LENGTH = 250;
+    const MAX_LNG = 180;
+    const MIN_LNG = -180;
+    const MAX_LAT = 85;
+    const MIN_LAT = -85;
+
     /** @var array */
     private $post;
     /** @var FlashMessage */
@@ -54,14 +69,16 @@ class Validator
      */
     private function pseudo(string $test): bool
     {
-        $len = strlen($test);
+        if (!preg_match('#' . self::PSEUDO . '#', $test)) {
+            return false;
+        }
 
-        return ($len > 0 && $len < 41) ? true : false;
+        return true;
     }
 
     private function password(string $test): bool
     {
-        return preg_match('#(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}#', $test);
+        return preg_match('#' . self::PASSWORD . '#', $test);
     }
 
     public function password1(string $test): bool
@@ -87,38 +104,38 @@ class Validator
 
     public function gender(string $test): bool
     {
-        return in_array($test, ['Rick', 'Morty', 'Beth', 'Jerry', 'Summer']);
+        return in_array($test, self::GENDER);
     }
 
     public function sexuality(string $test): bool
     {
-        return in_array($test, ['bi', 'homo', 'hetero']);
+        return in_array($test, self::KIND);
     }
 
     public function birthdate(int $test): bool
     {
-        return is_numeric($test) && $test <= (date('Y') - 18) && $test >= 1850;
+        return is_numeric($test) && $test <= (date('Y') - self::MIN_AGE) && $test >= (date('Y') - self::MAX_AGE);
     }
 
     public function name(string $test): bool
     {
         $len = strlen($test);
 
-        return $len > 0 && $len < 250;
+        return $len > 0 && $len < self::MAX_NAME_LENGTH;
     }
 
     public function surname(string $test): bool
     {
         $len = strlen($test);
 
-        return $len > 0 && $len < 250;
+        return $len > 0 && $len < self::MAX_NAME_LENGTH;
     }
 
     public function biography(string $test): bool
     {
         $len = strlen($test);
 
-        return $len > 0;
+        return $len > 0 && $len < self::MAX_TEXT_LENGTH;
     }
 
     public function text(string $test): bool
@@ -128,19 +145,14 @@ class Validator
         return $len > 0;
     }
 
-    public function submit(string $test): bool
+    public function lat($test): bool
     {
-        return $test === 'Envoyer';
+        return is_float($test) && $test >= self::MIN_LAT && $test <= self::MAX_LAT;
     }
 
-    public function lat(float $test): bool
+    public function lng($test): bool
     {
-        return $test >= -85 && $test <= 85;
-    }
-
-    public function lng(float $test): bool
-    {
-        return $test <= 180 && $test >= -180;
+        return is_float($test) && $test <= self::MAX_LNG && $test >= self::MIN_LNG;
     }
 
     public function g_recaptcha_response(string $token): bool

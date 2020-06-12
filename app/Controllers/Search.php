@@ -14,11 +14,10 @@ use Slim\Views\Twig;
 class Search
 {
     private const RADIUS = 6400;
-    private const AGE = ['min' => 18, 'max' => 118];
+    private const AGE = ['min' => Validator::MIN_AGE, 'max' => Validator::MAX_AGE];
     private const POPULARITY = ['min' => 0, 'max' => 100];
     private const DISTANCE_MIN = 1;
     private const DISTANCE_DEFAULT = 30;
-    private const KIND = ['Rick', 'Morty', 'Beth', 'Summer', 'Jerry'];
 
     /** @var FlashMessage */
     private $flash;
@@ -73,7 +72,7 @@ class Search
             'templates/in/search.html.twig',
             [
                 'me' => $_SESSION['profil'],
-                'gender' => self::KIND,
+                'gender' => Validator::GENDER,
                 'target' => $this->getDefaultTarget(),
                 'users' => $list,
                 'age' => self::AGE,
@@ -113,8 +112,8 @@ class Search
         }
         $date = date('Y');
         $age = [
-            'min' => min($date - (int) $post['Amin'], $date - self::AGE['min']),
-            'max' => max($date - (int) $post['Amax'], $date - self::AGE['max']),
+            'min' => min($date - (int) $post['Amin'], $date - Validator::MIN_AGE),
+            'max' => max($date - (int) $post['Amax'], $date - Validator::MAX_AGE),
         ];
         $popularity = [
             'min' => max((int) $post['Pmin'], 0),
@@ -200,7 +199,7 @@ class Search
     {
         if (!empty($post)) {
             $targets = [];
-            foreach (self::KIND as $key) {
+            foreach (Validator::GENDER as $key) {
                 if (array_key_exists($key, $post)) {
                     $targets[] = $key;
                 }
@@ -217,11 +216,11 @@ class Search
     {
         switch ($_SESSION['profil']['sexuality']) {
             case 'hetero':
-                return array_diff(self::KIND, [$_SESSION['profil']['gender']]);
+                return array_diff(Validator::GENDER, [$_SESSION['profil']['gender']]);
             case 'homo':
                 return [$_SESSION['profil']['gender']];
             default:
-                return self::KIND;
+                return Validator::GENDER;
         }
     }
 

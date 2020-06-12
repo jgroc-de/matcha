@@ -6,7 +6,7 @@ use App\Lib\_42API;
 use App\Lib\FlashMessage;
 use App\Lib\FormChecker;
 use App\Lib\googleAPI;
-use App\Matcha;
+use App\Lib\Validator;
 use App\Model\UserModel;
 use GuzzleHttp\Client;
 use Psr\Container\ContainerInterface;
@@ -50,7 +50,7 @@ class Authentication
     public function login(Request $request, Response $response, array $post): Response
     {
         if (!isset($post['gender'])) {
-            $post['gender'] = Matcha::GENDER[random_int(0, 4)];
+            $post['gender'] = Validator::GENDER[random_int(0, 4)];
         }
 
         return $this->renderSettings($response, $post, ['login' => true]);
@@ -130,7 +130,7 @@ class Authentication
         $data = array_merge([
             'flash' => $this->flashMessage->getMessages(),
             'post' => $post,
-            'characters' => Matcha::GENDER,
+            'characters' => Validator::GENDER,
             'PUB_42_KEY' => $_ENV['PUB_42_KEY'],
             'PUB_CAPTCHA_KEY' => $_ENV['PUB_CAPTCHA_KEY'],
         ], $viewOption);
