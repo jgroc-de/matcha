@@ -107,7 +107,7 @@ class TagModel
     public function getAllUserTags(int $userID): array
     {
         $req = $this->db->prepare('
-            SELECt tag
+            SELECT tag
             FROM usertags
             INNER JOIN hashtags
             ON usertags.id_tag = hashtags.id
@@ -115,6 +115,19 @@ class TagModel
             ORDER BY hashtags.tag
         ');
         $req->execute([$userID]);
+
+        return $req->fetchAll();
+    }
+
+    public function getMostUsedTags(): array
+    {
+        $req = $this->db->prepare('
+            SELECT tag
+            FROM hashtags
+            ORDER BY hashtags.tag_count DESC
+            LIMIT 10
+        ');
+        $req->execute();
 
         return $req->fetchAll();
     }

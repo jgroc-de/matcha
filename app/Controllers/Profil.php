@@ -68,6 +68,7 @@ class Profil
                 'tags' => $this->tag->getUserTags($_SESSION['id']),
                 'notification' => $this->notif->getNotification(),
                 'mapKey' => $_ENV['GMAP_KEY'],
+                'trendingTags' => $this->tag->getMostUsedTags()
             ]
         );
     }

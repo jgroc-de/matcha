@@ -123,7 +123,8 @@ CREATE TABLE `message` (
 
 CREATE TABLE `hashtags` (
     `id` SERIAL PRIMARY KEY,
-    `tag` VARCHAR(255) NOT NULL UNIQUE
+    `tag` VARCHAR(255) NOT NULL UNIQUE,
+    `tag_count` BIGINT UNSIGNED DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -168,5 +169,17 @@ CREATE TABLE `blacklist` (
     CONSTRAINT FK_blacklist FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE,
     CONSTRAINT FK_user_bl FOREIGN KEY (id_user_bl) REFERENCES user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TRIGGER `add_tag_count` AFTER INSERT
+    ON `usertags` FOR EACH ROW
+    UPDATE `hashtags` SET `tag_count` = `tag_count` + 1
+    WHERE `hashtags`.`id` = NEW.`id_tag`
+;
+
+CREATE TRIGGER `sub_tag_count` AFTER DELETE
+ON `usertags` FOR EACH ROW
+    UPDATE `hashtags` SET `tag_count` = `tag_count` - 1
+    WHERE `hashtags`.`id` = OLD.`id_tag`
+;
 
 COMMIT;

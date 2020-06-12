@@ -70,8 +70,8 @@
             <div class="w3-{% if home %}half{% else %}third{% endif %} w3-padding">
                 <div class="w3-card-4">
                     <h3 class="w3-hover-green" matcha-toggle="">{% if home %}Your {% endif %}Tags</h3>
-                    <div class="w3-theme-l5">
-                        <div class="gg-tag-section w3-padding" id="myTag">
+                    <div class="w3-theme-l5 gg-tag-section">
+                        <div class="w3-padding" id="myTag">
                             {% for tag in tags %}
                                 <span id="tag{{tag.id}}">
                                     {%if (tag != tags[0])%}
@@ -84,9 +84,21 @@
                                 </span>
                             {% endfor %}
                         </div>
+                        <h4>add tags</h4>
                         <form action="{{ path_for('addTag') }}" method="POST">
                             <input class="w3-input w3-border" id="test" type="text" name="tag" placeholder="tag_without_#" pattern="[^\s'&quot;`]{1,42}" required="">
                         </form>
+                        <h4>trending tags</h4>
+                        <div class="w3-padding">
+                            {% for tag in trendingTags %}
+                                <span id="tag{{tag.id}}">
+                                    {%if (tag != trendingTags[0])%}
+                                        -
+                                    {% endif %}
+                                    #{{tag.tag}}
+                                </span>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
