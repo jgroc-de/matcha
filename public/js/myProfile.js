@@ -5,30 +5,31 @@ window.URL = window.URL || window.webkitURL
 function addTag(path) {
     var tag = prompt("add a tag (without the '#'):")
 
-    if (tag) {
-        tag = tag.replace(/(?:\s)/g, "")
-        let xhr = new XMLHttpRequest()
+    if (!tag) {
+        return
+    }
+    tag = tag.replace(/(?:\s)/g, "")
+    let xhr = new XMLHttpRequest()
 
-        xhr.open('POST', path, true)
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (this.status === 200) {
-                    let id = this.responseText
-                    let span = getTemplate("repeatTag")
+    xhr.open('POST', path, true)
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4) {
+            if (this.status === 200) {
+                let id = this.responseText
+                let span = getTemplate("repeatTag")
 
-                    span.id = 'tag' + id
-                    span.children[1].setAttribute('onclick', 'delUserTag("/tag/", ' + id + ')')
-                    span.firstElementChild.textContent = "- #" + tag + " "
-                    document.getElementById('Interest').appendChild(span)
-                    printNotif(['added!', true])
-                } else {
-                    printNotif(['already Added?', false])
-                }
+                span.id = 'tag' + id
+                span.children[1].setAttribute('onclick', 'delUserTag("/tag/", ' + id + ')')
+                span.firstElementChild.textContent = "- #" + tag + " "
+                document.getElementById('Interest').appendChild(span)
+                printNotif(['added!', true])
+            } else {
+                printNotif(['already Added?', false])
             }
         }
-        xhr.send('tag=' + tag)
     }
+    xhr.send('tag=' + tag)
 }
 
 function addPicture() {
@@ -154,14 +155,12 @@ function mateStatus() {
 }
 
 function highlightMate(data) {
-    let div, name
+    let div, name, darker
 
     for (name in data.mateStatus) {
         div = document.getElementById("friend" + name).children[0].children[0]
-        if (data.mateStatus[name])
-            div.setAttribute('style', 'border-color:' + div.classList[0] + ';')
-        else
-            div.setAttribute('style', 'border-color:' + div.classList[0] + '60;')
+        darker = data.mateStatus[name] ? '' : '60'
+        div.setAttribute('style', 'border-color:' + div.classList[0] + darker + ';')
     }
 }
 
