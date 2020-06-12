@@ -57,7 +57,7 @@
                 <h3 class="w3-hover-green" matcha-toggle>Search By Name</h3>
                 <form id="searchByName" class="w3-container w3-theme-light clearfix" action="{{ path_for('searchByName') }}" method="POST">
                     <legend><label for="pseudo">Search By Name</label></legend>
-                    <input class="w3-input w3-border w3-col s12 m9 l6" type="text" name="pseudo" placeholder="pseudo" pattern="constant('App\\Lib\\Validator::PSEUDO')" required>
+                    <input class="w3-input w3-border w3-col s12 m9 l6" type="text" name="pseudo" placeholder="pseudo" pattern="{{ constant('App\\Lib\\Validator::PSEUDO') }}" required>
                     <button class="{{ buttonClass }}">Search</button>
                 </form>
                 <h3 class="w3-hover-green" matcha-toggle>Search By Criteria</h3>
