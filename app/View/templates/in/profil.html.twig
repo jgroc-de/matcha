@@ -178,6 +178,13 @@
 {% endblock %}
 
 {% block script %}
+    <template id="repeatAddImage">
+        <div class="w3-display-container" style="height:125px">
+            <label class="w3-section w3-jumbo w3-center fa fa-plus check-green w3-block w3-padding-large" title="add picture">
+                <input type="file" style="display:none">
+            </label>
+        </div>
+    </template>
     <template id="repeatImage">
         <div>
             <img class="w3-image w3-display-middle" style="max-height:100%">

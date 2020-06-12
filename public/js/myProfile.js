@@ -66,7 +66,7 @@ function sendPicture(event) {
             let imgElement = template.firstElementChild
             let iElement = template.lastElementChild
 
-            while (prev.firstChild)
+            while (prev.hasChildNodes())
                 prev.removeChild(prev.firstChild)
             imgElement.title = path
             imgElement.alt = path
@@ -85,29 +85,17 @@ function sendPicture(event) {
 
 function deletePic(id) {
     ggAjax('DELETE', 'picture/' + id.charAt(3), function (id) {
-        var parentNode = document.getElementById(id)
-        var labelElmt = document.createElement('label')
-        var inputElemt = document.createElement('input')
-        var inputElemt2 = document.createElement('input')
-        var div = document.createElement('div')
+        let parentNode = document.getElementById(id)
+        let div = getTemplate('repeatAddImage')
+        let inputElemt = div.querySelector('input')
 
-        div.className = 'w3-display-container'
-        if (id === 'img1')
+        if (id === 'img1') {
             div.style.height = '250px'
-        else
-            div.style.height = '125px'
-        labelElmt.className = 'w3-section w3-jumbo w3-center fa fa-plus check-green w3-block w3-padding-large'
-        labelElmt.title = 'add picture'
+        }
         inputElemt.setAttribute('data-id', id)
-        inputElemt.type = 'file'
-        inputElemt2.type = 'hidden'
-        inputElemt.style.display = 'none'
         while (parentNode.hasChildNodes())
             parentNode.removeChild(parentNode.firstChild)
         parentNode.appendChild(div)
-        div.appendChild(labelElmt)
-        labelElmt.appendChild(inputElemt2)
-        labelElmt.appendChild(inputElemt)
         addPicture()
     }, id)
 }
