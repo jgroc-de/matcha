@@ -1,5 +1,4 @@
 {% extends 'templates/home.html.twig' %}
-{% from 'macro/home/subsectionTitle.html.twig' import subtitle %}
 
 {% set color = {
     'Rick': '#878f99',
@@ -50,7 +49,7 @@
             {% endif %}
             <div class="w3-{% if home %}half{% else %}third{% endif %} w3-padding">
                 <div class="w3-card-4">
-                    {{ subtitle('Profil', home, 'fa fa-gear', path_for('editProfil'), 'edit profil', true) }}
+                    <h3 class="w3-hover-green" matcha-toggle="">{% if home %}Your {% endif %}Profil</h3>
                     <div id="Profil" class="w3-theme-l5 w3-padding gg-section">
                         <div class="w3-left-align">
                             <div class="profil-wrap">
@@ -70,19 +69,24 @@
             </div>
             <div class="w3-{% if home %}half{% else %}third{% endif %} w3-padding">
                 <div class="w3-card-4">
-                    {{ subtitle('Interest', home, 'fa fa-plus',  "addTag('/tag')", 'add tag') }}
-                    <div id="Interest" class="w3-theme-l5 gg-tag-section w3-padding" id="userTag">
-                        {% for tag in tags %}
-                            <span id="tag{{tag.id}}">
-                                {%if (tag != tags[0])%}
-                                    -
-                                {% endif %}
-                                #{{tag.tag}}
-                                {% if home %}
-                                    <span class="del" onclick="delUserTag('/tag/', {{tag.id}})">(delete)</span>
-                                {% endif %}
-                            </span>
-                        {% endfor %}
+                    <h3 class="w3-hover-green" matcha-toggle="">{% if home %}Your {% endif %}Tags</h3>
+                    <div class="w3-theme-l5">
+                        <div class="gg-tag-section w3-padding" id="myTag">
+                            {% for tag in tags %}
+                                <span id="tag{{tag.id}}">
+                                    {%if (tag != tags[0])%}
+                                        -
+                                    {% endif %}
+                                    #{{tag.tag}}
+                                    {% if home %}
+                                        <span class="del" onclick="delUserTag('/tag/', {{tag.id}})">(delete)</span>
+                                    {% endif %}
+                                </span>
+                            {% endfor %}
+                        </div>
+                        <form action="{{ path_for('addTag') }}" method="POST">
+                            <input class="w3-input w3-border" id="test" type="text" name="tag" placeholder="tag_without_#" pattern="[^\s'&quot;`]{1,42}" required="">
+                        </form>
                     </div>
                 </div>
             </div>

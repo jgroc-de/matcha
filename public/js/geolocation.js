@@ -62,13 +62,15 @@ function setGeoEventlisteners() {
     document.getElementById('resetGeo').addEventListener('click', function() {
         navigator.geolocation ? navigator.geolocation.getCurrentPosition(success, error):error()
     })
+    var latInput = document.getElementById('lat')
+    var lngInput = document.getElementById('lng')
     document.getElementById('setGeo').addEventListener('click', function() {
-        user.lat = Number(document.getElementById('lat').value)
-        user.lng = Number(document.getElementById('lng').value)
+        user.lat = Number(latInput.value)
+        user.lng = Number(lngInput.value)
         majLocation(user)
     })
-    document.getElementById('lat').addEventListener('change', changeLocation)
-    document.getElementById('lng').addEventListener('change', changeLocation)
+    latInput.addEventListener('change', changeLocation)
+    lngInput.addEventListener('change', changeLocation)
 }
 
 function error(err) {

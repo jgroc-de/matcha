@@ -104,7 +104,7 @@ $app->group('', function () use ($app) {
     $this->get('/startChat/{id:[0-9]+}', Chat::class . ':startChat');
     $this->get('/profilStatus/{id:[0-9]+}', Chat::class . ':profilStatus');
 
-    $this->post('/tag', Tag::class . ':add');
+    $this->post('/tag', Tag::class . ':add')->setName('addTag');
     $this->delete('/tag/{id:[0-9]+}', Tag::class . ':delete');
 
     $this->post('/friend/{id:[0-9]+}', FriendRequest::class . ':add');

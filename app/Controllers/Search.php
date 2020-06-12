@@ -72,7 +72,6 @@ class Search
             'templates/in/search.html.twig',
             [
                 'me' => $_SESSION['profil'],
-                'gender' => Validator::GENDER,
                 'target' => $this->getDefaultTarget(),
                 'users' => $list,
                 'age' => self::AGE,

@@ -34,10 +34,6 @@ function toggleSibling(event) {
     event.target.nextElementSibling.classList.toggle('w3-hide')
 }
 
-function toggleById(id) {
-    document.getElementById(id).classList.toggle('w3-hide')
-}
-
 async function postData(url = '', data = {}) {
     // Default options are marked with *
     let response = await fetch(url, {

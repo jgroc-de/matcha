@@ -34,10 +34,10 @@
         <a href="{{ path_for('editProfil') }}" class="{{ classR }}" title="edit profil" alt="edit">
             <i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
         </a>
-        <a href="#" class="{{ classR }} w3-display-container">
-            <i class="fa fa-bell" alt="like" title="new likes" onclick="toggleById('notification');resetBadge(this.firstElementChild)"></i>
+        <div class="{{ classR }} w3-display-container">
+            <i class="fa fa-bell" alt="like" title="new likes" matcha-notif></i>
                 <span id="badge" class="gg-badge w3-display-topright w3-tiny w3-hide"></span>
-        </a>
+        </div>
         <div class="g-signin2" hidden></div>
         <div class="w3-right w3-white gg-pop" title="Popularity: {{ me.popularity }}%">
             <div style="width:{{ me.popularity }}%;height:18px;background-color:{{(me.popularity > 50) ? '#5ad168' : '#a7e9af'}};"></div>

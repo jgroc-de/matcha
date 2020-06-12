@@ -22,7 +22,7 @@ function addTag(path) {
                 span.id = 'tag' + id
                 span.children[1].setAttribute('onclick', 'delUserTag("/tag/", ' + id + ')')
                 span.firstElementChild.textContent = "- #" + tag + " "
-                document.getElementById('Interest').appendChild(span)
+                document.getElementById('myTag').appendChild(span)
                 printNotif(['added!', true])
             } else {
                 printNotif(['already Added?', false])
