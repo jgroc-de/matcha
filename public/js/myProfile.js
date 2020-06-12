@@ -62,8 +62,9 @@ function sendPicture(event) {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let path = this.responseText
-            let imgElement = getTemplate("repeatImage")
-            let iElement = getTemplate("repeatCloseImage")
+            let template = getTemplate("repeatImage")
+            let imgElement = template.firstElementChild
+            let iElement = template.lastElementChild
 
             while (prev.firstChild)
                 prev.removeChild(prev.firstChild)
@@ -84,8 +85,8 @@ function sendPicture(event) {
 
 function deletePic(id) {
     ggAjax('DELETE', 'picture/' + id.charAt(3), function (id) {
-        var labelElmt = document.createElement('label')
         var parentNode = document.getElementById(id)
+        var labelElmt = document.createElement('label')
         var inputElemt = document.createElement('input')
         var inputElemt2 = document.createElement('input')
         var div = document.createElement('div')
@@ -160,7 +161,7 @@ function highlightMate(data) {
     for (name in data.mateStatus) {
         div = document.getElementById("friend" + name).children[0].children[0]
         darker = data.mateStatus[name] ? '' : '60'
-        div.setAttribute('style', 'border-color:' + div.classList[0] + darker + ';')
+        div.style.borderColor = div.classList[0] + darker
     }
 }
 
