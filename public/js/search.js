@@ -133,7 +133,7 @@ function setImg(node) {
     if (node.firstChild) {
         let img = node.getElementsByTagName('img')[0]
 
-        if (img.dataset.src != "") {
+        if (img.dataset.src !== "") {
             img.setAttribute('src', img.dataset.src)
             img.setAttribute('alt', 'profil\'s image')
         }
@@ -150,10 +150,12 @@ function setPrevNext(node) {
 
 function view(oldId, id) {
     let divSelected = document.getElementById(id)
-    let divOld = document.getElementById(oldId)
 
+    if (oldId) {
+        let divOld = document.getElementById(oldId)
+        divOld.parentElement.classList.add('w3-hide')
+    }
     setPrevNext(divSelected.parentElement)
-    divOld.parentElement.classList.add('w3-hide')
     divSelected.parentElement.classList.remove('w3-hide')
     document.getElementById('prev').setAttribute('onclick', "prev(" + id + ")")
     document.getElementById('add').dataset.url = "/friend/" + id
@@ -161,34 +163,34 @@ function view(oldId, id) {
 }
 
 function mapView(id) {
-    view(document.querySelector('#focus>div:not(.w3-hide)').children[0].id, id)
+    let hide = document.querySelector('#focus>div:not(.w3-hide)')
+
+    view(hide ? hide.children[0].id : '', id)
 }
 
 function searchForm(event) {
     event.preventDefault()
-    postData(event.currentTarget.action, new FormData(event.currentTarget))
-        .then(data => {
-            if (data.failure) {
-                printNotif([data.failure, false])
-            } else {
-                usersPos = data
-                reloadProfilCards()
-                initMap()
-            }
-        });
+    postData(event.currentTarget.action, new FormData(event.currentTarget)).then(data => {
+        if (data.failure) {
+            printNotif([data.failure, false])
+        } else {
+            usersPos = data
+            reloadProfilCards()
+            initMap()
+        }
+    })
 }
 
 function setSearchEvents() {
-    let tags = document.getElementById('myTags')
     let select = document.getElementById('sort1')
-    let nameForm = document.getElementById('searchByName')
-    let critForm = document.getElementById('searchByCriteria')
-
     select.addEventListener('change', generateCard)
+    let tags = document.getElementById('myTags')
     if (tags) {
         tags.addEventListener('change', tagSort, true)
     }
+    let nameForm = document.getElementById('searchByName')
     nameForm.addEventListener('submit', searchForm)
+    let critForm = document.getElementById('searchByCriteria')
     critForm.addEventListener('submit', searchForm)
 }
 
