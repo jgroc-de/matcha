@@ -83,10 +83,10 @@ function submitForm(event) {
 })()
 
 function xhrButtons() {
-    let buttons = document.querySelectorAll('button[data-url]')
+    let actionButtons = document.querySelectorAll('button[data-url]')
 
-    for (let button of buttons) {
-        button.addEventListener('click', getUrl)
+    for (let action of actionButtons) {
+        action.addEventListener('click', getUrl)
     }
 }
 
