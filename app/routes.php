@@ -76,6 +76,7 @@ $app->group('', function () use ($app) {
     $this->get('/editProfil', Settings::class . ':editProfil')
         ->setName('editProfil');
     $this->post('/editProfil', Settings::class . ':updateProfil');
+
     $this->get('/mailPassword', Settings::class . ':mailPassword')
         ->setName('mailPassword');
     $this->get('/editPassword', Settings::class . ':editPassword')
