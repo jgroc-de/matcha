@@ -117,18 +117,18 @@ function delFriendReq(path, id) {
 
 function acceptFriendReq(path, id) {
     let parent = document.getElementById("Friend")
-    let child = document.createElement('div')
-    let del = document.createElement('i')
+    let child = getTemplate('repeatFriends')
+    let del = child.querySelector('i')
+    let acopy = child.querySelector('a')
     let a = document.getElementById('req' + id).firstElementChild
 
     child.id = "friend" + id
-    child.className = "gg-friend"
-    del.className = 'fa fa-remove del-red'
-    del.title = 'delete'
-    del.setAttribute('onclick', 'delFriend("/friend/' + id + '")')
-
-    child.appendChild(a)
-    child.appendChild(del)
+    acopy.href = a.href
+    acopy.firstElementChild.src = a.firstElementChild.src
+    acopy.firstElementChild.alt = a.firstElementChild.alt
+    acopy.firstElementChild.style = a.firstElementChild.style
+    acopy.appendChild(a.lastChild)
+    del.setAttribute('onclick', 'delFriend("/friend/",' + id + ')')
     parent.appendChild(child)
 
     ggAjax('POST', path + id, ggRemoveChild, 'req' + id)

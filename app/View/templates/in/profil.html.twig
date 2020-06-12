@@ -178,6 +178,12 @@
 {% endblock %}
 
 {% block script %}
+    <template id="repeatFriends">
+        <div class="gg-friend">
+            <a><img class="gg-friend-img"></a>
+            <i class="fa fa-remove del-red" title="delete"></i>
+        </div>
+    </template>
     <template id="repeatAddImage">
         <div class="w3-display-container" style="height:125px">
             <label class="w3-section w3-jumbo w3-center fa fa-plus check-green w3-block w3-padding-large" title="add picture">
