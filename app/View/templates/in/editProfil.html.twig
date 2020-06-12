@@ -8,22 +8,24 @@
 {% block main %}
 {{editPwd}}
 <div class="w3-content w3-card-4 w3-margin-top w3-theme-light" style="max-width:500px">
-    {{ title('Change your Password', 'editPassword',  editPwd) }}
-    <form id="editPassword" class="w3-container w3-theme-light clearfix w3-hide {% if editPwd %}w3-show{% endif %}"
-          style="opacity:0.95" action="{{ path_for('editPassword') }}" method="post" matcha-form>
-        {% if not reset %}
+    {% if not me.oauth %}
+        {{ title('Change your Password', 'editPassword',  editPwd) }}
+        <form id="editPassword" class="w3-container w3-theme-light clearfix w3-hide {% if editPwd %}w3-show{% endif %}"
+              style="opacity:0.95" action="{{ path_for('editPassword') }}" method="post" matcha-form>
+            {% if not reset %}
+                <div class="w3-section">
+                    {{ input('password','enter old password', {'name': 'oldPassword'}) }}
+                </div>
+            {% endif %}
             <div class="w3-section">
-                {{ input('password','enter old password', {'name': 'oldPassword'}) }}
+                {{ input('password','enter new password', {'name': 'password'}) }}
             </div>
-        {% endif %}
-        <div class="w3-section">
-            {{ input('password','enter new password', {'name': 'password'}) }}
-        </div>
-        <div class="w3-section">
-            {{ input('password', 're-enter new password', {'name': 'password confirmation'}) }}
-        </div>
-        <input class="{{ buttonClass }}" type=submit value=Submit>
-    </form>
+            <div class="w3-section">
+                {{ input('password', 're-enter new password', {'name': 'password confirmation'}) }}
+            </div>
+            <input class="{{ buttonClass }}" type=submit value=Submit>
+        </form>
+    {% endif %}
     {{ title('Your Account', 'RGPD',  rgpd) }}
     <form id="RGPD" class="w3-container w3-theme-light clearfix w3-hide {% if rgpd %}w3-show{% endif %}"
           style="opacity:0.95" action="">
