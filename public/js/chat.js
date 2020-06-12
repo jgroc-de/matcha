@@ -14,7 +14,7 @@ function highlightMate(data) {
     for (name in data.mateStatus) {
         div = document.getElementById(name).firstElementChild
         darker = data.mateStatus[name] ? '':'70';
-        div.setAttribute('style', 'background-color:#' + div.dataset.color + darker + ';')
+        div.style.backgroundColor = '#' + div.dataset.color + darker
     }
 }
 
@@ -69,9 +69,9 @@ function tchatWith(event) {
             )
 
             TWindow.classList.remove('w3-hide')
-            history.forEach(function(value, index, array) {
+            for (let value of history) {
                 addMessage(value.message, value.owner, dataset.myId)
-            })
+            }
             msgBox.scrollIntoView()
             msgBox.focus()
         }

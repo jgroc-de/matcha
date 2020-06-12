@@ -1,15 +1,15 @@
 'use strict'
 
 function displayModal(url) {
-    var modal = document.getElementById('Modal')
+    let modal = document.getElementById('Modal')
 
     modal.getElementsByTagName('img')[0].src = url
     modal.style.display='block'
 }
 
 function display(id) {
-    var forms = document.forms
-    var h2 = document.querySelectorAll('h2[matcha-title]')
+    let forms = document.forms
+    let h2 = document.querySelectorAll('h2[matcha-title]')
 
     for (var i = 0; i < forms.length; i++) {
         h2[i].classList.replace("w3-theme-l1", "w3-theme-d1")
@@ -23,7 +23,7 @@ function display(id) {
 }
 
 function toggleDisplay2(x) {
-    while (x = x.nextElementSibling) {
+    while ((x = x.nextElementSibling)) {
         if ((x.className) || (x.innerHTML)) {
             x.classList.toggle('w3-hide')
         }
@@ -40,7 +40,7 @@ function toggleById(id) {
 
 async function postData(url = '', data = {}) {
     // Default options are marked with *
-    const response = await fetch(url, {
+    let response = await fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'same-origin', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -77,17 +77,17 @@ function submitForm(event) {
 (function() {
     let forms = document.querySelectorAll('form[matcha-form]')
 
-    forms.forEach(function(form) {
+    for (let form of forms) {
         form.addEventListener('submit', submitForm, true)
-    })
+    }
 })()
 
 function xhrButtons() {
     let buttons = document.querySelectorAll('button[data-url]')
 
-    buttons.forEach(function(button) {
+    for (let button of buttons) {
         button.addEventListener('click', getUrl)
-    })
+    }
 }
 
 xhrButtons()
@@ -165,8 +165,10 @@ function setCommonEvents() {
     for (let title of titles) {
         title.addEventListener('click', toggleSibling)
     }
-    if (document.getElementById('logout'))
-        document.getElementById('logout').addEventListener('click', revokeAllScopes)
+    let logout = document.getElementById('logout')
+    if (logout) {
+        logout.addEventListener('click', revokeAllScopes)
+    }
 }
 
 setCommonEvents()
