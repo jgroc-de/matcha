@@ -59,6 +59,11 @@ class Settings
         return $this->renderSettings($response, ['editPwd' => true]);
     }
 
+    public function mailPassword(Request $request, Response $response, array $args): Response
+    {
+        return $this->renderSettings($response, ['editPwd' => true, 'reset' => true]);
+    }
+
     public function updatePassword(Request $request, Response $response, array $args): Response
     {
         $this->form->checkPwd($request->getParsedBody());

@@ -2,7 +2,7 @@
 
 function displayModal(url) {
     var modal = document.getElementById('Modal')
-    
+
     modal.getElementsByTagName('img')[0].src = url
     modal.style.display='block'
 }
