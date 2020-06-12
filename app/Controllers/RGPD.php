@@ -66,7 +66,7 @@ class RGPD
         $_SESSION['profil']['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
         $this->user->updateToken($account['pseudo'], $_SESSION['profil']['token']);
         if ($get['action'] === 'ini') {
-            return $response->withRedirect('/mailPassword');
+            return $response->withRedirect('/mailPassword?token='.$_SESSION['profil']['token']);
         }
         if ($get['action'] === 'del') {
             $this->common->deleteAccountExecute();

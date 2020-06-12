@@ -92,7 +92,7 @@ function xhrButtons() {
 
 xhrButtons()
 
-function printNotif() {
+function printNotif(args) {
     let div = getTemplate("repeatNotif")
     let notif = document.getElementById('notif')
 
@@ -165,7 +165,8 @@ function setCommonEvents() {
     for (let title of titles) {
         title.addEventListener('click', toggleSibling)
     }
-    document.getElementById('logout').addEventListener('click', revokeAllScopes)
+    if (document.getElementById('logout'))
+        document.getElementById('logout').addEventListener('click', revokeAllScopes)
 }
 
 setCommonEvents()

@@ -61,6 +61,14 @@ class Settings
 
     public function mailPassword(Request $request, Response $response, array $args): Response
     {
+        $get = $request->getParams();
+        $account = $this->user->getUserById($_SESSION['id']);
+
+        if (!$this->validator->validate($get, ['token']) || ($get['token'] !== $account['token']))
+            return $response->withRedirect('/editPassword');
+
+        $_SESSION['profil']['token'] = password_hash(random_bytes(6), PASSWORD_DEFAULT);
+        $this->user->updateToken($account['pseudo'], $_SESSION['profil']['token']);
         return $this->renderSettings($response, ['editPwd' => true, 'reset' => true]);
     }
 
