@@ -3,8 +3,9 @@
 function initMap() {
     let mapNode = document.getElementById('map')
     mapNode.innerText = ''
-    let map = new google.maps.Map(document.getElementById('map'), {center: myPos, zoom: 11});
+    let map = new google.maps.Map(mapNode, {center: myPos, zoom: 11});
     let marker = [];
+
     for (let key in usersPos) {
         marker = new google.maps.Marker({
             position: usersPos[key],

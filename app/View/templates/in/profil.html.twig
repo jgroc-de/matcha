@@ -178,6 +178,18 @@
 {% endblock %}
 
 {% block script %}
+    <template id="repeatImage">
+        <img class="w3-image w3-display-middle" style="max-height:100%">
+    </template>
+    <template id="repeatCloseImage">
+        <i class="w3-padding w3-display-topright del-red fa fa-remove" title="remove picture"></i>
+    </template>
+    <template id="repeatTag">
+        <span>
+            <span></span>
+            <span class="del">(delete)</span>
+        </span>
+    </template>
     <script>
         var user =  {id: {{ profil.id }}, title: '{{ profil.pseudo }}', lat: {{ profil.lattitude }}, lng: {{ profil.longitude }} };
         var usersPos = [

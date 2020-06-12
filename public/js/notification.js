@@ -1,8 +1,7 @@
 'use strict'
 
 function addNotification(data) {
-    let template = document.getElementById("repeatSideNotif")
-    let link = document.importNode(template.content, true).firstElementChild
+    let link = getTemplate("repeatSideNotif")
     let notif = document.getElementById("notification")
     let badge = document.getElementById("badge")
 

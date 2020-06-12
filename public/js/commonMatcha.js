@@ -24,8 +24,7 @@ function display(id) {
 
 function toggleDisplay2(x) {
     while (x = x.nextElementSibling) {
-        if ((x.className) || (x.innerHTML))
-        {
+        if ((x.className) || (x.innerHTML)) {
             x.classList.toggle('w3-hide')
         }
     }
@@ -93,17 +92,12 @@ function xhrButtons() {
 
 xhrButtons()
 
-function printNotif(args) {
-    let template = document.querySelector("#repeatNotif")
-    let div = document.importNode(template.content, true).firstElementChild
+function printNotif() {
+    let div = getTemplate("repeatNotif")
     let notif = document.getElementById('notif')
 
     div.querySelector('p').textContent = args[0]
-    if (args[1]) {
-        div.classList.add('w3-green')
-    } else {
-        div.classList.add('w3-red')
-    }
+    div.classList.add(args[1] ? 'w3-green':'w3-red')
     notif.appendChild(div)
 
     setTimeout(function() {
@@ -112,7 +106,7 @@ function printNotif(args) {
 }
 
 function ggAjaxGet(path, callback, args) {
-    var request = new XMLHttpRequest()
+    let request = new XMLHttpRequest()
 
     request.open('GET', path, true)
     request.onreadystatechange = function() {
@@ -126,7 +120,7 @@ function ggAjaxGet(path, callback, args) {
 }
 
 function ggAjax(method, path, callback, args) {
-    var request = new XMLHttpRequest()
+    let request = new XMLHttpRequest()
 
     request.open(method, path, true)
     request.onreadystatechange = function() {
@@ -159,6 +153,11 @@ function getColor(kind) {
 function revokeAllScopes(event) {
     gapi.auth2.getAuthInstance().signOut();
     window.location.href = event.currentTarget.dataset.url
+}
+
+function getTemplate(id) {
+    let template = document.getElementById(id)
+    return document.importNode(template.content, true).firstElementChild
 }
 
 function setCommonEvents() {

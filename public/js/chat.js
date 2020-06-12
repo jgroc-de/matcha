@@ -23,8 +23,7 @@ function mateStatus() {
 }
 
 function addMessage(text, owner, myId) {
-    let template = document.getElementById("repeatChat")
-    let div = document.importNode(template.content, true).firstElementChild
+    let div = getTemplate("repeatChat")
     let position, color
 
     if (owner == myId) {
@@ -85,6 +84,7 @@ function sendMessageTo(event) {
     let targetId = event.currentTarget.dataset.targetId
     let dataset = document.getElementById(targetId).dataset
 
+
     if (text && text !== "") {
         let xhr = new XMLHttpRequest()
 
@@ -96,7 +96,7 @@ function sendMessageTo(event) {
     msgBox.focus()
 }
 
-function setEventListener(msgBox) {
+function setChatEventListener(msgBox) {
     msgBox.addEventListener("keydown", function(event) {
         if (event.code === "ShiftLeft" || event.code === "ShiftRight")
             shiftDown = 1
@@ -119,5 +119,5 @@ function setEventListener(msgBox) {
     sendButton.addEventListener('click', sendMessageTo, true)
 }
 
-setEventListener(msgBox)
+setChatEventListener(msgBox)
 setInterval(mateStatus, 60000)

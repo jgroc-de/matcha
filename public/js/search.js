@@ -55,8 +55,7 @@ function tagSort(event) {
 }
 
 function addChildrenCard(hash, show) {
-    let template = document.querySelector("#repeatProfil")
-    let clone = document.importNode(template.content, true)
+    let clone = getTemplate("repeatProfil")
 
     if (show) {
         let body = clone.querySelector('div')
@@ -179,7 +178,7 @@ function searchForm(event) {
         });
 }
 
-function setEvents() {
+function setSearchEvents() {
     let tags = document.getElementById('myTags')
     let select = document.getElementById('sort1')
     let nameForm = document.getElementById('searchByName')
@@ -194,4 +193,4 @@ function setEvents() {
 }
 
 reloadProfilCards()
-setEvents()
+setSearchEvents()

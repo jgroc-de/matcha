@@ -12,18 +12,19 @@ function addTag(path) {
         xhr.open('POST', path, true)
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
         xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                let id = this.responseText
-                let span = document.createElement('span')
-                let del = document.createElement('span')
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    let id = this.responseText
+                    let span = getTemplate("repeatTag")
 
-                span.id = 'tag' + id
-                span.textContent = "- #" + tag + " "
-                del.className = 'del'
-                del.setAttribute('onclick', 'delUserTag("/tag/", ' + id + ')')
-                del.textContent = '(delete)'
-                span.appendChild(del)
-                document.getElementById('Interest').appendChild(span)
+                    span.id = 'tag' + id
+                    span.children[1].setAttribute('onclick', 'delUserTag("/tag/", ' + id + ')')
+                    span.firstElementChild.textContent = "- #" + tag + " "
+                    document.getElementById('Interest').appendChild(span)
+                    printNotif(['added!', true])
+                } else {
+                    printNotif(['already Added?', false])
+                }
             }
         }
         xhr.send('tag=' + tag)
@@ -34,55 +35,50 @@ function addPicture() {
     let files = document.querySelectorAll('input[type=file]')
 
     for (let file of files) {
-        file.addEventListener('change', addEvent)
+        file.addEventListener('change', sendPicture)
     }
 }
 
-function addEvent(event) {
+function sendPicture(event) {
     var id = event.currentTarget.getAttribute('data-id')
-    var allowedTypes = ['image/png', 'image/jpeg', 'image/gif']
     var prev = this.parentNode.parentNode
+    let allowedTypes = ['image/png', 'image/jpeg', 'image/gif']
 
     if (allowedTypes.indexOf(this.files[0].type) === -1) {
         printNotif(['not allowed type (png, jpg/jpeg, gif)', false])
+        return
     } else if (this.files[0].size > 400000) {
         printNotif(['file too large (> 400ko)', false])
-    } else {
-        var form = new FormData()
-        var xhttp = new XMLHttpRequest()
-        var reader = new FileReader()
-
-        form.append('file', this.files[0])
-        xhttp.open('POST', '/picture/' + id.charAt(3), true)
-        xhttp.setRequestHeader('enctype', 'multipart/form-data')
-        xhttp.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200)
-            {
-                var path = this.responseText
-                var imgElement = document.createElement('img')
-                var iElement = document.createElement('i')
-
-                while (prev.firstChild)
-                    prev.removeChild(prev.firstChild)
-                imgElement.style.maxWidth = '100%'
-                imgElement.style.maxHeight = '100%'
-                imgElement.title = path
-                imgElement.alt = path
-                imgElement.className = 'w3-image w3-display-middle'
-                imgElement.setAttribute('onclick', 'displayModal("' + reader.result + '")')
-                imgElement.src = reader.result
-                prev.appendChild(imgElement)
-                iElement.className = 'w3-padding w3-display-topright del-red fa fa-remove'
-                iElement.title = 'remove picture'
-                iElement.setAttribute('onclick', 'deletePic("' + id + '")')
-                prev.appendChild(iElement)
-            }
-            else if (this.readyState === 4 && this.status === 500)
-                printNotif(['server trouble… try again later!', false])
-        }
-        xhttp.send(form)
-        reader.readAsDataURL(this.files[0])
+        return
     }
+    let form = new FormData()
+    let xhttp = new XMLHttpRequest()
+    var reader = new FileReader()
+
+    form.append('file', this.files[0])
+    xhttp.open('POST', '/picture/' + id.charAt(3), true)
+    xhttp.setRequestHeader('enctype', 'multipart/form-data')
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            let path = this.responseText
+            let imgElement = getTemplate("repeatImage")
+            let iElement = getTemplate("repeatCloseImage")
+
+            while (prev.firstChild)
+                prev.removeChild(prev.firstChild)
+            imgElement.title = path
+            imgElement.alt = path
+            imgElement.setAttribute('onclick', 'displayModal(this)')
+            imgElement.src = reader.result
+            prev.appendChild(imgElement)
+            iElement.setAttribute('onclick', 'deletePic("' + id + '")')
+            prev.appendChild(iElement)
+        }
+        else if (this.readyState === 4 && this.status === 500)
+            printNotif(['server trouble… try again later!', false])
+    }
+    xhttp.send(form)
+    reader.readAsDataURL(this.files[0])
 }
 
 function deletePic(id) {
