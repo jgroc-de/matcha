@@ -28,9 +28,9 @@
         <a href={{ path_for('home') }} class="{{ class }}">Home</a>
         <a href="{{ path_for('search') }}" class="{{ class }}">Search</a>
         <a href="{{ path_for('tchat') }}" class="{{ class }}">Chat</a>
-        <a href="#" class="{{ classR }}" title="logout" alt="logout" onclick="revokeAllScopes('{{ path_for('logout') }}')">
+        <div id="logout" class="{{ classR }}" title="logout" alt="logout" data-url="{{ path_for('logout') }}">
             <i class="fa fa-power-off" alt="logout" title="logout"></i>
-        </a>
+        </div>
         <a href="{{ path_for('editProfil') }}" class="{{ classR }}" title="edit profil" alt="edit">
             <i class="fa fa-gears" alt="edit profile" title="edit profile"></i>
         </a>

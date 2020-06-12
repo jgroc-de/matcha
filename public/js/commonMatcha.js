@@ -157,18 +157,17 @@ function getColor(kind) {
     }
 }
 
-function revokeAllScopes(url) {
+function revokeAllScopes(event) {
     gapi.auth2.getAuthInstance().signOut();
-    window.location.href = url
+    window.location.href = event.currentTarget.dataset.url
 }
 
 function setCommonEvents() {
     let titles = document.querySelectorAll('h3[matcha-toggle]')
-    let i = 0
-    while (i < titles.length) {
-        titles[i].addEventListener('click', toggleSibling)
-        i++
+    for (let title of titles) {
+        title.addEventListener('click', toggleSibling)
     }
+    document.getElementById('logout').addEventListener('click', revokeAllScopes)
 }
 
 setCommonEvents()
