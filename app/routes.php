@@ -13,6 +13,7 @@ use App\Controllers\Search;
 use App\Controllers\Settings;
 use App\Controllers\Setup;
 use App\Controllers\Tag;
+use App\Middlewares\adminRestriction;
 use App\Middlewares\authMiddleware;
 use App\Middlewares\noAuthMiddleware;
 use Monolog\Handler\StreamHandler;
@@ -33,12 +34,15 @@ $app->add(function ($req, $res, $next) {
 });
 
 /** @var $app Slim\App */
-$app->get('/setup', Setup::class . ':initDB')
-    ->setName('setup');
-$app->get('/seed', Setup::class . ':seed')
-    ->setName('seed');
-$app->get('/phpinfo', Setup::class . ':phpInfo');
-$app->get('/memcached', Setup::class . ':memcached');
+$app->group('', function() {
+    $this->get('/setup', Setup::class . ':initDB')
+        ->setName('setup');
+    $this->get('/seed', Setup::class . ':seed')
+        ->setName('seed');
+    $this->get('/phpinfo', Setup::class . ':phpInfo');
+    $this->get('/memcached', Setup::class . ':memcached');
+})->add(new adminRestriction());
+
 $app->get('/contact', Contact::class . ':page')
     ->setName('contact');
 $app->post('/contact', Contact::class . ':mail');

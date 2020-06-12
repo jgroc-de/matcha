@@ -39,9 +39,6 @@ class Setup
 
     public function memcached(Request $request, Response $response, array $args): Response
     {
-        if ($_ENV['PROD']) {
-            return $response->withRedirect('/');
-        }
         if (class_exists('Memcached')) {
             $memcached = new Memcached();
             $memcached->addServer("127.0.0.1", 11211);
@@ -60,9 +57,6 @@ class Setup
 
     public function phpInfo(Request $request, Response $response, array $args): Response
     {
-        if ($_ENV['PROD']) {
-            return $response->withRedirect('/');
-        }
         phpinfo();
 
         return $response;
@@ -70,10 +64,8 @@ class Setup
 
     public function initDB(Request $request, Response $response, array $args): Response
     {
-        if ($_ENV['PROD']) {
-            return $response->withRedirect('/');
-        }
-        $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
+        $file = file_get_contents(__DIR__ . '/../../data
+        base/matcha.sql');
         $this->pdo->exec($file);
 
         return $response->withRedirect('/');
@@ -81,9 +73,6 @@ class Setup
 
     public function seed(Request $request, Response $response, array $args): Response
     {
-        if ($_ENV['PROD']) {
-            return $response->withRedirect('/');
-        }
         $count = 500;
         $faker = Factory::create();
         $password = password_hash('trollB1B1', PASSWORD_DEFAULT);
