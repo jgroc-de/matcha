@@ -1,6 +1,7 @@
 vendor
 ratchet/vendor
 public/user_img/*.[png|jpg]
+.env
 .idea
 .ggApi.json
 .php_cs.cache
