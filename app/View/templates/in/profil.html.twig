@@ -189,6 +189,7 @@
         </div>
     </div>
 </div>
+<div id="myId" data-token="{{ me.publicToken }}"></div>
 {% endblock %}
 
 {% block script %}
@@ -224,7 +225,6 @@
                 {lat: {{ user.lattitude }}, lng: {{ user.longitude }}, title: '{{ user.pseudo }}', img: '{{ user.img1 }}', id: '{{ user.id }}', kind: '{{ user.gender }}'},
             {% endfor %}
         ];
-        var myId = '{{ me.publicToken }}';
     </script>
     {% if profil.id == me.id %}
         <script src="{{ BASE_URL }}/js/myProfile.js"></script>

@@ -1,9 +1,14 @@
 'use strict'
 
-function displayModal(url) {
+let test = document.getElementById('myId')
+if (test) {
+    var myId = test.dataset.token
+}
+
+function displayModal(event) {
     let modal = document.getElementById('Modal')
 
-    modal.getElementsByTagName('img')[0].src = url
+    modal.getElementsByTagName('img')[0].src = event.currentTarget.src
     modal.style.display='block'
 }
 
@@ -11,7 +16,7 @@ function display(id) {
     let forms = document.forms
     let h2 = document.querySelectorAll('h2[matcha-title]')
 
-    for (var i = 0; i < forms.length; i++) {
+    for (let i = 0; i < forms.length; i++) {
         h2[i].classList.replace("w3-theme-l1", "w3-theme-d1")
         if (forms[i].id === id) {
             forms[i].classList.add('w3-show')
@@ -157,6 +162,10 @@ function setCommonEvents() {
     let actionButtons = document.querySelectorAll('button[data-url]')
     for (let action of actionButtons) {
         action.addEventListener('click', getUrl)
+    }
+    let images = document.querySelectorAll('img[matcha-modal]')
+    for (let image of images) {
+        image.addEventListener('click', displayModal)
     }
 }
 

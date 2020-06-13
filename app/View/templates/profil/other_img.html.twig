@@ -4,7 +4,7 @@
         {% if url %}
             <img class="mySlides w3-image w3-display-middle"
                  alt="{{ pseudo }}" src="{{ url }}"
-                 title='{{ '%s_img%d'|format(pseudo, key + 2) }}' style="max-height:250px" onclick="displayModal('{{ url }}')">
+                 title='{{ '%s_img%d'|format(pseudo, key + 2) }}' style="max-height:250px" matcha-modal>
             {% set first = false %}
         {% endif %}
     {% endfor %}

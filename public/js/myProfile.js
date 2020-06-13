@@ -42,10 +42,11 @@ function sendPicture(event) {
                 prev.removeChild(prev.firstChild)
             imgElement.title = path
             imgElement.alt = path
-            imgElement.setAttribute('onclick', 'displayModal(this)')
+            imgElement.addEventListener('click', displayModal, true)
             imgElement.src = reader.result
             prev.appendChild(imgElement)
-            iElement.setAttribute('onclick', 'deletePic("' + id + '")')
+            iElement.dataset.id = id
+            iElement.addEventListener('click', deletePic, true)
             prev.appendChild(iElement)
         }
         else if (this.readyState === 4 && this.status === 500)
@@ -55,7 +56,8 @@ function sendPicture(event) {
     reader.readAsDataURL(this.files[0])
 }
 
-function deletePic(id) {
+function deletePic(event) {
+    var id = event.currentTarget.dataset.id
     ggAjax('DELETE', 'picture/' + id.charAt(3), function (id) {
         let parentNode = document.getElementById(id)
         let div = getTemplate('repeatAddImage')
@@ -68,7 +70,7 @@ function deletePic(id) {
         while (parentNode.hasChildNodes())
             parentNode.removeChild(parentNode.firstChild)
         parentNode.appendChild(div)
-        addPicture()
+        inputElemt.addEventListener('change', sendPicture, true)
     }, id)
 }
 
@@ -133,9 +135,12 @@ function setProfileEventsListener() {
         delButton.addEventListener('click', delUserTag, true)
     }
     let files = document.querySelectorAll('input[type=file]')
-
     for (let file of files) {
         file.addEventListener('change', sendPicture)
+    }
+    let dels = document.querySelectorAll('i[matcha-delete]')
+    for (let del of dels) {
+        del.addEventListener('click', deletePic)
     }
 }
 
