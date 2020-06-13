@@ -22,18 +22,6 @@ use Monolog\Logger;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-// enabling lazy cors
-$app->options('/{routes:.+}', function ($request, $response, $args) {
-    return $response;
-});
-$app->add(function ($req, $res, $next) {
-    $response = $next($req, $res);
-    return $response
-        ->withHeader('Access-Control-Allow-Origin', $this->get('settings')['siteUrl'])
-        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-});
-
 /** @var $app Slim\App */
 $app->group('', function() {
     $this->get('/setup', Setup::class . ':initDB')
@@ -41,6 +29,7 @@ $app->group('', function() {
     $this->get('/seed', Setup::class . ':seed')
         ->setName('seed');
     $this->get('/phpinfo', Setup::class . ':phpInfo');
+    $this->get('/cookie', Setup::class . ':cookieParams');
     $this->get('/memcached', Setup::class . ':memcached');
 })->add(new adminRestriction());
 

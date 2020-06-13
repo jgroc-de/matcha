@@ -117,4 +117,10 @@ class Setup
 
         return $response->withRedirect('/');
     }
+
+    public function cookieParams(Request $request, Response $response, array $args): Response
+    {
+        var_dump(session_get_cookie_params());
+        return $response;
+    }
 }

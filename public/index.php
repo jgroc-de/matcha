@@ -3,6 +3,13 @@
 use Slim\App;
 use Symfony\Component\Dotenv\Dotenv;
 
+// secure the session cookie in code
+session_set_cookie_params([
+    'samesite' => 'Strict',
+    'secure' => true,
+    'HttpOnly' => true,
+]);
+
 session_start();
 
 require '../vendor/autoload.php';
@@ -12,6 +19,7 @@ $dotenv = new Dotenv();
 if (is_file(__DIR__.'/../.env')) {
     $dotenv->load(__DIR__ . '/../.env');
 }
+
 // init cloudinary
 if ($_ENV['CLOUDINARY_URL']) {
     \Cloudinary::config_from_url($_ENV['CLOUDINARY_URL']);
@@ -27,11 +35,11 @@ $app = new App(['settings' => [
     'siteUrl' => $proto . '://' . $_SERVER['HTTP_HOST'],
 ]]);
 
-//CSRF
-//$app->add(new Guard);
-
 // Set up dependencies
 require '../app/container.php';
+
+// add security headers
+require '../app/security.php';
 
 // Register routes
 require '../app/routes.php';

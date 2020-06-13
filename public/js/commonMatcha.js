@@ -73,16 +73,6 @@ function submitForm(event) {
     });
 }
 
-function xhrButtons() {
-    let actionButtons = document.querySelectorAll('button[data-url]')
-
-    for (let action of actionButtons) {
-        action.addEventListener('click', getUrl)
-    }
-}
-
-xhrButtons()
-
 function printNotif(args) {
     let div = getTemplate("repeatNotif")
     let notif = document.getElementById('notif')
@@ -161,9 +151,12 @@ function setCommonEvents() {
         logout.addEventListener('click', revokeAllScopes)
     }
     let forms = document.querySelectorAll('form[matcha-form]')
-
     for (let form of forms) {
         form.addEventListener('submit', submitForm, true)
+    }
+    let actionButtons = document.querySelectorAll('button[data-url]')
+    for (let action of actionButtons) {
+        action.addEventListener('click', getUrl)
     }
 }
 
