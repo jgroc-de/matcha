@@ -25,6 +25,7 @@ $app->add(function ($req, $res, $next) {
         ->withHeader('Content-Security-Policy', $_ENV['PROD'] ? "default-src https: 'unsafe-inline'" : "default-src http: 'unsafe-inline'")
         //42 + local
         ->withHeader('Content-Security-Policy', "img-src data: meta.intra.42.fr localhost:8080 https://res.cloudinary.com matcha2.herokuapp.com maps.gstatic.com *.googleapis.com")
+        ->withHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
         //clickjacking
         ->withHeader('X-Frame-Options', 'DENY');
 });
