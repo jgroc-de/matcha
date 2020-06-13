@@ -7,7 +7,7 @@ SET time_zone = "+00:00";
 -- Databatse: `matcha`
 --
 
-DROP DATABASE IF EXISTS matcha
+DROP DATABASE IF EXISTS matcha;
 CREATE DATABASE matcha;
 USE matcha;
 
