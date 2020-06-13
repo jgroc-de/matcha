@@ -73,14 +73,6 @@ function submitForm(event) {
     });
 }
 
-(function() {
-    let forms = document.querySelectorAll('form[matcha-form]')
-
-    for (let form of forms) {
-        form.addEventListener('submit', submitForm, true)
-    }
-})()
-
 function xhrButtons() {
     let actionButtons = document.querySelectorAll('button[data-url]')
 
@@ -167,6 +159,11 @@ function setCommonEvents() {
     let logout = document.getElementById('logout')
     if (logout) {
         logout.addEventListener('click', revokeAllScopes)
+    }
+    let forms = document.querySelectorAll('form[matcha-form]')
+
+    for (let form of forms) {
+        form.addEventListener('submit', submitForm, true)
     }
 }
 
