@@ -16,6 +16,7 @@ use App\Controllers\Tag;
 use App\Middlewares\adminRestriction;
 use App\Middlewares\authMiddleware;
 use App\Middlewares\noAuthMiddleware;
+use App\Middlewares\noOAuth;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Slim\Http\Request;
@@ -81,14 +82,17 @@ $app->group('', function () use ($app) {
         ->setName('editProfil');
     $this->post('/editProfil', Settings::class . ':updateProfil');
     $this->get('/editEmail', Settings::class . ':editEmail')
-        ->setName('editEmail');
-    $this->post('/editEmail', Settings::class . ':updateEmail');
-
+        ->setName('editEmail')
+        ->add(new noOAuth());
+    $this->post('/editEmail', Settings::class . ':updateEmail')
+        ->add(new noOAuth());
     $this->get('/mailPassword', Settings::class . ':mailPassword')
         ->setName('mailPassword');
     $this->get('/editPassword', Settings::class . ':editPassword')
-        ->setName('editPassword');
-    $this->post('/editPassword', Settings::class . ':updatePassword');
+        ->setName('editPassword')
+        ->add(new noOAuth());
+    $this->post('/editPassword', Settings::class . ':updatePassword')
+        ->add(new noOAuth());
     $this->get('/rgpd', Settings::class . ':rgpd')
         ->setName('RGPD');
 

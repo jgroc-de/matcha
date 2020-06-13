@@ -25,18 +25,18 @@
             </div>
             <input class="{{ buttonClass }}" type=submit value=Submit>
         </form>
+        {{ title('Change your email', 'editEmail',  editEmail) }}
+        <form id="editEmail" class="w3-container w3-theme-light clearfix w3-hide {% if editEmail %}w3-show{% endif %}"
+              style="opacity:0.95" action="{{ path_for('editEmail') }}" method="post" matcha-form>
+            <div class="w3-section">
+                {{ input('password','enter password', {'name': 'password'}) }}
+            </div>
+            <div class="w3-section">
+                {{ input('email','enter new email', {'name': 'email'}) }}
+            </div>
+            <input class="{{ buttonClass }}" type=submit value=Submit>
+        </form>
     {% endif %}
-    {{ title('Change your email', 'editEmail',  editEmail) }}
-    <form id="editEmail" class="w3-container w3-theme-light clearfix w3-hide {% if editEmail %}w3-show{% endif %}"
-          style="opacity:0.95" action="{{ path_for('editEmail') }}" method="post" matcha-form>
-        <div class="w3-section">
-            {{ input('password','enter password', {'name': 'password'}) }}
-        </div>
-        <div class="w3-section">
-            {{ input('email','enter new email', {'name': 'email'}) }}
-        </div>
-        <input class="{{ buttonClass }}" type=submit value=Submit>
-    </form>
     {{ title('Your Account', 'RGPD',  rgpd) }}
     <form id="RGPD" class="w3-container w3-theme-light clearfix w3-hide {% if rgpd %}w3-show{% endif %}"
           style="opacity:0.95" action="">

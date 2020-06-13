@@ -55,8 +55,6 @@ class Settings
 
     public function editPassword(Request $request, Response $response, array $args): Response
     {
-        if ($_SESSION['profil']['oauth'])
-            return $this->renderSettings($response, ['editProfil' => true]);
         return $this->renderSettings($response, ['editPwd' => true]);
     }
 
@@ -75,8 +73,6 @@ class Settings
 
     public function updatePassword(Request $request, Response $response, array $args): Response
     {
-        if ($_SESSION['profil']['oauth'])
-            return $this->renderSettings($response, ['editProfil' => true]);
         $this->form->checkPwd($request->getParsedBody());
 
         return $response->withJson($this->flash->getMessages());
