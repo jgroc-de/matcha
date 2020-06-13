@@ -23,6 +23,8 @@ $app->add(function ($req, $res, $next) {
         ->withHeader('Referrer-Policy', 'no-referrer, strict-origin-when-cross-origin')
         //xss
         ->withHeader('Content-Security-Policy', $_ENV['PROD'] ? "default-src https: 'unsafe-inline'" : "default-src http: 'unsafe-inline'")
+        //42 + local
+        ->withHeader('Content-Security-Policy', "img-src data: meta.intra.42.fr localhost:8080 matcha2.herokuapp.com maps.gstatic.com *.googleapis.com")
         //clickjacking
         ->withHeader('X-Frame-Options', 'DENY');
 });
