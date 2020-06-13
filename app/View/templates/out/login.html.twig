@@ -10,7 +10,7 @@
     <form id="login" class="w3-container w3-theme-light clearfix w3-hide {% if login %}w3-show{% endif %}"
           style="opacity:0.95" action="{{ path_for('login') }}" method="post">
         {% if login %}
-            {% for key, message in flash['failure'] %}
+            {% for key, message in flash[FlashMessage::FAIL] %}
                 <div class="w3-panel w3-{% if key == "success" %}green{% else %}red{% endif %}">
                     <p>{{ message }}</p>
                 </div>

@@ -124,7 +124,7 @@ CREATE TABLE `message` (
 CREATE TABLE `hashtags` (
     `id` SERIAL PRIMARY KEY,
     `tag` VARCHAR(255) NOT NULL UNIQUE,
-    `tag_count` BIGINT UNSIGNED DEFAULT 1
+    `tag_count` BIGINT UNSIGNED DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

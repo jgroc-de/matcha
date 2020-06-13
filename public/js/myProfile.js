@@ -2,42 +2,14 @@
 
 window.URL = window.URL || window.webkitURL
 
-function addTag(path) {
-    var tag = prompt("add a tag (without the '#'):")
+function addTag(data) {
+    let span = getTemplate("repeatTag")
 
-    if (!tag) {
-        return
-    }
-    tag = tag.replace(/(?:\s)/g, "")
-    let xhr = new XMLHttpRequest()
-
-    xhr.open('POST', path, true)
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4) {
-            if (this.status === 200) {
-                let id = this.responseText
-                let span = getTemplate("repeatTag")
-
-                span.id = 'tag' + id
-                span.children[1].setAttribute('onclick', 'delUserTag("/tag/", ' + id + ')')
-                span.firstElementChild.textContent = "- #" + tag + " "
-                document.getElementById('myTag').appendChild(span)
-                printNotif(['added!', true])
-            } else {
-                printNotif(['already Added?', false])
-            }
-        }
-    }
-    xhr.send('tag=' + tag)
-}
-
-function addPicture() {
-    let files = document.querySelectorAll('input[type=file]')
-
-    for (let file of files) {
-        file.addEventListener('change', sendPicture)
-    }
+    span.id = 'tag' + data.id
+    span.lastElementChild.setAttribute('data-id', data.id)
+    span.lastElementChild.addEventListener('click', delUserTag, true)
+    span.firstElementChild.textContent = "- #" + data.tag + " "
+    document.getElementById('myTag').appendChild(span)
 }
 
 function sendPicture(event) {
@@ -135,8 +107,9 @@ function acceptFriendReq(path, id) {
     printNotif(["Friend request accepted", true])
 }
 
-function delUserTag(path, id) {
-    ggAjax('DELETE', path + id, ggRemoveChild, 'tag' + id)
+function delUserTag(event) {
+    let id = event.currentTarget.dataset.id
+    ggAjax('DELETE', '/tag/' + id, ggRemoveChild, 'tag' + id)
 }
 
 function mateStatus() {
@@ -153,5 +126,18 @@ function highlightMate(data) {
     }
 }
 
-addPicture()
+function setProfileEventsListener() {
+    let delButtons = document.querySelectorAll('span.del')
+
+    for (let delButton of delButtons) {
+        delButton.addEventListener('click', delUserTag, true)
+    }
+    let files = document.querySelectorAll('input[type=file]')
+
+    for (let file of files) {
+        file.addEventListener('change', sendPicture)
+    }
+}
+
+setProfileEventsListener()
 setInterval(mateStatus, 60000)

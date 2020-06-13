@@ -51,7 +51,7 @@ class Search
     public function main(Request $request, Response $response, array $args)
     {
         if (!$_SESSION['profil']['biography']) {
-            $this->flash->addMessage('failure', 'Plz complete your profil before searching for targets');
+            $this->flash->addMessage(FlashMessage::FAIL, 'Plz complete your profil before searching for targets');
 
             return $response->withRedirect('/editProfil', 302);
         }
@@ -99,7 +99,7 @@ class Search
             }
         }
 
-        return $response->withJson(['failure' => 'nothing Found'], 404);
+        return $response->withJson([FlashMessage::FAIL => 'nothing Found'], 404);
     }
 
     public function criteria(Request $request, Response $response, array $args)
@@ -107,7 +107,7 @@ class Search
         $post = $request->getParsedBody();
         $keys = ['Amin', 'Amax', 'Pmin', 'Pmax', 'distance'];
         if (!$this->validator->validate($post, $keys)) {
-            return $response->withJson(['failure' => 'nothing Found'], 404);
+            return $response->withJson([FlashMessage::FAIL => 'nothing Found'], 404);
         }
         $date = date('Y');
         $age = [
@@ -121,19 +121,19 @@ class Search
         $dist = max((int) $post['distance'], self::DISTANCE_MIN);
         $targets = $this->getTarget($post);
         if (empty($targets)) {
-            return $response->withJson(['failure' => 'nothing Found'], 404);
+            return $response->withJson([FlashMessage::FAIL => 'nothing Found'], 404);
         }
         if ($post['tags']) {
             $userTags = $this->getTags($post);
             if (empty($userTags)) {
-                return $response->withJson(['failure' => 'nothing Found'], 404);
+                return $response->withJson([FlashMessage::FAIL => 'nothing Found'], 404);
             }
         } else {
             $userTags = [];
         }
         $list = $this->user->getUserListByCriteria($age, $targets, $popularity, $this->distance2angle($dist), $userTags);
         if (empty($list)) {
-            return $response->withJson(['failure' => 'nothing Found'], 404);
+            return $response->withJson([FlashMessage::FAIL => 'nothing Found'], 404);
         }
         $tags = $this->tag->getUserTags($_SESSION['id']);
         $list = $this->computeMisc($list, $tags);

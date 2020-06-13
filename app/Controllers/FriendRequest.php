@@ -35,14 +35,14 @@ class FriendRequest
     public function add(Request $request, Response $response, array $args): Response
     {
         if (!$this->userModel->hasPictures($_SESSION['id'])) {
-            return $response->withJson(['failure' => ['1' => 'You need to add pictures on your profile first!']]);
+            return $response->withJson([FlashMessage::FAIL => ['1' => 'You need to add pictures on your profile first!']]);
         }
         if (!$this->isNotAlreadyFriendOrBlacklisted($_SESSION['id'], $args['id'])) {
-            return $response->withJson(['success' => 'already sent!']);
+            return $response->withJson([FlashMessage::SUCCESS => 'already sent!']);
         }
         $user = $this->userModel->getUserById($args['id']);
         if (empty($user)) {
-            return $response->withJson(['failure' => ['1' => 'Not Found!'], 404]);
+            return $response->withJson([FlashMessage::FAIL => ['1' => 'Not Found!'], 404]);
         }
         if ($this->friendsModel->isLiked($args['id'], $_SESSION['id']) || $user['bot']) {
             $this->friendsModel->setFriend($_SESSION['id'], $args['id']);
@@ -76,7 +76,7 @@ class FriendRequest
             $flash = 'Request Sent!';
         }
 
-        return $response->withJson(['success' => $flash]);
+        return $response->withJson([FlashMessage::SUCCESS => $flash]);
     }
 
     private function sendNotif($token, $destID, $expID, $friendId, $msg)

@@ -53,11 +53,13 @@
                     <div id="Profil" class="w3-theme-l5 w3-padding gg-section">
                         <div class="w3-left-align">
                             <div class="profil-wrap">
-                                <p>{% if not home %}<span id="online" class="w3-text-green w3-hide">(online)<br></span>
-                                    <span id="offline" class="matcha-small-text w3-text-blue">(offline since: {{ profil.lastlog|date('d M Y') }})<br></span>
-                                {% endif %}
-                                <span class="name">{{ profil.name}} {{profil.surname}}, {{ "now"|date("Y") - profil.birthdate }}</span><br>
-                                <span class="matcha-small-text">{{ profil.email }} - {{ profil.gender }} - {{ profil.sexuality }}</span><br>
+                                <p>
+                                    {% if not home %}
+                                        <span id="online" class="w3-text-green w3-hide">(online)<br></span>
+                                        <span id="offline" class="matcha-small-text w3-text-blue">(offline since: {{ profil.lastlog|date('d M Y') }})<br></span>
+                                    {% endif %}
+                                    <span class="name">{{ profil.name}} {{profil.surname}}, {{ "now"|date("Y") - profil.birthdate }}</span><br>
+                                    <span class="matcha-small-text">{{ profil.email }} - {{ profil.gender }} - {{ profil.sexuality }}</span><br>
                                 </p>
                                 <div class="matcha-pop-score" style="background-color:{{(profil.popularity > 50) ? '#5ad168' : '#a7e9af'}};">{{ profil.popularity }} %</div>
                             </div>
@@ -71,31 +73,27 @@
                 <div class="w3-card-4">
                     <h3 class="w3-hover-green" matcha-toggle="">{% if home %}Your {% endif %}Tags</h3>
                     <div class="w3-theme-l5 gg-tag-section">
+                        {% if home %}
+                            <h6 class="w3-hover-green" matcha-toggle>add tags</h6>
+                            <form action="{{ path_for('addTag') }}" method="POST" matcha-form>
+                                <label class="w3-margin-left" for="test">add your tag without #</label>
+                                <input class="w3-input w3-border" id="test" type="text" name="tag" placeholder="ex: science" pattern="[^\s'&quot;`]{1,42}" required="">
+                            </form>
+                            <h6 class="w3-hover-green" matcha-toggle>trending tags</h6>
+                            <div class="w3-padding w3-tiny">
+                                {% for tag in trendingTags %}
+                                    <span>{%if (tag != trendingTags[0])%} - {% endif %}#{{tag.tag}}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <h6 class="w3-hover-green" matcha-toggle>{% if home %}Your {% endif %}tags</h6>
                         <div class="w3-padding" id="myTag">
                             {% for tag in tags %}
                                 <span id="tag{{tag.id}}">
-                                    {%if (tag != tags[0])%}
-                                        -
-                                    {% endif %}
-                                    #{{tag.tag}}
+                                    {%if (tag != tags[0])%} - {% endif %}#{{tag.tag}}
                                     {% if home %}
-                                        <span class="del" onclick="delUserTag('/tag/', {{tag.id}})">(delete)</span>
+                                        <span class="del" data-id="{{tag.id}}">(delete)</span>
                                     {% endif %}
-                                </span>
-                            {% endfor %}
-                        </div>
-                        <h4>add tags</h4>
-                        <form action="{{ path_for('addTag') }}" method="POST">
-                            <input class="w3-input w3-border" id="test" type="text" name="tag" placeholder="tag_without_#" pattern="[^\s'&quot;`]{1,42}" required="">
-                        </form>
-                        <h4>trending tags</h4>
-                        <div class="w3-padding">
-                            {% for tag in trendingTags %}
-                                <span id="tag{{tag.id}}">
-                                    {%if (tag != trendingTags[0])%}
-                                        -
-                                    {% endif %}
-                                    #{{tag.tag}}
                                 </span>
                             {% endfor %}
                         </div>

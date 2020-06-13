@@ -26,9 +26,9 @@ class MailSender
     public function send(): bool
     {
         if ($this->mail->send()) {
-            $this->flash->addMessage('success', 'Email sent. Check your mailbox, your spambox, your lunchbox, everything!!!');
+            $this->flash->addMessage(FlashMessage::SUCCESS, 'Email sent. Check your mailbox, your spambox, your lunchbox, everything!!!');
         } else {
-            $this->flash->addMessage('failure', 'Email NOT sent.. For emergency cases, plz, "contact" us!!!');
+            $this->flash->addMessage(FlashMessage::FAIL, 'Email NOT sent.. For emergency cases, plz, "contact" us!!!');
         }
 
         return true;

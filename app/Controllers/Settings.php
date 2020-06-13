@@ -90,7 +90,7 @@ class Settings
             $this->user->updateEmail($post);
             $_SESSION['profil']['email'] = $post['email'];
             $this->mail->sendUpdateMail();
-            $this->flash->addMessage('success', 'Email updated, check your mail !');
+            $this->flash->addMessage(FlashMessage::SUCCESS, 'Email updated, check your mail !');
         }
 
         return $response->withJson($this->flash->getMessages());
@@ -106,7 +106,7 @@ class Settings
         $post = $request->getParsedBody();
         if ($this->form->checkProfil($post) && $this->user->updateUser($post)) {
             $_SESSION['profil'] = array_replace($_SESSION['profil'], $post);
-            $this->flash->addMessage('success', 'Profil updated !');
+            $this->flash->addMessage(FlashMessage::SUCCESS, 'Profil updated !');
         }
 
         return $response->withJson($this->flash->getMessages());

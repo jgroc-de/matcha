@@ -40,12 +40,12 @@ class TagModel
     public function getUserTagByName(string $tag, int $user)
     {
         $req = $this->db->prepare('
-            SELECT *
-            FROM usertags
-            INNER JOIN hashtags
+            SELECT hashtags.id, hashtags.tag
+            FROM hashtags
+            INNER JOIN usertags
             ON hashtags.id = usertags.id_tag
             WHERE hashtags.tag = ?
-            AND id_user = ?
+            AND usertags.id_user = ?
         ');
         $req->execute([$tag, $user]);
 

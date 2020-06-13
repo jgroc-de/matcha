@@ -43,7 +43,6 @@ async function postData(url = '', data = {}) {
         credentials: 'same-origin', // include, *same-origin, omit
         body: data // body data type must match "Content-Type" header
     });
-    console.log(response);
 
     return response.json();
 }
@@ -61,12 +60,15 @@ function getUrl(event) {
 
 function submitForm(event) {
     event.preventDefault()
-    postData(event.currentTarget.action, new FormData(event.currentTarget))
+    var action = event.currentTarget.action
+    var baseURI = event.currentTarget.baseURI
+    postData(action, new FormData(event.currentTarget))
         .then(data => {
-            if (data.success) {
-                printNotif([data.success, true])
-            } else {
-                printNotif([data.failure['1'], false])
+            data.success ? printNotif([data.success, true]) : printNotif([data.failure['1'], false])
+            switch (action) {
+                case baseURI + 'tag':
+                    addTag(data)
+                    break
             }
     });
 }
@@ -158,7 +160,7 @@ function getTemplate(id) {
 }
 
 function setCommonEvents() {
-    let titles = document.querySelectorAll('h3[matcha-toggle]')
+    let titles = document.querySelectorAll('[matcha-toggle]')
     for (let title of titles) {
         title.addEventListener('click', toggleSibling)
     }

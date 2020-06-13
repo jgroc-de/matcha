@@ -135,5 +135,5 @@ $container['App\Controllers\Setup'] = function ($container) {
 };
 
 $container['App\Controllers\Tag'] = function ($container) {
-    return new Tag($container->get('tag'), $container->get('validator'));
+    return new Tag($container->get('flash'), $container->get('tag'), $container->get('validator'));
 };

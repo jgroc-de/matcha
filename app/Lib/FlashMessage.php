@@ -7,6 +7,9 @@ namespace App\Lib;
  */
 class FlashMessage
 {
+    const SUCCESS = 'success';
+    const FAIL = 'failure';
+
     /** @var int $id */
     private $id = 1;
 
@@ -14,17 +17,17 @@ class FlashMessage
     private $storage = [];
 
     /**
-     * @param string $key key = fail or success
+     * @param string $key key = FlashMessage::SUCCESS or FAIL
      */
     public function addMessage(string $key, string $message)
     {
-        if ($key === 'success') {
-            $this->storage['success'] = $message;
+        if ($key === self::SUCCESS) {
+            $this->storage[self::SUCCESS] = $message;
         } else {
-            if (!isset($this->storage['failure'])) {
-                $this->storage['failure'] = [];
+            if (!isset($this->storage[self::FAIL])) {
+                $this->storage[self::FAIL] = [];
             }
-            $this->storage['failure'][$this->id] = $message;
+            $this->storage[self::FAIL][$this->id] = $message;
             ++$this->id;
         }
     }

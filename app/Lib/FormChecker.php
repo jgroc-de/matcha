@@ -41,17 +41,17 @@ class FormChecker
         }
         $account = $this->userModel->getUser($post['pseudo']);
         if (empty($account)) {
-            $this->flashMessage->addMessage('failure', 'wrong login or password');
+            $this->flashMessage->addMessage(FlashMessage::FAIL, 'wrong login or password');
 
             return false;
         }
         if ($account['activ'] == 0) {
-            $this->flashMessage->addMessage('failure', 'account need activation');
+            $this->flashMessage->addMessage(FlashMessage::FAIL, 'account need activation');
 
             return false;
         }
         if (!$this->testPassword($account['password'], $post['password'])) {
-            $this->flashMessage->addMessage('failure', 'wrong login or password');
+            $this->flashMessage->addMessage(FlashMessage::FAIL, 'wrong login or password');
 
             return false;
         }
@@ -97,7 +97,7 @@ class FormChecker
             if ($account) {
                 $this->mail->sendResetMail($account);
             }
-            $this->flashMessage->addMessage('success', 'Email sent, check your mailbox!!');
+            $this->flashMessage->addMessage(FlashMessage::SUCCESS, 'Email sent, check your mailbox!!');
         }
     }
 
@@ -109,12 +109,12 @@ class FormChecker
             return $post;
         }
         if (!empty($user->getUser($post['pseudo']))) {
-            $this->flashMessage->addMessage('failure', 'pseudo already taken');
+            $this->flashMessage->addMessage(FlashMessage::FAIL, 'pseudo already taken');
 
             return $post;
         }
         if (!empty($user->getUserByEmail($post['email']))) {
-            $this->flashMessage->addMessage('failure', 'email already taken');
+            $this->flashMessage->addMessage(FlashMessage::FAIL, 'email already taken');
 
             return $post;
         }
@@ -129,7 +129,7 @@ class FormChecker
         $post = $user->getUser($post['pseudo']);
         $this->ft_geoIP->setLatLng($post);
         $this->mail->sendValidationMail($post);
-        $this->flashMessage->addMessage('success', 'mail sent! Check yourmail box (including trash, spam, whatever…)');
+        $this->flashMessage->addMessage(FlashMessage::SUCCESS, 'mail sent! Check yourmail box (including trash, spam, whatever…)');
 
         return $post;
     }
@@ -138,7 +138,7 @@ class FormChecker
     {
         if ($valid = $this->validator->validate($post, ['email', 'text', 'g-recaptcha-response'])) {
             $this->mail->contactMe(htmlentities($post['text']), $post['email']);
-            $this->flashMessage->addMessage('success', 'Thank you!');
+            $this->flashMessage->addMessage(FlashMessage::SUCCESS, 'Thank you!');
         }
     }
 
@@ -147,12 +147,12 @@ class FormChecker
         if ($this->validator->validate($post, ['password', 'password_confirmation'])) {
             $account = $this->userModel->getUserById($_SESSION['id']);
             if (isset($post['oldPassword']) && !$this->testPassword($account['password'], $post['oldPassword'])) {
-                $this->flashMessage->addMessage('failure', 'wrong password');
+                $this->flashMessage->addMessage(FlashMessage::FAIL, 'wrong password');
                 return;
             }
 
             $this->userModel->updatePassUser(password_hash($post['password'], PASSWORD_DEFAULT));
-            $this->flashMessage->addMessage('success', 'password updated!');
+            $this->flashMessage->addMessage(FlashMessage::SUCCESS, 'password updated!');
         }
     }
 
@@ -163,7 +163,7 @@ class FormChecker
             return false;
         }
         if (!empty($this->userModel->getUser($post['pseudo'])) && $post['pseudo'] !== $_SESSION['profil']['pseudo']) {
-            $this->flashMessage->addMessage('failure', 'pseudo already taken');
+            $this->flashMessage->addMessage(FlashMessage::FAIL, 'pseudo already taken');
 
             return false;
         }
@@ -180,12 +180,12 @@ class FormChecker
         $account = $this->userModel->getUserById($_SESSION['id']);
 
         if (!$this->testPassword($account['password'], $post['password'])) {
-            $this->flashMessage->addMessage('failure', 'wrong password');
+            $this->flashMessage->addMessage(FlashMessage::FAIL, 'wrong password');
             return false;
         }
 
         if (!empty($this->userModel->getUserByEmail($post['email']))) {
-            $this->flashMessage->addMessage('failure', 'email already taken');
+            $this->flashMessage->addMessage(FlashMessage::FAIL, 'email already taken');
 
             return false;
         }

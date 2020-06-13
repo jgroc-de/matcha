@@ -40,7 +40,7 @@ class Blacklist
             $flash = 'This user is already on your blacklist!';
         }
 
-        return $response->withJson(['success' => $flash]);
+        return $response->withJson([FlashMessage::SUCCESS => $flash]);
     }
 
     public function report(Request $request, Response $response, array $args): Response
@@ -52,7 +52,7 @@ class Blacklist
             $flash = 'Already reported';
         }
 
-        return $response->withJson(['success' => $flash]);
+        return $response->withJson([FlashMessage::SUCCESS => $flash]);
     }
 
     private function deleteFriendAndBlacklist(int $id): bool

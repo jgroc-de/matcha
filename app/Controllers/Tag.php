@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Lib\FlashMessage;
 use App\Lib\Validator;
 use App\Model\TagModel;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -13,9 +14,12 @@ class Tag
     private $tag;
     /** @var Validator */
     private $validator;
+    /** @var FlashMessage */
+    private $flash;
 
-    public function __construct(TagModel $tagModel, Validator $validator)
+    public function __construct(FlashMessage $flashMessage, TagModel $tagModel, Validator $validator)
     {
+        $this->flash = $flashMessage;
         $this->tag = $tagModel;
         $this->validator = $validator;
     }
@@ -29,13 +33,14 @@ class Tag
             $tagInfo = $tag->getTag($post['tag']);
             if ($tag->setUserTag($tagInfo['id'])) {
                 $post = $tag->getUserTagByName($tagInfo['tag'], $_SESSION['id']);
-                $response->write($post['id']);
+                $this->flash->addMessage(FlashMessage::SUCCESS, 'tag added');
 
-                return $response;
+                return $response->withJson(array_merge($this->flash->getMessages(), $post));
             }
         }
+        $this->flash->addMessage('fail', 'tag not added…');
 
-        return $response->withStatus(404);
+        return $response->withJson($this->flash->getMessages());
     }
 
     public function delete(Request $request, Response $response, array $args): Response

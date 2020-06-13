@@ -42,7 +42,7 @@ class Validator
             $function = str_replace('-', '_', $key);
             if (is_callable([$this, $function]) && !$this->{$function}($array[$key])) {
                 if (empty($this->flashMessage->getMessages())) {
-                    $this->flashMessage->addMessage('failure', $key . ' is incorrect');
+                    $this->flashMessage->addMessage(FlashMessage::FAIL, $key . ' is incorrect');
                 }
 
                 return false;
@@ -56,7 +56,7 @@ class Validator
     {
         foreach ($keys as $key) {
             if (!isset($array[$key])) {
-                $this->flashMessage->addMessage('failure', $key . ' is missing');
+                $this->flashMessage->addMessage(FlashMessage::FAIL, $key . ' is missing');
                 return false;
             }
         }
@@ -89,7 +89,7 @@ class Validator
     public function password_confirmation(string $confirmation): bool
     {
         if ($this->post['password'] !== $confirmation) {
-            $this->flashMessage->addMessage('failure', 'Confirm password doesn\'t match');
+            $this->flashMessage->addMessage(FlashMessage::FAIL, 'Confirm password doesn\'t match');
 
             return false;
         }
@@ -164,8 +164,8 @@ class Validator
 
         $decode = json_decode(file_get_contents($api_url), true);
 
-        if (empty($decode) || $decode['success'] != true) {
-            $this->flashMessage->addMessage('failure', 'you\'re a robot, don\'t lie');
+        if (empty($decode) || $decode[FlashMessage::SUCCESS] != true) {
+            $this->flashMessage->addMessage(FlashMessage::FAIL, 'you\'re a robot, don\'t lie');
 
             return false;
         }
