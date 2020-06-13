@@ -70,6 +70,21 @@ class MailSender
         return $this->send();
     }
 
+    public function sendUpdateMail(): bool
+    {
+        $this->mail->addTo($_SESSION['profil']['email'], $_SESSION['profil']['pseudo']);
+
+        $this->mail->setSubject('Matcha Update Email');
+        $this->mail->addContent(MailInterface::TYPE_TEXT, 'Hi ' . $_SESSION['profil']['pseudo'] . ',
+
+            Your new adresse is well saved. Now we\'ll send our message on this adress.
+
+            ---------------
+            This is an automatic mail, thx to not reply.');
+
+        return $this->send();
+    }
+
     public function sendDeleteMail(): bool
     {
         $this->mail->addTo($_SESSION['profil']['email'], $_SESSION['profil']['pseudo']);
@@ -78,12 +93,12 @@ class MailSender
         $this->mail->addContent(MailInterface::TYPE_TEXT, 'Hi ' . $_SESSION['profil']['pseudo'] . ",
 
             It's sad but if you really really want to delete your profil, please, click on this last link:
-    
+
 " . $this->linkGen($_SESSION['profil'], 'del') . '
 
             We hope you had some good time on our website and wish you all the best!
 
-        GG,            
+        GG,
 
             ---------------
             This is an automatic mail, thx to not reply.');
@@ -111,7 +126,7 @@ class MailSender
         $this->mail->addContent(MailInterface::TYPE_TEXT, 'Hi ' . $_SESSION['profil']['pseudo'] . ",
 
             Here is all the datas we have about you. Thank you for your trust!
-    
+
     $str
 
             ---------------
@@ -131,7 +146,7 @@ class MailSender
 
             Have a good day!
 
-        GG, 
+        GG,
 
             ---------------
             This is an automatic mail, thx to not reply.");

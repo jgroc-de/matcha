@@ -82,6 +82,24 @@ class Settings
         return $response->withJson($this->flash->getMessages());
     }
 
+    public function editEmail(Request $request, Response $response, array $args): Response
+    {
+        return $this->renderSettings($response, ['editEmail' => true]);
+    }
+
+    public function updateEmail(Request $request, Response $response, array $args): Response
+    {
+        $post = $request->getParsedBody();
+        if ($this->form->checkEmail($post)) {
+            $this->user->updateEmail($post);
+            $_SESSION['profil']['email'] = $post['email'];
+            $this->mail->sendUpdateMail();
+            $this->flash->addMessage('success', 'Email updated, check your mail !');
+        }
+
+        return $response->withJson($this->flash->getMessages());
+    }
+
     public function editProfil(Request $request, Response $response, array $args): Response
     {
         return $this->renderSettings($response, ['editProfil' => true]);
@@ -92,7 +110,7 @@ class Settings
         $post = $request->getParsedBody();
         if ($this->form->checkProfil($post) && $this->user->updateUser($post)) {
             $_SESSION['profil'] = array_replace($_SESSION['profil'], $post);
-            $this->flash->addMessage('success', 'profil updated!');
+            $this->flash->addMessage('success', 'Profil updated !');
         }
 
         return $response->withJson($this->flash->getMessages());

@@ -303,7 +303,6 @@ class UserModel
         $req = $this->db->prepare(
             'UPDATE user
             SET pseudo = ?,
-            email = ?,
             name = ?,
             surname = ?,
             birthdate = ?,
@@ -315,7 +314,6 @@ class UserModel
 
         return $req->execute([
             $post['pseudo'],
-            $post['email'],
             $post['name'],
             $post['surname'],
             $post['birthdate'],
@@ -324,6 +322,16 @@ class UserModel
             $post['biography'],
             $_SESSION['profil']['pseudo'],
         ]);
+    }
+
+    public function updateEmail(array $post)
+    {
+        $req = $this->db->prepare('
+            UPDATE user
+            SET email = ?
+            WHERE pseudo = ?');
+
+        $req->execute([$post['email'], $_SESSION['profil']['pseudo']]);
     }
 
     public function updatePassUser(string $pwd)

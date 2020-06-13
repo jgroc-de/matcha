@@ -80,6 +80,9 @@ $app->group('', function () use ($app) {
     $this->get('/editProfil', Settings::class . ':editProfil')
         ->setName('editProfil');
     $this->post('/editProfil', Settings::class . ':updateProfil');
+    $this->get('/editEmail', Settings::class . ':editEmail')
+        ->setName('editEmail');
+    $this->post('/editEmail', Settings::class . ':updateEmail');
 
     $this->get('/mailPassword', Settings::class . ':mailPassword')
         ->setName('mailPassword');

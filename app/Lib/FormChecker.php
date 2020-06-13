@@ -158,7 +158,7 @@ class FormChecker
 
     public function checkProfil(?array $post): bool
     {
-        $keys = ['pseudo', 'email', 'name', 'surname', 'birthdate', 'gender', 'biography', 'sexuality'];
+        $keys = ['pseudo', 'name', 'surname', 'birthdate', 'gender', 'biography', 'sexuality'];
         if (!$this->validator->validate($post, $keys)) {
             return false;
         }
@@ -167,7 +167,24 @@ class FormChecker
 
             return false;
         }
-        if (!empty($this->userModel->getUserByEmail($post['email'])) && $post['email'] !== $_SESSION['profil']['email']) {
+
+        return true;
+    }
+
+    public function checkEmail(?array $post): bool
+    {
+        $keys = ['email'];
+        if (!$this->validator->validate($post, $keys)) {
+            return false;
+        }
+        $account = $this->userModel->getUserById($_SESSION['id']);
+
+        if (!$this->testPassword($account['password'], $post['password'])) {
+            $this->flashMessage->addMessage('failure', 'wrong password');
+            return false;
+        }
+
+        if (!empty($this->userModel->getUserByEmail($post['email']))) {
             $this->flashMessage->addMessage('failure', 'email already taken');
 
             return false;
@@ -175,6 +192,8 @@ class FormChecker
 
         return true;
     }
+
+
 
     private function testPassword(string $real, string $test): bool
     {

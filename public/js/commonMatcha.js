@@ -43,6 +43,7 @@ async function postData(url = '', data = {}) {
         credentials: 'same-origin', // include, *same-origin, omit
         body: data // body data type must match "Content-Type" header
     });
+    console.log(response);
 
     return response.json();
 }
