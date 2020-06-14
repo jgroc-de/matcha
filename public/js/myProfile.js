@@ -80,16 +80,22 @@ function ggRemoveChild(id) {
     child.parentNode.removeChild(child)
 }
 
-function delFriend(path, id) {
+function delFriend(event) {
+    let id = event.currentTarget.dataset.id
+    let url = event.currentTarget.dataset.url + id
     if (confirm('Seriously bro?'))
-        ggAjax('DELETE', path + id, ggRemoveChild, 'friend' + id)
+        ggAjax('DELETE', url, ggRemoveChild, 'friend' + id)
 }
 
-function delFriendReq(path, id) {
-    ggAjax('DELETE', path + id, ggRemoveChild, 'req' + id)
+function delFriendReq(event) {
+    let id = event.currentTarget.dataset.id
+    let url = event.currentTarget.dataset.url + id
+    ggAjax('DELETE', url, ggRemoveChild, 'req' + id)
 }
 
-function acceptFriendReq(path, id) {
+function acceptFriendReq(event) {
+    let id = event.currentTarget.dataset.id
+    let url = event.currentTarget.dataset.url + id
     let parent = document.getElementById("Friend")
     let child = getTemplate('repeatFriends')
     let del = child.querySelector('i')
@@ -102,10 +108,12 @@ function acceptFriendReq(path, id) {
     acopy.firstElementChild.alt = a.firstElementChild.alt
     acopy.firstElementChild.style = a.firstElementChild.style
     acopy.appendChild(a.lastChild)
-    del.setAttribute('onclick', 'delFriend("/friend/",' + id + ')')
+    del.dataset.url = "/friend/"
+    del.dataset.id = id
+    del.addEventListener('click', delFriend, true)
     parent.appendChild(child)
 
-    ggAjax('POST', path + id, ggRemoveChild, 'req' + id)
+    ggAjax('POST', url, ggRemoveChild, 'req' + id)
     printNotif(["Friend request accepted", true])
 }
 
@@ -132,11 +140,23 @@ function setProfileEventsListener() {
     }
     let files = document.querySelectorAll('input[type=file]')
     for (let file of files) {
-        file.addEventListener('change', sendPicture)
+        file.addEventListener('change', sendPicture, true)
     }
     let dels = document.querySelectorAll('i[matcha-delete]')
     for (let del of dels) {
-        del.addEventListener('click', deletePic)
+        del.addEventListener('click', deletePic, true)
+    }
+    dels = document.querySelectorAll('i[matcha-delfr]')
+    for (let del of dels) {
+        del.addEventListener('click', delFriendReq, true)
+    }
+    dels = document.querySelectorAll('i[matcha-delfriend]')
+    for (let del of dels) {
+        del.addEventListener('click', delFriend, true)
+    }
+    dels = document.querySelectorAll('i[matcha-addfr]')
+    for (let del of dels) {
+        del.addEventListener('click', acceptFriendReq, true)
     }
 }
 

@@ -24,7 +24,6 @@ function attachInfo(marker, info) {
         infowindow.open(map, this)
     })
     google.maps.event.addListener(infowindow, 'domready', function() {
-        console.log(this)
         document.getElementById('map' + info.id).addEventListener("click", mapView, true)
     })
 }
