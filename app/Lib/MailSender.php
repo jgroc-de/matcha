@@ -158,6 +158,7 @@ class MailSender
     {
         $this->mail->addTo($_ENV['MAIL_OWNER'], MailInterface::OWNER);
         $this->mail->setSubject('User report on ' . $_SERVER['SERVER_NAME']);
+        $this->mail->setReplyTo($_SESSION['profil']['email'], $_SESSION['profil']['pseudo']);
         $this->mail->addContent(MailInterface::TYPE_TEXT, "Bonjour maître des 7 océans numériques,
 
     L'utilisateur " . $_SESSION['id'] . " a dénoncé l'utlisateur $id comme étant un faux compte. Veuillez mettre en place les actions adéquates.
@@ -166,7 +167,7 @@ class MailSender
 
             Votre dévoué, " . $_SERVER['SERVER_NAME']);
 
-        return $this->send($_SESSION['profil']['email']);
+        return $this->send();
     }
 
     public function contactMe($msg, $mail): bool
@@ -178,6 +179,7 @@ class MailSender
         }
         $this->mail->addTo($_ENV['MAIL_OWNER'], MailInterface::OWNER);
         $this->mail->setSubject('User contact from ' . $_SERVER['SERVER_NAME']);
+        $this->mail->setReplyTo($mail, $user);
         $this->mail->addContent(MailInterface::TYPE_TEXT, "Bonjour maître des 7 océans numériques,
 
     On vous a laissé ce messsage:
@@ -188,7 +190,7 @@ class MailSender
 
             Votre dévoué, " . $_SERVER['SERVER_NAME']);
 
-        return $this->send($mail, $user);
+        return $this->send();
     }
 
     private function linkGen(array $user, string $action): string

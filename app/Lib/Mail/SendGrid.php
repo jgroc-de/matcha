@@ -60,7 +60,7 @@ class SendGrid implements MailInterface
 
     public function send(string $replyTo = self::MAIL, string $name = self::OWNER): bool
     {
-        $this->mail->setFrom($replyTo, $name);
+        $this->mail->setFrom(MailInterface::MAIL, MailInterface::OWNER);
         $this->mail->setReplyTo($replyTo, $name);
         $sendgrid = new \SendGrid($_ENV['SENDGRID_API_KEY']);
         try {
