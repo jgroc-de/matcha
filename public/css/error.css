@@ -6,7 +6,6 @@
 footer, header{
     position: fixed;
     left: 0;
-    width: 100vw;
     margin:0;
  }
 
