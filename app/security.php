@@ -21,10 +21,8 @@ $app->add(function ($req, $res, $next) {
         ->withHeader('X-Content-Type-Options', 'nosniff')
         //referer info
         ->withHeader('Referrer-Policy', 'no-referrer, strict-origin-when-cross-origin')
-        //xss
-        ->withHeader('Content-Security-Policy', $_ENV['PROD'] ? "default-src https: 'unsafe-inline'" : "default-src http: 'unsafe-inline'")
-        //42 + local
-        ->withHeader('Content-Security-Policy', "img-src data: meta.intra.42.fr localhost:8080 res.cloudinary.com matcha2.herokuapp.com maps.gstatic.com *.googleapis.com *.apis.google.com")
+        //xss: 42 + local
+        ->withHeader('Content-Security-Policy', "default-src 'self';img-src data: meta.intra.42.fr localhost:8080 res.cloudinary.com matcha2.herokuapp.com maps.gstatic.com *.googleapis.com *.apis.google.com")
         //clickjacking
         ->withHeader('X-Frame-Options', 'DENY');
 });
