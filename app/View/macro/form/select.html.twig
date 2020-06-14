@@ -2,7 +2,7 @@
 {% macro select(hash) %}
 <label for='{{ hash.name }}'>{{ hash.label }}</label>
 <select id="{{ hash.name }}" name="{{ hash.name|default(hash.label|default('select')) }}" class="w3-select {{ hash.class}}"
-        style="{{ hash.style }}" onchange="{{ hash.change }}">
+        style="{{ hash.style }}">
     {% for value in hash.array %}
         <option value='{{ value }}' {% if value == hash.select %}selected{% endif %}>
             {{ value }}

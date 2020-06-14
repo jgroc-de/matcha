@@ -35,11 +35,11 @@
                     <h3 class="w3-hover-green" matcha-toggle>Actions</h3>
                     <div id="Actions" class="w3-theme-l5 w3-padding gg-section">
                         {% if isLiked %}
-                            <button class="w3-button w3-orange w3-margin-top" onclick="profilAction('/friendReq/{{ profil.id }}', true)" >Unlike</button>
+                            <button id="delAction" class="w3-button w3-orange w3-margin-top" data-path='/friendReq/{{ profil.id }}'>Unlike</button>
                         {% elseif isFriend %}
-                            <button class="w3-button w3-orange w3-margin-top" onclick="profilAction('/friend/{{ profil.id }}', true)" >Unfriend</button>
+                            <button id="delAction" class="w3-button w3-orange w3-margin-top" data-path='/friend/{{ profil.id }}'>Unfriend</button>
                         {% else %}
-                            <button class="w3-button w3-green w3-margin-top" data-url="/friend/{{ profil.id }}" >Add to friends</button>
+                            <button class="w3-button w3-green w3-margin-top" data-url="/friend/{{ profil.id }}">Add to friends</button>
                         {% endif %}
                         <button class="w3-button w3-red w3-margin-top" data-url="/report/{{ profil.id }}">Report as fake user</button>
                         <button class="w3-button w3-black w3-margin-top" data-url="/blacklist/{{ profil.id }}">Blacklist this user</button>

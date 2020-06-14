@@ -1,5 +1,9 @@
 'use strict'
 
+const nextE = document.getElementById('next')
+const prevE = document.getElementById('prev')
+const addE = document.getElementById('add')
+
 function generateCard(event) {
     if (event) {
         let key = event.target.value
@@ -59,8 +63,8 @@ function addChildrenCard(hash, show) {
 
     if (show) {
         clone.classList.remove('w3-hide')
-        document.getElementById('add').dataset.url = "/friend/" + hash.id
-        document.getElementById('next').setAttribute('onclick', "next(" + hash.id + ")")
+        addE.dataset.url = "/friend/" + hash.id
+        nextE.dataset.id = hash.id
     }
     let link = clone.querySelector('a')
     link.href = link.href + hash.id
@@ -112,18 +116,20 @@ function checkTags() {
     }
 }
 
-function next(id1) {
+function next(event) {
+    let id1 = event.currentTarget.dataset.id
     let nextNode = document.getElementById(id1)
 
-    if (nextNode.parentElement.nextElementSibling) {
+    if (nextNode && nextNode.parentElement.nextElementSibling) {
         view(id1, nextNode.parentElement.nextElementSibling.children[0].id)
     }
 }
 
-function prev(id1) {
+function prev(event) {
+    let id1 = event.currentTarget.dataset.id
     let prevNode = document.getElementById(id1)
 
-    if (prevNode.parentElement.previousElementSibling) {
+    if (prevNode && prevNode.parentElement.previousElementSibling) {
         view(id1, prevNode.parentElement.previousElementSibling.children[0].id)
     }
 }
@@ -156,9 +162,9 @@ function view(oldId, id) {
     }
     setPrevNext(divSelected.parentElement)
     divSelected.parentElement.classList.remove('w3-hide')
-    document.getElementById('prev').setAttribute('onclick', "prev(" + id + ")")
-    document.getElementById('add').dataset.url = "/friend/" + id
-    document.getElementById('next').setAttribute('onclick', "next(" + id + ")")
+    prevE.dataset.id = id
+    addE.dataset.url = "/friend/" + id
+    nextE.dataset.id = id
 }
 
 function mapView(event) {
@@ -192,6 +198,8 @@ function setSearchEvents() {
     nameForm.addEventListener('submit', searchForm)
     let critForm = document.getElementById('searchByCriteria')
     critForm.addEventListener('submit', searchForm)
+    prevE.addEventListener('click', prev, true)
+    nextE.addEventListener('click', next, true)
 }
 
 reloadProfilCards()

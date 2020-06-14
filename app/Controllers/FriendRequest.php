@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Lib\FlashMessage;
 use App\Lib\MyZmq;
 use App\Model\BlacklistModel;
 use App\Model\FriendsModel;

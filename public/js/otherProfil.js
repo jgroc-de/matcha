@@ -23,8 +23,8 @@ function showDivs(n) {
     }
 }
 
-function profilAction(path, del = false) {
-    ggAjax(del ? 'DELETE':'POST', path, printNotif, ['response', true])
+function profilAction(event) {
+    ggAjax('DELETE', event.currentTarget.dataset.path, printNotif, ['response', true])
 }
 
 function onlineProfil(data) {
@@ -46,6 +46,11 @@ function setOtherProfilEventListeners() {
 
     for (let slideButton of slidesButtons) {
         slideButton.addEventListener('click', plusDivs, true)
+    }
+
+    let delButton = document.getElementById('delAction')
+    if (delButton) {
+        delButton.addEventListener('click',profilAction, true)
     }
 }
 
