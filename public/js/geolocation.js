@@ -1,5 +1,8 @@
 'use strict'
 
+var user = JSON.parse(document.getElementById('myUser').dataset.user)
+var usersPos = JSON.parse(document.getElementById('myFriends').dataset.friends)
+
 function initMap() {
     let map = new google.maps.Map(
             document.getElementById('Location'),
@@ -15,12 +18,12 @@ function initMap() {
         document.getElementById('lat').value = this.getPosition().lat().toFixed(7)
         document.getElementById('lng').value = this.getPosition().lng().toFixed(7)
     })
-    for (let x in usersPos) {
+    for (let userPos of usersPos) {
         marker = new google.maps.Marker({
-            position: usersPos[x],
+            position: userPos,
             map: map,
-            icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + getColor(usersPos[x].kind),
-            title: usersPos[x].title
+            icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + getColor(userPos.kind),
+            title: userPos.title
         })
     }
 }

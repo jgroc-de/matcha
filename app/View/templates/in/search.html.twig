@@ -67,6 +67,8 @@
     </div>
 </div>
 <div id="myId" data-token="{{ me.publicToken }}"></div>
+<div id="myPos" data-pos='{"lat":{{ me.lattitude }}, "lng":{{ me.longitude }}}'></div>
+"
 {% endblock %}
 
 {% block script %}
@@ -97,7 +99,6 @@
     </template>
     <script>
         var myTags = { {% for tag in tags %}'{{ tag.id }}':'{{ tag.tag }}'{% if not loop.last %},{% endif %}{% endfor %} };
-        var myPos = {lat:{{ me.lattitude }}, lng:{{ me.longitude }}};
         var usersPos = [
             {% for user in users %}
                 {

@@ -192,6 +192,8 @@
     </div>
 </div>
 <div id="myId" data-token="{{ me.publicToken }}"></div>
+<div id="myUser" data-user='{"id": {{ profil.id }},"title":"{{ profil.pseudo }}","lat":{{ profil.lattitude }},"lng":{{ profil.longitude }}}'></div>
+<div id="myFriends" data-friends='[{% for user in friends %}{"lat":{{ user.lattitude }},"lng":{{ user.longitude }},"title":"{{ user.pseudo }}", "img":"{{ user.img1 }}","id":{{ user.id }},"kind":"{{ user.gender }}"}{% if not loop.last %},{% endif %}{% endfor %}]'></div>
 {% endblock %}
 
 {% block script %}
@@ -220,14 +222,6 @@
             <span class="del">(delete)</span>
         </span>
     </template>
-    <script>
-        var user =  {id: {{ profil.id }}, title: '{{ profil.pseudo }}', lat: {{ profil.lattitude }}, lng: {{ profil.longitude }} };
-        var usersPos = [
-            {% for user in friends %}
-                {lat: {{ user.lattitude }}, lng: {{ user.longitude }}, title: '{{ user.pseudo }}', img: '{{ user.img1 }}', id: '{{ user.id }}', kind: '{{ user.gender }}'},
-            {% endfor %}
-        ];
-    </script>
     <script src="{{ BASE_URL }}/js/geolocation.js"></script>
     <script src="{{ BASE_URL }}/js/notification.js" async defer></script>
     {% if profil.id == me.id %}

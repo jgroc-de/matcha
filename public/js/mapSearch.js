@@ -2,6 +2,7 @@
 
 function initMap() {
     let mapNode = document.getElementById('map')
+    let myPos = JSON.parse(document.getElementById('myPos').dataset.pos)
     mapNode.innerText = ''
     let map = new google.maps.Map(mapNode, {center: myPos, zoom: 11});
     let marker = [];
