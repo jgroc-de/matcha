@@ -9,7 +9,7 @@
         {% endif %}
     {% endfor %}
     {% if imgs|filter(value => value)|length > 1 %}
-        <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-        <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
+        <button class="w3-button w3-display-left" matcha-slide>&#10094;</button>
+        <button class="w3-button w3-display-right" matcha-slide>&#10095;</button>
     {% endif %}
 </div>

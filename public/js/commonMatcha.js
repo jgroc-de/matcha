@@ -6,37 +6,18 @@ if (test) {
 }
 
 function displayModal(event) {
-    let modal = document.getElementById('Modal')
+    let modal = document.getElementById('modal')
 
     modal.getElementsByTagName('img')[0].src = event.currentTarget.src
     modal.style.display='block'
 }
 
-function display(id) {
-    let forms = document.forms
-    let h2 = document.querySelectorAll('h2[matcha-title]')
-
-    for (let i = 0; i < forms.length; i++) {
-        h2[i].classList.replace("w3-theme-l1", "w3-theme-d1")
-        if (forms[i].id === id) {
-            forms[i].classList.add('w3-show')
-            h2[i].classList.replace("w3-theme-d1", "w3-theme-l1")
-        } else {
-            forms[i].classList.remove('w3-show')
-        }
-    }
-}
-
-function toggleDisplay2(x) {
-    while ((x = x.nextElementSibling)) {
-        if ((x.className) || (x.innerHTML)) {
-            x.classList.toggle('w3-hide')
-        }
-    }
-}
-
 function toggleSibling(event) {
-    event.target.nextElementSibling.classList.toggle('w3-hide')
+    event.currentTarget.nextElementSibling.classList.toggle('w3-hide')
+}
+
+function toggleShowSibling(event) {
+    event.currentTarget.nextElementSibling.classList.toggle('w3-show')
 }
 
 async function postData(url = '', data = {}) {
@@ -151,6 +132,10 @@ function setCommonEvents() {
     for (let title of titles) {
         title.addEventListener('click', toggleSibling)
     }
+    let items = document.querySelectorAll('[matcha-show]')
+    for (let item of items) {
+        item.addEventListener('click', toggleShowSibling)
+    }
     let logout = document.getElementById('logout')
     if (logout) {
         logout.addEventListener('click', revokeAllScopes)
@@ -166,6 +151,12 @@ function setCommonEvents() {
     let images = document.querySelectorAll('img[matcha-modal]')
     for (let image of images) {
         image.addEventListener('click', displayModal)
+    }
+    let modal = document.getElementById('modal')
+    if (modal) {
+        modal.addEventListener('click', function(event) {
+            event.currentTarget.style.display='none'
+        }, true)
     }
 }
 

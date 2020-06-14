@@ -114,10 +114,6 @@ function delUserTag(event) {
     ggAjax('DELETE', '/tag/' + id, ggRemoveChild, 'tag' + id)
 }
 
-function mateStatus() {
-    ggAjaxGet('/chatStatus', function(){}, 0)
-}
-
 function highlightMate(data) {
     let div, name, darker
 

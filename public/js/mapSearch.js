@@ -18,9 +18,13 @@ function initMap() {
 }
 
 function attachInfo(marker, info) {
-    let infowindow = new google.maps.InfoWindow({});
+    let infowindow = new google.maps.InfoWindow({})
     marker.addListener('click', function() {
-        infowindow.setContent("<div class='w3-button w3-theme-l5' onclick='mapView(" + info.id + ")'><h6 class='w3-container' style='background-color:#" + getColor(info.gender) + "'>" + info.pseudo + "</h6><p class='w3-padding' style='margin:0'>" + info.gender + ", "  + info.age + "yo<br>score: " + info.score +"<br></p><img src=" + info.img + " style='height:40px'><div>");
-        infowindow.open(map, this);
-    });
+        infowindow.setContent("<div class='w3-button w3-theme-l5' id=map" + info.id + " data-id=" + info.id + "><h6 class='w3-container' style='background-color:#" + getColor(info.gender) + "'>" + info.pseudo + "</h6><p class='w3-padding' style='margin:0'>" + info.gender + ", "  + info.age + "yo<br>score: " + info.score +"<br></p><img src=" + info.img + " style='height:40px'><div>");
+        infowindow.open(map, this)
+    })
+    google.maps.event.addListener(infowindow, 'domready', function() {
+        console.log(this)
+        document.getElementById('map' + info.id).addEventListener("click", mapView, true)
+    })
 }

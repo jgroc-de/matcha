@@ -12,6 +12,10 @@ function setNotifEventListeners() {
 	}, true)
 }
 
+function mateStatus() {
+	ggAjaxGet('/chatStatus', function(){}, 0)
+}
+
 function socket() {
 	var notifPanel = document.getElementById("notification")
 	var badge = document.getElementById("badge")

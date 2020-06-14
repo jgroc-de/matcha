@@ -3,7 +3,8 @@
 var slideIndex = 1
 showDivs(slideIndex)
 
-function plusDivs(n) {
+function plusDivs(event) {
+    let n = event.currentTarget.innerText === '>' ? 1 : -1;
     showDivs(slideIndex += n)
 }
 
@@ -40,4 +41,13 @@ function profilStatus() {
     ggAjaxGet('/profilStatus/' + user.id, function(){}, 0)
 }
 
+function setOtherProfilEventListeners() {
+    let slidesButtons = document.querySelectorAll('button[matcha-slide]')
+
+    for (let slideButton of slidesButtons) {
+        slideButton.addEventListener('click', plusDivs, true)
+    }
+}
+
+setOtherProfilEventListeners()
 setInterval(profilStatus, 10000)

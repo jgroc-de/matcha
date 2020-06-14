@@ -20,7 +20,7 @@
             {% set home = true %}
         {% endif %}
         <!-- The Modal -->
-        <div id="Modal" class="w3-modal" style="cursor:pointer" onclick="this.style.display='none'">
+        <div id="modal" class="w3-modal" style="cursor:pointer">
             <div class="w3-modal-content w3-card-4" style="width:90vw;background-color:black;">
                 <div class="w3-display-container" style="height:80vh">
                     <img class="w3-display-middle" src="" style="max-height:80vh;max-width:100%" alt="profil image large">
@@ -157,34 +157,36 @@
             </div>
             <div class="w3-row w3-col l6 s12 w3-padding">
                 <div class="w3-row w3-card-4">
-                    <h3 class="w3-hover-green" onclick="toggleDisplay2(this)">{{ your }}Location</h3>
-                    <div id="Location" class="gg-map-small{% if home %} w3-half{% endif %}" style="height:255px"></div>
-                    {% if home %}
-                    <div class="w3-padding w3-half w3-row w3-white">
-                        <p id="textLocation">You are currently located at {{ profil.lattitude }}° of lattitude north and {{ profil.longitude }}° of longitude east.</p>
-                        <div class="w3-half">
-                            <label for="lat">lattitude</label>
-                            <input id="lat" class="w3-input w3-border"
-                                   type="number" name="lat"
-                                   value={{ profil.lattitude }}
-                                   min="{{ constant('App\\Lib\\Validator::MIN_LAT') }}" max="{{ constant('App\\Lib\\Validator::MAX_LAT') }}"
-                                   step="0.0000001">
-                        </div>
-                        <div class="w3-half">
-                            <label for="lng">longitude</label>
-                            <input id="lng" class="w3-input w3-border"
-                                   type="number" name="lng"
-                                   value={{ profil.longitude }}
-                                   min="{{ constant('App\\Lib\\Validator::MIN_LNG') }}" max="{{ constant('App\\Lib\\Validator::MAX_LNG') }}"
-                                   step="0.0000001">
-                        </div>
-                        <div class="w3-right w3-half w3-section">
-                            <button id="setGeo" class="w3-button w3-half w3-ripple w3-theme-l1 w3-hover-green" type="button">Set</button>
-                            <button id="resetGeo" class="w3-button w3-half w3-ripple w3-theme-d1 w3-hover-green" type="button">Reset</button>
-                        </div>
+                    <h3 class="w3-hover-green" matcha-toggle>{{ your }}Location</h3>
+                    <div>
+                        <div id="Location" class="gg-map-small{% if home %} w3-half{% endif %}" style="height:255px"></div>
+                        {% if home %}
+                            <div class="w3-padding w3-half w3-row w3-white">
+                                <p id="textLocation">You are currently located at {{ profil.lattitude }}° of lattitude north and {{ profil.longitude }}° of longitude east.</p>
+                                <div class="w3-half">
+                                    <label for="lat">lattitude</label>
+                                    <input id="lat" class="w3-input w3-border"
+                                           type="number" name="lat"
+                                           value={{ profil.lattitude }}
+                                           min="{{ constant('App\\Lib\\Validator::MIN_LAT') }}" max="{{ constant('App\\Lib\\Validator::MAX_LAT') }}"
+                                           step="0.0000001">
+                                </div>
+                                <div class="w3-half">
+                                    <label for="lng">longitude</label>
+                                    <input id="lng" class="w3-input w3-border"
+                                           type="number" name="lng"
+                                           value={{ profil.longitude }}
+                                           min="{{ constant('App\\Lib\\Validator::MIN_LNG') }}" max="{{ constant('App\\Lib\\Validator::MAX_LNG') }}"
+                                           step="0.0000001">
+                                </div>
+                                <div class="w3-right w3-half w3-section">
+                                    <button id="setGeo" class="w3-button w3-half w3-ripple w3-theme-l1 w3-hover-green" type="button">Set</button>
+                                    <button id="resetGeo" class="w3-button w3-half w3-ripple w3-theme-d1 w3-hover-green" type="button">Reset</button>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-                {% endif %}
             </div>
         </div>
     </div>
@@ -226,13 +228,13 @@
             {% endfor %}
         ];
     </script>
+    <script src="{{ BASE_URL }}/js/notification.js" async defer></script>
     {% if profil.id == me.id %}
         <script src="{{ BASE_URL }}/js/myProfile.js" async defer></script>
     {% else %}
         <script src="{{ BASE_URL }}/js/otherProfil.js" async defer></script>
     {% endif %}
     <script src="{{ BASE_URL }}/js/autobahn.js" async defer></script>
-    <script src="{{ BASE_URL }}/js/notification.js" async defer></script>
     <script src="{{ BASE_URL }}/js/geolocation.js" async defer></script>
     <script defer async src="https://maps.googleapis.com/maps/api/js?key={{ mapKey }}&callback=initMap"></script>
 {% endblock %}

@@ -161,7 +161,8 @@ function view(oldId, id) {
     document.getElementById('next').setAttribute('onclick', "next(" + id + ")")
 }
 
-function mapView(id) {
+function mapView(event) {
+    let id = event.currentTarget.dataset.id
     let hide = document.querySelector('#focus>div:not(.w3-hide)')
 
     view(hide ? hide.children[0].id : '', id)
