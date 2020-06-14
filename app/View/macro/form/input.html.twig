@@ -6,7 +6,7 @@
        type="{{ type }}"
        name="{{ hash.name|default(label|default(type)) }}"
        {% for key, value in hash %}
-           {% if key != name %}
+           {% if key != 'id' %}
            {{ key }}="{{ value }}"
            {% endif %}
        {% endfor %}
