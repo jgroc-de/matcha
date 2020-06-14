@@ -3,6 +3,7 @@
 const nextE = document.getElementById('next')
 const prevE = document.getElementById('prev')
 const addE = document.getElementById('add')
+const myTags = JSON.parse(document.getElementById('myTagsJS').dataset.tags)
 
 function generateCard(event) {
     if (event) {

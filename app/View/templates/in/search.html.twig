@@ -68,7 +68,15 @@
 </div>
 <div id="myId" data-token="{{ me.publicToken }}"></div>
 <div id="myPos" data-pos='{"lat":{{ me.lattitude }}, "lng":{{ me.longitude }}}'></div>
-"
+<div id="myTagsJS" data-tags='{ {% for tag in tags %}"{{ tag.id }}":"{{ tag.tag }}"{% if not loop.last %},{% endif %}{% endfor %} }'></div>
+<div id="userListJS" data-list='[
+            {% for user in users %}
+                {
+                	"pseudo":"{{ user.pseudo }}","id":{{ user.id }},"score":{{ user.score }},"lat":{{ user.lat }},"lng":{{ user.lng }},
+                    "img":"{{ user.img }}","gender":"{{ user.gender }}","age":{{ user.age }},"popularity":{{ user.popularity }},
+                    "biography":"{{ user.biography }}","distance":{{ user.distance }}, "tag":[{% for userTags in user.tag %}{{ userTags }}{% if not loop.last %},{% endif %}{% endfor %}]
+                }{% if not loop.last %},{% endif %}
+            {% endfor %}]'></div>
 {% endblock %}
 
 {% block script %}
@@ -97,18 +105,6 @@
             </a>
         </div>
     </template>
-    <script>
-        var myTags = { {% for tag in tags %}'{{ tag.id }}':'{{ tag.tag }}'{% if not loop.last %},{% endif %}{% endfor %} };
-        var usersPos = [
-            {% for user in users %}
-                {
-                	pseudo:'{{ user.pseudo }}',id:'{{ user.id }}',score:{{ user.score }},lat:{{ user.lat }},lng:{{ user.lng }},
-                    img:'{{ user.img }}',gender:'{{ user.gender }}',age:'{{ user.age }}',popularity:'{{ user.popularity }}',
-                    biography:'{{ user.biography }}',distance:'{{ user.distance }}', tag:[{% for userTags in user.tag %}{{ userTags }},{% endfor %}]
-                },
-            {% endfor %}
-        ];
-    </script>
     <script src="{{ BASE_URL }}/js/mapSearch.js"></script>
     <script src="{{ BASE_URL }}/js/search.js" async defer></script>
     <script src="{{ BASE_URL }}/js/autobahn.js" async defer></script>

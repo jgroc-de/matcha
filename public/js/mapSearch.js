@@ -1,5 +1,7 @@
 'use strict'
 
+var usersPos = JSON.parse(document.getElementById('userListJS').dataset.list)
+
 function initMap() {
     let mapNode = document.getElementById('map')
     let myPos = JSON.parse(document.getElementById('myPos').dataset.pos)
