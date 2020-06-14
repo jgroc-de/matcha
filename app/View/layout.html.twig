@@ -28,12 +28,12 @@
                 {% set size = "contain" %}
                 {% set position = "center" %}
             {% elseif (hour > 21 or hour < 7) %}
-                {% set url = "search2.jpg" %}
+                {% set url = "https://res.cloudinary.com/hs1tb2bod/image/upload/v1592100089/xzutzkcjvtl7ltz5w4kx.webp" %}
             {% else %}
-                {% set url = "background.jpg" %}
+                {% set url = "https://res.cloudinary.com/hs1tb2bod/image/upload/v1592100217/j1lnfyyvigdtc0xtdquu.webp" %}
             {% endif %}
             #main {
-                background: url('{{ BASE_URL }}/img/{{ url }}') no-repeat {{ position }};
+                background: url('{{ url }}') no-repeat {{ position }};
                 background-size: {{ size }};
                 min-height: 75vh;
             }
