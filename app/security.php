@@ -22,7 +22,6 @@ $app->add(function ($req, $res, $next) {
         //referer info
         ->withHeader('Referrer-Policy', 'no-referrer, strict-origin-when-cross-origin')
         //xss: 42 + local
-        ->withHeader('Content-Security-Policy', "default-src: 'self';style-src: www.w3schools.com cdnjs.cloudflare.com/ajax/libs/font-awesome;font-src: fonts.googleapis.com;img-src data: 'self' meta.intra.42.fr  res.cloudinary.com maps.gstatic.com *.googleapis.com *.apis.google.com")
         //clickjacking
         ->withHeader('X-Frame-Options', 'DENY');
 });
