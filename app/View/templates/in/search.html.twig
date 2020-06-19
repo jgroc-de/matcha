@@ -15,11 +15,38 @@
         <div class="w3-col l6 w3-padding">
             <div class="w3-card-4 w3-theme-l5">
                 <h3 class="w3-hover-green" matcha-toggle>Actions</h3>
-                <div id="Actions" class="w3-theme-l5 w3-padding gg-section search-wrap">
+                <div id="Actions" class="w3-theme-l5 w3-padding gg-big-section search-wrap">
                     <div class="profil-wrap">
                         <button id="prev" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue width150">Previous</button>
                         <button id="add" type="button" class="w3-button w3-green w3-margin-top width150" data-url="/friend/{{ profil.id }}">Add to friend</button>
                         <button id="next" type="button" class="w3-button w3-theme-d1 w3-margin-top w3-hover-blue width150">Next</button>
+                    </div>
+
+                    <div id="" class="w3-border profil-wrap">
+                        <div class="search-wrap">
+                            <h3 class="width150" class="matcha-medium-text">AGE</h3>
+                            <select class="age width112" id="filter_age" multiple>
+                            {% for i in range(0, 7) %}
+                                <option value="{{ i }}">{{ (i == 0) ? 18 : i * 10 + 15 }} - {{i * 10 + 25}}</option>
+                            {% endfor %}
+                            <select>
+                        </div>
+                        <div  class="search-wrap">
+                            <h3 class="width150" class="matcha-medium-text">TAG</h3>
+                            <select class="tag width112" id="filter_tag" multiple>
+                            {% for tag in tags %}
+                                <option value="{{ tag.id }}">{{ tag.tag }}</option>
+                            {% endfor %}
+                            <select>
+                        </div>
+                        <div  class="search-wrap">
+                            <h3 class="width150" class="matcha-medium-text">POPULARITY</h3>
+                            <select class="pop width112" id="filter_pop" multiple>
+                            {% for i in range(0, 9) %}
+                                <option value="{{ i }}">{{i * 10}} - {{i * 10 + 10}}</option>
+                            {% endfor %}
+                            <select>
+                        </div>
                     </div>
                     <div>
                         {{ select({
@@ -31,14 +58,6 @@
                             'class': ''
                         }) }}
                     </div>
-                    {% if tags is not empty %}
-                    <div id="myTags" class="w3-border w3-padding">
-                        {% for tag in tags %}
-                            <input id="tag_{{ tag.id }}" name="{{ tag.id }}" type="checkbox" value="">
-                            <label for="tag_{{ tag.id }}">#{{ tag.tag }}</label>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -83,9 +102,9 @@
     <template id="repeatProfil">
         <div class="w3-theme-l5 w3-row w3-hide">
             <a class="w3-col s12" href="{{ path_for('profil', {'id': ''}) }}" target="_blank" id="">
-                <div class="w3-theme-l5 w3-row" style="height: 200px; overflow: auto;">
+                <div class="w3-theme-l5 w3-row" style="height: 300px; overflow: auto;">
                     <div class="w3-col s6">
-                        <div class="w3-theme-l5 w3-padding gg-section">
+                        <div class="w3-theme-l5 w3-padding gg-big-section">
                             <div class="w3-left-align">
                                 <div class="profil-wrap">
                                     <p><span class="matcha-name"></span><br></p>

@@ -59,6 +59,13 @@ img {
     flex-direction: column;
 }
 
+.gg-big-section {
+    height: 300px;
+    overflow: auto;
+    display:flex;
+    flex-direction: column;
+}
+
 .gg-tag-section {
     height: 200px;
     overflow: auto;
@@ -164,8 +171,17 @@ img {
     width: 150px;
 }
 
+.width112 {
+    width: 112px;
+}
+
 .top13 {
     padding-top: 13px;
+}
+
+.padding10 {
+    padding-left: 17px;
+    padding-right: 17px;
 }
 
 h3 {

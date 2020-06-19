@@ -4,6 +4,10 @@ const nextE = document.getElementById('next')
 const prevE = document.getElementById('prev')
 const addE = document.getElementById('add')
 const myTags = JSON.parse(document.getElementById('myTagsJS').dataset.tags)
+var usersDefault = usersPos
+
+var opt = {"age" : [], "tag" : [], "pop" : []}
+
 
 function generateCard(event) {
     if (event) {
@@ -31,32 +35,56 @@ function reloadProfilCards() {
     }
 }
 
-function tagSort(event) {
-    let tags = [];
-    let childrens = event.target.parentElement.children
-    let i = 0
-    while (i < childrens.length) {
-        if (childrens[i].checked) {
-            tags.push(parseInt(childrens[i].name))
+function updateUsers() {
+    usersPos = []
+    user_for: for (let user of usersDefault) {
+        for (var n = 0; n < opt['age'].length; n++) {
+            let age_min = ((opt['age'][n] == 0) ? 18 : opt['age'][n] * 10 + 15);
+            let age_max = opt['age'][n] * 10 + 25;
+
+            if (user.age >= age_min && user.age <= age_max)
+                break;
+            if (n + 1 == opt['age'].length)
+                continue user_for;
         }
-        i++;
+
+        for (var i = 0; i < opt['pop'].length; i++) {
+            if (user.popularity >= (opt['pop'][i] * 10) && user.popularity <= (opt['pop'][i] * 10 + 10))
+                break;
+            if (i + 1 == opt['pop'].length)
+                continue user_for;
+        }
+
+        tag: for (var m = 0; m < opt['tag'].length; m++) {
+            for (let tag of user.tag) {
+                console.log(tag.toString())
+                console.log(opt['tag'][m])
+                if (tag.toString() === opt['tag'][m])
+                    break tag;
+            }
+
+            if (m + 1 == opt['tag'].length)
+                continue user_for;
+        }
+
+        usersPos.push(user)
     }
-    usersPos.sort(function(a, b) {
-        let bRes = 0
-        let aRes = 0
-        let i = 0
-        while (i < tags.length) {
-            if (b['tag'].includes(tags[i])) {
-                bRes++
-            }
-            if (a['tag'].includes(tags[i])) {
-                aRes++
-            }
-            i++
-        }
-        return bRes - aRes
-    })
-    reloadProfilCards()
+    reloadProfilCards();
+    initMap();
+}
+
+function filter(event) {
+    var f_opt = event.target.options;
+    var f_name = event.target.classList[0];
+
+    opt[f_name] = []
+    for (var i = 0; i < f_opt.length; i++) {
+        if (f_opt[i].selected)
+            opt[f_name].push(f_opt[i].value);
+    }
+
+    updateUsers();
+
 }
 
 function addChildrenCard(hash, show) {
@@ -182,6 +210,7 @@ function searchForm(event) {
             printNotif([data.failure, false])
         } else {
             usersPos = data
+            usersDefault = data
             reloadProfilCards()
             initMap()
         }
@@ -191,10 +220,17 @@ function searchForm(event) {
 function setSearchEvents() {
     let select = document.getElementById('sort1')
     select.addEventListener('change', generateCard)
-    let tags = document.getElementById('myTags')
-    if (tags) {
-        tags.addEventListener('change', tagSort, true)
-    }
+
+    let filter_age = document.getElementById('filter_age');
+    filter_age.addEventListener('change', filter, true);
+
+    let filter_tag = document.getElementById('filter_tag');
+    filter_tag.addEventListener('change', filter, true);
+
+    let filter_pop = document.getElementById('filter_pop');
+    filter_pop.addEventListener('change', filter, true);
+
+
     let nameForm = document.getElementById('searchByName')
     nameForm.addEventListener('submit', searchForm)
     let critForm = document.getElementById('searchByCriteria')
