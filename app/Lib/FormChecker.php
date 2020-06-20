@@ -65,8 +65,8 @@ class FormChecker
         $this->userModel->updateLastlog($user['id']);
         $_SESSION['id'] = $user['id'];
         $_SESSION['profil'] = $user;
-        $_SESSION['profil']['lattitude'] = floatval($_SESSION['profil']['lattitude']);
-        $_SESSION['profil']['longitude'] = floatval($_SESSION['profil']['longitude']);
+        $_SESSION['profil']['lattitude'] =(float) $_SESSION['profil']['lattitude'];
+        $_SESSION['profil']['longitude'] = (float) $_SESSION['profil']['longitude'];
         $this->userModel->updatePublicToken();
     }
 

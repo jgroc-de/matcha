@@ -340,7 +340,7 @@ class UserModel
         $req->execute([$pwd, $_SESSION['id']]);
     }
 
-    public function updateGeolocation($lat, $lon, $id): bool
+    public function updateGeolocation(float $lat, float $lon, int $id): bool
     {
         $req = $this->db->prepare('
             UPDATE user
@@ -348,7 +348,7 @@ class UserModel
             WHERE id = ?
         ');
 
-        return $req->execute([floatval($lat), floatval($lon), $id]);
+        return $req->execute([$lat, $lon, $id]);
     }
 
     public function activate()

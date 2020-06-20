@@ -27,11 +27,11 @@ class Geolocation
         if (!$this->validator->validate($post, $keys)) {
             return $response->withStatus(404);
         }
-        if (!$this->user->updateGeolocation($post['lat'], $post['lng'], $_SESSION['id'])) {
+        if (!$this->user->updateGeolocation((float) $post['lat'], (float) $post['lng'], $_SESSION['id'])) {
             return $response->withStatus(404);
         }
-        $_SESSION['profil']['lattitude'] = floatval($post['lat']);
-        $_SESSION['profil']['longitude'] = floatval($post['lng']);
+        $_SESSION['profil']['lattitude'] = (float) $post['lat'];
+        $_SESSION['profil']['longitude'] = (float) $post['lng'];
         $response->write(json_encode($post, JSON_NUMERIC_CHECK));
 
         return $response;

@@ -132,10 +132,6 @@ function highlightMate(data) {
     }
 }
 
-function mateStatus() {
-    ggAjaxGet('/chatStatus', function(){}, 0)
-}
-
 function setProfileEventsListener() {
     let delButtons = document.querySelectorAll('span.del')
 
@@ -162,6 +158,10 @@ function setProfileEventsListener() {
     for (let del of dels) {
         del.addEventListener('click', acceptFriendReq, true)
     }
+}
+
+function mateStatus() {
+    ggAjaxGet('/chatStatus', function(){}, 0)
 }
 
 setProfileEventsListener()

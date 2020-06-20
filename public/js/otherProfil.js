@@ -37,7 +37,7 @@ function onlineProfil(data) {
     }
 }
 
-function profilStatus() {
+function mateStatus() {
     ggAjaxGet('/profilStatus/' + user.id, function(){}, 0)
 }
 

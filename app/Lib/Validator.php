@@ -147,12 +147,14 @@ class Validator
 
     public function lat($test): bool
     {
-        return is_float($test) && $test >= self::MIN_LAT && $test <= self::MAX_LAT;
+        $test = (float) $test;
+        return $test >= self::MIN_LAT && $test <= self::MAX_LAT;
     }
 
     public function lng($test): bool
     {
-        return is_float($test) && $test <= self::MAX_LNG && $test >= self::MIN_LNG;
+        $test = (float) $test;
+        return $test <= self::MAX_LNG && $test >= self::MIN_LNG;
     }
 
     public function g_recaptcha_response(string $token): bool

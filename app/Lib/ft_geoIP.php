@@ -35,11 +35,11 @@ class ft_geoIP
                 $ip = $this->geoIP->city('212.27.48.10');
             }
             //$ip = $this->geoIP->city('82.231.186.199');
-            $post['lat'] = $ip->location->latitude;
-            $post['lng'] = $ip->location->longitude;
+            $post['lat'] = (float) $ip->location->latitude;
+            $post['lng'] = (float) $ip->location->longitude;
             if (array_key_exists('id', $_SESSION)) {
-                $_SESSION['profil']['lattitude'] = floatval($post['lat']);
-                $_SESSION['profil']['longitude'] = floatval($post['lng']);
+                $_SESSION['profil']['lattitude'] = $post['lat'];
+                $_SESSION['profil']['longitude'] = $post['lng'];
                 $this->user->updateGeolocation($post['lat'], $post['lng'], $_SESSION['id']);
             } else {
                 $this->user->updateGeolocation($post['lat'], $post['lng'], $post['id']);

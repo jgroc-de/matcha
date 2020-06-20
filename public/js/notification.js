@@ -41,8 +41,6 @@ function socket() {
 				//console.warn('WebSocket connection opened')
 				if (typeof mateStatus === "function") {
 					mateStatus()
-				} else if (typeof profilStatus === "function") {
-					profilStatus()
 				}
 			},
 			function () {//console.warn('WebSocket connection closed')

@@ -33,7 +33,9 @@
                 {% set url = "day_background.webp" %}
             {% endif %}
             #main {
-                background: url('/img/{{ url }}') no-repeat {{ position }};
+                background-image: url('/img/{{ url }}');
+                background-repeat: no-repeat;
+                background-position: {{ position }};
                 background-size: {{ size }};
                 min-height: 75vh;
             }
@@ -41,6 +43,7 @@
         {% block head %}{% endblock %}
     </head>
     <body>
+        <script>0</script>
         <header>
             {% block header %}{% endblock %}
         </header>

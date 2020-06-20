@@ -114,6 +114,9 @@ function setChatEventListener(msgBox) {
     }
     sendButton.addEventListener('click', sendMessageTo, true)
 }
+function mateStatus() {
+    ggAjaxGet('/chatStatus', function(){}, 0)
+}
 
 setChatEventListener(msgBox)
 setInterval(mateStatus, 60000)
