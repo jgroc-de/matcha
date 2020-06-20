@@ -217,8 +217,8 @@ function searchForm(event) {
 }
 
 function setSearchEvents() {
-    let select = document.getElementById('sort1')
-    select.addEventListener('change', generateCard)
+    var sort_select = document.getElementById('sort_list')
+    sort_select.addEventListener('change', generateCard, true)
 
     var filter_age = document.getElementById('filter_age');
     filter_age.addEventListener('change', filter, true);
@@ -228,22 +228,26 @@ function setSearchEvents() {
 
     var filter_pop = document.getElementById('filter_pop');
     filter_pop.addEventListener('change', filter, true);
-
-
-    let nameForm = document.getElementById('searchByName')
-    nameForm.addEventListener('submit', searchForm)
-    let critForm = document.getElementById('searchByCriteria')
-    critForm.addEventListener('submit', searchForm)
-    prevE.addEventListener('click', prev, true)
-    nextE.addEventListener('click', next, true)
-    document.getElementById('resetParams').addEventListener('click', function(event) {
+    document.getElementById('resetParams').addEventListener('click', function resetFiltersAndSorts(event) {
         filter_age.selectedIndex = -1
         filter_tag.selectedIndex = -1
         filter_pop.selectedIndex = -1
+        sort_select.selectedIndex = 0
         usersPos = usersDefault
+        usersPos.sort(function(a, b) {return b['score'] - a['score']})
+        opt = {"age" : [], "tag" : [], "pop" : []}
         reloadProfilCards()
         initMap()
     }, true)
+
+    let name_form = document.getElementById('searchByName')
+    name_form.addEventListener('submit', searchForm)
+
+    let crit_form = document.getElementById('searchByCriteria')
+    crit_form.addEventListener('submit', searchForm)
+
+    prevE.addEventListener('click', prev, true)
+    nextE.addEventListener('click', next, true)
 }
 
 reloadProfilCards()

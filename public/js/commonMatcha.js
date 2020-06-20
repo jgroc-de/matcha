@@ -1,8 +1,8 @@
 'use strict'
 
-let test = document.getElementById('myId')
-if (test) {
-    var myId = test.dataset.token
+let tokenId = document.getElementById('myId')
+if (tokenId) {
+    var myId = tokenId.dataset.token
 }
 
 function displayModal(event) {
