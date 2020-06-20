@@ -78,7 +78,7 @@ class UserModel
         return $req->fetch();
     }
 
-    public function getDefaultUserList(array $age, array $angle): array
+    public function getDefaultUserList(array $angle): array
     {
         $where = $this->getSexWherePart();
         $req = $this->db->prepare(
@@ -91,8 +91,7 @@ class UserModel
                 friends.id_user1 = IF(user.id < :id, user.id, :id) AND friends.id_user2 = IF(user.id > :id, user.id, :id)
             LEFT JOIN friendsReq ON
                 friendsReq.id_user1 = IF(:id > user.id, user.id, :id) AND friendsReq.id_user2 = IF(user.id > :id, user.id, :id)
-            WHERE birthdate BETWEEN :aMax AND :aMin
-                AND $where
+            WHERE $where
                 AND user.id <> :id
                 AND lattitude BETWEEN :latMin AND :latMax
                 AND longitude BETWEEN :longMin AND :longMax
@@ -104,8 +103,6 @@ class UserModel
             LIMIT " . self::LENGTH_LIST
         );
         $req->execute([
-            'aMax' => $age['max'],
-            'aMin' => $age['min'],
             'gender' => $_SESSION['profil']['gender'],
             'id' => $_SESSION['id'],
             'latMin' => $_SESSION['profil']['lattitude'] - $angle['lat'],

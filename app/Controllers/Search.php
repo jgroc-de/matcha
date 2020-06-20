@@ -56,11 +56,7 @@ class Search
             return $response->withRedirect('/editProfil', 302);
         }
 
-        $age = [
-            'min' => $_SESSION['profil']['birthdate'] + 10,
-            'max' => $_SESSION['profil']['birthdate'] - 10,
-        ];
-        $list = $this->user->getDefaultUserList($age, $this->distance2angle(self::DISTANCE_DEFAULT));
+        $list = $this->user->getDefaultUserList($this->distance2angle(self::DISTANCE_DEFAULT));
         if (empty($list)) {
             return $response->withRedirect('/', 302);
         }
