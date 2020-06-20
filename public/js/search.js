@@ -220,13 +220,13 @@ function setSearchEvents() {
     let select = document.getElementById('sort1')
     select.addEventListener('change', generateCard)
 
-    let filter_age = document.getElementById('filter_age');
+    var filter_age = document.getElementById('filter_age');
     filter_age.addEventListener('change', filter, true);
 
-    let filter_tag = document.getElementById('filter_tag');
+    var filter_tag = document.getElementById('filter_tag');
     filter_tag.addEventListener('change', filter, true);
 
-    let filter_pop = document.getElementById('filter_pop');
+    var filter_pop = document.getElementById('filter_pop');
     filter_pop.addEventListener('change', filter, true);
 
 
@@ -236,6 +236,14 @@ function setSearchEvents() {
     critForm.addEventListener('submit', searchForm)
     prevE.addEventListener('click', prev, true)
     nextE.addEventListener('click', next, true)
+    document.getElementById('resetParams').addEventListener('click', function(event) {
+        filter_age.selectedIndex = -1
+        filter_tag.selectedIndex = -1
+        filter_pop.selectedIndex = -1
+        usersPos = usersDefault
+        reloadProfilCards()
+        initMap()
+    }, true)
 }
 
 reloadProfilCards()
