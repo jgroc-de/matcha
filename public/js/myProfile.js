@@ -132,6 +132,10 @@ function highlightMate(data) {
     }
 }
 
+function mateStatus() {
+    ggAjaxGet('/chatStatus', function(){}, 0)
+}
+
 function setProfileEventsListener() {
     let delButtons = document.querySelectorAll('span.del')
 
