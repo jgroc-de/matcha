@@ -17,23 +17,23 @@
             {% set hour = "now"|date("G") %}
             {% set url = "" %}
             {% if logout %}
-                {% set url = "title_screen.png" %}
+                {% set url = "logout.webp" %}
                 {% set size = "contain" %}
                 {% set position = "center" %}
                 body, footer, header, h1, h4 {
                     background-color: black;
                 }
             {% elseif error is defined %}
-                {% set url = 'error.jpg' %}
+                {% set url = 'error.webp' %}
                 {% set size = "contain" %}
                 {% set position = "center" %}
             {% elseif (hour > 21 or hour < 7) %}
-                {% set url = "https://res.cloudinary.com/hs1tb2bod/image/upload/v1592100089/xzutzkcjvtl7ltz5w4kx.webp" %}
+                {% set url = "night_background.webp" %}
             {% else %}
-                {% set url = "https://res.cloudinary.com/hs1tb2bod/image/upload/v1592100217/j1lnfyyvigdtc0xtdquu.webp" %}
+                {% set url = "day_background.webp" %}
             {% endif %}
             #main {
-                background: url('{{ url }}') no-repeat {{ position }};
+                background: url('/img/{{ url }}') no-repeat {{ position }};
                 background-size: {{ size }};
                 min-height: 75vh;
             }
