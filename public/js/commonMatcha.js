@@ -5,6 +5,20 @@ if (tokenId) {
     var myId = tokenId.dataset.token
 }
 
+function display(event) {
+    let h2s = document.querySelectorAll('h2[matcha-title]')
+
+    for (let h2 of h2s) {
+        h2.classList.replace("w3-theme-l1", "w3-theme-d1")
+        if (h2 === event.currentTarget) {
+            h2.parentNode.nextElementSibling.classList.add('w3-show')
+            h2.classList.replace("w3-theme-d1", "w3-theme-l1")
+        } else {
+            h2.parentNode.nextElementSibling.classList.remove('w3-show')
+        }
+    }
+}
+
 function displayModal(event) {
     let modal = document.getElementById('modal')
 
@@ -130,15 +144,15 @@ function getTemplate(id) {
 function setCommonEvents() {
     let titles = document.querySelectorAll('[matcha-toggle]')
     for (let title of titles) {
-        title.addEventListener('click', toggleSibling)
+        title.addEventListener('click', toggleSibling, true)
     }
     let items = document.querySelectorAll('[matcha-show]')
     for (let item of items) {
-        item.addEventListener('click', toggleShowSibling)
+        item.addEventListener('click', toggleShowSibling, true)
     }
     let logout = document.getElementById('logout')
     if (logout) {
-        logout.addEventListener('click', revokeAllScopes)
+        logout.addEventListener('click', revokeAllScopes, true)
     }
     let forms = document.querySelectorAll('form[matcha-form]')
     for (let form of forms) {
@@ -146,12 +160,17 @@ function setCommonEvents() {
     }
     let actionButtons = document.querySelectorAll('button[data-url]')
     for (let action of actionButtons) {
-        action.addEventListener('click', getUrl)
+        action.addEventListener('click', getUrl, true)
     }
     let images = document.querySelectorAll('img[matcha-modal]')
     for (let image of images) {
-        image.addEventListener('click', displayModal)
+        image.addEventListener('click', displayModal, true)
     }
+    let h2s = document.querySelectorAll('h2[matcha-title]')
+    for (let h2 of h2s) {
+        h2.addEventListener('click', display, true)
+    }
+
     let modal = document.getElementById('modal')
     if (modal) {
         modal.addEventListener('click', function(event) {
