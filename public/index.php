@@ -5,7 +5,7 @@ use Symfony\Component\Dotenv\Dotenv;
 
 // secure the session cookie in code
 session_set_cookie_params([
-    'samesite' => 'Strict',
+    'samesite' => 'Lax',
     'httponly' => true,
 ]);
 

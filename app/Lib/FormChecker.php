@@ -68,6 +68,7 @@ class FormChecker
         $_SESSION['profil']['lattitude'] =(float) $_SESSION['profil']['lattitude'];
         $_SESSION['profil']['longitude'] = (float) $_SESSION['profil']['longitude'];
         $this->userModel->updatePublicToken();
+        session_regenerate_id();
     }
 
     public function getImg(string $gender): string

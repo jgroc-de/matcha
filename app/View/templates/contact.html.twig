@@ -18,7 +18,13 @@
                 <p>If you have anything to tell us, we will be happy to read you even if Rick doesn't care, like, at all!</p>
             </div>
             <div class="w3-section">
-                {{ input('email', 'your email', {'name':'email', 'value': me.email|default("rick@morty.com") }) }}
+                <label for='email'>Your email</label>
+                <input class="w3-input w3-border {{ hash.class }}"
+                       id="email"
+                       type="email"
+                       name="email"
+                       value="{{ me.email|default("rick@morty.com") }}"
+                required>
             </div>
             <div class="w3-section">
                 {{ textarea({'label': 'your message', 'placeholder': 'why we do care!', 'name':'text'}) }}

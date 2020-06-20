@@ -55,4 +55,4 @@ function setOtherProfilEventListeners() {
 }
 
 setOtherProfilEventListeners()
-setInterval(profilStatus, 10000)
+setInterval(mateStatus, 10000)

@@ -62,7 +62,6 @@ class Authentication
         if ($this->form->checkLogin($post)) {
             return $response->withRedirect('/');
         }
-        session_regenerate_id();
 
         return $this->login($request, $response, $post);
     }
@@ -89,7 +88,6 @@ class Authentication
                 $url = $client->loginToApi($token);
                 $response->write($url);
         }
-        session_regenerate_id();
 
         return $response;
     }

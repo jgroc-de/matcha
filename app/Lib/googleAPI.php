@@ -4,7 +4,7 @@ namespace App\Lib;
 
 use Google_Client;
 
-class googleAPI extends APIinterface
+class googleAPI extends APIAbstract
 {
     /** @var Google_Client */
     protected $client;

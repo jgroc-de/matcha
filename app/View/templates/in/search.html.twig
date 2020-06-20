@@ -23,7 +23,7 @@
                     </div>
                     <div id="" class="w3-border profil-wrap w3-col s12 w3-margin-bottom">
                         <div class="search-wrap">
-                            <h3 class="width150" class="matcha-medium-text">AGE</h3>
+                            <h3 class="width150 matcha-medium-text">AGE</h3>
                             <select class="age width112" id="filter_age" multiple>
                             {% for i in range(0, 7) %}
                                 <option value="{{ i }}">{{ (i == 0) ? 18 : i * 10 + 15 }} - {{i * 10 + 25}}</option>
@@ -31,7 +31,7 @@
                             </select>
                         </div>
                         <div class="search-wrap">
-                            <h3 class="width150" class="matcha-medium-text">TAG</h3>
+                            <h3 class="width150 matcha-medium-text">TAG</h3>
                             <select class="tag width112" id="filter_tag" multiple>
                             {% for tag in tags %}
                                 <option value="{{ tag.id }}">{{ tag.tag }}</option>
@@ -39,7 +39,7 @@
                             </select>
                         </div>
                         <div class="search-wrap">
-                            <h3 class="width150" class="matcha-medium-text">POPULARITY</h3>
+                            <h3 class="width150 matcha-medium-text">POPULARITY</h3>
                             <select class="pop width112" id="filter_pop" multiple>
                             {% for i in range(0, 9) %}
                                 <option value="{{ i }}">{{i * 10}} - {{i * 10 + 10}}</option>
@@ -67,7 +67,7 @@
         </div>
         <div class="w3-col l6 w3-padding">
             <h3 class="w3-hover-green" matcha-toggle>Focus</h3>
-            <div id="focus" class="w3-card-4"></div>
+            <div id="focus" class="w3-card-4 gg-big-section w3-theme-l5"></div>
         </div>
         <div class="w3-col l6 w3-padding">
             <div class="w3-row w3-card-4">
@@ -104,11 +104,11 @@
 
 {% block script %}
     <template id="repeatProfil">
-        <div class="w3-theme-l5 w3-row w3-hide">
+        <div class="w3-row w3-hide">
             <a class="w3-col s12" href="{{ path_for('profil', {'id': ''}) }}" target="_blank" id="">
-                <div class="w3-theme-l5 w3-row" style="height: 300px; overflow: auto;">
+                <div class="w3-row" style="height: 300px; overflow: auto;">
                     <div class="w3-col s6">
-                        <div class="w3-theme-l5 w3-padding gg-big-section">
+                        <div class="w3-padding">
                             <div class="w3-left-align">
                                 <div class="profil-wrap">
                                     <p><span class="matcha-name"></span><br></p>

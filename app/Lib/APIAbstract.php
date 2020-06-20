@@ -4,7 +4,7 @@ namespace App\Lib;
 
 use App\Model\UserModel;
 
-abstract class APIinterface
+abstract class APIAbstract
 {
     protected $client;
     /** @var UserModel */

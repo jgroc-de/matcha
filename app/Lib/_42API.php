@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 
-class _42API extends APIinterface
+class _42API extends APIAbstract
 {
     /** @var Client */
     protected $client;
