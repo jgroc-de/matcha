@@ -74,7 +74,6 @@ class Setup
     {
         $minAge = Date('Y') - Validator::MIN_AGE;
         $maxAge = Date('Y') - Validator::MAX_AGE;
-        echo "$maxAge + $minAge<br>";
         $count = 1000;
         $faker = Factory::create();
         $password = password_hash('trollB1B1', PASSWORD_DEFAULT);

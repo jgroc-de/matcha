@@ -264,7 +264,6 @@ class UserModel
 
     public function updateFakeUser(array $post)
     {
-        echo ($post['birthdate']) . '<br>';
         $req = $this->db->prepare(
             'UPDATE user
             SET name = ?,
