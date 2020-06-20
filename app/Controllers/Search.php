@@ -74,7 +74,7 @@ class Search
                 'distSelect' => self::DISTANCE_DEFAULT,
                 'distance' => ['1', '5', '10', '20', '30', '50', '100', '500', '1000', '10000'],
                 'popularity' => self::POPULARITY,
-                'sort' => ['score', 'popularity', 'age desc.', 'age asc.', 'distance'],
+                'sort' => ['score', 'popularity', 'age desc.', 'age asc.', 'distance', 'tag'],
                 'notification' => $this->notif->getNotification(),
                 'mapKey' => $_ENV['GMAP_KEY'],
                 'tags' => $tags,

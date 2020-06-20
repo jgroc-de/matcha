@@ -8,7 +8,7 @@ namespace App\Model;
  */
 class UserModel
 {
-    private const LENGTH_LIST = 500;
+    private const LENGTH_LIST = 200;
     /** @var \PDO */
     private $db;
 

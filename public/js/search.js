@@ -38,24 +38,24 @@ function reloadProfilCards() {
 function updateUsers() {
     usersPos = []
     user_for: for (let user of usersDefault) {
-        for (var n = 0; n < opt['age'].length; n++) {
-            let age_min = ((opt['age'][n] == 0) ? 18 : opt['age'][n] * 10 + 15);
+        for (let n = 0; n < opt['age'].length; n++) {
+            let age_min = ((opt['age'][n] === 0) ? 18 : opt['age'][n] * 10 + 15);
             let age_max = opt['age'][n] * 10 + 25;
 
             if (user.age >= age_min && user.age <= age_max)
                 break;
-            if (n + 1 == opt['age'].length)
+            if (n + 1 === opt['age'].length)
                 continue user_for;
         }
 
-        for (var i = 0; i < opt['pop'].length; i++) {
+        for (let i = 0; i < opt['pop'].length; i++) {
             if (user.popularity >= (opt['pop'][i] * 10) && user.popularity <= (opt['pop'][i] * 10 + 10))
                 break;
-            if (i + 1 == opt['pop'].length)
+            if (i + 1 === opt['pop'].length)
                 continue user_for;
         }
 
-        tag: for (var m = 0; m < opt['tag'].length; m++) {
+        tag: for (let m = 0; m < opt['tag'].length; m++) {
             for (let tag of user.tag) {
                 console.log(tag.toString())
                 console.log(opt['tag'][m])
@@ -63,7 +63,7 @@ function updateUsers() {
                     break tag;
             }
 
-            if (m + 1 == opt['tag'].length)
+            if (m + 1 === opt['tag'].length)
                 continue user_for;
         }
 
@@ -74,17 +74,16 @@ function updateUsers() {
 }
 
 function filter(event) {
-    var f_opt = event.target.options;
-    var f_name = event.target.classList[0];
+    let f_opt = event.target.options;
+    let f_name = event.target.classList[0];
 
     opt[f_name] = []
-    for (var i = 0; i < f_opt.length; i++) {
+    for (let i = 0; i < f_opt.length; i++) {
         if (f_opt[i].selected)
             opt[f_name].push(f_opt[i].value);
     }
 
     updateUsers();
-
 }
 
 function addChildrenCard(hash, show) {
