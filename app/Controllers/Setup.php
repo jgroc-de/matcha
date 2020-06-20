@@ -72,7 +72,10 @@ class Setup
 
     public function seed(Request $request, Response $response, array $args): Response
     {
-        $count = 500;
+        $minAge = Date('Y') - Validator::MIN_AGE;
+        $maxAge = Date('Y') - Validator::MAX_AGE;
+        echo "$maxAge + $minAge<br>";
+        $count = 1000;
         $faker = Factory::create();
         $password = password_hash('trollB1B1', PASSWORD_DEFAULT);
         for ($i = 0; $i < $count; ++$i) {
@@ -85,8 +88,8 @@ class Setup
                 'email' => $faker->email(),
                 'name' => $name,
                 'surname' => $faker->lastName,
-                'birthdate' => rand(1970, 2000),
-                'sexuality' => Validator::KIND[rand(0, 2)],
+                'birthdate' => (int) rand($maxAge, $minAge),
+                'sexuality' => Validator::KIND[rand(0, count(Validator::KIND) - 1)],
                 'biography' => $faker->text(250),
                 'password' => $password,
                 'activ' => 1,

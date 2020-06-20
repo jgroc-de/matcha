@@ -17,7 +17,7 @@ class Search
     private const AGE = ['min' => Validator::MIN_AGE, 'max' => Validator::MAX_AGE];
     private const POPULARITY = ['min' => 0, 'max' => 100];
     private const DISTANCE_MIN = 1;
-    private const DISTANCE_DEFAULT = 30;
+    private const DISTANCE_DEFAULT = 200;
 
     /** @var FlashMessage */
     private $flash;
@@ -245,11 +245,11 @@ class Search
     private function computeScore(array $user): int
     {
         return 1000
-            + floor($user['popularity'] / 5)
-            + 5 * pow($user['tag'], $user['tag'])
+            + $user['popularity'] * 5
+            + count($user['tag']) * 100
             - $user['time']
             - floor($user['distance'] * 2)
-            - abs($_SESSION['profil']['birthdate'] - $user['birthdate']);
+            - abs($_SESSION['profil']['birthdate'] - $user['birthdate']) * 10;
     }
 
     public function sortList(array $a, array $b): int

@@ -8,7 +8,7 @@ namespace App\Model;
  */
 class UserModel
 {
-    private const LENGTH_LIST = 200;
+    private const LENGTH_LIST = 500;
     /** @var \PDO */
     private $db;
 
@@ -61,7 +61,7 @@ class UserModel
      */
     public function getUserByEmail(string $email)
     {
-        $req = $this->db->prepare('SELECT * FROM user WHERE email = ? and oauth = 0');
+        $req = $this->db->prepare('SELECT * FROM user WHERE email = ? AND oauth = 0');
         $req->execute([$email]);
 
         return $req->fetch();
@@ -72,7 +72,7 @@ class UserModel
      */
     public function getAuthUserByEmail(string $email)
     {
-        $req = $this->db->prepare('SELECT * FROM user WHERE email = ? and oauth = 1');
+        $req = $this->db->prepare('SELECT * FROM user WHERE email = ? AND oauth = 1');
         $req->execute([$email]);
 
         return $req->fetch();
@@ -83,7 +83,7 @@ class UserModel
         $where = $this->getSexWherePart();
         $req = $this->db->prepare(
             "
-            SELECT pseudo, sexuality, biography, lattitude as lat, longitude as lng, img1 as img, birthdate, gender, user.id, popularity, lastlog
+            SELECT pseudo, sexuality, biography, lattitude AS lat, longitude AS lng, img1 AS img, birthdate, gender, user.id, popularity, lastlog
             FROM user
             LEFT JOIN blacklist ON
                 blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
@@ -119,7 +119,7 @@ class UserModel
         $where = $this->getSexWherePart();
         $req = $this->db->prepare(
             "
-            SELECT pseudo, sexuality, biography, lattitude as lat, longitude as lng, img1 as img, birthdate, gender, user.id, popularity, lastlog
+            SELECT pseudo, sexuality, biography, lattitude AS lat, longitude AS lng, img1 AS img, birthdate, gender, user.id, popularity, lastlog
             FROM user
             LEFT JOIN blacklist ON
                 blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
@@ -172,7 +172,7 @@ class UserModel
         }
         $req = $this->db->prepare(
             "
-            SELECT pseudo, sexuality, biography, lattitude as lat, longitude as lng, img1 as img, birthdate, gender, user.id, popularity, lastlog
+            SELECT pseudo, sexuality, biography, lattitude AS lat, longitude AS lng, img1 AS img, birthdate, gender, user.id, popularity, lastlog
             FROM user
             LEFT JOIN blacklist ON
                 blacklist.id_user IN (:id, user.id) AND blacklist.id_user_bl IN (:id, user.id)
@@ -264,6 +264,7 @@ class UserModel
 
     public function updateFakeUser(array $post)
     {
+        echo ($post['birthdate']) . '<br>';
         $req = $this->db->prepare(
             'UPDATE user
             SET name = ?,
