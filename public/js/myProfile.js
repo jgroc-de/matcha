@@ -10,6 +10,7 @@ function addTag(data) {
     span.lastElementChild.addEventListener('click', delUserTag, true)
     span.firstElementChild.textContent = "- #" + data.tag + " "
     document.getElementById('myTag').appendChild(span)
+    document.getElementById('test').value = ""
 }
 
 function sendPicture(event) {
@@ -165,4 +166,4 @@ function mateStatus() {
 }
 
 setProfileEventsListener()
-setInterval(mateStatus, 60000)
+setInterval(mateStatus, 10000)

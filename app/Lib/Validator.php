@@ -13,7 +13,7 @@ class Validator
     const KIND = ['bi', 'homo', 'hetero'];
     const PSEUDO = '[^\s\'"`]{1,42}';
     const PASSWORD = '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}';
-    const MAX_AGE = 150;
+    const MAX_AGE = 100;
     const MIN_AGE = 18;
     const MAX_TEXT_LENGTH = 1500;
     const MAX_NAME_LENGTH = 250;
@@ -112,7 +112,7 @@ class Validator
         return in_array($test, self::KIND);
     }
 
-    public function birthdate(int $test): bool
+    public function birthdate($test): bool
     {
         return is_numeric($test) && $test <= (date('Y') - self::MIN_AGE) && $test >= (date('Y') - self::MAX_AGE);
     }

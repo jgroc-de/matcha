@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <h2 class='' style="margin-bottom:0;background-color: {{ color[profil.gender] }}">{{ hi }}{{ profil.pseudo }}</h2>
+        <h2 class='' style="margin-bottom:0;background-color: {{ color[profil.gender] }}">{{ hi }}{{ profil.pseudo_decorated|default(profil.pseudo) }}</h2>
         <div class="w3-row {% if home %}w3-col l6 s12{% endif %}">
             {% if not home %}
             <div class="w3-third w3-padding">
@@ -192,7 +192,7 @@
     </div>
 </div>
 <div id="myId" data-token="{{ me.publicToken }}"></div>
-<div id="myUser" data-user='{"id": {{ profil.id }},"title":"{{ profil.pseudo }}","lat":{{ profil.lattitude }},"lng":{{ profil.longitude }}}'></div>
+<div id="myUser" data-user='{"id": {{ profil.id }},"title":"{{ profil.pseudo }}","lat":{{ profil.lattitude }},"lng":{{ profil.longitude }} }'></div>
 <div id="myFriends" data-friends='[{% for user in friends %}{"lat":{{ user.lattitude }},"lng":{{ user.longitude }},"title":"{{ user.pseudo }}", "img":"{{ user.img1 }}","id":{{ user.id }},"kind":"{{ user.gender }}"}{% if not loop.last %},{% endif %}{% endfor %}]'></div>
 {% endblock %}
 

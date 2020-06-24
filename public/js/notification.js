@@ -53,4 +53,7 @@ function socket() {
 }
 
 setNotifEventListeners()
-socket()
+
+window.addEventListener('load', function() {
+	socket()
+}, true);

@@ -152,11 +152,11 @@ class Search
         }
         foreach ($list as $key => $user) {
             $tmp = [
-                'time' => floor((time() - intval($user['lastlog'])) / 3600),
+                'time' => floor((time() - (int) $user['lastlog']) / 3600),
                 'distance' => $this->angle2distance($user),
-                'score' => $this->computeScore($user),
             ];
             $user = array_merge($user, $tmp);
+            $user['score'] = $this->computeScore($user);
             $user['lat'] = (float) $user['lat'];
             $user['lng'] = (float) $user['lng'];
             $user['age'] = date('Y') - $user['birthdate'];
@@ -246,10 +246,10 @@ class Search
     {
         return 1000
             + $user['popularity'] * 5
-            + count($user['tag']) * 100
+            + (!empty($user['tag']) ? count($user['tag']) * 100 : 0)
             - $user['time']
-            - floor($user['distance'] * 2)
-            - abs($_SESSION['profil']['birthdate'] - $user['birthdate']) * 10;
+            - floor($user['distance'] * 5)
+            - abs($_SESSION['profil']['birthdate'] - $user['birthdate']) * 20;
     }
 
     public function sortList(array $a, array $b): int

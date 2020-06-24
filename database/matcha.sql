@@ -39,7 +39,7 @@ CREATE TABLE `user` (
     `name` VARCHAR(255) NOT NULL DEFAULT 'John',
     `surname` VARCHAR(255) NOT NULL DEFAULT 'Doe',
     `biography` TEXT,
-    `birthdate` SMALLINT NOT NULL DEFAULT (YEAR(CURDATE()) - 18),
+    `birthdate` SMALLINT NOT NULL DEFAULT 2002,
     `lattitude` FLOAT NOT NULL DEFAULT 48.853,
     `longitude` FLOAT NOT NULL DEFAULT 2.349,
     `gender` ENUM('Rick','Morty','Summer','Beth','Jerry') NOT NULL DEFAULT 'Rick',

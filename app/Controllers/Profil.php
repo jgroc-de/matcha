@@ -89,10 +89,11 @@ class Profil
             ]);
             $isFriend = $this->friends->isFriend($_SESSION['id'], $user['id']);
             $isLiked = $this->friends->isLiked($_SESSION['id'], $user['id']);
+            $user['pseudo_decorated'] = $user['pseudo'];
             if ($isFriend) {
-                $user['pseudo'] .= ' "Friend"';
+                $user['pseudo_decorated'] .= ' "Friend"';
             } elseif ($isLiked) {
-                $user['pseudo'] .= ' "Liked"';
+                $user['pseudo_decorated'] .= ' "Liked"';
             }
 
             return $this->view->render(

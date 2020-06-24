@@ -57,8 +57,8 @@ function updateUsers() {
 
         tag: for (let m = 0; m < opt['tag'].length; m++) {
             for (let tag of user.tag) {
-                console.log(tag.toString())
-                console.log(opt['tag'][m])
+                //console.log(tag.toString())
+                //console.log(opt['tag'][m])
                 if (tag.toString() === opt['tag'][m])
                     break tag;
             }

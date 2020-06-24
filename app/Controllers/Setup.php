@@ -67,6 +67,7 @@ class Setup
         $file = file_get_contents(__DIR__ . '/../../database/matcha.sql');
         $this->pdo->exec($file);
 
+        //return $response;
         return $response->withRedirect('/');
     }
 

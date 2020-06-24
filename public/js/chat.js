@@ -102,7 +102,7 @@ function setChatEventListener(msgBox) {
         if (event.code === "ShiftLeft" || event.code === "ShiftRight")
             shiftDown = 0
 
-        if (event.code === "Enter" && shiftDown === 1) {
+        if (event.code === "Enter" && shiftDown === 0) {
             event.preventDefault()
             sendButton.click()
         }
