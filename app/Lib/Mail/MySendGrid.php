@@ -3,10 +3,9 @@
 
 namespace App\Lib\Mail;
 
-use App\Lib\FlashMessage;
 use SendGrid\Mail\Mail;
 
-class SendGrid implements MailInterface
+class MySendGrid implements MailInterface
 {
     /** @var Mail */
     private $mail;

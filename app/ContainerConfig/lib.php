@@ -46,9 +46,13 @@ $container['flash'] = new FlashMessage();
 
 $container['mail'] = function ($container) {
     if ($_ENV['PROD']) {
-        $mail = new \App\Lib\Mail\SendGrid();
+        if ($_ENV['MAILGUN_API_KEY']) {
+            $mail = new \App\Lib\Mail\MyMailGun();
+        } else {
+            $mail = new \App\Lib\Mail\MySendGrid();
+        }
     } else {
-        $mail = new \App\Lib\Mail\PHPMailer2();
+        $mail = new \App\Lib\Mail\MyPHPMailer();
     }
     return new MailSender($container->get('flash'), $mail, $container->get('settings')['siteUrl']);
 };
