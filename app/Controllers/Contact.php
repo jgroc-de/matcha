@@ -28,7 +28,6 @@ class Contact
 
     public function page(Request $request, Response $response, array $args): Response
     {
-        echo'lol';
         return $this->view->render(
             $response,
             self::template,
