@@ -73,9 +73,9 @@ class MyMailGun implements MailInterface
 
     public function send(string $replyTo = '', string $name = self::OWNER): bool
     {
-        $adminMail = $_ENV['MAIL'] ?? MailInterface::MAIL;
-        if ('' === $replyTo && !empty($_ENV['MAIL'])) {
-            $replyTo = $_ENV['MAIL'];
+        $adminMail = $_ENV['MAIL_OWNER'] ?? MailInterface::MAIL;
+        if ('' === $replyTo && !empty($_ENV['MAIL_OWNER'])) {
+            $replyTo = $_ENV['MAIL_OWNER'];
         }
         $this->setFrom($adminMail, MailInterface::OWNER);
         $this->setReplyTo($replyTo, $name);
